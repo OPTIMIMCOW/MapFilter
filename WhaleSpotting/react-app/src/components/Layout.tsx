@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Container } from 'reactstrap';
+import NavMenu from "./NavMenu";
 
-export default function Counter() {
-    const [counter, setCounter] = useState(0);
+export default function Layout({children}: {children: JSX.Element | JSX.Element[]}) {
 
     return (
         <div>
-            <h1>Counter</h1>
-
-            <p>This is a simple example of a React component.</p>
-
-            <p aria-live="polite">Current count: <strong>{counter}</strong></p>
-
-            <button className="btn btn-primary" onClick={() => setCounter(counter + 1)}>Increment</button>
+            <NavMenu />
+            <Container>
+                {children}
+            </Container>
         </div>
     );
 }
