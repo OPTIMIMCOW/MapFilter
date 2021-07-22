@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
-interface Forecast {
-    date: string;
-    temperatureC: string;
-    temperatureF: string;
-    summary: string;
-}
+import WeatherForecastApiModel from "../apiModels/WeatherForecastApiModel";
 
 export default function FetchData() {
-    const [forecastData, setData] = useState<Array<Forecast>>();
+    const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
 
     async function populateWeatherData() {
         const response = await fetch('weatherforecast');
