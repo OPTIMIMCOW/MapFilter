@@ -27,8 +27,12 @@ namespace WhaleSpotting
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
 
+            var connectionString = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DATABASE_URL"))
+                ? Configuration.GetValue<string>("DATABASE_URL")
+                : Environment.GetEnvironmentVariable("DATABASE_URL");
+            
             services.AddDbContext<WhaleSpottingContext>(options =>
-                options.UseNpgsql(Configuration.GetValue<string>("DATABASE_URL")));
+                options.UseNpgsql(connectionString!));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
