@@ -12,7 +12,8 @@ jobs:
           steps:
             - run: cd WhaleSpotting/react-app; npm install
             - run: cd WhaleSpotting/react-app; npm test
-            - run: cd WhaleSpotting/react-app; npm run lint
+#            Uncomment below to add linting
+#            - run: cd WhaleSpotting/react-app; npm run lint
   build-and-test-api:
     executor:
       name: windows/default
