@@ -1,0 +1,30 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+  windows: circleci/windows@2.2.0
+jobs:
+  build-and-test-react:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd WhaleSpotting/react-app
+            - run: npm install
+            - run: npm test
+            - run: npm run lint
+  build-and-test-api:
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: dotnet.exe restore
+            - run: dotnet.exe test
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test-react
+      - build-and-test-api

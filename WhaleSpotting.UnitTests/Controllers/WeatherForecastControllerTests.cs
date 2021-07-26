@@ -7,7 +7,7 @@ namespace WhaleSpotting.UnitTests.Controllers
     public class WeatherForecastControllerTests
     {
         private readonly WeatherForecastController _underTest;
-        
+
         public WeatherForecastControllerTests()
         {
             _underTest = new WeatherForecastController();
@@ -18,7 +18,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         {
             // Act
             var result = _underTest.Get();
-            
+
             // Assert
             result.Should().HaveCount(5);
         }
