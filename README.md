@@ -1,9 +1,11 @@
 # WhaleSpotting
 
 ## Running the app
-To run the app, hit the play icon in Visual Studio or Rider.
-To run the UI tests, navigate to `WhaleSpotting/react-app` and run `npm test`.
-To run the API tests, right click the `WhaleSpotting.UnitTests` project and chose to run tests.
+To run the app, first run `npm install` in the `WhaleSpotting/react-app` directory, then hit the play icon in Visual Studio or Rider.
+
+## Testing the app
+- To run the UI tests, navigate to `WhaleSpotting/react-app` and run `npm test`.
+- To run the API tests, right click the `WhaleSpotting.UnitTests` project and chose to run tests.
 
 ## Preparing the database
 To set up the database, navigate to `WhaleSpotting` and run `docker-compose up -d`.
