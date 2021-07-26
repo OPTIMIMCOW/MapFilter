@@ -6,7 +6,7 @@ jobs:
   build-and-test-react:
     executor:
       name: node/default
-    working_directory: ~/WhaleSpotting/react-app
+    working_directory: ~/WhaleSpottingJuly/WhaleSpotting/react-app
     steps:
       - checkout
       - node/with-cache:
