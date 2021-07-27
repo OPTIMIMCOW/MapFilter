@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import Home from "../components/Home";
 
@@ -13,11 +13,5 @@ describe("Home Page tests", () => {
         render(<Home />);
         const filter = screen.getByTestId("filter-button");
         expect(filter).toBeInTheDocument();
-    });
-
-    test("Renders page nav", () => {
-        render(<Home />);
-        const pageNav = screen.getByTestId("page-nav");
-        expect(pageNav).toBeInTheDocument();
     });
 });

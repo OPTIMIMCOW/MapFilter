@@ -1,0 +1,31 @@
+@import "./constants.scss";
+
+.page-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: $fontFamily;
+
+    .page-button{
+        height: 50px;
+        width: 25%;
+        font-family: $fontFamily;
+        background-color: $primaryLight;
+        border-radius: 10px;
+        border-width: 0px;
+        color: $textOnPrimary;
+
+        &:hover 
+        {
+            background-color: $primaryCard;
+        }
+    }
+
+    @media (max-width: $mobileScreenSize) {
+        .page-nav {
+            .page-button {
+                width: 40%;
+            }
+        }
+    }
+}

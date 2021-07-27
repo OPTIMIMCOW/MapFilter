@@ -1,6 +1,6 @@
 import "../styles/Home.scss";
 import React from "react";
-
+import PageNav from "./PageNav";
 
 export default function Home() {
     return (
@@ -31,10 +31,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="page-nav" data-testid="page-nav">
-                    <button className="page-button"> Previous Page</button>
-                    <button className="page-button" >Next Page</button>
-                </div>
+                <PageNav />
             </div>
         </div>
     );
