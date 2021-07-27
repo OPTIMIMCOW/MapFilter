@@ -40,5 +40,5 @@ jobs:
 workflows:
   test:
     jobs:
-      - frontend
+      - test-frontend
       - test-backend
