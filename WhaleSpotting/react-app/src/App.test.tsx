@@ -6,4 +6,4 @@ test("Renders Home Page", () => {
     render(<App />);
     const linkElement = screen.getByTestId("home");
     expect(linkElement).toBeInTheDocument();
-})
+});
