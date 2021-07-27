@@ -1,0 +1,23 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using WhaleSpotting.Models.Enums;
+
+namespace WhaleSpotting.Models.DbModels
+{
+    public class SightingDbModel
+    {
+        public int Id { get; set; }
+        public Species Species { get; set; }
+        public int Quantity { get; set; }
+        public string Description { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public string Location { get; set; }
+        public DateTime SightedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public OrcaType? OrcaType { get; set; }
+        public OrcaPod? OrcaPod { get; set; }
+        public bool Approved { get; set; }
+    }
+}

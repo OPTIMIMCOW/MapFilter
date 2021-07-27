@@ -9,5 +9,6 @@ namespace WhaleSpotting.Models.DbModels
         }
         
         public DbSet<TestDbModel> Test { get; set; }
+        public DbSet<SightingDbModel> Sightings { get; set; }
     }
 }
