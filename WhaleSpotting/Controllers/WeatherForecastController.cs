@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WhaleSpotting.Models.ApiModels;
 
 namespace WhaleSpotting.Controllers
 {
+    [Authorize] // add this for pages where user must be authorised to view 
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
