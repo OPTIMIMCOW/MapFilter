@@ -2,21 +2,21 @@
 {
     public enum Species
     {
-        Orca, 
-        Minke, 
-        GrayWhale, 
-        Humpback, 
-        AtlanticWhiteSidedDolphin, 
-        PacificWhiteSidedDolphin, 
-        DallsPorpoise, 
-        HarborPorpoise, 
-        HarborSeal, 
-        NorthernElephantSeal, 
-        SouthernElephantSeal, 
-        CaliforniaSeaLion, 
-        StellerSeaLion, 
-        SeaOtter, 
+        AtlanticWhiteSidedDolphin = 1,
+        CaliforniaSeaLion,
+        DallsPorpoise,
+        GrayWhale,
+        HarborPorpoise,
+        HarborSeal,
+        Humpback,
+        Minke,
+        NorthernElephantSeal,
+        Orca,
         Other,
+        PacificWhiteSidedDolphin,
+        SeaOtter,
+        SouthernElephantSeal,
+        StellerSeaLion,
         Unknown
     }
 }

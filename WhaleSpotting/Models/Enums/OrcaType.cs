@@ -2,9 +2,9 @@
 {
     public enum OrcaType
     {
-        SouthernResident, 
-        NorthernResident,
+        NorthernResident = 1,
+        Offshore,
+        SouthernResident,
         Transient,
-        Offshore
     }
 }

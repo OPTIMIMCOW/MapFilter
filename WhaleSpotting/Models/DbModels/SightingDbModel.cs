@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using WhaleSpotting.Models.Enums;
 
@@ -17,7 +18,7 @@ namespace WhaleSpotting.Models.DbModels
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public OrcaType? OrcaType { get; set; }
-        public OrcaPod? OrcaPod { get; set; }
-        public bool Approved { get; set; }
+        public string OrcaPod { get; set; }
+        public bool Confirmed { get; set; }
     }
 }
