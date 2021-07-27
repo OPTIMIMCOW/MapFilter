@@ -3,10 +3,128 @@
 .heading {
     font-size: $mobileTitleFontSize;
 }
+.user-details-container{
+    margin-left: $mobileGutters;
+    margin-right: $mobileGutters;
+    display:flex;
+    flex-direction: column;
+}
+.user-information{
+    padding:0px;
+    margin:0px;
+}
+.text-badge-container{
+    display:flex;
+    flex-direction:row;
+}
+.text-container{
+    width:100%;
+}
+
+.badge-container{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-end;
+    align-items:flex-end;
+}
+.badges{
+    height:50px;
+    width:50px;
+    padding:1px;
+}
+.profile-image{
+    height:200px;
+    width:200px;
+}
+
 
 @media(min-width: $mobileScreenSize) {
-// desktop
     .heading {
         font-size: $titleFontSize;
     }
+    .user-details-container{
+        margin-left: $gutters;
+        margin-right: $gutters;
+        flex-direction: row;
+        width:100%;
+        height:200px;
+        align-items:flex-end;
+    }
+    .text-badge-container{
+        height:100%;
+        flex-direction:column;
+    }
+    .text-container{
+        height:100%;
+    }
+    .badge-container{
+        flex-direction:row;
+        justify-content:center;
+        align-items:flex-end;
+    }
+    .profile-image{
+        height:200px;
+        width:200px;
+    }
+}
+
+
+.spacer{
+    margin:50px;
+}
+.alt-little-text{
+    font-size: 10px;
+    margin:0px;
+}
+.alt-big-text{
+    font-size: 36px;
+    margin:0px;
+}
+.alt-heading{
+    font-size: 24px;
+    margin:0px;
+}
+.alt-joined{
+    padding:0px;
+    margin:0px;
+}
+.alt-outer-container{
+    display:flex;
+    flex-direction: column;
+    width:205px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.alt-badge-text-container{
+    display:flex;
+    flex-direction: column;
+}
+.alt-heading-container{
+    display:flex;
+    flex-direction: column;
+}
+.alt-badge-container{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+}
+.alt-sightings-container{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+}
+.alt-reported{
+    margin-left:5px;
+}
+.alt-badge{
+    width:70px;
+    height:70px;
+    margin-left:10px;
+    border-radius: 50%;
+}
+.alt-profile-image{
+    width:200px;
+    height:200px;
+    margin-top:5px;
+    border-radius: 5%;
 }
