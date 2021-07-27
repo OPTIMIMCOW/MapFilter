@@ -34,14 +34,14 @@ jobs:
             - dotnet-packages-v1-{{ checksum "WhaleSpotting/WhaleSpotting.csproj" }}
       - run:
           name: "Restore project"
-          command: dotnet.exe restore
+          command: dotnet restore
       - save_cache:
           paths:
             - C:\Users\circleci\.nuget\packages
           key: dotnet-packages-v1-{{ checksum "WhaleSpotting/WhaleSpotting.csproj" }}
       - run:
           name: "Run tests"
-          command: dotnet.exe test
+          command: dotnet test
 
 workflows:
   test:
