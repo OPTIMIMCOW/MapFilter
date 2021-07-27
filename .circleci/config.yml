@@ -1,7 +1,13 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
-  windows: circleci/windows@2.2.0
+
+executors:
+  dotnet:
+    description: .NET Executor
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+
 jobs:
   test-frontend:
     executor:
@@ -20,8 +26,7 @@ jobs:
                 name: "Run lint"
                 command: cd WhaleSpotting/react-app; npm run lint
   test-backend:
-    executor:
-      name: windows/default
+    executor: dotnet
     steps:
       - checkout
       - restore_cache:
@@ -37,6 +42,7 @@ jobs:
       - run:
           name: "Run tests"
           command: dotnet.exe test
+
 workflows:
   test:
     jobs:
