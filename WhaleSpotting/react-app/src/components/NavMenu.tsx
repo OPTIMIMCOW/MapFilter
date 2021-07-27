@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import './NavMenu.scss';
+import React, { useState } from "react";
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from "reactstrap";
+import { Link } from "react-router-dom";
+import "./NavMenu.scss";
 
-export default function NavMenu() {
+export default function NavMenu(): JSX.Element {
     const [collapsed, setCollapsed] = useState(true);
     
     function toggleNavbar(){

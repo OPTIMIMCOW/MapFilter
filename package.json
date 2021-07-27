@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "WhaleSpotting",
   "version": "1.0.0",
   "description": "This file exists only so that we can deploy to heroku and install node (used for building the react-app/ folder)",
