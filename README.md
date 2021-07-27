@@ -16,3 +16,16 @@ To set up the database, navigate to `WhaleSpotting` and run `docker-compose up -
 ## Deployments
 
 This app is hosted on heroku and can be found at: https://whale-spotting-stg.herokuapp.com/ for the staging environment and https://whale-spotting-prod.herokuapp.com/ for the production environment. The staging environment will automatically update with pushes to main, to promote staging to production please contact one of the admins of the repo.
+
+##Connecting pgAdmin4 to the WhaleSpottingDB in Docker
+- Run docker and ensure Whale SpottingDb is running. 
+- Open pgAdmin4 > Object > Create > Server
+- Use the following values on the general and connection tabs: 
+	- HostName/address = localhost
+	- Port = 5440 ( found on the running docker screen) 
+	- Maintenance Database = postgres
+	- Username = postgres
+	- Password = Password123 (taken from yml document) 
+- Click Save
+You should now be connected to the DB in pgAdmin and can see the tables. 
+
