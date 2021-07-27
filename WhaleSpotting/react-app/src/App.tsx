@@ -15,7 +15,7 @@ function App() {
         <Router>
             <Nav />
                 <Switch>
-                    <Route exact path='/'  />
+                    <Route exact path='/' component={Home}  />
                     <Route path='/map'  />
                     <Route path='/reportsighting'  />
                     <Route path='/profile'  />
