@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from "react-router-dom";
 import "./NavMenu.scss";
 
-export default function NavMenu() :JSX.Element {
+export default function NavMenu(): JSX.Element {
     const [collapsed, setCollapsed] = useState(true);
     
     function toggleNavbar(){

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import WeatherForecastApiModel from "../apiModels/WeatherForecastApiModel";
 
-export default function FetchData() :JSX.Element {
+export default function FetchData(): JSX.Element {
     const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
 
     async function populateWeatherData() {
