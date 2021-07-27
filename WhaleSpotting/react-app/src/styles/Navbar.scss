@@ -1,0 +1,57 @@
+@import './constants.scss';
+
+.header {
+    position: sticky;
+    top: 0;
+    background-color: $primaryColour;
+    display: flex;
+    justify-content: center;
+    height: 6vh;
+}
+
+
+.navbar {
+    background-color: $primaryColour;
+    display: flex;
+    justify-content: center;
+    width: 700px;
+    height: 6vh;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-link {
+    margin-left: 5%;
+    margin-right: 5%;
+    color: white;
+    font-size: 1vw;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.navbar-link:hover {
+    background-color: $primaryDark;
+    border-radius: 5px;
+    color: white;
+}
+
+.profile-navlink {
+    display: none;
+}
+
+.group1 {
+    float: left;
+    display: flex;
+}
+
+.group2 {
+   margin-left: 2%;
+   float: right;
+   justify-self: flex-end;
+   display: flex;
+}
+
+
+
+
+
