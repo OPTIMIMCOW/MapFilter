@@ -1,1 +1,142 @@
 @import "./constants.scss";
+
+.home {
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: $secondaryLight;
+    font-family: $fontFamily;
+    margin: 0;
+    padding: 0;
+}
+
+.home-contents {
+    margin-left: 6vw;
+    margin-right: 6vw;
+}
+
+.banner-image{
+    width: 100vw;
+    margin: 0;
+    height: 40vh;
+    object-fit: cover;
+}
+
+.report-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    font-family: $fontFamily;
+
+    .report-button{
+        width: 50%;
+        background-color: $primaryDark;
+        color: $textOnPrimary;
+        border-radius: 10px;
+        border: 0px;
+        height: 50px;
+        font-family: $fontFamily;
+        
+        &:hover 
+        {
+            background-color: $primaryColour;
+        }
+    }
+}
+
+.sightings-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: $fontFamily;
+
+    .filter-button{
+        font-family: $fontFamily;
+        background-color: $primaryLight;
+        border-radius: 10px;
+        border-width: 0px;
+        color: $textOnPrimary;
+
+        &:hover 
+        {
+            background-color: $primaryCard;
+        }
+    }
+}
+
+.card-holder {
+    .card {
+        border-radius: 10px;
+        border-width: 0px;
+        background-color: $primaryCard;
+        height: 120px;
+        width: 100%;
+        color: $textOnSecondary;
+        margin-top: 15px; // use gutters
+        margin-bottom: 15px;
+    }
+}
+
+.page-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-family: $fontFamily;
+
+    .page-button{
+        height: 50px;
+        width: 25%;
+        font-family: $fontFamily;
+        background-color: $primaryLight;
+        border-radius: 10px;
+        border-width: 0px;
+        color: $textOnPrimary;
+
+        &:hover 
+        {
+            background-color: $primaryCard;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .banner-image{
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .card-holder{
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .banner-image {
+        height: 80vw;
+    }
+
+    .card-holder{
+        margin-left:auto;
+        margin-right:auto;
+    }
+    
+    .report-button-container {
+        margin: 0px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        .report-button{
+            width:100%;
+        }
+    }
+
+    .page-nav {
+        .page-button {
+            width: 40%;
+        }
+    }
+}
