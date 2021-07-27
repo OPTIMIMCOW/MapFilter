@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap%27');
+
+$primaryDark:  #004785;
+$primaryColour: #0072B5;
+$primaryLight: #56A0E8;
+$secondaryColour: #CDE9FF;
+$secondaryLight: #FFFFFF;
+$secondaryDark: #9BB7CC;
+$textOnPrimary: #FFFFFF;
+$textOnSecondary: #000000;
+
+$fontFamily: 'IBM Plex Mono', monospace;
+$titleFontSize: 32px;
+$subtitleFontSize: 24px;
+$bodyFontSize: 16px;
+$mobileTitleFontSize: 24px;
+$mobileSubtitleFontSize: 20px;
+$mobileBodyFontSize: 14px;
+$smallMobileTitleFontSize: 18px;
+$smallMobileSubtitleFontSize: 14px;
+$smallMobileBodyFontSize: 10px;
+
+$bodyWidth: 1024px;
+$activeImageBorder: 10px solid $primaryColor;
+$cardBackgroundColour: $secondaryDark;
+$titleLineHeight: 40px;
+$subtitleLineHeight: 32px;
+$bodyLineHeight: 24px;
+$mobileTitleLineHeight: 32px;
+$mobileSubtitleLineHeight: 24px;
+$mobileBodyLineHeight: 20px;
+
+$gutters: 48px;
+$mobileGutters: 24px;
+$cardPadding: 24px;
+$mobileCardPadding: 16px;
+
+$mobileScreenSize: 445px;
+$desktopContentWidth:760px;
+
+$cardInformationWidth:50vw;
+$outingCardWidth:500px;
+$footerHeight: 6vh;
+
+$cardMargin:20px;
+$smallMobileCardPadding:10px;
