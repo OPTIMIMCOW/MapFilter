@@ -16,3 +16,7 @@ To set up the database, navigate to `WhaleSpotting` and run `docker-compose up -
 ## Deployments
 
 This app is hosted on heroku and can be found at: https://whale-spotting-stg.herokuapp.com/ for the staging environment and https://whale-spotting-prod.herokuapp.com/ for the production environment. The staging environment will automatically update with pushes to main, to promote staging to production please contact one of the admins of the repo.
+
+## Automated testing
+
+Automated testing runs on circle ci, please note to get testing working there please set the environment variable `Configuration` to `Release`

@@ -1,29 +1,50 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
-  windows: circleci/windows@2.2.0
+
+executors:
+  dotnet:
+    description: .NET Executor
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0
+
 jobs:
-  build-and-test-react:
+  test-frontend:
     executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
           steps:
-            - run: cd WhaleSpotting/react-app; npm install
-            - run: cd WhaleSpotting/react-app; npm test
-            - run: cd WhaleSpotting/react-app; npm run lint
-  build-and-test-api:
-    executor:
-      name: windows/default
+            - run:
+                name: "Install dependencies"
+                command: cd WhaleSpotting/react-app; npm install
+            - run:
+                name: "Run tests"
+                command: cd WhaleSpotting/react-app; npm test
+            - run:
+                name: "Run lint"
+                command: cd WhaleSpotting/react-app; npm run lint
+  test-backend:
+    executor: dotnet
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: dotnet.exe restore
-            - run: dotnet.exe test
+      - restore_cache:
+          keys:
+            - dotnet-packages-v1-{{ checksum "WhaleSpotting/WhaleSpotting.csproj" }}
+      - run:
+          name: "Restore project"
+          command: dotnet restore
+      - save_cache:
+          paths:
+            - C:\Users\circleci\.nuget\packages
+          key: dotnet-packages-v1-{{ checksum "WhaleSpotting/WhaleSpotting.csproj" }}
+      - run:
+          name: "Run tests"
+          command: dotnet test
+
 workflows:
-  build-and-test:
+  test:
     jobs:
-      - build-and-test-react
-      - build-and-test-api
+      - test-frontend
+      - test-backend
