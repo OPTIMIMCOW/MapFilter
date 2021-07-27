@@ -13,7 +13,7 @@ function App() {
             <Layout>
               <Route exact path='/' component={Home} />
               <Route path='/counter' component={Counter} />
-              <Route path='/fetch-data' component={FetchData} />
+              {/* <Route path='/fetch-data' component={FetchData} /> */}
             </Layout>
         </BrowserRouter>
     );
