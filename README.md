@@ -11,7 +11,7 @@ To run the app, first run `npm install` in the `WhaleSpotting/react-app` directo
 To set up the database, navigate to `WhaleSpotting` and run `docker-compose up -d`.
 
 - To add/remove a migration, navigate to `WhaleSpotting` and run `dotnet ef migrations add/remove [MIGRATION NAME]` or use the Package Manager Console.
-- To update the database, navigate to `WhaleSpotting` and run `dotnet ef databse update` or use the Package Manager Console.
+- To update the database, navigate to `WhaleSpotting` and run `dotnet ef datbase update` or use the Package Manager Console.
 
 ## Deployments
 
