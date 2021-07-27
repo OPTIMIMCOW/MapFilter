@@ -32,6 +32,10 @@
         "semi": [
             "error",
             "always"
+        ],
+        "jsx-quotes": [
+            "error",
+            "prefer-double"
         ]
     },
     "settings": {

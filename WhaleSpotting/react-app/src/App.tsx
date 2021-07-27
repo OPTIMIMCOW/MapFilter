@@ -7,12 +7,12 @@ function App(): JSX.Element {
     return (
         <Router>
             <Switch>
-                <Route path='/map' />
-                <Route path='/reportsighting' />
-                <Route path='/profile' />
-                <Route path='/login' />
-                <Route path='/register' />
-                <Route path='' component={Home} />
+                <Route path="/map" />
+                <Route path="/reportsighting" />
+                <Route path="/profile" />
+                <Route path="/login" />
+                <Route path="/register" />
+                <Route path="" component={Home} />
             </Switch >
         </Router >
     );

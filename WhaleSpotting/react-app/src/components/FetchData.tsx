@@ -18,7 +18,7 @@ export default function FetchData(): JSX.Element {
     
     if (forecastData){
         contents =
-            <table className='table table-striped' aria-labelledby="tabelLabel">
+            <table className="table table-striped" aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
                         <th>Date</th>
