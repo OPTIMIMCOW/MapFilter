@@ -1,0 +1,12 @@
+@import './Constants.scss';
+
+.heading {
+    font-size: $mobileTitleFontSize;
+}
+
+@media(min-width: $mobileScreenSize) {
+// desktop
+    .heading {
+        font-size: $titleFontSize;
+    }
+}

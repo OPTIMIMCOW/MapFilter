@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.scss";
 import Home from "./components/Home";
+import Profile from "./components/Profile";
 
 function App(): JSX.Element {
     return (
@@ -9,7 +10,7 @@ function App(): JSX.Element {
             <Switch>
                 <Route path="/map" />
                 <Route path="/reportsighting" />
-                <Route path="/profile" />
+                <Route path="/profile" component={Profile}/>
                 <Route path="/login" />
                 <Route path="/register" />
                 <Route path="" component={Home} />
