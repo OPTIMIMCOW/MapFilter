@@ -31,6 +31,12 @@ namespace WhaleSpotting
             
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
