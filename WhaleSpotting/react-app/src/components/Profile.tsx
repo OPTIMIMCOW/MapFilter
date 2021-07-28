@@ -24,7 +24,7 @@ export function Profile(): JSX.Element {
                     </div>
                     <div className="button-container">
                         <a className="toggle" onClick={() => setFeedToggle("Sightings")}>Sightings</a>
-                        <a className="toggle" onClick={() => setFeedToggle("Approvals")}>Approvals</a>
+                        <a className="toggle" data-testid="approval-toggle" onClick={() => setFeedToggle("Approvals")}>Approvals</a>
                     </div>
                 </div>
             </div>
