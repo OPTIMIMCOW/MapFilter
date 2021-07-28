@@ -7,13 +7,13 @@ using RestSharp;
 
 namespace WhaleSpotting.Services
 {
-    public interface ISightingServices
+    public interface ISightingService
     {
         List<SightingResponseModel> GetSightings();
         //IEnumerable<SightingResponseModel> GetSightings();
     }
 
-    public class SightingsService : ISightingServices
+    public class SightingsService : ISightingService
     {
         public WhaleSpottingContext _context;
 

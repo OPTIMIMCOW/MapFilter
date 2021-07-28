@@ -13,16 +13,16 @@ namespace WhaleSpotting.Controllers
     public class SightingsController : ControllerBase
     {
         //private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        private readonly ISightingServices _sightings;
+        private readonly ISightingService _sightings;
 
-        public SightingsController(ISightingServices sightings)
+        public SightingsController(ISightingService sightings)
         {
             _sightings = sightings;
         }
         [HttpGet]
         public IActionResult GetInfo()
         {
-            return Created(Url.Action("Get", new { id = 2 }), _sightings.GetSightings());
+            return Created(Url.Action("Get"), _sightings.GetSightings());
         }
     }
 }
