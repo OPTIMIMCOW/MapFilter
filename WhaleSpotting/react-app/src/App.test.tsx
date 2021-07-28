@@ -4,6 +4,6 @@ import App from "./App";
 
 test("Renders Home Page", () => {
     render(<App />);
-    const linkElement = screen.getByTestId("home");
-    expect(linkElement).toBeInTheDocument();
+    const home = screen.getByTestId("home");
+    expect(home).toBeInTheDocument();
 });

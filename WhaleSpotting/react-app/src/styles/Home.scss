@@ -8,18 +8,13 @@
     justify-content: center;
     background: $secondaryLight;
     font-family: $fontFamily;
-    margin: 0;
-    padding: 0;
 }
 
 .home-contents {
-    margin-left: 6vw;
-    margin-right: 6vw;
+    margin: 0 6vw;
 }
 
 .banner-image{
-    width: 100vw;
-    margin: 0;
     height: 40vh;
     object-fit: cover;
 }
@@ -28,7 +23,6 @@
     display: flex;
     justify-content: center;
     margin: 20px;
-    font-family: $fontFamily;
 
     .report-button{
         width: 50%;
@@ -37,7 +31,6 @@
         border-radius: 10px;
         border: 0px;
         height: 50px;
-        font-family: $fontFamily;
         
         &:hover 
         {
@@ -56,40 +49,25 @@
         font-family: $fontFamily;
         background-color: $primaryLight;
         border-radius: 10px;
-        border-width: 0px;
+        border-width: 0;
         color: $textOnPrimary;
 
         &:hover 
         {
-            background-color: $primaryCard;
+            background-color: $primaryColour;
         }
     }
 }
 
 .card-holder {
-    .card {
+    .card-component {
         border-radius: 10px;
         border-width: 0px;
         background-color: $primaryCard;
         height: 120px;
-        width: 100%;
         color: $textOnSecondary;
         margin-top: 15px; // use gutters
         margin-bottom: 15px;
-    }
-}
-
-
-
-@media (max-width: 600px) {
-    .banner-image{
-        width: 100%;
-        object-fit: cover;
-    }
-
-    .card-holder{
-        margin-left:auto;
-        margin-right:auto;
     }
 }
 
@@ -97,11 +75,6 @@
 
     .banner-image {
         height: 80vw;
-    }
-
-    .card-holder{
-        margin-left:auto;
-        margin-right:auto;
     }
     
     .report-button-container {
