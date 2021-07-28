@@ -5,8 +5,6 @@
     margin-top: $headerHeight;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background: $secondaryLight;
     font-family: $fontFamily;
 }
 
@@ -29,7 +27,7 @@
         background-color: $primaryDark;
         color: $textOnPrimary;
         border-radius: 10px;
-        border: 0px;
+        border: 0;
         height: 50px;
         
         &:hover 
@@ -43,7 +41,6 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    font-family: $fontFamily;
 
     .filter-button{
         font-family: $fontFamily;
@@ -62,12 +59,9 @@
 .card-holder {
     .card-component {
         border-radius: 10px;
-        border-width: 0px;
         background-color: $primaryCard;
         height: 120px;
-        color: $textOnSecondary;
-        margin-top: 15px; // use gutters
-        margin-bottom: 15px;
+        margin: 15px 0;
     }
 }
 
