@@ -6,11 +6,11 @@ namespace WhaleSpotting.UnitTests.Controllers
 {
     public class WeatherForecastControllerTests
     {
-        private readonly WeatherForecastController _underTest;
+        private readonly SightingController _underTest;
 
         public WeatherForecastControllerTests()
         {
-            _underTest = new WeatherForecastController();
+            _underTest = new SightingController();
         }
 
         [Fact]
