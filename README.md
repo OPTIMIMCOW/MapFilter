@@ -20,3 +20,16 @@ This app is hosted on heroku and can be found at: https://whale-spotting-stg.her
 ## Automated testing
 
 Automated testing runs on circle ci, please note to get testing working there please set the environment variable `Configuration` to `Release`
+
+##Connecting pgAdmin4 to the WhaleSpottingDB in Docker
+- Run docker and ensure Whale SpottingDb is running. 
+- Open pgAdmin4 > Object > Create > Server
+- Use the following values on the general and connection tabs: 
+	- HostName/address = localhost
+	- Port = 5440 ( found on the running docker screen) 
+	- Maintenance Database = postgres
+	- Username = postgres
+	- Password = Password123 (taken from yml document) 
+- Click Save
+You should now be connected to the DB in pgAdmin and can see the tables. 
+
