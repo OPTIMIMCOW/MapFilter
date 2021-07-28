@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Profile } from "../components/Profile";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 
 test("renders the Profile information", () => {
     render(
