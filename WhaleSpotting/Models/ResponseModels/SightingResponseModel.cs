@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
@@ -6,30 +7,43 @@ namespace WhaleSpotting.Models.ApiModels
 {
     public class SightingResponseModel
     {
+        [JsonProperty("sighted_at")]
         public DateTime SightedAt { get; set; }
-        public Species Species { get; set; }
-        public int Quantity { get; set; }
-        public string Location { get; set; }
+        [JsonProperty("species")]
+        public string Species { get; set; }
+        [JsonProperty("quantity")]
+        public int? Quantity { get; set; }
+        [JsonProperty("location")]
+        public string? Location { get; set; }
+        [JsonProperty("longitude")]
         public double Longitude { get; set; }
+        [JsonProperty("latitude")]
         public double Latitude { get; set; }
-        public string Description { get; set; }
-        public OrcaType? OrcaType { get; set; }
-        public string OrcaPod { get; set; }
+        [JsonProperty("description")]
+        public string? Description { get; set; }
+        [JsonProperty("orca_type")]
+        public string? OrcaType { get; set; }
         public int? UserId { get; set; }
         public string Username { get; set; }
         public bool Confirmed { get; set; }
 
+        public SightingResponseModel()
+        {
+            Confirmed = true;
+            Username = "Whale Museum";
+        }
+
         public SightingResponseModel(SightingDbModel sighting)
         {
             SightedAt = sighting.SightedAt;
-            Species = sighting.Species;
+            Species = sighting.Species.ToString();
             Quantity = sighting.Quantity;
             Location = sighting.Location;
             Longitude = sighting.Longitude;
             Latitude = sighting.Latitude;
             Description = sighting.Description;
-            OrcaType = sighting.OrcaType;
-            OrcaPod = sighting.OrcaPod;
+            OrcaType = sighting.OrcaType.ToString();
+            //OrcaPod = sighting.OrcaPod;
             Confirmed = sighting.Confirmed;
 
             //TODO - Use real UserId and Username

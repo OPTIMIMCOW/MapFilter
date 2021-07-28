@@ -33,7 +33,7 @@ namespace WhaleSpotting
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
 
-            services.AddTransient<ISightingsServices, SightingsService>();
+            services.AddTransient<ISightingServices, SightingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
