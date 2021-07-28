@@ -1,0 +1,83 @@
+@import "./constants.scss";
+
+.home {
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    display: flex;
+    flex-direction: column;
+    font-family: $fontFamily;
+}
+
+.home-contents {
+    margin: 0 6vw;
+}
+
+.banner-image{
+    height: 40vh;
+    object-fit: cover;
+}
+
+.report-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+    .report-button{
+        width: 50%;
+        background-color: $primaryDark;
+        color: $textOnPrimary;
+        border-radius: 10px;
+        border: 0;
+        height: 50px;
+        
+        &:hover 
+        {
+            background-color: $primaryColour;
+        }
+    }
+}
+
+.sightings-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .filter-button{
+        font-family: $fontFamily;
+        background-color: $primaryLight;
+        border-radius: 10px;
+        border-width: 0;
+        color: $textOnPrimary;
+
+        &:hover 
+        {
+            background-color: $primaryColour;
+        }
+    }
+}
+
+.card-holder {
+    .card-component {
+        border-radius: 10px;
+        background-color: $primaryCard;
+        height: 120px;
+        margin: 15px 0;
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .banner-image {
+        height: 80vw;
+    }
+    
+    .report-button-container {
+        margin: 0px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        .report-button{
+            width:100%;
+        }
+    }
+}

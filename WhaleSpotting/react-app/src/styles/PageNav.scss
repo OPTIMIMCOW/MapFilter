@@ -1,0 +1,28 @@
+@import "./constants.scss";
+
+.page-nav {
+    display: flex;
+    justify-content: space-between;
+
+    .page-button{
+        height: 50px;
+        width: 25%;
+        background-color: $primaryLight;
+        border-radius: 10px;
+        border-width: 0px;
+        color: $textOnPrimary;
+
+        &:hover 
+        {
+            background-color: $primaryColour;
+        }
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+    .page-nav {
+        .page-button {
+            width: 40%;
+        }
+    }
+}
