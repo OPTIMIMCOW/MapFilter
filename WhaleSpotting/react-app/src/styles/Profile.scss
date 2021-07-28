@@ -1,39 +1,45 @@
 @import './Constants.scss';
 
 .body {
-    width: 100vw;
     min-width: $minMobileScreenSize;
     font-family: $fontFamily;
     display: flex;
     flex-direction: column;
 }
-.banner {
+
+.profile-pane {
     height: 290px;
     background-color: $secondaryDark;
 }
+
 .feed{
     padding: 0px 20px;
     flex: 1;
 }
+
 .little-text{
     font-size: $smallMobileBodyFontSize;
     margin: 0px;
 }
+
 .joined{
-    padding: 0px;
     margin-top:-7px;
 }
+
 .reported{
     margin-left: 5px;
 }
+
 .feature-text{
     font-size: $mobileFeatureFontSize;
     margin:0px;
 }
+
 .heading{
     font-size: $mobileTitleFontSize;
     margin:0px;
 }
+
 .outer-container{
     display:flex;
     flex-direction: row;
@@ -41,76 +47,88 @@
     margin-left:auto;
     margin-right:auto;
 }
+
 .trophy-text-container{
     display:flex;
     flex-direction: column;
 }
+
 .button-container{
     display:flex;
     flex-direction: column;
+    flex: 1;
 }
+
 .trophy-container{
     display:flex;
     flex-direction: row;
     align-items:center;
 }
+
 .trophy-image{
     width:70px;
     height:auto;
     margin-left:10px;
     border-radius: 50%;
 }
+
 .profile-image{
     width: 160px;
     height:auto;
     margin-top:5px;
     border-radius: 5%;
 }
+
 .button-container{
     align-items: center;
     flex-direction: column-reverse;
 }
-.toggle{
-    background-color: $primaryDark;
-    border-radius:25px;
-    color: $textOnPrimary;
-    font-size:$mobileBodyFontSize;
-    text-decoration: none;
-    width:fit-content;
-    padding:2px 5px;
+
+.primary-button{
     margin:5px;
+    width: 70%;
 }
+
 @media(min-width: $mobileScreenSize) {
+
     .body {
         max-width: 1024px;
         width: 100vw;
         margin: 0 auto 0 auto;
         flex-direction: row;
     }
-    .banner {
+
+    .profile-pane {
         height: 100vh;
         width: 250px;
     }
+
     .outer-container {
         width: 90%;
         flex-direction: column;
     }
+
     .little-text {
         font-size: $bodyFontSize;
 
         .reported {
             margin-left: 10px;
         }
+
     }
+
     .feature-text {
         font-size: $featureFontSize;
     }
+
     .heading {
         font-size: $titleFontSize;
     }
+
     .trophy {
         width: 80px;
     }
+
     .profile-image {
         width: 100%;
     }
