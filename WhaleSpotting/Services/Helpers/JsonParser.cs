@@ -2,22 +2,32 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using WhaleSpotting.Models.ApiModels;
-
+using WhaleSpotting.Models.DbModels;
 
 namespace WhaleSpotting.Services.Helpers
 {
+    public interface IJsonParser
+    {
+        List<SightingResponseModel> GetSightingsFromJson(string path);
+    }
+
     public class JsonParser
     {
+
+        private readonly WhaleSpottingContext _context;
+        public JsonParser(WhaleSpottingContext context)
+        {
+            _context = context;
+        }
+
         //private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        public static List<SightingResponseModel> GetTransactionsFromJson(string path)
+        public static List<SightingResponseModel> GetSightingsFromJson(string path)
         {
             try
             {
-                var json = File.ReadAllText("http://hotline.whalemuseum.org/api.json");
+                var json = File.ReadAllText(path);
                 //Logger.Info("The program has successfully read the file.");
                 return JsonConvert.DeserializeObject<List<SightingResponseModel>>(json);
             }

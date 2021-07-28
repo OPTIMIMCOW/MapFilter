@@ -5,7 +5,7 @@ export default function FetchData(): JSX.Element {
     const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
 
     async function populateWeatherData() {
-        const response = await fetch("weatherforecast");
+        const response = await fetch("sightings");
         const data = await response.json();
         setData(data);
     }

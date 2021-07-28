@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace WhaleSpotting.Services
 {
-    public interface ISightingsServices
+    public interface ISightingServices
     {
-        IEnumerable<SightingResponseModel> GetSightings();
+        List<SightingResponseModel> GetSightings();
+        //IEnumerable<SightingResponseModel> GetSightings();
     }
 
-    public class SightingsService : ISightingsServices
+    public class SightingsService : ISightingServices
     {
         public WhaleSpottingContext _context;
 
@@ -21,9 +22,11 @@ namespace WhaleSpotting.Services
             _context = context;
         }
 
-        public IEnumerable<SightingResponseModel> GetSightings ()
+        public List<SightingResponseModel> GetSightings()
         {
-
+            var client = new RestClient("http://hotline.whalemuseum.org/api.json");
+            var sightings = JsonConvert.DeserializeObject <List<SightingResponseModel>> (client.Execute(new RestRequest()).Content);
+            return sightings;
         }
     }
 }
