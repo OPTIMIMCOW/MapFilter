@@ -12,7 +12,7 @@ export function Profile(): JSX.Element {
         <div className="body">
             <div className="profile-pane">
                 <div className="outer-container">
-                    <div className="trophy-text-container">
+                    <div>
                         <h1 className="heading">UserName</h1>
                         <p className="joined little-text"> Joined: June 2004</p>
                         <div className="trophy-container">

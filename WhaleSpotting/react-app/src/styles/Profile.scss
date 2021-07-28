@@ -1,14 +1,16 @@
 @import './Constants.scss';
 
 .body {
-    min-width: $minMobileScreenSize;
+    max-width: 1024px;
     font-family: $fontFamily;
+    margin: 0 auto 0 auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .profile-pane {
-    height: 290px;
+    height: 100vh;
+    width: 250px;
     background-color: $secondaryDark;
 }
 
@@ -17,8 +19,13 @@
     flex: 1;
 }
 
+.outer-container {
+    width: 90%;
+    flex-direction: column;
+}
+
 .little-text{
-    font-size: $smallMobileBodyFontSize;
+    font-size: $bodyFontSize;
     margin: 0px;
 }
 
@@ -27,30 +34,33 @@
 }
 
 .reported{
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .feature-text{
-    font-size: $mobileFeatureFontSize;
+    font-size: $featureFontSize;
     margin:0px;
 }
 
 .heading{
-    font-size: $mobileTitleFontSize;
+    font-size: $titleFontSize;
     margin:0px;
+}
+
+.trophy {
+    width: 80px;
+}
+
+.profile-image {
+    width: 100%;
 }
 
 .outer-container{
     display:flex;
-    flex-direction: row;
-    width: 90vw;
+    flex-direction: column;
+    width: 90%;
     margin-left:auto;
     margin-right:auto;
-}
-
-.trophy-text-container{
-    display:flex;
-    flex-direction: column;
 }
 
 .button-container{
@@ -73,7 +83,7 @@
 }
 
 .profile-image{
-    width: 160px;
+    width: 100%;
     height:auto;
     margin-top:5px;
     border-radius: 5%;
@@ -89,47 +99,39 @@
     width: 70%;
 }
 
-@media(min-width: $mobileScreenSize) {
+@media(max-width: $mobileScreenSize) {
 
     .body {
-        max-width: 1024px;
-        width: 100vw;
-        margin: 0 auto 0 auto;
-        flex-direction: row;
-    }
-
-    .profile-pane {
-        height: 100vh;
-        width: 250px;
-    }
-
-    .outer-container {
-        width: 90%;
+        min-width: $minMobileScreenSize;
         flex-direction: column;
     }
 
-    .little-text {
-        font-size: $bodyFontSize;
+    .profile-pane {
+        height: 290px;
+        width:100vw;
+    }
 
-        .reported {
-            margin-left: 10px;
-        }
+    .little-text { 
+        font-size: $smallMobileBodyFontSize;
+    }
 
+    .reported {
+        margin-left: 5px;
     }
 
     .feature-text {
-        font-size: $featureFontSize;
+        font-size: $mobileFeatureFontSize;
     }
 
     .heading {
-        font-size: $titleFontSize;
+        font-size: $mobileTitleFontSize;
     }
 
-    .trophy {
-        width: 80px;
+    .outer-container{
+        flex-direction: row;
     }
 
-    .profile-image {
-        width: 100%;
+    .profile-image{
+        width: 170px;
     }
 }
