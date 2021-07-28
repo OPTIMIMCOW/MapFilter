@@ -12,7 +12,7 @@ namespace WhaleSpotting.Models.DbModels
     {
         public int Id { get; set; } // id 'hides' - check w/ Oskar
         public string Username { get; set; }
-        public string Password { get; set; }
+        public string HashedPassword { get; set; }
         public string ProfileImageUrl { get; set; }
         public string Role { get; set; } //alternate option - ENUM / Bool
     }

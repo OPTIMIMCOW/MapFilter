@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.scss";
+import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import Home from "./components/Home";
 
 function App(): JSX.Element {
@@ -8,8 +9,8 @@ function App(): JSX.Element {
         <Router>
             <Switch>
                 <Route path="/map" />
-                <Route path="/reportsighting" />
-                <Route path="/profile" />
+                <AuthorizeRoute path="/reportsighting" />
+                <AuthorizeRoute path="/profile" />
                 <Route path="/login" />
                 <Route path="/register" />
                 <Route path="" component={Home} />

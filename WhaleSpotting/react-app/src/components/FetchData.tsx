@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import WeatherForecastApiModel from "../apiModels/WeatherForecastApiModel";
+import authService from './api-authorization/AuthorizeService';
 
 export default function FetchData(): JSX.Element {
     const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
 
     async function populateWeatherData() {
-        const response = await fetch("weatherforecast");
+        const token = await authService.getAccessToken();
+        const response = await fetch("weatherforecast", {
+            headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+          });
         const data = await response.json();
         setData(data);
     }
