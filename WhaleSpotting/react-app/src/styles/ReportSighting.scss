@@ -1,0 +1,62 @@
+@import "./Constants.scss";
+
+.report-sighting {
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    display: flex;
+    flex-direction: column;
+    font-family: $fontFamily;
+    align-items: center;
+    width: 100%;
+}
+
+.banner-image{
+    height: 40vh;
+    object-fit: cover;
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.sighting-contents {
+    margin: 0 6vw;
+    max-width: 1024px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sightings-header{
+    width: 100%;
+    display: contents;
+    justify-content: space-between;
+}
+.card-component {
+    border-radius: 10px;
+    background-color: $primaryCard;
+    margin: 15px 0;
+    padding: 5%;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input {
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 40%;
+}
+
+.right {
+    float: right;
+    width: 40%;
+}
