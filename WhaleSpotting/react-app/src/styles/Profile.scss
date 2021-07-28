@@ -3,11 +3,12 @@
 .body {
     width: 100vw;
     min-width: $minMobileScreenSize;
+    font-family: $fontFamily;
 }
 
 .banner {
     height: 290px;
-    background-color: #cccccc;
+    background-color: $secondaryDark;
 }
 
 .little-text {
@@ -33,12 +34,16 @@
 
 .outer-container{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 90vw;
     margin-left:auto;
     margin-right:auto;
 }
 .badge-text-container{
+    display:flex;
+    flex-direction: column;
+}
+.button-container{
     display:flex;
     flex-direction: column;
 }
@@ -69,7 +74,20 @@
     margin-top:5px;
     border-radius: 5%;
 }
-
+.button-container{
+    align-items: center;
+    flex-direction: column-reverse;
+}
+.toggle{
+    background-color: $primaryDark;
+    border-radius:25px;
+    color: $textOnPrimary;
+    font-size:$mobileBodyFontSize;
+    text-decoration: none;
+    width:fit-content;
+    padding:2px 5px;
+    margin:5px;
+}
 
 @media(min-width: $mobileScreenSize) {
     .body {
@@ -82,11 +100,10 @@
         height: 100vh;
         width: 250px;
     }
-
     .outer-container {
         width: 90%;
+        flex-direction: column;
     }
-
     .little-text {
         font-size: $bodyFontSize;
 
@@ -94,7 +111,6 @@
             margin-left: 10px;
         }
     }
-
     .feature-text {
         font-size: $featureFontSize;
     }
@@ -105,7 +121,6 @@
     .trophy {
         width: 80px;
     }
-
     .profile-image {
         width: 100%;
     }

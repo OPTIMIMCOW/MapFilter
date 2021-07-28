@@ -19,9 +19,14 @@ export function Profile(): JSX.Element {
                             </div>
                             <img className="trophy" src="https://picsum.photos/id/215/70" />
                         </div>
+                        <img className="profile-image" src="https://picsum.photos/id/237/200" />
                     </div>
-                    <img className="profile-image" src="https://picsum.photos/id/237/200" />
+                    <div className="button-container">
+                        <a className="toggle">Sightings</a>
+                        <a className="toggle">Approvals</a>
+                    </div>
                 </div>
+
             </div>
         </div>
     );
