@@ -4,24 +4,28 @@
     width: 100vw;
     min-width: $minMobileScreenSize;
     font-family: $fontFamily;
+    display: flex;
+    flex-direction: column;
 }
-
 .banner {
     height: 290px;
     background-color: $secondaryDark;
 }
-
-.little-text {
+.feed{
+    padding: 0px 20px;
+    flex: 1;
+}
+.little-text{
     font-size: $smallMobileBodyFontSize;
     margin: 0px;
 
-    .joined {
-        padding: 0px;
-    }
-
-    .reported {
-        margin-left: 5px;
-    }
+}
+.joined{
+    padding: 0px;
+    margin-top:-7px;
+}
+.reported{
+    margin-left: 5px;
 }
 .feature-text{
     font-size: $mobileFeatureFontSize;
@@ -31,7 +35,6 @@
     font-size: $mobileTitleFontSize;
     margin:0px;
 }
-
 .outer-container{
     display:flex;
     flex-direction: row;
@@ -39,7 +42,7 @@
     margin-left:auto;
     margin-right:auto;
 }
-.badge-text-container{
+.trophy-text-container{
     display:flex;
     flex-direction: column;
 }
@@ -47,22 +50,12 @@
     display:flex;
     flex-direction: column;
 }
-.heading-container{
-    display:flex;
-    flex-direction: column;
-}
-.badge-container{
+.trophy-container{
     display:flex;
     flex-direction: row;
     align-items:center;
 }
-.sightings-container{
-    display:flex;
-    flex-direction: row;
-    align-items:center;
-}
-
-.trophy{
+.trophy-image{
     width:70px;
     height:auto;
     margin-left:10px;
@@ -88,14 +81,13 @@
     padding:2px 5px;
     margin:5px;
 }
-
 @media(min-width: $mobileScreenSize) {
     .body {
         max-width: 1024px;
         width: 100vw;
         margin: 0 auto 0 auto;
+        flex-direction: row;
     }
-
     .banner {
         height: 100vh;
         width: 250px;
@@ -114,7 +106,6 @@
     .feature-text {
         font-size: $featureFontSize;
     }
-
     .heading {
         font-size: $titleFontSize;
     }
