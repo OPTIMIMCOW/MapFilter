@@ -1,130 +1,112 @@
 @import './Constants.scss';
 
-.heading {
-    font-size: $mobileTitleFontSize;
+.body {
+    width: 100vw;
+    min-width: $minMobileScreenSize;
 }
-.user-details-container{
-    margin-left: $mobileGutters;
-    margin-right: $mobileGutters;
+
+.banner {
+    height: 290px;
+    background-color: #cccccc;
+}
+
+.little-text {
+    font-size: $smallMobileBodyFontSize;
+    margin: 0px;
+
+    .joined {
+        padding: 0px;
+    }
+
+    .reported {
+        margin-left: 5px;
+    }
+}
+.feature-text{
+    font-size: $mobileFeatureFontSize;
+    margin:0px;
+}
+.heading{
+    font-size: $mobileTitleFontSize;
+    margin:0px;
+}
+
+.outer-container{
+    display:flex;
+    flex-direction: column;
+    width: 90vw;
+    margin-left:auto;
+    margin-right:auto;
+}
+.badge-text-container{
     display:flex;
     flex-direction: column;
 }
-.user-information{
-    padding:0px;
-    margin:0px;
-}
-.text-badge-container{
+.heading-container{
     display:flex;
-    flex-direction:row;
+    flex-direction: column;
 }
-.text-container{
-    width:100%;
-}
-
 .badge-container{
     display:flex;
-    flex-direction:row;
-    justify-content:flex-end;
-    align-items:flex-end;
+    flex-direction: row;
+    align-items:center;
 }
-.badges{
-    height:50px;
-    width:50px;
-    padding:1px;
+.sightings-container{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+}
+
+.trophy{
+    width:70px;
+    height:auto;
+    margin-left:10px;
+    border-radius: 50%;
 }
 .profile-image{
-    height:200px;
-    width:200px;
+    width: 160px;
+    height:auto;
+    margin-top:5px;
+    border-radius: 5%;
 }
 
 
 @media(min-width: $mobileScreenSize) {
+    .body {
+        max-width: 1024px;
+        width: 100vw;
+        margin: 0 auto 0 auto;
+    }
+
+    .banner {
+        height: 100vh;
+        width: 250px;
+    }
+
+    .outer-container {
+        width: 90%;
+    }
+
+    .little-text {
+        font-size: $bodyFontSize;
+
+        .reported {
+            margin-left: 10px;
+        }
+    }
+
+    .feature-text {
+        font-size: $featureFontSize;
+    }
+
     .heading {
         font-size: $titleFontSize;
     }
-    .user-details-container{
-        margin-left: $gutters;
-        margin-right: $gutters;
-        flex-direction: row;
-        width:100%;
-        height:200px;
-        align-items:flex-end;
+    .trophy {
+        width: 80px;
     }
-    .text-badge-container{
-        height:100%;
-        flex-direction:column;
-    }
-    .text-container{
-        height:100%;
-    }
-    .badge-container{
-        flex-direction:row;
-        justify-content:center;
-        align-items:flex-end;
-    }
-    .profile-image{
-        height:200px;
-        width:200px;
-    }
-}
 
-
-.spacer{
-    margin:50px;
-}
-.alt-little-text{
-    font-size: 10px;
-    margin:0px;
-}
-.alt-big-text{
-    font-size: 36px;
-    margin:0px;
-}
-.alt-heading{
-    font-size: 24px;
-    margin:0px;
-}
-.alt-joined{
-    padding:0px;
-    margin:0px;
-}
-.alt-outer-container{
-    display:flex;
-    flex-direction: column;
-    width:205px;
-    margin-left:auto;
-    margin-right:auto;
-}
-.alt-badge-text-container{
-    display:flex;
-    flex-direction: column;
-}
-.alt-heading-container{
-    display:flex;
-    flex-direction: column;
-}
-.alt-badge-container{
-    display:flex;
-    flex-direction: row;
-    align-items:center;
-}
-.alt-sightings-container{
-    display:flex;
-    flex-direction: row;
-    align-items:center;
-}
-.alt-reported{
-    margin-left:5px;
-}
-.alt-badge{
-    width:70px;
-    height:70px;
-    margin-left:10px;
-    border-radius: 50%;
-}
-.alt-profile-image{
-    width:200px;
-    height:200px;
-    margin-top:5px;
-    border-radius: 5%;
+    .profile-image {
+        width: 100%;
+    }
 }
