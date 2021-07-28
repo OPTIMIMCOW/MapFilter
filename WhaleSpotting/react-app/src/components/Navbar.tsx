@@ -21,30 +21,30 @@ export default function Navbar(): JSX.Element {
             <nav className="nav-bar">
                 <div className="fixed-nav-links">
                     <Link to="./Home" data-testid="home"
-                        className={currentPage === "Home" ? "nav-link-selected" : "navbar-link"}
+                        className={currentPage === "Home" ? "navbar-link selected" : "navbar-link"}
                         onClick={() => HandleLinkClick("Home")}>Home</Link>
                     <Link to="./Map"
-                        className={currentPage === "Map" ? "nav-link-selected" : "navbar-link"}
+                        className={currentPage === "Map" ? "navbar-link selected" : "navbar-link"}
                         onClick={() => HandleLinkClick("Map")}>Map</Link>
                     <Link to="./Reportsighting"
-                        className={currentPage === "Reportsighting" ? "nav-link-selected" : "navbar-link"}
+                        className={currentPage === "Reportsighting" ? "navbar-link selected" : "navbar-link"}
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
                 <div className="changing-nav-links">
                     <div className={(!loggedIn) ? "display" : "dontdisplay"}>
                         <Link to="./Register"
-                            className={currentPage === "Register" ? "nav-link-selected" : "navbar-link"}
+                            className={currentPage === "Register" ? "navbar-link selected" : "navbar-link"}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
                         <Link to="./Login"
-                            className={currentPage === "Login" ? "nav-link-selected" : "navbar-link"}
+                            className={currentPage === "Login" ? "navbar-link selected" : "navbar-link"}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
                     <div className={(loggedIn) ? "display" : "dontdisplay"}>
                         <Link to="./Profile"
-                            className={currentPage === "Profile" ? "nav-link-selected" : "navbar-link"}
+                            className={currentPage === "Profile" ? "navbar-link selected" : "navbar-link"}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>
                         <Link to="./Logout"
-                            className={currentPage === "Logout" ? "nav-link-selected" : "navbar-link"}
+                            className={currentPage === "Logout" ? "navbar-link selected" : "navbar-link"}
                             onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
                     </div>
                 </div>
