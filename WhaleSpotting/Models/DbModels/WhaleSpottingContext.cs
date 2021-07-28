@@ -11,8 +11,8 @@ namespace WhaleSpotting.Models.DbModels
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
-        }      
-        public DbSet<TestDbModel> Test { get; set; }
+        }
+        public DbSet<SightingDbModel> Sightings { get; set; }
         public DbSet<UserDbModel> Users { get; set; }
     }
 }

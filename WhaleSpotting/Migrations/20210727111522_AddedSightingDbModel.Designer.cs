@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhaleSpotting.Models.DbModels;
@@ -9,9 +10,10 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    partial class WhaleSpottingContextModelSnapshot : ModelSnapshot
+    [Migration("20210727111522_AddedSightingDbModel")]
+    partial class AddedSightingDbModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace WhaleSpotting.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("Confirmed")
+                    b.Property<bool>("Approved")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("CreatedAt")
@@ -44,8 +46,8 @@ namespace WhaleSpotting.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("OrcaPod")
-                        .HasColumnType("text");
+                    b.Property<int?>("OrcaPod")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("OrcaType")
                         .HasColumnType("integer");
@@ -65,6 +67,21 @@ namespace WhaleSpotting.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sightings");
+                });
+
+            modelBuilder.Entity("WhaleSpotting.Models.DbModels.TestDbModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tests");
                 });
 #pragma warning restore 612, 618
         }
