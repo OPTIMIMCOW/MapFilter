@@ -9,9 +9,7 @@ export default function Navbar(): JSX.Element {
     const [currentPage, setCurrentPage] = useState(pageName);
 
     function HandleLinkClick(currentPage: string) {
-
         setCurrentPage(currentPage);
-        console.log(currentPage);
     }
     const loggedIn = false;
 
@@ -21,7 +19,7 @@ export default function Navbar(): JSX.Element {
     return (
         <div className="header">
             <nav className="nav-bar">
-                <div className="group1">
+                <div className="fixed-nav-links">
                     <Link to="./Home" data-testid="home"
                         className={currentPage === "Home" ? "nav-link-selected" : "navbar-link"}
                         onClick={() => HandleLinkClick("Home")}>Home</Link>
@@ -32,7 +30,7 @@ export default function Navbar(): JSX.Element {
                         className={currentPage === "Reportsighting" ? "nav-link-selected" : "navbar-link"}
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
-                <div className="group2">
+                <div className="changing-nav-links">
                     <div className={(!loggedIn) ? "display" : "dontdisplay"}>
                         <Link to="./Register"
                             className={currentPage === "Register" ? "nav-link-selected" : "navbar-link"}

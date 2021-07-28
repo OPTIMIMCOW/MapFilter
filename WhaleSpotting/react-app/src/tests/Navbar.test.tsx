@@ -5,6 +5,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 test("renders navbar", () => {
     render(<Router><Navbar /></Router>);
-    const home = screen.getByTestId("home");
-    expect(home).toBeInTheDocument(); 
+    const homeLink = screen.getByTestId("home");
+    expect(homeLink).toBeInTheDocument(); 
 });
