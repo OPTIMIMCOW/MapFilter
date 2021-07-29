@@ -1,0 +1,27 @@
+@import "./Constants.scss";
+
+.primary-button{
+    background-color: $primaryDark;
+    color: $textOnPrimary;
+    border-radius: 10px;
+    border: 0;
+    height: 50px;
+
+    &:hover
+    {
+        background-color: $primaryColour;
+    }
+}
+
+.secondary-button{
+    background-color: $primaryLight;
+    color: $textOnPrimary;
+    border-radius: 10px;
+    border: 0;
+    height: 50px;
+
+    &:hover
+    {
+        background-color: $primaryColour;
+    }
+}
