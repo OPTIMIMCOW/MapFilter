@@ -5,6 +5,7 @@ using WhaleSpotting.Models.DbModels;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WhaleSpotting.Services
 {
@@ -26,6 +27,10 @@ namespace WhaleSpotting.Services
         {
             var client = new RestClient("http://hotline.whalemuseum.org/api.json");
             var sightings = await client.GetAsync<List<SightingResponseModel>>(new RestRequest());
+
+            var sightingsRm = _context.Sightings.OrderBy(s => s.SightedAt).Select(s => new SightingResponseModel(s)).ToList();
+            sightings = sightings.Concat(sightingsRm).OrderBy(s => s.SightedAt).ToList();
+
             return sightings;
         }
     }
