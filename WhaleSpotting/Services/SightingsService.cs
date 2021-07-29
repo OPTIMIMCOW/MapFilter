@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WhaleSpotting.Services
 {
-    public interface ISightingService
+    public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
     }

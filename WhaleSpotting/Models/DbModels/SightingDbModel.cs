@@ -21,6 +21,7 @@ namespace WhaleSpotting.Models.DbModels
         public string OrcaPod { get; set; }
         public bool Confirmed { get; set; }
 
+        // TODO - Add UserDbModel
         //public UserDbModel User {get; set; }
     }
 }

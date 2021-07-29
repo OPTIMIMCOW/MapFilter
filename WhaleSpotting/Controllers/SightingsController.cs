@@ -10,18 +10,16 @@ namespace WhaleSpotting.Controllers
     [Route("[controller]")]
     public class SightingsController : ControllerBase
     {
-        //private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-        private readonly ISightingService _sightings;
+        private readonly ISightingsService _sightings;
 
-        public SightingsController(ISightingService sightings)
+        public SightingsController(ISightingsService sightings)
         {
             _sightings = sightings;
         }
         [HttpGet]
         public async Task<List<SightingResponseModel>> GetInfo()
         {
-            var sightings = await _sightings.GetSightings();
-            return sightings;
+            return await _sightings.GetSightings();
         }
     }
 }
