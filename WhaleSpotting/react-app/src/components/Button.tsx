@@ -1,33 +1,32 @@
 import React, { useState } from "react";
 
-enum func{
-    next,
-    previous,
-    sightings,
-    approvals
+enum ButtonFunction {
+  nextPage,
+  previousPage,
+  sightings,
+  approvals
 }
 
 interface ButtonProps {
-    type: boolean;
-    text: string;
-    use: func;
+  type: boolean;
+  text: string;
+  buttonFunction: ButtonFunction;
 }
 
-export function Button({ type, text, use: func }: ButtonProps): JSX.Element {
-    const onClickFunction;
+export function Button({ type, text, buttonFunction }: ButtonProps): JSX.Element {
+  let onClickFunction;
 
-    switch (use) {
-        case 'Oranges':
-          console.log('Oranges are $0.59 a pound.');
-          break;
-        case 'Mangoes':
-        case 'Papayas':
-          console.log('Mangoes and papayas are $2.79 a pound.');
-          // expected output: "Mangoes and papayas are $2.79 a pound."
-          break;
-        default:
-          console.log(`Sorry, we are out of ${expr}.`);
-      }
+  switch (buttonFunction) {
+    case ButtonFunction.approvals:
+      // a function that changes context?
+      break;
+    case ButtonFunction.sightings:
+      break;
+    case ButtonFunction.nextPage:
+      break;
+    case ButtonFunction.previousPage:
+      break;
+  }
 
-    return (<button className={type ? "primary-button" : "secondary-button"} onClick={() => }>{text}</button>);
+  return (<button className={type ? "primary-button" : "secondary-button"} onClick={() => }>{text}</button>);
 }
