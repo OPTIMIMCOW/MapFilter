@@ -19,14 +19,21 @@ namespace WhaleSpotting.UnitTests.Services
         public async Task GetSightings_Called_ReturnsSightings()
         {
             // Arrange
-            await Context.Sightings.AddAsync(new SightingDbModel());
+            var whaleSighting = new SightingDbModel
+            {
+                Quantity = 5,
+                Description = "Whales at sea",
+                SightedAt = System.DateTime.Parse("13/05/2021")
+            };
+
+            await Context.Sightings.AddRangeAsync(new SightingDbModel(), whaleSighting);
             await Context.SaveChangesAsync();
 
             // Act
             var result = await _underTest.GetSightings();
 
             // Assert
-            result.Should().NotBeEmpty();
+            result.Should().HaveCount(2);
         }
     }
 }
