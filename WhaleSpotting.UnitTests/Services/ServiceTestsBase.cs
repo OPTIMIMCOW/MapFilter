@@ -5,11 +5,11 @@ using WhaleSpotting.Models.DbModels;
 
 namespace WhaleSpotting.UnitTests.Services
 {
-    public class BaseServiceTests
+    public class ServiceTestsBase
     {
         protected readonly WhaleSpottingContext Context;
 
-        protected BaseServiceTests()
+        protected ServiceTestsBase()
         {
             Context = CreateDatabase();
         }
