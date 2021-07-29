@@ -1,4 +1,4 @@
-@import "./constants.scss";
+@import "./Constants.scss";
 
 .page-nav {
     display: flex;
@@ -12,7 +12,7 @@
         border-width: 0px;
         color: $textOnPrimary;
 
-        &:hover 
+        &:hover
         {
             background-color: $primaryColour;
         }

@@ -9,4 +9,3 @@ export default function PageNav() : JSX.Element {
         </div>
     );
 }
-
