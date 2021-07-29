@@ -26,7 +26,7 @@
     color: $textOnPrimary;
     border-radius: 5px;
     text-decoration: none;  
-    font-size: calc($bodyFontSize + 1vmin);  
+    font-size: $bodyFontSize;  
 
     &.selected, &:hover {
         background-color: $primaryDark;
