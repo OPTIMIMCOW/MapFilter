@@ -1,31 +1,26 @@
-﻿using FakeItEasy;
-using FluentAssertions;
+﻿using FluentAssertions;
 using System.Threading.Tasks;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
 using Xunit;
 
-namespace WhaleSpotting.UnitTests.Controllers
+namespace WhaleSpotting.UnitTests.Services
 {
-    public class SightingsServiceTests
+    public class SightingsServiceTests : ServiceTestsBase
     {
-        //private readonly WhaleSpottingContext _context;
         private readonly ISightingService _underTest;
 
-        public SightingsServiceTests(WhaleSpottingContext context)
+        public SightingsServiceTests()
         {
-            //_context = context;
-            //_underTest = new SightingsService(_context);
+            _underTest = new SightingsService(Context);
         }
 
         [Fact]
         public async Task GetSightings_Called_ReturnsSightings()
         {
             // Arrange
- 
-        
-            //A.CallTo(() => _underTest.GetSightings())
-            //    .Returns(serviceResponse);
+            await Context.Sightings.AddAsync(new SightingDbModel());
+            await Context.SaveChangesAsync();
 
             // Act
             var result = await _underTest.GetSightings();
