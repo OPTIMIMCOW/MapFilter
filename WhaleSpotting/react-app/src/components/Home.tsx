@@ -1,8 +1,9 @@
 import "../styles/Home.scss";
 import React from "react";
 import PageNav from "./PageNav";
+import Card from "./Card";
 
-export default function Home() : JSX.Element {
+export default function Home(): JSX.Element {
     return (
         <div className="home" data-testid="home">
             <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" />
@@ -17,18 +18,10 @@ export default function Home() : JSX.Element {
                 </div>
 
                 <div className="card-holder">
-                    <div className="card-component">
-                        Replace these divs for your card
-                    </div>
-                    <div className="card-component">
-                        text text text
-                    </div>
-                    <div className="card-component">
-                        text text text
-                    </div>
-                    <div className="card-component">
-                        text text text
-                    </div>
+                    <Card />
+                    <Card />
+                    <Card />
+                    <Card />
                 </div>
 
                 <PageNav />

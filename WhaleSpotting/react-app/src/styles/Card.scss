@@ -1,0 +1,34 @@
+@import "./Constants.scss";
+
+.card-holder {
+    .card-component {
+        width: 100%;
+        border-radius: 10px;
+        display: inline-flex;
+        background-color: $primaryCard;
+        height: fit-content;
+        margin: 15px 0;
+
+        .columns {
+            width: 50%;
+            margin: 15px 10px;
+        }
+
+        .pending {
+            margin: 10px;
+            position: absolute;
+            right: 5vw;
+        }
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .first-column {
+        width: 80%;
+    }
+
+    .second-column {
+        display: none;
+    }
+}
