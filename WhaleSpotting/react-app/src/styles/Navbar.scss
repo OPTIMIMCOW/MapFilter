@@ -1,0 +1,50 @@
+@import './Constants.scss';
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: $primaryColour;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $headerHeight;
+}
+
+.nav-bar {
+    display: flex;
+    width: 100%;
+    max-width: 1024px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar-link {
+    margin: 0 5%;
+    padding: 3%;
+    white-space: nowrap;
+    color: $textOnPrimary;
+    border-radius: 5px;
+    text-decoration: none;  
+    font-size: $bodyFontSize;  
+
+    &.selected, &:hover {
+        background-color: $primaryDark;
+        text-decoration: none;
+        color: $textOnPrimary;
+        border-radius: 5px; 
+    }
+}
+
+.dontdisplay {
+    display: none;
+}
+
+.fixed-nav-links {
+    justify-self: flex-start;
+}
+
+.changing-nav-links {
+   justify-self: flex-end;
+   margin-right: 5%;
+}
