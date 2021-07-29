@@ -10,10 +10,5 @@ namespace WhaleSpotting.Models.DbModels
     [Table("Users")]
     public class UserDbModel : IdentityUser
     {
-        public int Id { get; set; } // id 'hides' - check w/ Oskar
-        public string Username { get; set; }
-        public string HashedPassword { get; set; }
-        public string ProfileImageUrl { get; set; }
-        public string Role { get; set; } //alternate option - ENUM / Bool
     }
 }

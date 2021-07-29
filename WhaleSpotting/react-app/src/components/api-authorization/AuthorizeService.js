@@ -1,5 +1,5 @@
-import { UserManager, WebStorageStateStore } from 'oidc-client';
-import { ApplicationPaths, ApplicationName } from './ApiAuthorizationConstants';
+import { UserManager, WebStorageStateStore } from "oidc-client";
+import { ApplicationPaths, ApplicationName } from "./ApiAuthorizationConstants";
 
 export class AuthorizeService {
     _callbacks = [];
@@ -52,7 +52,7 @@ export class AuthorizeService {
 
             try {
                 if (this._popUpDisabled) {
-                    throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
+                    throw new Error("Popup disabled. Change 'AuthorizeService.js:AuthorizeService._popupDisabled' to false to enable it.");
                 }
 
                 const popUpUser = await this.userManager.signinPopup(this.createArguments());
@@ -85,8 +85,8 @@ export class AuthorizeService {
             this.updateState(user);
             return this.success(user && user.state);
         } catch (error) {
-            console.log('There was an error signing in: ', error);
-            return this.error('There was an error signing in.');
+            console.log("There was an error signing in: ", error);
+            return this.error("There was an error signing in.");
         }
     }
 
@@ -99,7 +99,7 @@ export class AuthorizeService {
         await this.ensureUserManagerInitialized();
         try {
             if (this._popUpDisabled) {
-                throw new Error('Popup disabled. Change \'AuthorizeService.js:AuthorizeService._popupDisabled\' to false to enable it.')
+                throw new Error("Popup disabled. Change 'AuthorizeService.js:AuthorizeService._popupDisabled' to false to enable it.");
             }
 
             await this.userManager.signoutPopup(this.createArguments());
@@ -199,7 +199,7 @@ export class AuthorizeService {
         });
     }
 
-    static get instance() { return authService }
+    static get instance() { return authService; }
 }
 
 const authService = new AuthorizeService();
@@ -207,7 +207,7 @@ const authService = new AuthorizeService();
 export default authService;
 
 export const AuthenticationResultStatus = {
-    Redirect: 'redirect',
-    Success: 'success',
-    Fail: 'fail'
+    Redirect: "redirect",
+    Success: "success",
+    Fail: "fail"
 };
