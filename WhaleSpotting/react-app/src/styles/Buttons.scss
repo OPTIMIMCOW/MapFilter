@@ -1,7 +1,7 @@
 @import "./Constants.scss";
 
-.primary-button{
-    background-color: $primaryDark;
+@mixin button($color: $primaryDark) {
+    background-color: $color;
     color: $textOnPrimary;
     border-radius: 10px;
     border: 0;
@@ -10,24 +10,30 @@
     &:hover
     {
         background-color: $primaryColour;
+        color: $textOnPrimary;
     }
 }
 
-.secondary-button{
-    background-color: $primaryLight;
-    color: $textOnPrimary;
-    border-radius: 10px;
-    border: 0;
-    height: 50px;
+.primary-button{
+    @include button($primaryDark);
+}
 
-    &:hover
-    {
-        background-color: $primaryColour;
-    }
+.secondary-button{
+    @include button($primaryLight);
+}
+
+.reject-button {
+    @include button($rejectButton);
 }
 
 .minWidth25{
     width:25%;
+}
+
+.link {
+    text-decoration: none;
+    text-align: center;
+    padding-top: 12px;
 }
 
 @media (max-width: $mobileScreenSize) {

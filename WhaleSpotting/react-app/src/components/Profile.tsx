@@ -24,12 +24,12 @@ export function Profile(): JSX.Element {
                     </div>
                     <div className="button-container">
                         <Button 
-                            stylePrimary={true} 
+                            style={0} 
                             text="Sightings"
                             onClick={() => setFeedToggle("Sightings")}
                             minWidth25={false}/>
                         <Button 
-                            stylePrimary={true} 
+                            style={0} 
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"

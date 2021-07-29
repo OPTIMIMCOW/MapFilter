@@ -8,13 +8,13 @@ export default function PageNav(): JSX.Element {
     return (
         <div className="page-nav" data-testid="page-nav">
             <Button
-                stylePrimary={false}
+                style={1}
                 text="Previous Page"
                 onClick={() => setPage(page - 1)}
                 minWidth25={true}
             />
             <Button
-                stylePrimary={false}
+                style={1}
                 text="Next Page"
                 onClick={() => setPage(page + 1)}
                 minWidth25={true}

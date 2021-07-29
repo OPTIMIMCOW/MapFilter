@@ -21,39 +21,12 @@
     display: flex;
     justify-content: center;
     margin: 20px;
-
-    .report-button{
-        width: 50%;
-        background-color: $primaryDark;
-        color: $textOnPrimary;
-        border-radius: 10px;
-        border: 0;
-        height: 50px;
-
-        &:hover
-        {
-            background-color: $primaryColour;
-        }
-    }
 }
 
 .sightings-header{
     width: 100%;
     display: flex;
     justify-content: space-between;
-
-    .filter-button{
-        font-family: $fontFamily;
-        background-color: $primaryLight;
-        border-radius: 10px;
-        border-width: 0;
-        color: $textOnPrimary;
-
-        &:hover
-        {
-            background-color: $primaryColour;
-        }
-    }
 }
 
 .card-holder {
