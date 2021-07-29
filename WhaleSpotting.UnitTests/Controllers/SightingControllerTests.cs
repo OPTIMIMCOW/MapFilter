@@ -11,7 +11,7 @@ namespace WhaleSpotting.UnitTests.Controllers
 {
     public class SightingsControllerTests
     {
-        private readonly ISightingService _sightings = A.Fake<ISightingService>();
+        private readonly ISightingsService _sightings = A.Fake<ISightingsService>();
         private readonly SightingsController _underTest;
 
         public SightingsControllerTests()

@@ -8,7 +8,7 @@ namespace WhaleSpotting.UnitTests.Services
 {
     public class SightingsServiceTests : ServiceTestsBase
     {
-        private readonly ISightingService _underTest;
+        private readonly ISightingsService _underTest;
 
         public SightingsServiceTests()
         {

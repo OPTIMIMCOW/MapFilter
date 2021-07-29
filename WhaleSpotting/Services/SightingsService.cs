@@ -12,7 +12,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings();
     }
 
-    public class SightingsService : ISightingService
+    public class SightingsService : ISightingsService
     {
         private readonly WhaleSpottingContext _context;
 
