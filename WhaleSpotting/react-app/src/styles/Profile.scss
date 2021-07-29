@@ -4,12 +4,11 @@
     max-width: 1024px;
     font-family: $fontFamily;
     display: flex;
-    margin-bottom: $footerHeight;
-    margin-top: $headerHeight;
+    margin: $headerHeight auto $footerHeight auto;
 }
 
 .profile-pane {
-    max-height: calc(100vh - $footerHeight - $headerHeight);
+    min-height: 100vh - $footerHeight - $headerHeight;
     width: 250px;
     background-color: $secondaryDark;
 }
@@ -88,6 +87,7 @@
     .profile-pane {
         height: 290px;
         width:100vw;
+        min-height: unset;
     }
 
     .little-text { 
