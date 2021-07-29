@@ -65,8 +65,9 @@
 
 .button-container{
     display:flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     flex: 1;
+    align-items: center;
 }
 
 .trophy-container{
@@ -87,11 +88,6 @@
     height:auto;
     margin-top:5px;
     border-radius: 5%;
-}
-
-.button-container{
-    align-items: center;
-    flex-direction: column-reverse;
 }
 
 .primary-button{
