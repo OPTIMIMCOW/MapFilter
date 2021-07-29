@@ -1,0 +1,57 @@
+@import "./Constants.scss";
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: $primaryDark;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: $footerHeight;
+    min-height: 70px;
+
+    .footer-logo-container {
+        max-width: $bodyWidth;
+        width: 85%;
+        display: flex;
+        justify-content: space-between;
+
+        .link {
+            padding: 1%;
+            color: $textOnPrimary;
+            font-family: $fontFamily;
+            text-decoration: none;
+
+            .logo {
+                height: 100%;
+            }
+
+            &.whale-link {
+                margin-left: 10%;
+            }
+        }
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+    .footer {
+        height: $mobileFooterHeight;
+
+        .footer-logo-container {
+
+            .link {
+                font-size: $smallMobileBodyFontSize;
+
+                .logo {
+                    max-height: 100%;
+                    height: auto;
+
+                    &.techswitch-logo {
+                        max-height: 90%;
+                        max-width: 90%;
+                    }
+                }
+            }
+        }
+    }
+}
