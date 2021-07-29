@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Footer } from "../components/Footer";
+import React from "react";
 
 test("renders Whale Museum logo in footer", () => {
     render(<Footer />);
