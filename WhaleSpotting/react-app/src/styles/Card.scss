@@ -1,34 +1,57 @@
 @import "./Constants.scss";
 
-.card-holder {
-    .card-component {
-        width: 100%;
-        border-radius: 10px;
+.card-component {
+    width: 100%;
+    border-radius: 10px;
+    background-color: $primaryCard;
+    height: fit-content;
+    margin: 15px 0; 
+    position: relative;
+    z-index: -1;
+
+    .card-info {
         display: inline-flex;
-        background-color: $primaryCard;
-        height: fit-content;
-        margin: 15px 0;
-
-        .columns {
-            width: 50%;
-            margin: 15px 10px;
-        }
-
-        .pending {
-            margin: 10px;
-            position: absolute;
-            right: 5vw;
-        }
+        padding: 10px 10px;
     }
+
+    .first-column {
+        width: 50%;
+    }
+
+    .second-column {
+        width: 50%;
+    }
+
+    .pending {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        width: fit-content;
+    }
+}
+
+.non-admin {
+    display: none;
 }
 
 @media (max-width: $mobileScreenSize) {
 
-    .first-column {
-        width: 80%;
-    }
+    .card-component {
+        .card-info{
+            display: block;
+        }
 
-    .second-column {
-        display: none;
+        .first-column {
+            width: 100%;
+        }
+
+        .second-column {
+            display: none;
+        }
+
+        .open {
+            display: block;
+            width: 100%;
+        }
     }
 }
