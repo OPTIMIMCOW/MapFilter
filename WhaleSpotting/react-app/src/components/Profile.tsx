@@ -1,9 +1,9 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
-import "../styles/Buttons.scss";
 import React from "react";
 import { useState } from "react";
 import PageNav from "./PageNav";
+import { Button } from "./Button";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -23,8 +23,17 @@ export function Profile(): JSX.Element {
                         <img className="profile-image" alt="Profile Image" src="https://picsum.photos/id/237/200" />
                     </div>
                     <div className="button-container">
-                        <button className="primary-button" onClick={() => setFeedToggle("Sightings")}>Sightings</button>
-                        <button className="primary-button" data-testid="approval-toggle" onClick={() => setFeedToggle("Approvals")}>Approvals</button>
+                        <Button 
+                            stylePrimary={true} 
+                            text="Sightings"
+                            onClick={() => setFeedToggle("Sightings")}
+                            minWidth25={false}/>
+                        <Button 
+                            stylePrimary={true} 
+                            text="Approvals"
+                            onClick={() => setFeedToggle("Approvals")}
+                            dataTestId="approval-toggle"
+                            minWidth25={false}/>
                     </div>
                 </div>
             </div>

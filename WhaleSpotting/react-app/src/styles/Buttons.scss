@@ -25,3 +25,14 @@
         background-color: $primaryColour;
     }
 }
+
+.minWidth25{
+    width:25%;
+}
+
+@media (max-width: $mobileScreenSize) {
+    
+    .minWidth25{
+        width: 40%;
+    }
+}

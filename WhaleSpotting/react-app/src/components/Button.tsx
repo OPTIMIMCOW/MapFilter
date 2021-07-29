@@ -1,32 +1,17 @@
-import React, { useState } from "react";
-
-enum ButtonFunction {
-  nextPage,
-  previousPage,
-  sightings,
-  approvals
-}
+import React from "react";
+import "../styles/Buttons.scss";
 
 interface ButtonProps {
-  type: boolean;
+  stylePrimary: boolean;
   text: string;
-  buttonFunction: ButtonFunction;
+  onClick: () => void;
+  dataTestId?: string;
+  minWidth25: boolean;
 }
 
-export function Button({ type, text, buttonFunction }: ButtonProps): JSX.Element {
-  let onClickFunction;
+export function Button({ stylePrimary, text, onClick, dataTestId, minWidth25}: ButtonProps): JSX.Element {
+    const style = stylePrimary ? "primary-button" : "secondary-button";
+    const width = minWidth25 ? "minWidth25" : "";
 
-  switch (buttonFunction) {
-    case ButtonFunction.approvals:
-      // a function that changes context?
-      break;
-    case ButtonFunction.sightings:
-      break;
-    case ButtonFunction.nextPage:
-      break;
-    case ButtonFunction.previousPage:
-      break;
-  }
-
-  return (<button className={type ? "primary-button" : "secondary-button"} onClick={() => }>{text}</button>);
+    return (<button data-testid={dataTestId} className={`${style} ${width}`} onClick={onClick}>{text}</button>);
 }
