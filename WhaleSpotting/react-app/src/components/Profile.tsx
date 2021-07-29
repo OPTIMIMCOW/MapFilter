@@ -43,6 +43,15 @@ export function Profile(): JSX.Element {
                     <div className="card-component">
                         text text text
                     </div>
+                    <div className="card-component">
+                        text text text
+                    </div>
+                    <div className="card-component">
+                        text text text
+                    </div>
+                    <div className="card-component">
+                        text text text
+                    </div>
                 </div>
                 <PageNav />
             </div>

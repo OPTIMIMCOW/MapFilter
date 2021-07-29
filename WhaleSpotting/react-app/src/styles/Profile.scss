@@ -3,64 +3,49 @@
 .body {
     max-width: 1024px;
     font-family: $fontFamily;
-    margin: 0 auto 0 auto;
     display: flex;
-    flex-direction: row;
+    margin-bottom: $footerHeight;
+    margin-top: $headerHeight;
 }
 
 .profile-pane {
-    height: 100vh;
+    max-height: calc(100vh - $footerHeight - $headerHeight);
     width: 250px;
     background-color: $secondaryDark;
 }
 
 .feed{
-    padding: 0px 20px;
+    padding: 0 20px;
     flex: 1;
 }
 
 .outer-container {
     width: 90%;
     flex-direction: column;
+    display:flex;
+    margin: 0 auto;
 }
 
 .little-text{
-    font-size: $bodyFontSize;
-    margin: 0px;
-}
+    margin: 0;
 
-.joined{
-    margin-top:-7px;
-}
-
-.reported{
-    margin-left: 10px;
+    &.joined{
+        margin-top:-7px;
+    }
+    
+    &.reported{
+        margin-left: 10px;
+    }
 }
 
 .feature-text{
     font-size: $featureFontSize;
-    margin:0px;
+    margin:0;
 }
 
 .heading{
     font-size: $titleFontSize;
-    margin:0px;
-}
-
-.trophy {
-    width: 80px;
-}
-
-.profile-image {
-    width: 100%;
-}
-
-.outer-container{
-    display:flex;
-    flex-direction: column;
-    width: 90%;
-    margin-left:auto;
-    margin-right:auto;
+    margin:0;
 }
 
 .button-container{
@@ -72,13 +57,12 @@
 
 .trophy-container{
     display:flex;
-    flex-direction: row;
     align-items:center;
 }
 
 .trophy-image{
     width:70px;
-    height:auto;
+    height: 70px;
     margin-left:10px;
     border-radius: 50%;
 }
@@ -98,7 +82,6 @@
 @media(max-width: $mobileScreenSize) {
 
     .body {
-        min-width: $minMobileScreenSize;
         flex-direction: column;
     }
 
@@ -109,10 +92,10 @@
 
     .little-text { 
         font-size: $smallMobileBodyFontSize;
-    }
 
-    .reported {
-        margin-left: 5px;
+        &.reported {
+            margin-left: 5px;
+        }
     }
 
     .feature-text {
