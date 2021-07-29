@@ -1,13 +1,14 @@
 @import './Constants.scss';
 
 .header {
-    position: sticky;
+    position: fixed;
+    top: 0;
+    width: 100%;
     background-color: $primaryColour;
     display: flex;
     justify-content: center;
     align-items: center;
     height: $headerHeight;
-    z-index: 10;
 }
 
 .nav-bar {
@@ -25,7 +26,7 @@
     color: $textOnPrimary;
     border-radius: 5px;
     text-decoration: none;  
-    font-size: calc(10px + 1vmin);  
+    font-size: calc($bodyFontSize + 1vmin);  
 
     &.selected, &:hover {
         background-color: $primaryDark;
