@@ -1,0 +1,65 @@
+@import "./Constants.scss";
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: $primaryDark;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 100vw;
+    height: $footerHeight;
+    min-height: 70px;
+
+    .footer-logo-container {
+        max-width: $bodyWidth;
+        width: 85%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        .link {
+            padding: 1%;
+            color: $textOnPrimary;
+            font-family: $fontFamily;
+            text-decoration: none;
+            font-size: $bodyFontSize;
+
+            .logo {
+                height: 100%;
+            }
+        }
+
+        .whale-link {
+            margin-left: 10%;
+        }
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+    .footer {
+        height: $mobileFooterHeight;
+
+        .footer-logo-container {
+
+            .link {
+                display: block;
+                height: auto;
+                width: auto;
+                font-size: $smallMobileBodyFontSize;
+
+                .logo {
+                    display: block;
+                    max-height: 100%;
+                    height: auto;
+                }
+
+                .techswitch-logo {
+                    max-height: 90%;
+                    max-width: 90%;
+                }
+            }
+        }
+    }
+}
