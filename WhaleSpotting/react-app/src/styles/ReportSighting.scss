@@ -1,40 +1,71 @@
 @import "./Constants.scss";
 
-.report-sighting {
-    padding-bottom: $footerHeight;
-    margin-top: $headerHeight;
-    display: flex;
-    flex-direction: column;
-    font-family: $fontFamily;
-    align-items: center;
-    width: 100%;
-}
-
 .banner-image{
-    height: 40vh;
+    height: 30vh;
     object-fit: cover;
     width: 100%;
     margin-bottom: 2%;
 }
 
-.sighting-contents {
-    margin: 0 6vw;
-    max-width: 1024px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container{
+    font-family: $fontFamily;
+    max-width: 700px;
+    width: 100%;
+    padding: 4% 5%;
 }
 
-.sightings-header{
-    width: 100%;
-    display: contents;
-    justify-content: space-between;
+.card-component{
+    background: $primaryCard;
+    border-radius: 5px;
 }
-.card-component {
-    border-radius: 10px;
-    background-color: $primaryCard;
-    margin: 15px 0;
-    padding: 5%;
+
+.title{
+    font-size: $subtitleFontSize;
+    text-align: center;
+    font-size: $titleFontSize;
+}
+
+.sighting-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 8% 0 6% 0;
+    padding: 2% 5% 5% 5%;
+}
+
+.input-box{
+    margin: 3% 0;
+    width: 46%;
+    display: block;
+    
+    input{
+        height: 85%;
+        width: 100%;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        border: 1px solid $primaryColour;
+        padding-left: 15px;
+        font-size: $bodyFontSize;
+    }
+}
+
+.button{
+    height: 45px;
+    margin: 35px 0;
+    
+    input{
+        height: 100%;
+        width: 100%;
+        color: $textOnPrimary;
+        border: none;
+        font-size: $bodyFontSize;
+        border-radius: 5px;
+        background: $primaryDark;
+        
+        &:hover{
+            background: $primaryColour;
+        }
+    }
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -45,18 +76,22 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 
-input {
-    width: 100%;
-}
+@media (max-width: 584px){
+    .container{
+        max-width: 100%;
+    }
 
-.left {
-    display: flex;
-    flex-direction: column;
-    float: left;
-    width: 40%;
-}
+    form .sighting-details .input-box{
+        margin-bottom: 15px;
+        width: 100%;
+    }
 
-.right {
-    float: right;
-    width: 40%;
+   .conatiner form .sighting-details{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+    
+    .sighting-details::-webkit-scrollbar{
+        width: 0;
+    }
 }
