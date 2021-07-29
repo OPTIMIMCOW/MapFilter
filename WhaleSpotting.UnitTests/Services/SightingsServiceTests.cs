@@ -23,7 +23,7 @@ namespace WhaleSpotting.UnitTests.Services
             {
                 Quantity = 5,
                 Description = "Whales at sea",
-                SightedAt = System.DateTime.Parse("13/05/2021")
+                SightedAt = System.DateTime.Now
             };
 
             await Context.Sightings.AddRangeAsync(new SightingDbModel(), whaleSighting);
