@@ -1,28 +1,39 @@
-﻿using FluentAssertions;
+﻿using FakeItEasy;
+using FluentAssertions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
+using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Services;
 using Xunit;
 
 namespace WhaleSpotting.UnitTests.Controllers
 {
-    public class GetInfoTest
+    public class SightingsControllerTests
     {
         private readonly SightingsController _underTest;
-        private readonly ISightingServices _sightings;
+        private readonly ISightingService _sightings = A.Fake<ISightingService>();
 
-        public GetInfoTest()
+        public SightingsControllerTests()
         {
+
             _underTest = new SightingsController(_sightings);
+
         }
 
         [Fact]
-        public void Get_WhenCalled_Returns5Models()
+        public async Task GetInfo_Called_ReturnsSightings()
         {
+            // Arrange
+            var serviceResponse = new List<SightingResponseModel>();
+            A.CallTo(() => _sightings.GetSightings())
+                .Returns(serviceResponse);
+
             // Act
-            var result = _underTest.GetInfo();
+            var result = await _underTest.GetInfo();
 
             // Assert
-            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
         }
     }
 }

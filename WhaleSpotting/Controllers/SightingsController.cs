@@ -21,10 +21,10 @@ namespace WhaleSpotting.Controllers
             _sightings = sightings;
         }
         [HttpGet]
-        public async Task<IActionResult> GetInfo()
+        public async Task<List<SightingResponseModel>> GetInfo()
         {
             var sightings = await _sightings.GetSightings();
-            return Created(Url.Action("Get"), sightings);
+            return sightings;
         }
     }
 }
