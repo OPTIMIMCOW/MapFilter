@@ -7,7 +7,6 @@ namespace WhaleSpotting.Models.ApiModels
     public class SightingResponseModel
     {
         [JsonProperty("sighted_at")]
-
         public DateTime SightedAt { get; set; }
 
         [JsonProperty("species")]
@@ -31,6 +30,8 @@ namespace WhaleSpotting.Models.ApiModels
         [JsonProperty("orca_type")]
         public string OrcaType { get; set; }
 
+        public string OrcaPod { get; set; }
+
         public int? UserId { get; set; }
 
         public string Username { get; set; }
@@ -53,9 +54,9 @@ namespace WhaleSpotting.Models.ApiModels
             Latitude = sighting.Latitude;
             Description = sighting.Description;
             OrcaType = sighting.OrcaType.ToString();
+            OrcaPod = sighting.OrcaPod;
             Confirmed = sighting.Confirmed;
 
-            //TODO - Add the property OrcaPod if/when it's needed
             //TODO - Use real UserId and Username
             UserId = 4;
             Username = "FakeUser";

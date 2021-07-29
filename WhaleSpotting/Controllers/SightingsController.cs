@@ -16,6 +16,7 @@ namespace WhaleSpotting.Controllers
         {
             _sightings = sightings;
         }
+
         [HttpGet]
         public async Task<List<SightingResponseModel>> GetInfo()
         {
