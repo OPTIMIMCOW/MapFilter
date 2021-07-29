@@ -2,7 +2,7 @@
 
 .footer {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     background-color: $primaryDark;
     display: flex;
     justify-content: center;
@@ -40,13 +40,9 @@
         .footer-logo-container {
 
             .link {
-                display: block;
-                height: auto;
-                width: auto;
                 font-size: $smallMobileBodyFontSize;
 
                 .logo {
-                    display: block;
                     max-height: 100%;
                     height: auto;
 
