@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
+using WhaleSpotting.Services;
 
 namespace WhaleSpotting
 {
@@ -31,6 +32,8 @@ namespace WhaleSpotting
             
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
+
+            services.AddTransient<ISightingsService, SightingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
