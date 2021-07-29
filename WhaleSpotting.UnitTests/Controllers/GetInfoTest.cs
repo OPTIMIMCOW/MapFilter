@@ -25,7 +25,12 @@ namespace WhaleSpotting.UnitTests.Controllers
         public async Task GetInfo_Called_ReturnsSightings()
         {
             // Arrange
-            var serviceResponse = new List<SightingResponseModel>();
+            var serviceResponse = new List<SightingResponseModel>
+            {
+                new SightingResponseModel(),
+                new SightingResponseModel()
+            };
+        
             A.CallTo(() => _sightings.GetSightings())
                 .Returns(serviceResponse);
 
