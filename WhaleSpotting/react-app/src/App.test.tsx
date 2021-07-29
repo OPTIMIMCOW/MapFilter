@@ -4,6 +4,6 @@ import App from "./App";
 
 test("Renders Home Page", () => {
     render(<App />);
-    const home = screen.getByTestId("home");
-    expect(home).toBeInTheDocument();
+    const header = screen.getByText("Recent Sightings");
+    expect(header).toBeInTheDocument();
 });
