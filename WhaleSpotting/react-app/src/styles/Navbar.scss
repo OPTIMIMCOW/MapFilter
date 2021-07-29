@@ -1,9 +1,7 @@
-@import './constants.scss';
+@import './Constants.scss';
 
 .header {
     position: sticky;
-    top: 0;
-    width: 100%;
     background-color: $primaryColour;
     display: flex;
     justify-content: center;
@@ -21,10 +19,10 @@
 }
 
 .navbar-link {
-    margin: 0% 5%;
+    margin: 0 5%;
     padding: 3%;
     white-space: nowrap;
-    color: white;
+    color: $textOnPrimary;
     border-radius: 5px;
     text-decoration: none;  
     font-size: calc(10px + 1vmin);  
@@ -32,7 +30,7 @@
     &.selected, &:hover {
         background-color: $primaryDark;
         text-decoration: none;
-        color: white;
+        color: $textOnPrimary;
         border-radius: 5px; 
     }
 }
