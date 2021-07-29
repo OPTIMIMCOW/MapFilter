@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using System;
 using WhaleSpotting.Models.DbModels;
-using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.ApiModels
 {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
-using Newtonsoft.Json;
 using RestSharp;
 using System.Threading.Tasks;
 using System.Linq;

@@ -16,9 +16,7 @@ namespace WhaleSpotting.UnitTests.Controllers
 
         public SightingsControllerTests()
         {
-
             _underTest = new SightingsController(_sightings);
-
         }
 
         [Fact]

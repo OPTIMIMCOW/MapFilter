@@ -6,6 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Controllers\GetInfoTest.cs" />
+      <Compile Remove="Services\SightingsServiceTest.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="FakeItEasy" Version="7.1.0" />
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
