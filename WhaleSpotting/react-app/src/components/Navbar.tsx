@@ -13,7 +13,7 @@ export default function Navbar(): JSX.Element {
         setCurrentPage(currentPage);
     }
 
-    const loggedIn = !!localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
+    const loggedIn = !!localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting");
 
     useEffect(() => {
         setCurrentPage(pageName);
