@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
+using WhaleSpotting.Models.ResponseModels;
 
 namespace WhaleSpotting.Controllers
 {
@@ -26,18 +26,17 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost]
-        public string CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
+        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
             {
-                _sightings.CreateSighting(sightingRequestModel);
-                return "Success";
+                var newSighting =_sightings.CreateSighting(sightingRequestModel);
+                return Created(x, newSighting);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-            Created()
            
         }
     }
