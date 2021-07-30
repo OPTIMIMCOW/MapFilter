@@ -15,8 +15,6 @@ export default function Navbar(): JSX.Element {
 
     const loggedIn = !!localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
 
-    const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
-
     useEffect(() => {
         setCurrentPage(pageName);
     }, [location, loggedIn]);
@@ -41,10 +39,10 @@ export default function Navbar(): JSX.Element {
                 </div>
                 <div className="changing-nav-links">
                     <div className={(!loggedIn) ? "display" : "dontdisplay"}>
-                        <Link to={ApplicationPaths.Register}
+                        <Link to="/register"
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
-                        <Link to={ApplicationPaths.Login}
+                        <Link to="/login"
                             className={CheckCurrentPage("Login")}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
@@ -52,7 +50,7 @@ export default function Navbar(): JSX.Element {
                         <Link to="/Profile"
                             className={CheckCurrentPage("Profile")}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>
-                        <Link to={logoutPath}
+                        <Link to="/logout"
                             className={CheckCurrentPage("Logout")}
                             onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
                     </div>

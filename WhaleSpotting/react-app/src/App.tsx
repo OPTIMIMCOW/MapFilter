@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Route } from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import Home from "./components/Home";
 import Counter from "./components/Counter";
@@ -19,12 +19,20 @@ function App(): JSX.Element {
             <Route exact path="/map" />
             <AuthorizeRoute exact path="/reportsighting" />
             <AuthorizeRoute exact path="/profile" component={Profile}/>
-            <Route exact path="/login"  />
-            {/*<Route exact path="/register"  to={`${ApplicationPaths.Register}`}/>*/}
+            <Route exact path="/login">
+                <Redirect to={ApplicationPaths.Login} />
+            </Route>
+            <Route exact path="/register">
+                <Redirect to={ApplicationPaths.Register} />
+            </Route>
+            <Route exact path="/logout">
+                <Redirect to={{ pathname: `${ApplicationPaths.LogOut}`, state: { local: true } }} />
+            </Route>
             <Route exact path="/weather" component={FetchData} />
             <Route exact path="/counter" component={Counter} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route exact path="/" component={Home} />
+            <Route exact path="/Home" component={Home} />
             <Footer />
         </Fragment>
     );
