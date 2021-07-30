@@ -1,10 +1,8 @@
 @import "./Constants.scss";
 
 .card-component {
-    width: 100%;
     border-radius: 10px;
     background-color: $primaryCard;
-    height: fit-content;
     margin: 15px 0; 
     position: relative;
 
@@ -18,21 +16,12 @@
         width: 50%;
     }
 
-    .second-column {
-        width: 50%;
-    }
-
     .pending {
         position: absolute;
         right: 7px;
         top: 5px;
-        width: fit-content;
         color: $primaryDark;
     }
-}
-
-.confirmed {
-    display: none;
 }
 
 .non-admin {
@@ -52,11 +41,6 @@
 
         .closed {
             display: none;
-        }
-
-        .open {
-            display: block;
-            width: 100%;
         }
     }
 }

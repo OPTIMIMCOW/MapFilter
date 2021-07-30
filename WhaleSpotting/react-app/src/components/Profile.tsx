@@ -70,13 +70,11 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h1 className="heading">Your {feedToggle}</h1>
                 <div className="card-holder">
-
                     <Card sighting={orca} />
                     <Card sighting={orca} />
                     <Card sighting={orcaConfirmed} />
                     <Card sighting={orcaConfirmed} />
                     <Card sighting={orcaConfirmed} />
-
                 </div>
                 <PageNav />
             </div>

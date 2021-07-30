@@ -33,22 +33,20 @@ const exampleUnconfirmed: SightingApiModel = {
     username: "FakeUserNotConfirmed"
 };
 
-describe("Card tests", () => {
-    test("Renders card", () => {
-        render(<Card sighting={exampleConfirmed}/>);
-        const cardComponent = screen.getByTestId("card-component");
-        expect(cardComponent).toBeInTheDocument();
-    });
+test("Renders card", () => {
+    render(<Card sighting={exampleConfirmed} />);
+    const cardComponent = screen.getByTestId("card-component");
+    expect(cardComponent).toBeInTheDocument();
+});
 
-    test("Does not render pending for confirmed card", () => {
-        render(<Card sighting={exampleConfirmed}/>);
-        const pending = screen.getByTestId("confirmed");
-        expect(pending).toBeInTheDocument();
-    });
+test("Does not render pending for confirmed card", () => {
+    render(<Card sighting={exampleConfirmed} />);
+    const confirmed = screen.getByTestId("confirmed");
+    expect(confirmed).toBeInTheDocument();
+});
 
-    test("Renders pending for unconfirmed card", () => {
-        render(<Card sighting={exampleUnconfirmed}/>);
-        const pending = screen.getByTestId("pending");
-        expect(pending).toBeInTheDocument();
-    });
+test("Renders pending for unconfirmed card", () => {
+    render(<Card sighting={exampleUnconfirmed} />);
+    const pending = screen.getByTestId("pending");
+    expect(pending).toBeInTheDocument();
 });
