@@ -1,6 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.scss";
+import React, { Fragment } from "react";
+import { Route } from "react-router-dom";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import Home from "./components/Home";
 import Counter from "./components/Counter";
@@ -14,21 +13,19 @@ import Navbar from "./components/Navbar";
 
 function App(): JSX.Element {
     return (
-        <Router>
+        <Fragment>
             <Navbar />
-            <Switch>
-                <Route path="/map" />
-                <AuthorizeRoute path="/reportsighting" />
-                <AuthorizeRoute path="/profile" component={Profile}/>
-                <Route path="/login" />
-                <Route path="/register" />
-                <AuthorizeRoute path="/weather" component={FetchData} />
-                <Route path="/counter" component={Counter} />
-                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
-                <Route path="" component={Home} />
-            </Switch >
+            <Route exact path="/map" />
+            <AuthorizeRoute exact path="/reportsighting" />
+            <AuthorizeRoute exact path="/profile" component={Profile}/>
+            <Route exact path="/login" />
+            <Route exact path="/register" />
+            <AuthorizeRoute exact path="/weather" component={FetchData} />
+            <Route exact path="/counter" component={Counter} />
+            <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+            <Route exact path="/" component={Home} />
             <Footer />
-        </Router >
+        </Fragment>
     );
 }
 

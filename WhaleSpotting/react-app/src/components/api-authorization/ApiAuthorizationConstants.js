@@ -1,4 +1,4 @@
-export const ApplicationName = "react_app";
+export const ApplicationName = "WhaleSpotting";
 
 export const QueryParameterNames = {
     ReturnUrl: "returnUrl",

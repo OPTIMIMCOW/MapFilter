@@ -13,6 +13,5 @@ namespace WhaleSpotting.Models.DbModels
         {
         }
         public DbSet<SightingDbModel> Sightings { get; set; }
-        public DbSet<UserDbModel> Users { get; set; }
     }
 }
