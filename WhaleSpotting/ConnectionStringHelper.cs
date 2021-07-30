@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace WhaleSpotting
 {
-    public static class ConnectionStringerHelper
+    public static class ConnectionStringHelper
     {
         public static string GetConnectionString(IConfiguration configuration)
         {
@@ -20,10 +20,10 @@ namespace WhaleSpotting
             var uri = new Uri(databaseUrl!);
             var username = uri.UserInfo.Split(':')[0];
             var password = uri.UserInfo.Split(':')[1];
-            var connectionString = "User ID=" + username + 
-                ";Password=" + password + 
-                ";Host=" + uri.Host + 
-                ";Port=" + uri.Port + 
+            var connectionString = "User ID=" + username +
+                ";Password=" + password +
+                ";Host=" + uri.Host +
+                ";Port=" + uri.Port +
                 ";Database=" + uri.AbsolutePath[1..] +
                 ";Pooling=true;SSL Mode=Require;TrustServerCertificate=True;";
             Console.WriteLine(connectionString);
