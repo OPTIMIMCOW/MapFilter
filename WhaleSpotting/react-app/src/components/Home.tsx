@@ -11,8 +11,6 @@ export default function Home() : JSX.Element {
         console.log("this needs to be implemented");
     }
 
-export default function Home(): JSX.Element {
-
     const orca: SightingApiModel = {
         sightedAt: new Date(),
         species: "whale",

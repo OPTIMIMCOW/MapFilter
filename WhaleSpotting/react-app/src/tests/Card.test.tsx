@@ -36,8 +36,8 @@ const exampleUnconfirmed: SightingApiModel = {
 describe("Card tests", () => {
     test("Renders card", () => {
         render(<Card sighting={exampleConfirmed}/>);
-        const pending = screen.getByTestId("card-component");
-        expect(pending).toBeInTheDocument();
+        const cardComponent = screen.getByTestId("card-component");
+        expect(cardComponent).toBeInTheDocument();
     });
 
     test("Does not render pending for confirmed card", () => {
