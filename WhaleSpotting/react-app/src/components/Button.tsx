@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Buttons.scss";
 import { Link } from "react-router-dom";
 
-enum Style {
+export enum Style {
     primary,
     secondary,
     reject
@@ -13,11 +13,11 @@ interface ButtonProps {
     text: string;
     onClick?: () => void;
     dataTestId?: string;
-    minWidth25: boolean;
+    minWidth25?: boolean;
     link?: string;
 }
 
-export function Button({ style, text, onClick, dataTestId, minWidth25, link }: ButtonProps): JSX.Element {
+export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link }: ButtonProps): JSX.Element {
     const width = minWidth25 ? "minWidth25" : "";
     let styleClass;
 

@@ -15,7 +15,7 @@
 }
 
 .primary-button{
-    @include button($primaryDark);
+    @include button();
 }
 
 .secondary-button{

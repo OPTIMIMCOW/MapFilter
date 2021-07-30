@@ -3,7 +3,7 @@ import "../styles/Home.scss";
 import React from "react";
 import { useState } from "react";
 import PageNav from "./PageNav";
-import { Button } from "./Button";
+import { Button, Style } from "./Button";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -24,16 +24,14 @@ export function Profile(): JSX.Element {
                     </div>
                     <div className="button-container">
                         <Button 
-                            style={0} 
+                            style={Style.primary} 
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")}
-                            minWidth25={false}/>
+                            onClick={() => setFeedToggle("Sightings")}/>
                         <Button 
-                            style={0} 
+                            style={Style.primary} 
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle"
-                            minWidth25={false}/>
+                            dataTestId="approval-toggle"/>
                     </div>
                 </div>
             </div>

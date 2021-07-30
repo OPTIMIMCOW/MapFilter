@@ -1,7 +1,7 @@
 import "../styles/Home.scss";
 import React from "react";
 import PageNav from "./PageNav";
-import { Button } from "./Button";
+import { Button, Style } from "./Button";
 
 export default function Home() : JSX.Element {
 
@@ -16,16 +16,15 @@ export default function Home() : JSX.Element {
             <div className="home-contents">
                 <div className="report-button-container">
                     <Button 
-                        style={0}
+                        style={Style.primary}
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
-                        minWidth25={false}
                         link="/Reportsighting"/>
                 </div>
                 <div className="sightings-header">
                     <h2>Recent Sightings</h2>
                     <Button
-                        style={1}
+                        style={Style.secondary}
                         text="Order By Location"
                         dataTestId="filter-button"
                         onClick={orderFeedBy}

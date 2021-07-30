@@ -3,12 +3,11 @@
 .footer {
     position: fixed;
     bottom: 0;
-    background-color: $primaryDark;
+    background-color: $primaryColour;
     display: flex;
     justify-content: center;
     width: 100vw;
     height: $footerHeight;
-    min-height: 70px;
 
     .footer-logo-container {
         max-width: $bodyWidth;
