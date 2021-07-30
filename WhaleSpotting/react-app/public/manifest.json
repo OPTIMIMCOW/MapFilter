@@ -1,6 +1,6 @@
 {
-  "short_name": "react-app",
-  "name": "react-app",
+  "short_name": "Whale Spotting",
+  "name": "Whale Spotting App",
   "icons": [
     {
       "src": "whaleicon64.png",
@@ -22,5 +22,5 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "description": "Whale Spotting App"
+  "description": "Whale Spotting App - we encourage whale watchers to report sightings."
 }
