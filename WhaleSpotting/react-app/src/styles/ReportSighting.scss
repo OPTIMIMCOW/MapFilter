@@ -47,6 +47,9 @@
         padding-left: 15px;
         font-size: $bodyFontSize;
     }
+    &.description{
+        width: 200%;
+    }
 }
 
 .button{

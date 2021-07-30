@@ -75,7 +75,7 @@ export default function ReportSighting(): JSX.Element {
                                     value={imageUrl}
                                     onChange={(e) => setImageUrl(e.target.value)}></input>
                             </div>
-                            <div className="input-box">
+                            <div className="input-box description">
                                 <label>Description</label>
                                 <input type="textarea" placeholder="Description"
                                     value={description}
