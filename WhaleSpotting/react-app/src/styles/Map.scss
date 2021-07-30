@@ -1,0 +1,15 @@
+@import "./Constants.scss";
+
+.map-component {
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    display: flex;
+    flex-direction: column;
+    font-family: $fontFamily;
+}
+
+// .banner-image{
+//     height: 40vh;
+//     width: 100%;
+//     object-fit: cover;
+// }

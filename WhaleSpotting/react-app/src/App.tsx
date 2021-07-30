@@ -4,13 +4,14 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import {Profile} from "./components/Profile";
+import Map from "./components/Map";
 
 function App(): JSX.Element {
     return (
         <Router>
             <Navbar />
             <Switch>
-                <Route path="/map" />
+                <Route path="/map" component={Map} />
                 <Route path="/reportsighting" />
                 <Route path="/profile" component={Profile}/>
                 <Route path="/login" />
