@@ -12,8 +12,7 @@ export default function ReportSighting(): JSX.Element {
     const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
 
-    // eslint-disable-next-line
-    const handleSubmit = (event: any) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const sighting = { datetime, location, species, quantity, longitude, latitude, orcaPod, imageUrl, description };
         console.log(sighting);
@@ -24,67 +23,67 @@ export default function ReportSighting(): JSX.Element {
             <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" />
             <div className="container">
                 <div className="title">Report Your Sighting</div>
-                <form action="#" onSubmit={handleSubmit}>
+                <form action="#" onSubmit={(e)=>handleSubmit(e)}>
                     <div className="card-component">
                         <div className="sighting-details">
                             <div className="input-box">
                                 <label className="details">Sighting Date Time</label>
                                 <input name="datetime" type="date" placeholder="Enter Sighting Date Time" required
                                     value={datetime}
-                                    onChange={(e) => setDatetime(e.target.value)}></input>
+                                    onChange={(e) => setDatetime(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Location</label>
                                 <input type="text" name="location" placeholder="Confirm your location" required
                                     value={location}
-                                    onChange={(e) => setLocation(e.target.value)}></input>
+                                    onChange={(e) => setLocation(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Species</label>
                                 <input type="text" name="species" placeholder="Enter species" required
                                     value={species}
-                                    onChange={(e) => setSpecies(e.target.value)}></input>
+                                    onChange={(e) => setSpecies(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Quantity</label>
                                 <input type="number" placeholder="Enter quantity"
                                     value={quantity}
-                                    onChange={(e) => setQuantity(e.target.value)}></input>
+                                    onChange={(e) => setQuantity(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Longitude</label>
                                 <input type="number" placeholder="Enter your longitude"
                                     value={longitude}
-                                    onChange={(e) => setLongitude(e.target.value)}></input>
+                                    onChange={(e) => setLongitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Latitude</label>
                                 <input type="number" placeholder="Enter your latitude"
                                     value={latitude}
-                                    onChange={(e) => setLatitude(e.target.value)}></input>
+                                    onChange={(e) => setLatitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Orca Pod</label>
                                 <input type="text" placeholder="Orca Pod"
                                     value={orcaPod}
-                                    onChange={(e) => setOrcaPod(e.target.value)}></input>
+                                    onChange={(e) => setOrcaPod(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label>Image Url</label>
                                 <input type="url" placeholder="Image url"
                                     value={imageUrl}
-                                    onChange={(e) => setImageUrl(e.target.value)}></input>
+                                    onChange={(e) => setImageUrl(e.target.value)}/>
                             </div>
                             <div className="input-box description">
                                 <label>Description</label>
                                 <input type="textarea" placeholder="Description"
                                     value={description}
-                                    onChange={(e) => setDescription(e.target.value)}></input>
+                                    onChange={(e) => setDescription(e.target.value)}/>
                             </div>
                         </div>
                     </div>
                     <div className="button">
-                        <input type="submit" value="Submit Sighting" ></input>
+                        <input type="submit" value="Submit Sighting"/>
                     </div>
                 </form>
             </div>
