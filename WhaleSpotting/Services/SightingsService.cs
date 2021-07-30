@@ -30,5 +30,10 @@ namespace WhaleSpotting.Services
 
             return sightings;
         }
+
+        public string CreateSighting()
+        {
+            _context
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Models.ApiModels;
@@ -21,6 +22,21 @@ namespace WhaleSpotting.Controllers
         public async Task<List<SightingResponseModel>> GetInfo()
         {
             return await _sightings.GetSightings();
+        }
+
+        [HttpPost]
+        public string CreateSighting()
+        {
+            try
+            {
+                _sightings.AddAnimal(addAnimalViewModel);
+                return "Success";
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
         }
     }
 }
