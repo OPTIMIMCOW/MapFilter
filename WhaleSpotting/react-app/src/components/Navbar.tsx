@@ -36,7 +36,7 @@ export default function Navbar(): JSX.Element {
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
                 <div className="changing-nav-links">
-                    <div className={(!loggedIn) ? "display" : "dontdisplay"}>
+                    <div hidden={loggedIn}>
                         <Link to="/Register"
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
@@ -44,7 +44,7 @@ export default function Navbar(): JSX.Element {
                             className={CheckCurrentPage("Login")}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
-                    <div className={(loggedIn) ? "display" : "dontdisplay"}>
+                    <div hidden={!loggedIn}>
                         <Link to="/Profile"
                             className={CheckCurrentPage("Profile")}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>

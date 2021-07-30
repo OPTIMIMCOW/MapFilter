@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Card from "../components/Card";
 import SightingApiModel from "../apiModels/SightingApiModel";
+import userEvent from "@testing-library/user-event";
 
 const exampleConfirmed: SightingApiModel = {
     sightedAt: new Date(),
@@ -41,12 +42,20 @@ test("Renders card", () => {
 
 test("Does not render pending for confirmed card", () => {
     render(<Card sighting={exampleConfirmed} />);
-    const confirmed = screen.getByTestId("confirmed");
-    expect(confirmed).toBeInTheDocument();
+    const pending = screen.queryByTestId("pending");
+    expect(pending).toBeNull();
 });
 
 test("Renders pending for unconfirmed card", () => {
     render(<Card sighting={exampleUnconfirmed} />);
     const pending = screen.getByTestId("pending");
     expect(pending).toBeInTheDocument();
+});
+
+test("On click the class changes to open", () => {
+    render(<Card sighting={exampleUnconfirmed} />);
+    const card = screen.getByTestId("card");
+    const secondCol = screen.getByTestId("second-column");
+    userEvent.click(card);
+    expect(secondCol).toHaveClass("open");
 });

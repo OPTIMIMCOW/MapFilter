@@ -3,8 +3,7 @@
 .card-component {
     border-radius: 10px;
     background-color: $primaryCard;
-    margin: 15px 0; 
-    position: relative;
+    margin: 15px 0;
 
     .card-info {
         display: inline-flex;
@@ -17,15 +16,11 @@
     }
 
     .pending {
-        position: absolute;
-        right: 7px;
-        top: 5px;
+        text-align: end;
+        margin-right: 7px;
+        height: 0;
         color: $primaryDark;
     }
-}
-
-.non-admin {
-    display: none;
 }
 
 @media (max-width: $mobileScreenSize) {
