@@ -1,9 +1,9 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
-import "../styles/Buttons.scss";
 import React from "react";
 import { useState } from "react";
 import PageNav from "./PageNav";
+import { Button, Style } from "./Button";
 import SightingApiModel from "../apiModels/SightingApiModel";
 import Card from "./Card";
 
@@ -55,8 +55,15 @@ export function Profile(): JSX.Element {
                         <img className="profile-image" alt="Profile Image" src="https://picsum.photos/id/237/200" />
                     </div>
                     <div className="button-container">
-                        <button className="primary-button" onClick={() => setFeedToggle("Sightings")}>Sightings</button>
-                        <button className="primary-button" data-testid="approval-toggle" onClick={() => setFeedToggle("Approvals")}>Approvals</button>
+                        <Button 
+                            style={Style.primary} 
+                            text="Sightings"
+                            onClick={() => setFeedToggle("Sightings")}/>
+                        <Button 
+                            style={Style.primary} 
+                            text="Approvals"
+                            onClick={() => setFeedToggle("Approvals")}
+                            dataTestId="approval-toggle"/>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,15 @@
 import "../styles/Home.scss";
 import React from "react";
 import PageNav from "./PageNav";
+import { Button, Style } from "./Button";
 import Card from "./Card";
 import SightingApiModel from "../apiModels/SightingApiModel";
+
+export default function Home() : JSX.Element {
+
+    function orderFeedBy():void {
+        console.log("this needs to be implemented");
+    }
 
 export default function Home(): JSX.Element {
 
@@ -42,13 +49,22 @@ export default function Home(): JSX.Element {
 
             <div className="home-contents">
                 <div className="report-button-container">
-                    <button className="report-button">REPORT SIGHTING</button>
+                    <Button 
+                        style={Style.primary}
+                        text="REPORT SIGHTING"
+                        dataTestId="sighting-button"
+                        link="/Reportsighting"/>
                 </div>
                 <div className="sightings-header">
                     <h2>Recent Sightings</h2>
-                    <button className="filter-button" data-testid="filter-button">Order By Location</button>
+                    <Button
+                        style={Style.secondary}
+                        text="Order By Location"
+                        dataTestId="filter-button"
+                        onClick={orderFeedBy}
+                        minWidth25={true}
+                    />
                 </div>
-
                 <div className="card-holder">
                     <Card sighting={orca} />
                     <Card sighting={orca}/>
