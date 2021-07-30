@@ -1,5 +1,6 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void TestCreateSighting()
+        public void TestCreateSightingWorks()
         {
             var newSighting = new SightingRequestModel
             {
@@ -59,8 +60,15 @@ namespace WhaleSpotting.UnitTests.Controllers
                 UserId = 5,
             };
 
-            A.CallTo(() => _sightings.CreateSighting(newSighting))
-                .Returns(serviceResponse);
+            var response = _underTest.CreateSighting(newSighting) as CreatedResult;
+
+            var url = response.Location;
+            var dbObject = response.Value as SightingResponseModel;
+
+            dbObject.Id.Should().BeGreaterThan(0);
+
+            //A.CallTo(() => _sightings.CreateSighting(newSighting))
+            //    .Returns(serviceResponse);
 
         }
     // create request object 

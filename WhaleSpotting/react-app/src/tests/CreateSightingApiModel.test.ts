@@ -1,16 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSightingApiModel";
 
-
 test("check species enum works correctly", () => {
-    const test = {
+    const test: CreateSightingApiModel = {
         species: Species.AtlanticWhiteSidedDolphin,
         quantity: 2,
         description: "was nice",
         longitude: -100.010,
         latitude: -22.010,
         location: "atlantic ocean",
-        sightedAt: Date.now,
+        sightedAt: new Date('July 30, 2021 16:00:00'),
         orcaType: null,
         orcaPod: "",
         userId: 5,
