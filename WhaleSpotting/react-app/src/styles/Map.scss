@@ -4,8 +4,17 @@
     padding-bottom: $footerHeight;
     margin-top: $headerHeight;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    //flex-direction: column;
     font-family: $fontFamily;
+    background-color: #98d5f5;
+    height: 100vh;
+}
+
+
+.map {
+    overflow: hidden;
+    //width: 1024px;
 }
 
 // .banner-image{
