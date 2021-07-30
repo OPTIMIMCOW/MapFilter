@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Services;
+using WhaleSpotting.Models.RequestModels;
 
 namespace WhaleSpotting.Controllers
 {
@@ -25,17 +26,18 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost]
-        public string CreateSighting()
+        public string CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
             {
-                _sightings.AddAnimal(addAnimalViewModel);
+                _sightings.CreateSighting(sightingRequestModel);
                 return "Success";
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+            Created()
            
         }
     }

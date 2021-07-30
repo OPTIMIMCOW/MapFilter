@@ -17,10 +17,10 @@ namespace WhaleSpotting.Models.RequestModels
         public int Quantity { get; set; }
         public string Description { get; set; }
         [Required(ErrorMessage = "Longitude is required")]
-        [Range(-180.00, 180.00, ErrorMessage = "Longitude must be greater than {1}")]
+        [Range(-180.00, 180.00, ErrorMessage = "Longitude must be between -180 and 180 degrees")]
         public double Longitude { get; set; }
         [Required(ErrorMessage = "Latitude is required")]
-        [Range(-90.00, 90.00, ErrorMessage = "Latitude must be greater than {1}")]
+        [Range(-90.00, 90.00, ErrorMessage = "Latitude must be between -90 and 90 degrees")]
         public double Latitude { get; set; }
         public string Location { get; set; }
         [Required(ErrorMessage = "SightedAt is required")]
