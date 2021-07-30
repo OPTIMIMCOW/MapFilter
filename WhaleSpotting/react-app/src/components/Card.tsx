@@ -13,8 +13,9 @@ export default function Card({sighting}: CardProps) : JSX.Element {
     const admin = true;
     
     return (
-        <div className="card-component">
-            <div className={!sighting.confirmed ? "pending" : "confirmed"}> PENDING </div>
+        <div className="card-component" data-testid="card-component">
+            <div className={!sighting.confirmed ? "pending" : "confirmed"}
+                data-testid={!sighting.confirmed ? "pending" : "confirmed"}> PENDING </div>
             <div className="card-info"
                 onClick={() => setCardState(!closeCard)} data-testid="card">
                 <div className="first-column">
