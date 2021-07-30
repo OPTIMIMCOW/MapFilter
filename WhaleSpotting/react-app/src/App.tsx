@@ -15,7 +15,7 @@ function App(): JSX.Element {
                 <Route path="/profile" component={Profile}/>
                 <Route path="/login" />
                 <Route path="/register" />
-                <Route path="/Reportsighting" component={ReportSighting}/>
+                <Route path="/reportsighting" component={ReportSighting}/>
                 <Route path="" component={Home} />
             </Switch >
             <Footer />

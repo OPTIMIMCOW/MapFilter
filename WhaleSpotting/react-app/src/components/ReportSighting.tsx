@@ -27,63 +27,63 @@ export default function ReportSighting(): JSX.Element {
                     <div className="card-component">
                         <div className="sighting-details">
                             <div className="input-box">
-                                <label className="details">Sighting Date Time</label>
-                                <input name="datetime" type="date" placeholder="Enter Sighting Date Time" required
+                                <label className="details">Sighting Date Time <span className="required">(required)</span></label>
+                                <input className="input-field" name="datetime" type="date" placeholder="Enter sighting date and time" required
                                     value={datetime}
                                     onChange={(e) => setDatetime(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Location</label>
-                                <input type="text" name="location" placeholder="Confirm your location" required
+                                <label className="details">Location <span className="required">(required)</span></label>
+                                <input className="input-field"  type="text" name="location" placeholder="Confirm your location" required
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Species</label>
-                                <input type="text" name="species" placeholder="Enter species" required
+                                <label className="details">Species <span className="required">(required)</span></label>
+                                <input className="input-field" type="text" name="species" placeholder="Enter species" required
                                     value={species}
                                     onChange={(e) => setSpecies(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Quantity</label>
-                                <input type="number" placeholder="Enter quantity"
+                                <input className="input-field" type="number" placeholder="Enter quantity"
                                     value={quantity}
                                     onChange={(e) => setQuantity(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Longitude</label>
-                                <input type="number" placeholder="Enter your longitude"
+                                <input className="input-field coordinates" type="number" placeholder="Enter your longitude"
                                     value={longitude}
                                     onChange={(e) => setLongitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Latitude</label>
-                                <input type="number" placeholder="Enter your latitude"
+                                <input className="input-field coordinates" type="number" placeholder="Enter your latitude"
                                     value={latitude}
                                     onChange={(e) => setLatitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label className="details">Orca Pod</label>
-                                <input type="text" placeholder="Orca Pod"
+                                <input className="input-field" type="text" placeholder="Enter the orca pod"
                                     value={orcaPod}
                                     onChange={(e) => setOrcaPod(e.target.value)}/>
                             </div>
                             <div className="input-box">
                                 <label>Image Url</label>
-                                <input type="url" placeholder="Image url"
+                                <input className="input-field" type="url" placeholder="Enter your image url"
                                     value={imageUrl}
                                     onChange={(e) => setImageUrl(e.target.value)}/>
                             </div>
                             <div className="input-box description">
                                 <label>Description</label>
-                                <input type="textarea" placeholder="Description"
+                                <input className="input-field" type="textarea" placeholder="Enter description"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}/>
                             </div>
                         </div>
                     </div>
                     <div className="button">
-                        <input type="submit" value="Submit Sighting"/>
+                        <input className="input-field" type="submit" value="Submit Sighting"/>
                     </div>
                 </form>
             </div>

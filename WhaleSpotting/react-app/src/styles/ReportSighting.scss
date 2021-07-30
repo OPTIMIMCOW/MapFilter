@@ -1,105 +1,90 @@
 @import "./Constants.scss";
-
-.banner-image{
-    height: 30vh;
-    object-fit: cover;
-    width: 100%;
-    margin-bottom: 2%;
-}
-
-.container{
+.report-sighting{
     font-family: $fontFamily;
-    max-width: 700px;
-    width: 100%;
-    padding: 4% 5%;
-}
 
-form{
-    margin-bottom: 8%;
-    padding-bottom: 5%;
-}
-
-.card-component{
-    background: $primaryCard;
-    border-radius: 5px;
-}
-
-.title{
-    font-size: $subtitleFontSize;
-    text-align: center;
-    font-size: $titleFontSize;
-}
-
-.sighting-details{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 8% 0 6% 0;
-    padding: 2% 5% 5% 5%;
-}
-
-.input-box{
-    margin: 3% 0;
-    width: 46%;
-    display: block;
-    
-    input{
-        height: 85%;
+    .banner-image{
+        height: 40vh;
+        object-fit: cover;
         width: 100%;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        border: 1px solid $primaryColour;
-        padding-left: 15px;
-        font-size: $bodyFontSize;
     }
-    &.description{
-        width: 200%;
-    }
-}
 
-.button{
-    height: 45px;
-    margin: 35px 0;
-    
-    input{
-        height: 100%;
-        width: 100%;
-        color: $textOnPrimary;
-        border: none;
-        font-size: $bodyFontSize;
+    .required{
+        color: $secondaryDark;
+        font-size: $mobileBodyFontSize;
+    }
+
+    .container{
+        margin: auto;
+        max-width: 800px;
+        padding: 4% 5%;
+    }
+
+    .card-component{
+        background: $primaryCard;
         border-radius: 5px;
-        background: $primaryDark;
-        
-        &:hover{
-            background: $primaryColour;
+    }
+
+    .title{
+        text-align: center;
+        font-size: $titleFontSize;
+    }
+
+    .sighting-details{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 6%;
+        padding: 2% 5% 5% 5%;
+    }
+
+    .input-box{
+        margin: 3% 0;
+        width: 46%;
+    
+        .input-field{
+            height: 85%;
+            width: 100%;
+            padding-left: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid $primaryColour;
+            font-size: $bodyFontSize;
+            
+            &:focus{
+                outline: none;
+                border: 2px solid $primaryDark;
+            } 
         }
     }
-}
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
-}
-
-@media (max-width: 584px){
-    .container{
-        max-width: 100%;
+    .description{
+        width: 200%;
     }
-
-    form .sighting-details .input-box{
-        margin-bottom: 15px;
-        width: 100%;
-    }
-
-   .conatiner form .sighting-details{
-        max-height: 300px;
-        overflow-y: scroll;
-    }
+        
+    .button{
+        height: 45px;
+        margin: 35px 0;
     
-    .sighting-details::-webkit-scrollbar{
-        width: 0;
+        .input-field{
+            height: 100%;
+            width: 100%;
+            color: $textOnPrimary;
+            border: none;
+            font-size: $bodyFontSize;
+            border-radius: 5px;
+            background: $primaryDark; 
+        
+            &:hover{
+                background: $primaryColour;
+            }
+        }
+    }
+
+    .coordinates::-webkit-inner-spin-button, 
+    .coordinates::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0; 
     }
 }

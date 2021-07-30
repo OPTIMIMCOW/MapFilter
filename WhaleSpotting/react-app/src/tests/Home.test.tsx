@@ -4,7 +4,9 @@ import Home from "../components/Home";
 
 describe("Home Page tests", () => {
     test("Renders Recent Sightings", () => {
+        
         render(<Home />);
+
         const text = screen.getByText("Recent Sightings");
         expect(text).toBeInTheDocument();
     });
