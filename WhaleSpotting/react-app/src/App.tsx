@@ -9,6 +9,7 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import {Profile} from "./components/Profile";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
+//import {LoginMenu} from "./components/api-authorization/LoginMenu.js";
 
 
 function App(): JSX.Element {
@@ -18,9 +19,9 @@ function App(): JSX.Element {
             <Route exact path="/map" />
             <AuthorizeRoute exact path="/reportsighting" />
             <AuthorizeRoute exact path="/profile" component={Profile}/>
-            <Route exact path="/login" />
-            <Route exact path="/register" />
-            <AuthorizeRoute exact path="/weather" component={FetchData} />
+            <Route exact path="/login"  />
+            {/*<Route exact path="/register"  to={`${ApplicationPaths.Register}`}/>*/}
+            <Route exact path="/weather" component={FetchData} />
             <Route exact path="/counter" component={Counter} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route exact path="/" component={Home} />

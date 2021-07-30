@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
+import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();
@@ -37,10 +38,10 @@ export default function Navbar(): JSX.Element {
                 </div>
                 <div className="changing-nav-links">
                     <div className={(!loggedIn) ? "display" : "dontdisplay"}>
-                        <Link to="/Register"
+                        <Link to={`${ApplicationPaths.Register}`}
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
-                        <Link to="/Login"
+                        <Link to={`${ApplicationPaths.Login}`}
                             className={CheckCurrentPage("Login")}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
