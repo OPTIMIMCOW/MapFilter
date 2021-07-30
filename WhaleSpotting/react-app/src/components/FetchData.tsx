@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import WeatherForecastApiModel from "../apiModels/SightingApiModel";
 
 export default function FetchData(): JSX.Element {
-    const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
+    //TODO Fetch api
+    // const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
 
-    async function populateWeatherData() {
+    async function populateSightingData() {
         const response = await fetch("sightings");
         const data = await response.json();
-        setData(data);
+        // setData(data);
     }
     
     useEffect(() => {
-        populateWeatherData();
+        populateSightingData();
     }, []);
 
-    let contents = <p><em>Loading...</em></p>;
+    const contents = <p><em>Loading...</em></p>;
     
     // if (forecastData){
     //     contents =

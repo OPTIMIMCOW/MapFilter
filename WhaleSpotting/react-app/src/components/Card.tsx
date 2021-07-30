@@ -9,6 +9,7 @@ interface CardProps {
 export default function Card({sighting}: CardProps) : JSX.Element {
 
     const [closeCard, setCardState] = useState(true);
+    
     //TODO - authorise admin to display userIds
     const admin = true;
     
