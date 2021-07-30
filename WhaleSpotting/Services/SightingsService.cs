@@ -4,12 +4,15 @@ using WhaleSpotting.Models.DbModels;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using WhaleSpotting.Models.RequestModels;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Services
 {
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
+        string CreateSighting(SightingRequestModel sightingRequestModel);
     }
 
     public class SightingsService : ISightingsService
@@ -31,9 +34,22 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public string CreateSighting()
+        public string CreateSighting(SightingRequestModel sightingRequestModel)
         {
-            _context
+
+                var newSighting = new SightingDbModel()
+                {
+                    Species = (Species) sightingRequestModel.Species,
+                    Name = addAnimalViewModel.Name,
+                    Sex = addAnimalViewModel.Sex,
+                    Dob = addAnimalViewModel.Dob,
+                    DateAcquired = addAnimalViewModel.DateAcquired,
+                    Enclosure = enclosure,
+                    Keeper = keeper
+                };
+
+            _context.Sightings.Add(newSighting);
+            _context.SaveChanges();
         }
     }
 }

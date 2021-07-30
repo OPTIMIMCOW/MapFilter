@@ -10,8 +10,8 @@ namespace WhaleSpotting.Models.RequestModels
     public class SightingRequestModel
     {
         [Required(ErrorMessage = "Species is required")]
-        [Range(0, 15, ErrorMessage = "Species must be between 0 and 15")]
-        public Species Species { get; set; }
+        [Range(1, 16, ErrorMessage = "Species must be between 1 and 16")]
+        public int Species { get; set; }
         [Required(ErrorMessage = "Quantity is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than {1}")]
         public int Quantity { get; set; }
@@ -26,7 +26,7 @@ namespace WhaleSpotting.Models.RequestModels
         [Required(ErrorMessage = "SightedAt is required")]
         [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
         public DateTime SightedAt { get; set; }
-        [Range(0, 3, ErrorMessage = "OrcaType must be between 0 and 3")]
+        [Range(1, 4, ErrorMessage = "OrcaType must be between 1 and 4")]
         public OrcaType? OrcaType { get; set; }
         public string OrcaPod { get; set; }
         [Required(ErrorMessage = "UserId is required")]
