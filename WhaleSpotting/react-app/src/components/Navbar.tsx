@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
 import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();
@@ -12,11 +13,19 @@ export default function Navbar(): JSX.Element {
     function HandleLinkClick(currentPage: string) {
         setCurrentPage(currentPage);
     }
-    const loggedIn = false;
+
+    let loggedIn = false;
+    //const loggedIn = Promise.all([authService.isAuthenticated()]);
+    //const loggedIn = authService.isAuthenticated();
+    if (localStorage.getItem("access_token")) {
+        loggedIn = true;
+    }
+
+    const logoutPath = { pathname: `${ApplicationPaths.LogOut}`, state: { local: true } };
 
     useEffect(() => {
         setCurrentPage(pageName);
-    }, [location]);
+    }, [location, loggedIn]);
 
     function CheckCurrentPage(pageName: string) {
         return currentPage === pageName ? "navbar-link selected" : "navbar-link";
@@ -49,7 +58,7 @@ export default function Navbar(): JSX.Element {
                         <Link to="/Profile"
                             className={CheckCurrentPage("Profile")}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>
-                        <Link to="/Logout"
+                        <Link to={logoutPath}
                             className={CheckCurrentPage("Logout")}
                             onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
                     </div>
