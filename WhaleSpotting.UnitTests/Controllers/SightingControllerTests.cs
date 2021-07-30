@@ -1,8 +1,11 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
+using WhaleSpotting.Models.Enums;
+using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using WhaleSpotting.Services;
 using Xunit;
@@ -28,7 +31,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 new SightingResponseModel(),
                 new SightingResponseModel()
             };
-        
+
             A.CallTo(() => _sightings.GetSightings())
                 .Returns(serviceResponse);
 
@@ -38,5 +41,30 @@ namespace WhaleSpotting.UnitTests.Controllers
             // Assert
             result.Should().HaveCount(2);
         }
-    }
+
+        [Fact]
+        public void TestCreateSighting()
+        {
+            var newSighting = new SightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                UserId = 5,
+            };
+
+            A.CallTo(() => _sightings.CreateSighting(newSighting))
+                .Returns(serviceResponse);
+
+        }
+    // create request object 
+    // call controller
+    // integgorate return response for url and object returned for id.
+}
 }
