@@ -3,7 +3,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
-using WhaleSpotting.Models.ApiModels;
+using WhaleSpotting.Models.ResponseModels;
 using WhaleSpotting.Services;
 using Xunit;
 

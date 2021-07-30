@@ -25,13 +25,14 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
-        [HttpPost]
+        [HttpPost("/create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
             {
                 var newSighting =_sightings.CreateSighting(sightingRequestModel);
-                return Created(x, newSighting);
+                return Created($"/sighting/{newSighting.Id}", newSighting);
+                // TODO note the url parameter above is to be updated if a get sighting by id enpoint is created. 
             }
             catch (Exception e)
             {
