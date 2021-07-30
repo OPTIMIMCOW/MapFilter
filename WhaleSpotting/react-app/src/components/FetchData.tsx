@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import WeatherForecastApiModel from "../apiModels/WeatherForecastApiModel";
+import WeatherForecastApiModel from "../apiModels/SightingApiModel";
 
 export default function FetchData(): JSX.Element {
     const [forecastData, setData] = useState<Array<WeatherForecastApiModel>>();
@@ -16,29 +16,29 @@ export default function FetchData(): JSX.Element {
 
     let contents = <p><em>Loading...</em></p>;
     
-    if (forecastData){
-        contents =
-            <table className="table table-striped" aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {forecastData.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>;
-    }
+    // if (forecastData){
+    //     contents =
+    //         <table className="table table-striped" aria-labelledby="tabelLabel">
+    //             <thead>
+    //                 <tr>
+    //                     <th>Date</th>
+    //                     <th>Temp. (C)</th>
+    //                     <th>Temp. (F)</th>
+    //                     <th>Summary</th>
+    //                 </tr>
+    //             </thead>
+    //             <tbody>
+    //                 {forecastData.map(forecast =>
+    //                     // <tr key={forecast.date}>
+    //                     //     <td>{forecast.date}</td>
+    //                     //     <td>{forecast.temperatureC}</td>
+    //                     //     <td>{forecast.temperatureF}</td>
+    //                     //     <td>{forecast.summary}</td>
+    //                     // </tr>
+    //                 )}
+    //             </tbody>
+    //         </table>;
+    // }
 
     return (
         <div>
