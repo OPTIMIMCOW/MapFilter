@@ -29,15 +29,6 @@
     justify-content: space-between;
 }
 
-.card-holder {
-    .card-component {
-        border-radius: 10px;
-        background-color: $primaryCard;
-        height: 120px;
-        margin: 15px 0;
-    }
-}
-
 @media (max-width: $mobileScreenSize) {
 
     .banner-image {

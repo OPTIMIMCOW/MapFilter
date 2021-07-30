@@ -1,0 +1,41 @@
+@import "./Constants.scss";
+
+.card-component {
+    border-radius: 10px;
+    background-color: $primaryCard;
+    margin: 15px 0;
+
+    .card-info {
+        display: inline-flex;
+        padding: 10px 10px;
+        width: 100%;
+    }
+
+    .first-column {
+        width: 50%;
+    }
+
+    .pending {
+        text-align: end;
+        margin-right: 7px;
+        height: 0;
+        color: $primaryDark;
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .card-component {
+        .card-info{
+            display: block;
+        }
+
+        .first-column {
+            width: 100%;
+        }
+
+        .closed {
+            display: none;
+        }
+    }
+}
