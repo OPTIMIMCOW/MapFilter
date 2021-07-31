@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {
     ComposableMap,
@@ -10,6 +10,21 @@ import {
 } from "react-simple-maps";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json"
+
+async function populateSightingData() {
+    const response = await fetch("http://hotline.whalemuseum.org/api.json");
+    const response2 = await fetch("http://hotline.whalemuseum.org/api.json?northern%20elephant%20seal")
+    console.log(response);
+    const json = await response.json();
+    const json2 = await response2.json();
+    console.log(json.length)
+    console.log(json2.length)
+    console.log(json2.concat(json2).length)
+    
+    return json.concat(json2);
+}
+
+
 const markers = [
     {
         markerOffset: -15,
@@ -18,7 +33,27 @@ const markers = [
     }
 ];
 
-const MapChart = () => {
+
+function MapChart () {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        populateSightingData()
+        .then(data => setData(data))
+        .catch(console.log("no data"))
+    }, []);
+
+    console.log(data);
+
+    data.forEach(a => {
+        markers.push({
+            markerOffset: 15,
+            name: "",
+            coordinates: [a.latitude, a.longitude]
+        })
+    })
+
     return (
         <ComposableMap
             projection="geoEqualEarth"
@@ -39,7 +74,7 @@ const MapChart = () => {
 
             {markers.map(({ name, coordinates, markerOffset }) => (
                     <Marker key={name} coordinates={coordinates}>
-                        <circle r={10} fill="#89CFF0" stroke="#fff" strokeWidth={2} />
+                        <circle r={7} fill="#FFA500" stroke="#fff" strokeWidth={0.2} />
                         <text
                             textAnchor="middle"
                             y={markerOffset}

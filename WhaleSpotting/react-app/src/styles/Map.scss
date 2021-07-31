@@ -3,22 +3,32 @@
 .map-component {
     padding-bottom: $footerHeight;
     margin-top: $headerHeight;
-    display: flex;
-    justify-content: center;
+    //display: flex;
+    //justify-content: center;
     //flex-direction: column;
     font-family: $fontFamily;
-    background-color: #98d5f5;
-    height: 100vh;
+    height: 100%;
+    overflow: hidden;
 }
 
+.map-container {
+    background-color: #98d5f5;
+}
 
 .map {
     overflow: hidden;
-    //width: 1024px;
+    width: 2048px;
 }
 
-// .banner-image{
-//     height: 40vh;
-//     width: 100%;
-//     object-fit: cover;
-// }
+@media (min-width: 2559px) {
+
+    .map-component {
+
+        // .map {
+        //     width: 2560px;
+        // }
+        
+        display: flex;
+        justify-content: center;
+    }
+}
