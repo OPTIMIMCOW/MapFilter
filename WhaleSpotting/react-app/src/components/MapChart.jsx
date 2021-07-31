@@ -14,14 +14,14 @@ const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 async function populateSightingData() {
     const response = await fetch("http://hotline.whalemuseum.org/api.json");
     const response2 = await fetch("http://hotline.whalemuseum.org/api.json?northern%20elephant%20seal")
-    console.log(response);
+    // console.log(response);
     const json = await response.json();
     const json2 = await response2.json();
-    console.log(json.length)
-    console.log(json2.length)
+    // console.log(json.length)
+    // console.log(json2.length)
     console.log(json2.concat(json2).length)
     
-    return json.concat(json2);
+    return await json.concat(json2);
 }
 
 
@@ -74,7 +74,7 @@ function MapChart () {
 
             {markers.map(({ name, coordinates, markerOffset }) => (
                     <Marker key={name} coordinates={coordinates}>
-                        <circle r={7} fill="#FFA500" stroke="#fff" strokeWidth={0.2} />
+                        <circle r={4} fill="#FFA500" stroke="#fff" strokeWidth={0.2} />
                         <text
                             textAnchor="middle"
                             y={markerOffset}
