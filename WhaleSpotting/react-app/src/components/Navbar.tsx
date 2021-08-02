@@ -12,7 +12,9 @@ export default function Navbar(): JSX.Element {
         setCurrentPage(currentPage);
     }
 
-    const loggedIn = !!localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting");
+    const loggedIn = !!(localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
+        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-stg.herokuapp.com:WhaleSpotting")
+        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-prod.herokuapp.com:WhaleSpotting"));
 
     useEffect(() => {
         setCurrentPage(pageName);

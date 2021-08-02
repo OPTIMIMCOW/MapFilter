@@ -26,7 +26,7 @@ namespace WhaleSpotting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = ConnectionStringHelper.GetConnectionString(Configuration);
+            var connectionString = ConfigurationHelper.GetDbConnectionString(Configuration);
 
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
@@ -34,7 +34,10 @@ namespace WhaleSpotting
             services.AddDefaultIdentity<UserDbModel>()
                 .AddEntityFrameworkStores<WhaleSpottingContext>();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+                {
+                    options.IssuerUri = ConfigurationHelper.GetIssuerUri(Configuration);
+                })
                 .AddApiAuthorization<UserDbModel, WhaleSpottingContext>();
 
             services.AddAuthentication()

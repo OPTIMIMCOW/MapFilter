@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace WhaleSpotting
 {
-    public static class ConnectionStringHelper
+    public static class ConfigurationHelper
     {
-        public static string GetConnectionString(IConfiguration configuration)
+        public static string GetDbConnectionString(IConfiguration configuration)
         {
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
                 return configuration.GetValue<string>("DATABASE_URL");
@@ -28,6 +28,20 @@ namespace WhaleSpotting
                 ";Pooling=true;SSL Mode=Require;TrustServerCertificate=True;";
             Console.WriteLine(connectionString);
             return connectionString;
+        }
+
+        public static string GetIssuerUri(IConfiguration configuration)
+        {
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
+                return configuration.GetValue<string>("ISSUER_URI");
+            }
+
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ISSUER_URI")))
+            {
+                throw new Exception("No environment variable set for DATABASE_URL");
+            }
+
+            return Environment.GetEnvironmentVariable("ISSUER_URI");
         }
     }
 }
