@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import {Profile} from "./components/Profile";
+import ReportSighting from "./components/ReportSighting";
 
 function App(): JSX.Element {
     return (
@@ -11,10 +12,10 @@ function App(): JSX.Element {
             <Navbar />
             <Switch>
                 <Route path="/map" />
-                <Route path="/reportsighting" />
                 <Route path="/profile" component={Profile}/>
                 <Route path="/login" />
                 <Route path="/register" />
+                <Route path="/reportsighting" component={ReportSighting}/>
                 <Route path="" component={Home} />
             </Switch >
             <Footer />
