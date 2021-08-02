@@ -7,9 +7,6 @@ namespace WhaleSpotting.Models.DbModels
 {
     public class WhaleSpottingContext: ApiAuthorizationDbContext<UserDbModel>
     {
-        //public WhaleSpottingContext(DbContextOptions<WhaleSpottingContext> options) : base(options)
-        //{
-        //}
         public WhaleSpottingContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
