@@ -7,7 +7,7 @@
     //justify-content: center;
     //flex-direction: column;
     font-family: $fontFamily;
-    height: 100%;
+    height: 100vw;
     overflow: hidden;
 }
 
@@ -24,10 +24,6 @@
 
     .map-component {
 
-        // .map {
-        //     width: 2560px;
-        // }
-        
         display: flex;
         justify-content: center;
     }

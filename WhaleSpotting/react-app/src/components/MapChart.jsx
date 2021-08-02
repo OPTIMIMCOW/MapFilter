@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
     ComposableMap,
     Geographies,
@@ -13,44 +13,31 @@ const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 
 async function populateSightingData() {
     const response = await fetch("http://hotline.whalemuseum.org/api.json");
-    const response2 = await fetch("http://hotline.whalemuseum.org/api.json?northern%20elephant%20seal")
-    // console.log(response);
+    const response2 = await fetch("http://hotline.whalemuseum.org/api.json?northern%20elephant%20seal");
     const json = await response.json();
     const json2 = await response2.json();
-    // console.log(json.length)
-    // console.log(json2.length)
-    console.log(json2.concat(json2).length)
-    
+
     return await json.concat(json2);
 }
 
+const markers = [];
 
-const markers = [
-    {
-        markerOffset: -15,
-        name: "Buenos Aires",
-        coordinates: [-58.3816, -34.6037]
-    }
-];
-
-
-function MapChart () {
-
+function MapChart() {
     const [data, setData] = useState([]);
+    const [chosen, setChosen] = useState({});
 
     useEffect(() => {
         populateSightingData()
-        .then(data => setData(data))
-        .catch(console.log("no data"))
+            .then(data => setData(data))
+            .catch(console.log("no data"))
     }, []);
-
-    console.log(data);
 
     data.forEach(a => {
         markers.push({
             markerOffset: 15,
             name: "",
-            coordinates: [a.latitude, a.longitude]
+            coordinates: [a.longitude, a.latitude],
+            chosen: false
         })
     })
 
@@ -59,22 +46,33 @@ function MapChart () {
             projection="geoEqualEarth"
         >
             <ZoomableGroup zoom={1}>
-            <Geographies geography={geoUrl}>
-                {({ geographies }) =>
-                    geographies.map(geo => <Geography
-                        key={geo.rsmKey}
-                        geography={geo}
-                        fill="#DDD"
-                        stroke="#FFF" 
+                <Geographies geography={geoUrl}>
+                    {({ geographies }) =>
+                        geographies.map(geo => <Geography
+                            key={geo.rsmKey}
+                            geography={geo}
+                            fill="#DDD"
+                            stroke="#FFF"
                         // fill="#EAEAEC"
                         // stroke="#D6D6DA"
-                    />)
-                }
-            </Geographies>
+                        />)
+                    }
+                </Geographies>
 
-            {markers.map(({ name, coordinates, markerOffset }) => (
-                    <Marker key={name} coordinates={coordinates}>
-                        <circle r={4} fill="#FFA500" stroke="#fff" strokeWidth={0.2} />
+                {/* {markers.push(chosen)}; */}
+                {markers.map(({ name, coordinates, markerOffset, chosen }, index) => (
+                    <Marker key={index} coordinates={coordinates}
+                        onClick={a => {
+                            console.log("clicked");
+                            console.log(coordinates);
+                            markers.push({
+                                markerOffset: 15,
+                                name: "",
+                                coordinates: [coordinates.longitude, coordinates.latitude],
+                                chosen: false
+                            });
+                        }}>
+                        <circle r={4} fill= {chosen ? "#F24726" : "#FFA500"} stroke="#fff" strokeWidth={0.2} />
                         <text
                             textAnchor="middle"
                             y={markerOffset}
@@ -83,7 +81,7 @@ function MapChart () {
                             {name}
                         </text>
                     </Marker>
-            ))}
+                ))}
             </ZoomableGroup>
         </ComposableMap>
     );
