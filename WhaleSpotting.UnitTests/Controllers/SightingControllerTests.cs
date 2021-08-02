@@ -59,12 +59,13 @@ namespace WhaleSpotting.UnitTests.Controllers
                 OrcaPod = "",
                 UserId = 5,
             };
+            A.CallTo(() => _sightings.CreateSighting(newSighting)).Returns(new SightingResponseModel { });
 
-            var response = _underTest.CreateSighting(newSighting) as CreatedResult;
+            //act
+            var response = _underTest.CreateSighting(newSighting);
 
-            var url = response.Location;
-            var dbObject = response.Value as SightingResponseModel;
-
+            //assert
+            var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
             dbObject.Id.Should().BeGreaterThan(0);
 
             //A.CallTo(() => _sightings.CreateSighting(newSighting))
