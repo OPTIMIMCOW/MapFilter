@@ -1,7 +1,9 @@
 @import "./Constants.scss";
-.report-sighting{
-    font-family: $fontFamily;
 
+.report-sighting{
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    
     .banner-image{
         height: 40vh;
         object-fit: cover;
@@ -17,11 +19,6 @@
         margin: auto;
         max-width: 800px;
         padding: 4% 5%;
-    }
-
-    .card-component{
-        background: $primaryCard;
-        border-radius: 5px;
     }
 
     .title{
@@ -52,7 +49,7 @@
             
             &:focus{
                 outline: none;
-                border: 2px solid $primaryDark;
+                border: 1.25px solid $primaryDark;
             } 
         }
     }
@@ -61,22 +58,18 @@
         width: 200%;
     }
         
-    .button{
+    .submit-button{
         height: 45px;
         margin: 35px 0;
-    
-        .input-field{
-            height: 100%;
-            width: 100%;
-            color: $textOnPrimary;
-            border: none;
-            font-size: $bodyFontSize;
-            border-radius: 5px;
-            background: $primaryDark; 
+        width: 100%;
+        color: $textOnPrimary;
+        border: none;
+        font-size: $bodyFontSize;
+        border-radius: 5px;
+        background: $primaryDark;
         
-            &:hover{
-                background: $primaryColour;
-            }
+        &:hover{
+            background: $primaryColour;
         }
     }
 

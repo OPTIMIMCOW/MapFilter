@@ -2,7 +2,7 @@ import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
 
 export default function ReportSighting(): JSX.Element {
-    const [datetime, setDatetime] = useState("");
+    const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [species, setSpecies] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -12,9 +12,9 @@ export default function ReportSighting(): JSX.Element {
     const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const sighting = { datetime, location, species, quantity, longitude, latitude, orcaPod, imageUrl, description };
+        const sighting = { date, location, species, quantity, longitude, latitude, orcaPod, imageUrl, description };
         console.log(sighting);
     };
 
@@ -23,47 +23,47 @@ export default function ReportSighting(): JSX.Element {
             <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" />
             <div className="container">
                 <div className="title">Report Your Sighting</div>
-                <form action="#" onSubmit={(e)=>handleSubmit(e)}>
+                <form>
                     <div className="card-component">
                         <div className="sighting-details">
                             <div className="input-box">
-                                <label className="details">Sighting Date Time <span className="required">(required)</span></label>
-                                <input className="input-field" name="datetime" type="date" placeholder="Enter sighting date and time" required
-                                    value={datetime}
-                                    onChange={(e) => setDatetime(e.target.value)}/>
+                                <label >Sighting Date Time <span className="required">(required)</span></label>
+                                <input className="input-field" name="date" type="date" placeholder="Enter sighting date" required
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Location <span className="required">(required)</span></label>
-                                <input className="input-field"  type="text" name="location" placeholder="Confirm your location" required
+                                <label>Location <span className="required">(required)</span></label>
+                                <input className="input-field"  type="text" name="location" placeholder="Enter your location" required
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Species <span className="required">(required)</span></label>
+                                <label>Species <span className="required">(required)</span></label>
                                 <input className="input-field" type="text" name="species" placeholder="Enter species" required
                                     value={species}
                                     onChange={(e) => setSpecies(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Quantity</label>
+                                <label>Quantity</label>
                                 <input className="input-field" type="number" placeholder="Enter quantity"
                                     value={quantity}
                                     onChange={(e) => setQuantity(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Longitude</label>
+                                <label>Longitude</label>
                                 <input className="input-field coordinates" type="number" placeholder="Enter your longitude"
                                     value={longitude}
                                     onChange={(e) => setLongitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Latitude</label>
+                                <label>Latitude</label>
                                 <input className="input-field coordinates" type="number" placeholder="Enter your latitude"
                                     value={latitude}
                                     onChange={(e) => setLatitude(e.target.value)}/>
                             </div>
                             <div className="input-box">
-                                <label className="details">Orca Pod</label>
+                                <label>Orca Pod</label>
                                 <input className="input-field" type="text" placeholder="Enter the orca pod"
                                     value={orcaPod}
                                     onChange={(e) => setOrcaPod(e.target.value)}/>
@@ -82,9 +82,9 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                         </div>
                     </div>
-                    <div className="button">
-                        <input className="input-field" type="submit" value="Submit Sighting"/>
-                    </div>
+                    <button onClick={handleSubmit} className="submit-button">
+                        Submit Sighting
+                    </button>
                 </form>
             </div>
         </div>
