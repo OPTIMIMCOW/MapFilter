@@ -1,0 +1,83 @@
+@import "./Constants.scss";
+
+.report-sighting{
+    padding-bottom: $footerHeight;
+    margin-top: $headerHeight;
+    
+    .banner-image{
+        height: 40vh;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .required{
+        color: $secondaryDark;
+        font-size: $mobileBodyFontSize;
+    }
+
+    .container{
+        margin: auto;
+        max-width: 800px;
+        padding: 4% 5%;
+    }
+
+    .title{
+        text-align: center;
+        font-size: $titleFontSize;
+    }
+
+    .sighting-details{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 6%;
+        padding: 2% 5% 5% 5%;
+    }
+
+    .input-box{
+        margin: 3% 0;
+        width: 46%;
+    
+        .input-field{
+            height: 85%;
+            width: 100%;
+            padding-left: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid $primaryColour;
+            font-size: $bodyFontSize;
+            
+            &:focus{
+                outline: none;
+                border: 1.25px solid $primaryDark;
+            } 
+        }
+    }
+
+    .description{
+        width: 200%;
+    }
+        
+    .submit-button{
+        height: 45px;
+        margin: 35px 0;
+        width: 100%;
+        color: $textOnPrimary;
+        border: none;
+        font-size: $bodyFontSize;
+        border-radius: 5px;
+        background: $primaryDark;
+        
+        &:hover{
+            background: $primaryColour;
+        }
+    }
+
+    .coordinates::-webkit-inner-spin-button, 
+    .coordinates::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0; 
+    }
+}

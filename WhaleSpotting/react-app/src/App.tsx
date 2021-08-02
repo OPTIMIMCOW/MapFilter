@@ -8,14 +8,14 @@ import {Profile} from "./components/Profile";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import FetchWeatherData from "./components/FetchWeatherData";
-import FetchData from "./components/FetchData";
+import ReportSighting from "./components/ReportSighting";
 
 function App(): JSX.Element {
     return (
         <Fragment>
             <Navbar />
             <Route exact path="/map" />
-            <AuthorizeRoute exact path="/reportsighting" component={FetchData}/>
+            <AuthorizeRoute exact path="/reportsighting" component={ReportSighting}/>
             <AuthorizeRoute exact path="/profile" component={Profile}/>
             <Route exact path="/login">
                 <Redirect to={ApplicationPaths.Login} />
