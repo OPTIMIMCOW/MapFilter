@@ -7,7 +7,6 @@ export class AuthorizeService {
     _user = null;
     _isAuthenticated = false;
 
-    // By default pop ups are disabled because they don't work properly on Edge.
     // If you want to enable pop up authentication simply set this flag to false.
     _popUpDisabled = false;
 

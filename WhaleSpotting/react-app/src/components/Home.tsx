@@ -1,5 +1,5 @@
-import "../styles/Home.scss";
 import React from "react";
+import "../styles/Home.scss";
 import PageNav from "./PageNav";
 
 export default function Home() : JSX.Element {

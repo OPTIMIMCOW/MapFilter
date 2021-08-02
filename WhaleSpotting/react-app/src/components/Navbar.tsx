@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
-import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();

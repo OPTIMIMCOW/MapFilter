@@ -1,8 +1,7 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
 import "../styles/Buttons.scss";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import PageNav from "./PageNav";
 
 export function Profile(): JSX.Element {
