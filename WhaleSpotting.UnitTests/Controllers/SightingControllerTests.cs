@@ -44,8 +44,9 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void TestCreateSightingWorks()
+        public void CreateSighting_NewSighting_CreatedResult()
         {
+            // Arrange
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -59,21 +60,66 @@ namespace WhaleSpotting.UnitTests.Controllers
                 OrcaPod = "",
                 UserId = 5,
             };
-            A.CallTo(() => _sightings.CreateSighting(newSighting)).Returns(new SightingResponseModel { });
 
-            //act
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = false,
+            };
+
+            A.CallTo(() => _sightings.CreateSighting(newSighting))
+                .Returns(sightingResponse);
+
+            //Act
             var response = _underTest.CreateSighting(newSighting);
 
-            //assert
+            //Assert
             var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
-            dbObject.Id.Should().BeGreaterThan(0);
-
-            //A.CallTo(() => _sightings.CreateSighting(newSighting))
-            //    .Returns(serviceResponse);
-
+            createdResult.Location.Should().Contain("1");
+            createdResult.Value.Should().Be(sightingResponse);
         }
-    // create request object 
-    // call controller
-    // integgorate return response for url and object returned for id.
-}
+
+        [Fact]
+        public void CreateSighting_NewSighting_BadRequest()
+        {
+            // Arrange
+            var newSighting = new SightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                UserId = 5,
+            };
+
+            var exception = new Exception("Sighted At must be in the past");
+
+            A.CallTo(() => _sightings.CreateSighting(newSighting))
+                .Throws(exception);
+
+            //Act
+            var response = _underTest.CreateSighting(newSighting);
+
+            //Assert
+            var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
+            badRequestResult.Value.Should().Be("Sighted At must be in the past");
+            badRequestResult.StatusCode.Should().Be(400);
+        }
+    }
 }
