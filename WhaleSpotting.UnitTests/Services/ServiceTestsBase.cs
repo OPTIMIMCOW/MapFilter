@@ -1,5 +1,8 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using FakeItEasy;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Data.Common;
 using WhaleSpotting.Models.DbModels;
 
@@ -19,7 +22,8 @@ namespace WhaleSpotting.UnitTests.Services
             var context = new WhaleSpottingContext(
                 new DbContextOptionsBuilder<WhaleSpottingContext>()
                     .UseSqlite(CreateInMemoryDatabase())
-                    .Options);
+                    .Options, 
+                A.Fake<IOptions<OperationalStoreOptions>>());
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             return context;

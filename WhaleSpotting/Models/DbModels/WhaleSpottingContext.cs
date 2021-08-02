@@ -11,7 +11,7 @@ namespace WhaleSpotting.Models.DbModels
         //{
         //}
         public WhaleSpottingContext(
-            DbContextOptions<WhaleSpottingContext> options,
+            DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }

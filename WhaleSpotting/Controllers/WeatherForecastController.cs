@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WhaleSpotting.Models.ApiModels;
+using WhaleSpotting.Models.ResponseModels;
 
 namespace WhaleSpotting.Controllers
 {
@@ -18,10 +18,10 @@ namespace WhaleSpotting.Controllers
         };
 
         [HttpGet]
-        public IEnumerable<WeatherForecastApiModel> Get()
+        public IEnumerable<WeatherForecastResponseModel> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecastApiModel
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecastResponseModel
                 {
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = rng.Next(-20, 55),

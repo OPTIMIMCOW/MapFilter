@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WhaleSpotting.Models.ApiModels
+namespace WhaleSpotting.Models.ResponseModels
 {
-    public class WeatherForecastApiModel
+    public class WeatherForecastResponseModel
     {
         public DateTime Date { get; set; }
 
