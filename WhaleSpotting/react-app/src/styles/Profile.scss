@@ -1,7 +1,7 @@
 @import './Constants.scss';
 
 .body {
-    max-width: 1024px;
+    max-width: $bodyWidth;
     font-family: $fontFamily;
     display: flex;
     margin: $headerHeight auto $footerHeight auto;
@@ -14,11 +14,12 @@
 }
 
 .feed{
-    padding: 0 20px;
+    padding: $guttersTopBottom $guttersSide;
     flex: 1;
 }
 
 .outer-container {
+    padding-top: $guttersTopBottom;
     width: 90%;
     flex-direction: column;
     display:flex;
@@ -49,7 +50,8 @@
 
 .button-container{
     display:flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    justify-content: flex-end;
     flex: 1;
     align-items: center;
 }
@@ -82,6 +84,7 @@
 
     .body {
         flex-direction: column;
+        margin: $headerHeight auto $mobileFooterHeight auto;
     }
 
     .profile-pane {
@@ -108,6 +111,7 @@
 
     .outer-container{
         flex-direction: row;
+        padding-top: 0;
     }
 
     .profile-image{
