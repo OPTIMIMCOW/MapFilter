@@ -37,7 +37,7 @@ export default function Navbar(): JSX.Element {
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
                 <div className="changing-nav-links">
-                    <div className={(!loggedIn) ? "display" : "dontdisplay"}>
+                    <div hidden={loggedIn} >
                         <Link to="/register"
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>

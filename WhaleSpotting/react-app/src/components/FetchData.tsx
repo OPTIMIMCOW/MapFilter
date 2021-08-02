@@ -1,9 +1,12 @@
 
 import React, { useState, useEffect } from "react";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function FetchData(): JSX.Element {
     //TODO Fetch api
     async function populateSightingData() {
+        const token = await authService.getAccessToken();
+
         const response = await fetch("sightings");
         const data = await response.json();
     }
