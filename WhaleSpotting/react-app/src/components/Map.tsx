@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Style } from "./Button";
 import SightingApiModel from "../apiModels/SightingApiModel";
 import MapChart from "./MapChart";
+import Weather from "./WeatherCard";
 
 export default function Map(): JSX.Element {
 
@@ -18,12 +19,11 @@ export default function Map(): JSX.Element {
                 <div className="map">
                     <MapChart />
                 </div>
-
             </div>
-            {/* <div className="map-info">
-                Weather
-                Picture of whale
-            </div> */}
+            <div className="map-info">
+                {/* <Weather ()/> */}
+                list of spieces
+            </div>
         </div>
     );
 }

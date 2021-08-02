@@ -9,6 +9,7 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import SightingApiModel from "../apiModels/SightingApiModel";
+import WeatherCard from "./WeatherCard";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -44,35 +45,38 @@ export function MapChart(): JSX.Element {
     }
 
     return (
-        <ComposableMap
-            projection="geoEqualEarth">
-            <ZoomableGroup zoom={1}>
-                <Geographies geography={geoUrl}>
-                    {({ geographies }) =>
-                        geographies.map(geo => <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            fill={fillColour}
-                            stroke="#FFF"
-                        // fill="#EAEAEC"
-                        // stroke="#D6D6DA"
-                        />)
-                    }
-                </Geographies>
-                {data.map(({ id, longitude, latitude }, index) => (
-                    <Marker key={index} coordinates={[longitude, latitude]} name=""
-                        onClick={() => setChosenId(id)} >
-                        <circle r={2} fill={id === chosenId ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
-                        {/* <text
+        <div>
+            <ComposableMap
+                projection="geoEqualEarth">
+                <ZoomableGroup zoom={1}>
+                    <Geographies geography={geoUrl}>
+                        {({ geographies }) =>
+                            geographies.map(geo => <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                fill={fillColour}
+                                stroke="#FFF"
+                            // fill="#EAEAEC"
+                            // stroke="#D6D6DA"
+                            />)
+                        }
+                    </Geographies>
+                    {data.map(({ id, longitude, latitude }, index) => (
+                        <Marker key={index} coordinates={[longitude, latitude]} name=""
+                            onClick={() => setChosenId(id)} >
+                            <circle r={2} fill={id === chosenId ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                            {/* <text
                             textAnchor="middle"
                             y={15}
                             style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}>
                             {location}
                         </text> */}
-                    </Marker>
-                ))}
-            </ZoomableGroup>
-        </ComposableMap>
+                        </Marker>
+                    ))}
+                </ZoomableGroup>
+            </ComposableMap>
+            <WeatherCard />
+        </div>
     );
 }
 
