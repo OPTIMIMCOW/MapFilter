@@ -44,3 +44,80 @@
    justify-self: flex-end;
    margin-right: 5%;
 }
+
+.burger-button {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    margin: 6px;
+    width: 30px;
+    right: 20px;
+    z-index: 3;
+    background-color: $primaryColour;
+}
+
+@mixin bar {
+    width: 35px;
+    height: 5px;
+    background-color: $secondaryLight;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.opened-bar-1, .opened-bar-2, .opened-bar-3 {
+    @include bar;
+}
+
+/* Rotate first bar */
+.closed-bar-1 {
+    @include bar;
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+/* Fade out the second bar */
+.closed-bar-2 {
+    @include bar;
+    opacity: 0;
+}
+
+/* Rotate last bar */
+.closed-bar-3 {
+    @include bar;
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+@media(max-width: $mobileScreenSize) {
+    .burger-button, .current-page-mobile {
+        display: inline-block
+    }
+
+    .header {
+        height: 50px;
+    }
+
+    .nav-bar-mobile {
+        width: 100%;
+        position: absolute;
+        z-index: 3;
+        background-color: $primaryDark;
+
+        .nav-link, .nav-link-selected {
+            display: block;
+            padding: 12px;
+
+            &:hover {
+                color: $primaryLight;
+            }
+
+            &:active {
+                margin-top: 0.2%;
+                color: $primaryLight;
+            }
+        }
+    }
+
+    .nav-bar, .current-page {
+        display: none;
+    }
+}
