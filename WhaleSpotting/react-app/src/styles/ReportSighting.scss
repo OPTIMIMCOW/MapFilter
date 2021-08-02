@@ -83,6 +83,9 @@
     }
     
     @media (max-width: 544px) {
+        .container{
+            margin-bottom: $mobileFooterHeight;
+        }
         .sighting-details .input-box{
             margin-bottom: 15px;
             width: 100%;
