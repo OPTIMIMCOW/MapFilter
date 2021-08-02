@@ -1,73 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { isPropertySignature } from "typescript";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import WeatherApiModel from "../apiModels/WeatherApiModel";
 
 interface infoProps {
-    place: {lon: number, lat: number};
+    place: { lon: number, lat: number };
 }
 
+
 // export default function SightingMapInfo({place}: infoProps): JSX.Element {
-export default function SightingMapInfo(): JSX.Element {
-    const [page, setPage] = useState(1);
+export default function SightingMapInfo(props: any): JSX.Element {
 
     //TODO - fetch weather api with the sighting model
-    const place = {
-        lon: -122.08, 
-        lat: 37.39}; 
+    //props.lon, props.lat
 
-    const weatherApiData = [
-        {
-            "coord": {
-                "lon": -122.08,
-                "lat": 37.39
-            },
-            "weather": [
-                {
-                    "id": 800,
-                    "main": "Clear",
-                    "description": "clear sky",
-                    "icon": "01d"
-                }
-            ],
-            "base": "stations",
-            "main": {
-                "temp": 282.55,
-                "feels_like": 281.86,
-                "temp_min": 280.37,
-                "temp_max": 284.26,
-                "pressure": 1023,
-                "humidity": 100
-            },
-            "visibility": 16093,
-            "wind": {
-                "speed": 1.5,
-                "deg": 350
-            },
-            "clouds": {
-                "all": 1
-            },
-            "dt": 1560350645,
-            "sys": {
-                "type": 1,
-                "id": 5122,
-                "message": 0.0139,
-                "country": "US",
-                "sunrise": 1560343627,
-                "sunset": 1560396563
-            },
-            "timezone": -25200,
-            "id": 420006353,
-            "name": "Mountain View",
-            "cod": 200
-        }
-    ];
+    const [weatherData, setWeatherData] = useState<WeatherApiModel>();
+
+    async function fetchWeather(): Promise<WeatherApiModel | void> {
+        return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${props.lat}&lon=${props.lon}&Appid=35d29d97cfc38cae6b23aa34bc4af423`)
+            .then(response => response.json())
+            .then(response => setWeatherData(response))
+            .catch(() => console.log("no data"));
+    }
+
+    useEffect(() => {
+        fetchWeather();
+    }, []);
+
+    if (!weatherData) {
+        return <div> Loading.. </div>;
+    }
 
     return (
         <div className="weather-component" data-testid="weather">
             <h4>Current weather at this sighting</h4>
-            <div>lon {weatherApiData[0].coord.lon} lat {weatherApiData[0].coord.lat}</div>
-            <div>weather {weatherApiData[0].weather[0].main} temp {weatherApiData[0].main.temp} wind {weatherApiData[0].wind.deg} {weatherApiData[0].wind.speed} </div>
-
+            <div>lon {weatherData.lon} lat {weatherData.lat}</div>
+            <div>weather {weatherData.current.weather[0].main} temp {weatherData.current.temp} wind {weatherData.current.wind_speed} visibility {weatherData.current.visibility}</div>
         </div>
     );
 }

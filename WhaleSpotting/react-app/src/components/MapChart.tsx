@@ -30,9 +30,9 @@ async function populateSightingData(): Promise<SightingApiModel[]> {
 
 const fillColour = "#DDD";
 
-export function MapChart(): JSX.Element {
+export function MapChart(props: any): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
-    const [chosenId, setChosenId] = useState<number>(0);
+    //const [chosen, setChosen] = useState<{id:number, lat: number, lon:number} >({id:0, lat:0, lon:0});
 
     useEffect(() => {
         populateSightingData()
@@ -63,8 +63,8 @@ export function MapChart(): JSX.Element {
                     </Geographies>
                     {data.map(({ id, longitude, latitude }, index) => (
                         <Marker key={index} coordinates={[longitude, latitude]} name=""
-                            onClick={() => setChosenId(id)} >
-                            <circle r={2} fill={id === chosenId ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                            onClick={() => props.setChosen({id: id, lat: latitude, lon: longitude} )} >
+                            <circle r={2} fill={id === props.chosen.id ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
                             {/* <text
                             textAnchor="middle"
                             y={15}
@@ -75,7 +75,6 @@ export function MapChart(): JSX.Element {
                     ))}
                 </ZoomableGroup>
             </ComposableMap>
-            <WeatherCard />
         </div>
     );
 }

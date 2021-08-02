@@ -5,10 +5,12 @@ import { Button, Style } from "./Button";
 import SightingApiModel from "../apiModels/SightingApiModel";
 import MapChart from "./MapChart";
 import Weather from "./WeatherCard";
+import WeatherCard from "./WeatherCard";
+import SightingMapInfo from "./WeatherCard";
 
 export default function Map(): JSX.Element {
 
-    const [selectedMarker, setSelectedMarker] = useState<SightingApiModel | undefined>(undefined);
+    const [chosen, setChosen] = useState<{id:number, lat: number, lon:number} >({id:0, lat:0, lon:0});
 
     return (
         <div className="map-component">
@@ -17,11 +19,11 @@ export default function Map(): JSX.Element {
             <h2>MAP OF SIGHTINGS</h2>
             <div className="map-container">
                 <div className="map">
-                    <MapChart />
+                    <MapChart props={setChosen}/>
                 </div>
             </div>
             <div className="map-info">
-                {/* <Weather ()/> */}
+                <SightingMapInfo chosen={chosen} setChosen={setChosen} />
                 list of spieces
             </div>
         </div>
