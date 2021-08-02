@@ -1,5 +1,5 @@
-import "../styles/Home.scss";
 import React from "react";
+import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";

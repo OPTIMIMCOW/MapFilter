@@ -1,6 +1,7 @@
-using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,15 +24,35 @@ namespace WhaleSpotting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = ConnectionStringHelper.GetConnectionString(Configuration);
+
+            services.AddDbContext<WhaleSpottingContext>(options =>
+                options.UseNpgsql(connectionString!));
+
+            services.AddDefaultIdentity<UserDbModel>()
+                .AddEntityFrameworkStores<WhaleSpottingContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<UserDbModel, WhaleSpottingContext>();
+
+            services.AddAuthentication()
+                  .AddIdentityServerJwt();
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
-
-            var connectionString = ConnectionStringerHelper.GetConnectionString(Configuration);
-            
-            services.AddDbContext<WhaleSpottingContext>(options =>
-                options.UseNpgsql(connectionString!));
 
             services.AddTransient<ISightingsService, SightingsService>();
         }
@@ -56,11 +77,16 @@ namespace WhaleSpotting
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>
