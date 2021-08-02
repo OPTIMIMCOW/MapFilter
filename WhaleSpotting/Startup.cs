@@ -95,6 +95,7 @@ namespace WhaleSpotting
             app.Use((context, next) =>
             {
                 context.Request.Protocol = "https";
+                context.Request.Scheme = "https";
                 return next();
             });
 
