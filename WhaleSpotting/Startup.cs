@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Http;
 
 namespace WhaleSpotting
 {
@@ -55,6 +57,14 @@ namespace WhaleSpotting
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
 
             services.AddTransient<ISightingsService, SightingsService>();
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +90,13 @@ namespace WhaleSpotting
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseForwardedHeaders();
+
+            app.Use((context, next) =>
+            {
+                context.Request.Protocol = "https";
+                return next();
+            });
 
             app.UseEndpoints(endpoints =>
             {
