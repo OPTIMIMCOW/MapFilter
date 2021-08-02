@@ -100,12 +100,12 @@
 
     }
     @media (max-width: $minMobileScreenSize){
+        padding-bottom: $mobileFooterHeight;
+        
         .title{
             font-size: $smallMobileTitleFontSize;
         }
-        .report-sighting{
-            padding-bottom: $mobileFooterHeight;
-        }
+
     }
 }
 
