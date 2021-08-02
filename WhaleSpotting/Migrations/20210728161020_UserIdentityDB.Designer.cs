@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhaleSpotting.Models.DbModels;
@@ -9,9 +10,10 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    partial class WhaleSpottingContextModelSnapshot : ModelSnapshot
+    [Migration("20210728161020_UserIdentityDB")]
+    partial class UserIdentityDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,6 +325,9 @@ namespace WhaleSpotting.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("HashedPassword")
+                        .HasColumnType("text");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -346,6 +351,12 @@ namespace WhaleSpotting.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("ProfileImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -355,6 +366,9 @@ namespace WhaleSpotting.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

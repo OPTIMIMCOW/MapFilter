@@ -11,11 +11,12 @@ export default function Navbar(): JSX.Element {
     function HandleLinkClick(currentPage: string) {
         setCurrentPage(currentPage);
     }
-    const loggedIn = false;
+
+    const loggedIn = !!localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting");
 
     useEffect(() => {
         setCurrentPage(pageName);
-    }, [location]);
+    }, [location, loggedIn]);
 
     function CheckCurrentPage(pageName: string) {
         return currentPage === pageName ? "navbar-link selected" : "navbar-link";
@@ -36,11 +37,11 @@ export default function Navbar(): JSX.Element {
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
                 <div className="changing-nav-links">
-                    <div hidden={loggedIn}>
-                        <Link to="/Register"
+                    <div hidden={loggedIn} >
+                        <Link to="/register"
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
-                        <Link to="/Login"
+                        <Link to="/login"
                             className={CheckCurrentPage("Login")}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
@@ -48,7 +49,7 @@ export default function Navbar(): JSX.Element {
                         <Link to="/Profile"
                             className={CheckCurrentPage("Profile")}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>
-                        <Link to="/Logout"
+                        <Link to="/logout"
                             className={CheckCurrentPage("Logout")}
                             onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
                     </div>
