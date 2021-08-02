@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
+using WhaleSpotting.Services;
 
 namespace WhaleSpotting
 {
@@ -52,6 +53,8 @@ namespace WhaleSpotting
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
+
+            services.AddTransient<ISightingsService, SightingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,38 +12,13 @@ export default function FetchData(): JSX.Element {
             headers: !token ? {} : { "Authorization": `Bearer ${token}` }
         });
         const data = await response.json();
-        setData(data);
     }
     
     useEffect(() => {
-        populateWeatherData();
+        populateSightingData();
     }, []);
 
-    let contents = <p><em>Loading...</em></p>;
-    
-    if (forecastData){
-        contents =
-            <table className="table table-striped" aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {forecastData.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>;
-    }
+    const contents = <p><em>Loading...</em></p>;
 
     return (
         <div>
