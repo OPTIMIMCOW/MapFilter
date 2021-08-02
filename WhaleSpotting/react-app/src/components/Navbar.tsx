@@ -26,7 +26,7 @@ export default function Navbar(): JSX.Element {
 
     return (
         <div className="header">
-            <nav className="nav-bar">
+            <nav className={closeBurger ? "nav-bar" : "nav-bar-mobile"}>
                 <div className="fixed-nav-links">
                     <Link to="/Home" data-testid="home-link-navbar"
                         className={CheckCurrentPage("Home")}
