@@ -11,6 +11,7 @@ export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
 
     const orca: SightingApiModel = {
+        id: 1,
         sightedAt: new Date(),
         species: "whale",
         quantity: 1,
@@ -26,6 +27,7 @@ export function Profile(): JSX.Element {
     };
 
     const orcaConfirmed: SightingApiModel = {
+        id: 2,
         sightedAt: new Date(),
         species: "orca",
         quantity: 3,

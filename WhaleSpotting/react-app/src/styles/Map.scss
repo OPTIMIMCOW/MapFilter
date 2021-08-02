@@ -7,8 +7,7 @@
     //justify-content: center;
     //flex-direction: column;
     font-family: $fontFamily;
-    height: 100vw;
-    overflow: hidden;
+    height: 100vh;
 }
 
 .map-container {
@@ -16,8 +15,7 @@
 }
 
 .map {
-    overflow: hidden;
-    width: 2048px;
+    width: 100%;
 }
 
 @media (min-width: 2559px) {
