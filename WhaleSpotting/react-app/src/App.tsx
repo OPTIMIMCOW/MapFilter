@@ -8,6 +8,7 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import {Profile} from "./components/Profile";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
+import FetchWeatherData from "./components/FetchWeatherData";
 
 function App(): JSX.Element {
     return (
@@ -25,7 +26,7 @@ function App(): JSX.Element {
             <Route exact path="/logout">
                 <Redirect to={{ pathname: `${ApplicationPaths.LogOut}`, state: { local: true } }} />
             </Route>
-            <AuthorizeRoute exact path="/weather" component={FetchData} />
+            <AuthorizeRoute exact path="/weather" component={FetchWeatherData} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route exact path="/" component={Home} />
             <Route exact path="/Home" component={Home} />
