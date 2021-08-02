@@ -29,9 +29,6 @@ namespace WhaleSpotting
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
 
-            services.AddDefaultIdentity<UserDbModel>()
-                .AddEntityFrameworkStores<WhaleSpottingContext>();
-
             services.AddIdentityServer()
                 .AddApiAuthorization<UserDbModel, WhaleSpottingContext>();
 
