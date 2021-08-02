@@ -14,8 +14,8 @@
     }    
 
     .home-contents {
-        margin: 0  auto $footerHeight auto;
-        max-width: 1024px;
+        margin: auto;
+        max-width: $bodyWidth;
         width: 100%;
     }
 
@@ -38,9 +38,7 @@
         }
 
         .report-button-container {
-            margin: 0px;
-            margin-top: 5px;
-            margin-bottom: 5px;
+            margin: 5px 0;
 
             .report-button {
                 width:100%;
