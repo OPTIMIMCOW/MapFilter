@@ -4,6 +4,7 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";
 import SightingApiModel from "../apiModels/SightingApiModel";
+import { BannerImage } from "./BannerImage";
 
 export default function Home() : JSX.Element {
 
@@ -43,8 +44,7 @@ export default function Home() : JSX.Element {
 
     return (
         <div className="home" data-testid="home">
-            <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" />
-
+            <BannerImage />
             <div className="home-contents">
                 <div className="report-button-container">
                     <Button 
