@@ -81,10 +81,10 @@ namespace WhaleSpotting.UnitTests.Controllers
             A.CallTo(() => _sightings.CreateSighting(newSighting))
                 .Returns(sightingResponse);
 
-            //Act
+            // Act
             var response = _underTest.CreateSighting(newSighting);
 
-            //Assert
+            // Assert
             var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
             createdResult.Location.Should().Contain("1");
             createdResult.Value.Should().Be(sightingResponse);
@@ -113,10 +113,10 @@ namespace WhaleSpotting.UnitTests.Controllers
             A.CallTo(() => _sightings.CreateSighting(newSighting))
                 .Throws(exception);
 
-            //Act
+            // Act
             var response = _underTest.CreateSighting(newSighting);
 
-            //Assert
+            // Assert
             var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
             badRequestResult.Value.Should().Be("Sighted At must be in the past");
         }
