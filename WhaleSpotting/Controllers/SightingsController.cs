@@ -38,7 +38,6 @@ namespace WhaleSpotting.Controllers
             {
                 return BadRequest(e.Message);
             }
-           
         }
     }
 }

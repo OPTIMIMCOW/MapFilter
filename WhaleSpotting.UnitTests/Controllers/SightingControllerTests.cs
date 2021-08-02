@@ -44,7 +44,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_NewSighting_CreatedResult()
+        public void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
         {
             // Arrange
             var newSighting = new SightingRequestModel
@@ -91,7 +91,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_NewSighting_BadRequest()
+        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsBadRequest()
         {
             // Arrange
             var newSighting = new SightingRequestModel
@@ -102,7 +102,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Longitude = -100.010,
                 Latitude = -22.010,
                 Location = "atlantic ocean",
-                SightedAt = DateTime.Now,
+                SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = "",
                 UserId = 5,
@@ -119,7 +119,6 @@ namespace WhaleSpotting.UnitTests.Controllers
             //Assert
             var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
             badRequestResult.Value.Should().Be("Sighted At must be in the past");
-            badRequestResult.StatusCode.Should().Be(400);
         }
     }
 }

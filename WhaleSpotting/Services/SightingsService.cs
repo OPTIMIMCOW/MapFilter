@@ -63,6 +63,6 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(newSighting);
+        }
     }
-}
 }
