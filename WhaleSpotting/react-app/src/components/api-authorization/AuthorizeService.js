@@ -8,7 +8,7 @@ export class AuthorizeService {
     _isAuthenticated = false;
 
     // If you want to enable pop up authentication simply set this flag to false.
-    _popUpDisabled = false;
+    _popUpDisabled = true;
 
     async isAuthenticated() {
         const user = await this.getUser();
