@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace react_app.Controllers
+namespace WhaleSpotting.Controllers
 {
     public class OidcConfigurationController : Controller
     {
