@@ -49,7 +49,7 @@ export default function ReportSighting(): JSX.Element {
         //         // eslint-disable-next-line no-console
         //         console.log(sighting);
         //         /a
-        //fetch post request to the correct endpoint. 
+        // fetch post request to the correct endpoint. 
         // handle the reponse with catch.
         // make response object? 
         // make error message viewer. 
@@ -77,32 +77,24 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                             <div className="input-box">
                                 <label>Species <span className="required">(required)</span></label>
-                                <select className="input-field">
-                                    AtlanticWhiteSidedDolphin,
-                                    CaliforniaSeaLion,
-                                    DallsPorpoise,
-                                    GrayWhale,
-                                    HarborPorpoise,
-                                    HarborSeal,
-                                    Humpback,
-                                    Minke,
-                                    NorthernElephantSeal,
-                                    Orca,
-                                    Other,
-                                    PacificWhiteSidedDolphin,
-                                    SeaOtter,
-                                    SouthernElephantSeal,
-                                    StellerSeaLion,
-                                    Unknown,
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="grapefruit">Grapefruit</option>
-                                    <option value="lime">Lime</option>
-                                    <option selected value="coconut">Coconut</option>
-                                    <option value="mango">Mango</option>
+                                <select className="input-field" onChange={(e) =>{setSpecies(e.target.value);}}>
+                                    
+                                    <option value="AtlanticWhiteSidedDolphin">Atlantic White Sided Dolphin</option>,
+                                    <option value="CaliforniaSeaLion">California Sea Lion</option>,
+                                    <option value="DallsPorpoise">Dalls Porpoise</option>,
+                                    <option value="GrayWhale">Gray Whale</option>,
+                                    <option value="HarborPorpoise">Harbor Porpoise</option>,
+                                    <option value="HarborSeal">Harbor Seal</option>,
+                                    <option value="Humpback">Humpback</option>,
+                                    <option value="Minke">Minke</option>,
+                                    <option value="NorthernElephantSeal">Northern Elephant Seal</option>,
+                                    <option value="Orca">Orca</option>,
+                                    <option value="Other">Other</option>,
+                                    <option value="PacificWhiteSidedDolphin">Pacific White Sided Dolphin</option>,
+                                    <option value="SeaOtter">Sea Otter</option>,
+                                    <option value="SouthernElephantSeal">Southern Elephant Seal</option>,
+                                    <option value="StellerSeaLion">Steller Sea Lion</option>,
+                                    <option value="Unknown">Unknown</option>,
                                 </select>
                                 {/* <input className="input-field" type="text" name="species" placeholder="Enter species" required
                                     value={species}
