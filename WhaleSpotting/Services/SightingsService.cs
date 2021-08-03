@@ -10,6 +10,7 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
+        void AddNewSightings(List<SightingDbModel> sightingsToAdd);
     }
 
     public class SightingsService : ISightingsService
@@ -29,6 +30,25 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings;
+        }
+
+        public void AddNewSightings(List<SightingDbModel> sightingsToAdd)
+        {
+            var newSightingIds =
+                sightingsToAdd.Select(s => s.ApiId).Distinct().ToArray();
+            var SightingsInDb =
+                _context
+                    .Sightings
+                    .Where(s => newSightingIds.Contains(s.ApiId))
+                    .Select(s => s.ApiId)
+                    .ToArray();
+            var SightingsNotInDb =
+                sightingsToAdd.Where(s => !SightingsInDb.Contains(s.ApiId));
+            SightingsNotInDb
+                .ToList();
+      
+            _context.Sightings.AddRange(SightingsNotInDb.ToArray());
+            _context.SaveChanges();
         }
     }
 }
