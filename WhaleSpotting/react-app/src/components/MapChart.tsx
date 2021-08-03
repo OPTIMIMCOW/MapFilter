@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
@@ -9,7 +9,8 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import SightingApiModel from "../apiModels/SightingApiModel";
-import WeatherCard from "./WeatherCard";
+import { Chosen } from "./Map";
+import WeatherCard from "./SightingMapInfo";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -30,9 +31,13 @@ async function populateSightingData(): Promise<SightingApiModel[]> {
 
 const fillColour = "#DDD";
 
-export function MapChart(props: any): JSX.Element {
+interface MapChartProps {
+    chosen: Chosen | undefined;
+    setChosen: Dispatch<SetStateAction<Chosen | undefined>>;
+}
+
+export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
-    //const [chosen, setChosen] = useState<{id:number, lat: number, lon:number} >({id:0, lat:0, lon:0});
 
     useEffect(() => {
         populateSightingData()
@@ -45,37 +50,30 @@ export function MapChart(props: any): JSX.Element {
     }
 
     return (
-        <div>
-            <ComposableMap
-                projection="geoEqualEarth">
-                <ZoomableGroup zoom={1}>
-                    <Geographies geography={geoUrl}>
-                        {({ geographies }) =>
-                            geographies.map(geo => <Geography
-                                key={geo.rsmKey}
-                                geography={geo}
-                                fill={fillColour}
-                                stroke="#FFF"
-                            // fill="#EAEAEC"
-                            // stroke="#D6D6DA"
-                            />)
-                        }
-                    </Geographies>
-                    {data.map(({ id, longitude, latitude }, index) => (
-                        <Marker key={index} coordinates={[longitude, latitude]} name=""
-                            onClick={() => props.setChosen({id: id, lat: latitude, lon: longitude} )} >
-                            <circle r={2} fill={id === props.chosen.id ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
-                            {/* <text
-                            textAnchor="middle"
-                            y={15}
-                            style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}>
-                            {location}
-                        </text> */}
-                        </Marker>
-                    ))}
-                </ZoomableGroup>
-            </ComposableMap>
-        </div>
+
+        <ComposableMap className = "simple-map"
+            projection="geoEqualEarth">
+            <ZoomableGroup zoom={1}>
+                <Geographies geography={geoUrl}>
+                    {({ geographies }) =>
+                        geographies.map(geo => <Geography
+                            key={geo.rsmKey}
+                            geography={geo}
+                            fill={fillColour}
+                            stroke="#FFF"
+                        // fill="#EAEAEC"
+                        // stroke="#D6D6DA"
+                        />)
+                    }
+                </Geographies>
+                {data.map(({ id, longitude, latitude }, index) => (
+                    <Marker key={index} coordinates={[longitude, latitude]} name=""
+                        onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
+                        <circle r={2} fill={chosen !== undefined && id === chosen.id ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                    </Marker>
+                ))}
+            </ZoomableGroup>
+        </ComposableMap>
     );
 }
 

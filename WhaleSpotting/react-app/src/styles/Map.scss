@@ -7,22 +7,41 @@
     //justify-content: center;
     //flex-direction: column;
     font-family: $fontFamily;
-    height: 100vh;
+    color: $textOnSecondary;
+    // height: 80vh;
+}
+
+.map-header{
+    text-align: center;
 }
 
 .map-container {
     background-color: #98d5f5;
+    display: flex;
+    justify-content: center;
 }
 
-.map {
-    width: 100%;
+.simple-map {
+    width: 80%;
+    max-width: $bodyWidth;
 }
 
 @media (min-width: 2559px) {
 
     .map-component {
-
         display: flex;
         justify-content: center;
     }
+}
+
+.map-info {
+    font-family: $fontFamily;
+    color: $textOnSecondary;
+}
+
+@media (max-width: $mobileScreenSize) {
+    .simple-map {
+        width: 100%;
+    }
+    
 }

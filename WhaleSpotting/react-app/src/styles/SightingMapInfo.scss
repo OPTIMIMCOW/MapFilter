@@ -1,0 +1,41 @@
+@import "./Constants.scss";
+
+.weather-component {
+    border-radius: 10px;
+    background-color: $primaryCard;
+    margin: 15px 0;
+    width: 100%;
+    text-align: center;
+
+    .sighting-info {
+        display: inline-flex;
+        padding: 10px 10px;
+        width: 100%;
+        text-align: left;
+    }
+
+    .weather-info {
+        width: 50%;
+    }
+
+    .species {
+        width: 50%; 
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .weather-component {
+        .sighting-info{
+            display: block;
+        }
+
+        .weather-info {
+            width: 100%;
+        }
+
+        .species {
+            width: 100%; 
+        }
+    }
+}
