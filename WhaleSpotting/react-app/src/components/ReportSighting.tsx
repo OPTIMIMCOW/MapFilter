@@ -7,12 +7,12 @@ import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSi
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
     const [location, setLocation] = useState("");
-    const [species, setSpecies] = useState<Species>(-1);
+    const [species, setSpecies] = useState<Species>(1);
     const [quantity, setQuantity] = useState(0);
     const [longitude, setLongitude] = useState("");
     const [latitude, setLatitude] = useState("");
     const [orcaPod, setOrcaPod] = useState("");
-    const [orcaType, setorcaType] = useState<OrcaType>(-1);
+    const [orcaType, setorcaType] = useState<OrcaType>(1);
     const [description, setDescription] = useState("");
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,17 +28,6 @@ export default function ReportSighting(): JSX.Element {
             orcaPod: orcaPod,
             orcaType: orcaType
         };
-
-        // species: Species;
-        // quantity: number;
-        // description: string;
-        // longitude: number;
-        // latitude: number;
-        // location: string;
-        // sightedAt: Date;
-        // orcaType: OrcaType | null;
-        // orcaPod: string;
-        // userId: number;
 
         // eslint-disable-next-line no-console
         console.log(sighting);
@@ -72,7 +61,7 @@ export default function ReportSighting(): JSX.Element {
                             <div className="input-box">
                                 <label>Species <span className="required">(required)</span></label>
                                 <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }}>
-                                    <option value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
+                                    <option selected value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
                                     <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
                                     <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
                                     <option value={Species.GrayWhale}>Gray Whale</option>,
@@ -109,19 +98,19 @@ export default function ReportSighting(): JSX.Element {
                                     onChange={(e) => setLatitude(e.target.value)} />
                             </div>
                             <div className="input-box">
+                                <label>Orca Type <span className="required">(required)</span></label>
+                                <select className="input-field" onChange={(e) => { setorcaType(parseInt(e.target.value)); }}>
+                                    <option selected value={OrcaType.NorthernResident}>Northern Resident</option>,
+                                    <option value={OrcaType.Offshore}>Offshore</option>,
+                                    <option value={OrcaType.SouthernResident}>Southern Resident</option>,
+                                    <option value={OrcaType.Transient}>Transient</option>,
+                                </select>
+                            </div>
+                            <div className="input-box">
                                 <label>Orca Pod</label>
                                 <input className="input-field" type="text" placeholder="Enter the orca pod"
                                     value={orcaPod}
                                     onChange={(e) => setOrcaPod(e.target.value)} />
-                            </div>
-                            <div className="input-box">
-                                <label>Orca Type <span className="required">(required)</span></label>
-                                <select className="input-field" onChange={(e) => { setorcaType(parseInt(e.target.value)); }}>
-                                    <option value={OrcaType.NorthernResident}>Atlantic White Sided Dolphin</option>,
-                                    <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
-                                    <option value={Species.GrayWhale}>Gray Whale</option>,
-                                    <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
-                                </select>
                             </div>
                             <div className="input-box description">
                                 <label>Description</label>
