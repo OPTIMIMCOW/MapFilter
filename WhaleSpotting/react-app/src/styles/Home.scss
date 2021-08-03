@@ -7,12 +7,6 @@
     flex-direction: column;
     font-family: $fontFamily;
   
-    .banner-image{
-        height: 40vh;
-        object-fit: cover;
-        width: 100%;
-    }    
-
     .home-contents {
         margin: auto;
         max-width: $bodyWidth;
@@ -33,10 +27,6 @@
     }
 
     @media (max-width: $mobileScreenSize) {
-
-        .banner-image {
-            height: 80vw;
-        }
 
         .report-button-container {
             margin: 5px 0;
