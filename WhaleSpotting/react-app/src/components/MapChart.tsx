@@ -50,10 +50,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
 
     if (data.length === 0) {
         return <div> Loading... </div>;
-    } 
-
-    const chosenSelected = false;
-    console.log(props);
+    }
 
     return (
 
