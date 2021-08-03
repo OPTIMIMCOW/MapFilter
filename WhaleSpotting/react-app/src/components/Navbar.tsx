@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
 
@@ -8,11 +8,8 @@ export default function Navbar(): JSX.Element {
     const pageName = removeSlash === "" ? "Home" : removeSlash.substr(0, 1).toUpperCase() + removeSlash.substr(1).toLowerCase();
     const [currentPage, setCurrentPage] = useState(pageName);
     const [closeBurger, setBurgerState] = useState(true);
-
-    function HandleLinkClick(currentPage: string) {
-        setCurrentPage(currentPage);
-        setBurgerState(true);
-    }
+    const ref = useRef<HTMLDivElement>(null);
+    useOnClickOutside(ref, () => { setBurgerState(true); });
 
     const loggedIn = !!(localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
         || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-stg.herokuapp.com:WhaleSpotting")
@@ -22,12 +19,17 @@ export default function Navbar(): JSX.Element {
         setCurrentPage(pageName);
     }, [location, loggedIn]);
 
+    function HandleLinkClick(currentPage: string) {
+        setCurrentPage(currentPage);
+        setBurgerState(true);
+    }
+
     function CheckCurrentPage(pageName: string) {
         return currentPage === pageName ? "navbar-link selected" : "navbar-link";
     }
 
     return (
-        <div className="header">
+        <div className="header" ref={ref}>
             <nav className={closeBurger ? "nav-bar" : "nav-bar-mobile"}>
                 <div className="fixed-nav-links">
                     <Link to="/Home" data-testid="home-link-navbar"
@@ -69,6 +71,26 @@ export default function Navbar(): JSX.Element {
                 <div className={closeBurger ? "opened-bar-2" : "closed-bar-2"}></div>
                 <div className={closeBurger ? "opened-bar-3" : "closed-bar-3"}></div>
             </div>
+            <div className="current-page-mobile">{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
         </div>
     );
+}
+
+function useOnClickOutside(ref: React.RefObject<HTMLDivElement>, handler: () => void) {
+    useEffect(() => {
+        document.addEventListener("mousedown", listener);
+        document.addEventListener("touchstart", listener);
+
+        return () => {
+            document.removeEventListener("mousedown", listener);
+            document.removeEventListener("touchstart", listener);
+        };
+    }, [ref, handler]);
+
+    function listener(this: Document, ev: MouseEvent | TouchEvent): any {
+        if (!ref.current || ref.current!.contains(ev.target as Node)) {
+            return;
+        }
+        handler();
+    }
 }

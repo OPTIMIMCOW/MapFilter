@@ -89,13 +89,13 @@
     transform: rotate(45deg) translate(-8px, -8px);
 }
 @media(max-width: $mobileScreenSize) {
-    .burger-button, .current-page-mobile {
-        display: inline-block;
+
+    .burger-button{
+        display: block;
     }
 
     .header {
         padding-top: 5px;
-
     }
     .fixed-nav-links {
         display: flex;
@@ -127,8 +127,11 @@
             }
         }
     }
-
+ 
     .nav-bar, .current-page {
         display: none;
     }
+    // .navbar-link-selected{
+    //     display: grid;
+    // }
 }
