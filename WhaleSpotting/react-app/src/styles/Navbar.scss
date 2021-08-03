@@ -50,11 +50,15 @@
     display: none;
     cursor: pointer;
     position: absolute;
-    margin: 6px;
+    margin: 0 6px;
     width: 30px;
     right: 20px;
     z-index: 3;
     background-color: $primaryColour;
+}
+
+.current-page-mobile {
+    display: none;
 }
 
 @mixin bar {
@@ -90,13 +94,25 @@
 }
 @media(max-width: $mobileScreenSize) {
 
-    .burger-button{
+    .burger-button {
         display: block;
     }
 
-    .header {
-        padding-top: 5px;
+    .current-page-mobile {
+        display: flow-root;
+        margin-right: 75%;
+        background-color: $primaryDark;
+        text-decoration: none;
+        color: $textOnPrimary;
+        border-radius: 5px;
+        width: max-content;
+        padding: 5px;
     }
+
+    .header {
+        height: $headerHeight+2;
+    }
+
     .fixed-nav-links {
         display: flex;
         flex-direction: column;
@@ -111,7 +127,7 @@
         width: 100%;
         z-index: 3;
         background-color: $primaryColour;
- 
+
         .nav-link, .nav-link-selected {
             display: flex;
             flex-direction: column;
@@ -131,7 +147,4 @@
     .nav-bar, .current-page {
         display: none;
     }
-    // .navbar-link-selected{
-    //     display: grid;
-    // }
 }

@@ -71,7 +71,7 @@ export default function Navbar(): JSX.Element {
                 <div className={closeBurger ? "opened-bar-2" : "closed-bar-2"}></div>
                 <div className={closeBurger ? "opened-bar-3" : "closed-bar-3"}></div>
             </div>
-            <div className="current-page-mobile">{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
+            <div className={closeBurger ? "current-page-mobile" : "nav-bar"}>{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
         </div>
     );
 }
