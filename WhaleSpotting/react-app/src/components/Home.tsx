@@ -9,7 +9,7 @@ import { BannerImage } from "./BannerImage";
 export default function Home() : JSX.Element {
 
     function orderFeedBy():void {
-        console.log("this needs to be implemented");
+        //TODO "this needs to be implemented";
     }
 
     const orca: SightingApiModel = {

@@ -16,7 +16,7 @@ export default function ReportSighting(): JSX.Element {
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const sighting = { date, location, species, quantity, longitude, latitude, orcaPod, imageUrl, description };
-        console.log(sighting);
+        //TODO - Implement this
     };
 
     return (
