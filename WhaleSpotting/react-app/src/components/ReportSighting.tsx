@@ -15,7 +15,7 @@ export default function ReportSighting(): JSX.Element {
     const [orcaType, setorcaType] = useState<OrcaType>(1);
     const [description, setDescription] = useState("");
 
-    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    async function handleSubmit (event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
         const sighting: CreateSightingApiModel = {
             species: species,
@@ -32,6 +32,23 @@ export default function ReportSighting(): JSX.Element {
         // eslint-disable-next-line no-console
         console.log(sighting);
 
+        const response = await fetch(`/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sighting),
+        })
+        .then(response => response.json)
+        .catch(e => {
+            console.log()
+        });
+
+        const test = 10;
+    
+        if (!response.ok) {
+            throw new Error(await response.json())
+        }
         //a
         // fetch post request to the correct endpoint. 
         // handle the reponse with catch.
