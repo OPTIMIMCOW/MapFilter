@@ -15,7 +15,10 @@ export default function ReportSighting(): JSX.Element {
     const [orcaType, setorcaType] = useState<OrcaType>(1);
     const [description, setDescription] = useState("");
 
-    async function handleSubmit (event: React.MouseEvent<HTMLButtonElement>) {
+    const [responseMessage, setResponseMessage] = useState("");
+
+
+    async function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
         const sighting: CreateSightingApiModel = {
             species: species,
@@ -39,22 +42,20 @@ export default function ReportSighting(): JSX.Element {
             },
             body: JSON.stringify(sighting),
         })
-        .then(response => response.json)
-        .catch(e => {
-            console.log()
-        });
-
-        const test = 10;
-    
-        if (!response.ok) {
-            throw new Error(await response.json())
-        }
-        //a
-        // fetch post request to the correct endpoint. 
-        // handle the reponse with catch.
-        // make response object? 
-        // make error message viewer. 
+            .then(response => setResponseMessage((response.ok) ? "Your sighting was submitted successfully. An admin will review it shortly." : "Unsuccessful submission" + (response as any).Message));
+            //.catch(e => {
+            //    //
+            //    console.log(e)
+            //});
     };
+
+    function ShowResultMessage() : JSX.Element {
+
+        return (
+            <p className="response-message">
+                {responseMessage}
+            </p>)
+    }
 
     return (
         <div className="report-sighting" data-testid="report-sighting">
@@ -140,6 +141,7 @@ export default function ReportSighting(): JSX.Element {
                     <button onClick={handleSubmit} className="submit-button">
                         Submit Sighting
                     </button>
+                    {ShowResultMessage()}
                 </form>
             </div>
         </div>
