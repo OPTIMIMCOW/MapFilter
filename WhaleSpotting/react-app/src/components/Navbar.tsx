@@ -40,22 +40,26 @@ export default function Navbar(): JSX.Element {
                         className={CheckCurrentPage("Reportsighting")}
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
-                <div className="changing-nav-links">
+                <div className="changing-nav-links" >
                     <div hidden={loggedIn} >
-                        <Link to="/register"
-                            className={CheckCurrentPage("Register")}
-                            onClick={() => HandleLinkClick("Register")} >Register</Link>
-                        <Link to="/login"
-                            className={CheckCurrentPage("Login")}
-                            onClick={() => HandleLinkClick("Login")}>Login</Link>
+                        <div className="changing-nav-links-mobile" >
+                            <Link to="/register"
+                                className={CheckCurrentPage("Register")}
+                                onClick={() => HandleLinkClick("Register")} >Register</Link>
+                            <Link to="/login"
+                                className={CheckCurrentPage("Login")}
+                                onClick={() => HandleLinkClick("Login")}>Login</Link>
+                        </div>
                     </div>
                     <div hidden={!loggedIn}>
-                        <Link to="/Profile"
-                            className={CheckCurrentPage("Profile")}
-                            onClick={() => HandleLinkClick("Profile")}>Profile</Link>
-                        <Link to="/logout"
-                            className={CheckCurrentPage("Logout")}
-                            onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
+                        <div className="changing-nav-links-mobile" >
+                            <Link to="/Profile"
+                                className={CheckCurrentPage("Profile")}
+                                onClick={() => HandleLinkClick("Profile")}>Profile</Link>
+                            <Link to="/logout"
+                                className={CheckCurrentPage("Logout")}
+                                onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
+                        </div>
                     </div>
                 </div>
             </nav>

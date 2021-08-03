@@ -33,6 +33,7 @@
         text-decoration: none;
         color: $textOnPrimary;
         border-radius: 5px; 
+        width:max-content;
     }
 }
 
@@ -89,21 +90,31 @@
 }
 @media(max-width: $mobileScreenSize) {
     .burger-button, .current-page-mobile {
-        display: inline-block
+        display: inline-block;
     }
 
     .header {
-        height: 50px;
+        padding-top: 5px;
+
+    }
+    .fixed-nav-links {
+        display: flex;
+        flex-direction: column;
+    }
+    .changing-nav-links-mobile{
+        display: flex;
+        flex-direction: column;
     }
 
     .nav-bar-mobile {
+        align-self: baseline;
         width: 100%;
-        position: absolute;
         z-index: 3;
         background-color: $primaryColour;
-
+ 
         .nav-link, .nav-link-selected {
-            display: block;
+            display: flex;
+            flex-direction: column;
             padding: 12px;
 
             &:hover {
