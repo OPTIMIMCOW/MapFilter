@@ -17,6 +17,7 @@ export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
 
     const [weatherData, setWeatherData] = useState<WeatherApiModel>();
     async function fetchWeather(): Promise<WeatherApiModel | void> {
+        //eslint-disable-next-line
         return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen!.lat}&lon=${chosen!.lon}&units=metric&Appid=35d29d97cfc38cae6b23aa34bc4af423`)
             .then(response => response.json())
             .then(response => setWeatherData(response));
