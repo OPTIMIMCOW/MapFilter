@@ -15,10 +15,23 @@ export default function ReportSighting(): JSX.Element {
     const [description, setDescription] = useState("");
 
     const speciesKeyValues = {
-        "Blue Whale" : Species.AtlanticWhiteSidedDolphin,
-        
-
-    }
+        "Atlantic White Sided Dolphin": Species.AtlanticWhiteSidedDolphin,
+        "California Sea Lion": Species.CaliforniaSeaLion,
+        "Dalls Porpoise": Species.DallsPorpoise,
+        "Gray Whale": Species.GrayWhale,
+        "Harbor Porpoise": Species.HarborPorpoise,
+        "Harbor Seal": Species.HarborSeal,
+        "Humpback": Species.Humpback,
+        "Minke": Species.Minke,
+        "Northern Elephant Seal": Species.NorthernElephantSeal,
+        "Orca": Species.Orca,
+        "Pacific White Sided Dolphin": Species.PacificWhiteSidedDolphin,
+        "Sea Otter": Species.SeaOtter,
+        "Southern Elephant Seal": Species.SouthernElephantSeal,
+        "StellerSeaLion": Species.StellerSeaLion,
+        "Other": Species.Other,
+        "Unknown": Species.Unknown
+    };
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -65,6 +78,22 @@ export default function ReportSighting(): JSX.Element {
                             <div className="input-box">
                                 <label>Species <span className="required">(required)</span></label>
                                 <select className="input-field">
+                                    AtlanticWhiteSidedDolphin,
+                                    CaliforniaSeaLion,
+                                    DallsPorpoise,
+                                    GrayWhale,
+                                    HarborPorpoise,
+                                    HarborSeal,
+                                    Humpback,
+                                    Minke,
+                                    NorthernElephantSeal,
+                                    Orca,
+                                    Other,
+                                    PacificWhiteSidedDolphin,
+                                    SeaOtter,
+                                    SouthernElephantSeal,
+                                    StellerSeaLion,
+                                    Unknown,
                                     <option value="grapefruit">Grapefruit</option>
                                     <option value="grapefruit">Grapefruit</option>
                                     <option value="grapefruit">Grapefruit</option>
