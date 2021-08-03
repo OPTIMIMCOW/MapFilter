@@ -15,6 +15,28 @@ export default function FetchWeatherData(): JSX.Element {
         setData(data);
     }
 
+    async function makeAdmin() {
+        const token = await authService.getAccessToken();
+        const response = await fetch("User/MakeAdmin", {
+            headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        });
+        console.log(response);
+    }
+    async function checkAdmin() {
+        const token = await authService.getAccessToken();
+        const response = await fetch("User/CheckAdmin", {
+            headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        });
+        console.log(response);
+    }
+    async function removeAdmin() {
+        const token = await authService.getAccessToken();
+        const response = await fetch("User/RemoveAdmin", {
+            headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        });
+        console.log(response);
+    }
+
     useEffect(() => {
         populateWeatherData();
     }, []);
@@ -50,6 +72,9 @@ export default function FetchWeatherData(): JSX.Element {
             <h1 id="tabelLabel" >Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
+            <button onClick={makeAdmin}>Make admin</button>
+            <button onClick={checkAdmin}>Check admin</button>
+            <button onClick={removeAdmin}>Remove admin</button>
         </div>
     );
 }

@@ -10,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Http;
 
 namespace WhaleSpotting
 {
@@ -31,7 +30,7 @@ namespace WhaleSpotting
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
 
-            services.AddDefaultIdentity<UserDbModel>()
+            services.AddIdentity<UserDbModel, IdentityRole>()
                 .AddEntityFrameworkStores<WhaleSpottingContext>();
 
             services.AddIdentityServer(options =>
