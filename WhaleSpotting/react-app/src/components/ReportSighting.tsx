@@ -18,17 +18,17 @@ export default function ReportSighting(): JSX.Element {
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const sighting: CreateSightingApiModel = {
-                species: species,
-                quantity: quantity,
-                description: description,
-                longitude: parseInt(longitude),
-                latitude: parseInt(latitude),
-                location: location,
-                sightedAt: date,
-                orcaPod: orcaPod,
-                orcaType: orcaType
+            species: species,
+            quantity: quantity,
+            description: description,
+            longitude: parseInt(longitude),
+            latitude: parseInt(latitude),
+            location: location,
+            sightedAt: date,
+            orcaPod: orcaPod,
+            orcaType: orcaType
         };
-        
+
         // species: Species;
         // quantity: number;
         // description: string;
@@ -40,10 +40,10 @@ export default function ReportSighting(): JSX.Element {
         // orcaPod: string;
         // userId: number;
 
-                // eslint-disable-next-line no-console
-                console.log(sighting);
-                
-                //a
+        // eslint-disable-next-line no-console
+        console.log(sighting);
+
+        //a
         // fetch post request to the correct endpoint. 
         // handle the reponse with catch.
         // make response object? 
@@ -61,8 +61,7 @@ export default function ReportSighting(): JSX.Element {
                             <div className="input-box">
                                 <label >Sighting Date Time <span className="required">(required)</span></label>
                                 <input className="input-field" name="date" type="date" placeholder="Enter sighting date" required
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)} />
+                                    onChange={(e) => setDate(new Date(e.target.value))} />
                             </div>
                             <div className="input-box">
                                 <label>Location <span className="required">(required)</span></label>
@@ -72,7 +71,7 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                             <div className="input-box">
                                 <label>Species <span className="required">(required)</span></label>
-                                <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value));}}>
+                                <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }}>
                                     <option value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
                                     <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
                                     <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
@@ -95,7 +94,7 @@ export default function ReportSighting(): JSX.Element {
                                 <label>Quantity</label>
                                 <input className="input-field" type="number" placeholder="Enter quantity"
                                     value={quantity}
-                                    onChange={(e) => setQuantity(e.target.value)} />
+                                    onChange={(e) => setQuantity(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
                                 <label>Longitude</label>
@@ -116,10 +115,13 @@ export default function ReportSighting(): JSX.Element {
                                     onChange={(e) => setOrcaPod(e.target.value)} />
                             </div>
                             <div className="input-box">
-                                <label>Image Url</label>
-                                <input className="input-field" type="url" placeholder="Enter your image url"
-                                    value={imageUrl}
-                                    onChange={(e) => setImageUrl(e.target.value)} />
+                                <label>Orca Type <span className="required">(required)</span></label>
+                                <select className="input-field" onChange={(e) => { setorcaType(parseInt(e.target.value)); }}>
+                                    <option value={OrcaType.NorthernResident}>Atlantic White Sided Dolphin</option>,
+                                    <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
+                                    <option value={Species.GrayWhale}>Gray Whale</option>,
+                                    <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
+                                </select>
                             </div>
                             <div className="input-box description">
                                 <label>Description</label>
