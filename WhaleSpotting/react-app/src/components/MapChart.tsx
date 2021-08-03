@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import {
     ComposableMap,
     Geographies,
@@ -10,23 +9,19 @@ import {
 } from "react-simple-maps";
 import SightingApiModel from "../apiModels/SightingApiModel";
 import { Chosen } from "./Map";
-import WeatherCard from "./SightingMapInfo";
+import "../styles/Map.scss";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 async function populateSightingData(): Promise<SightingApiModel[]> {
     const response = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000");
     const response2 = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000&page=2");
-    // const response3 = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000&page=3");
-    // const response4 = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000&page=4");
-    // const response5 = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000&page=5");
+    
     const json = await response.json();
     const json2 = await response2.json();
-    // const json3 = await response3.json();
-    // const json4 = await response4.json();
-    // const json5 = await response5.json();
+    
 
-    return json.concat(json2);//.concat(json3).concat(json4).concat(json5);
+    return json.concat(json2);
 }
 
 const fillColour = "#DDD";
@@ -41,12 +36,8 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
 
     useEffect(() => {
         populateSightingData()
-            .then(data => setData(data))
-            .catch(() => console.log("no data"));
+            .then(data => setData(data));
     }, []);
-
-    console.log(data.length);
-    console.log(data);
 
     if (data.length === 0) {
         return <div> Loading... </div>;

@@ -1,11 +1,7 @@
 import "../styles/Map.scss";
 import "../styles/Home.scss";
-import React, { useEffect, useState } from "react";
-import { Button, Style } from "./Button";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import React, { useState } from "react";
 import MapChart from "./MapChart";
-import Weather from "./SightingMapInfo";
-import WeatherCard from "./SightingMapInfo";
 import SightingMapInfo from "./SightingMapInfo";
 
 export interface Chosen {

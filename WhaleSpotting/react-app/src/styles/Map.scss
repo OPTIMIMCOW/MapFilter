@@ -1,46 +1,39 @@
 @import "./Constants.scss";
 
 .map-component {
-    padding-bottom: $footerHeight;
-    margin-top: $headerHeight;
-    //display: flex;
-    //justify-content: center;
-    //flex-direction: column;
+    margin: $headerHeight auto $footerHeight auto;
+    display: flex;
+    flex-direction: column;
     font-family: $fontFamily;
     color: $textOnSecondary;
-    // height: 80vh;
-}
-
-.map-header{
-    text-align: center;
+    max-width: $bodyWidth;
+    align-items: center;
 }
 
 .map-container {
     background-color: #98d5f5;
     display: flex;
     justify-content: center;
+    width: 80%;
+}
+
+.map-header{
+    text-align: center;
 }
 
 .simple-map {
-    width: 80%;
-    max-width: $bodyWidth;
-}
-
-@media (min-width: 2559px) {
-
-    .map-component {
-        display: flex;
-        justify-content: center;
-    }
+    width: 100%;
 }
 
 .map-info {
     font-family: $fontFamily;
     color: $textOnSecondary;
+    width: 80%;
 }
 
 @media (max-width: $mobileScreenSize) {
-    .simple-map {
+
+    .map-container {
         width: 100%;
     }
     
