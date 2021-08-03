@@ -5,6 +5,7 @@ import SightingApiModel from "../../apiModels/SightingApiModel";
 import userEvent from "@testing-library/user-event";
 
 const exampleConfirmed: SightingApiModel = {
+    id: 1,
     sightedAt: new Date(),
     species: "orca",
     quantity: 3,
@@ -20,6 +21,7 @@ const exampleConfirmed: SightingApiModel = {
 };
 
 const exampleUnconfirmed: SightingApiModel = {
+    id: 2,
     sightedAt: new Date(),
     species: "orca",
     quantity: 3,

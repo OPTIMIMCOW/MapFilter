@@ -15,13 +15,12 @@ export default function Map(): JSX.Element {
     const [chosen, setChosen] = useState<Chosen>();
 
     return (
-        <div className="map-component">
-            {/* <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" /> */}
+        <div className="map-component" data-testid="map-component">
             <h2 className="map-header">MAP OF SIGHTINGS</h2>
-            <div className="map-container">
+            <div className="map-container" data-testid="map-container">
                 <MapChart chosen={chosen} setChosen={setChosen} />
             </div>
-            <div className="map-info">
+            <div className="map-info" data-testid="map-info">
                 <SightingMapInfo chosen={chosen} />
             </div>
         </div>

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
 import {
     ComposableMap,
     Geographies,
@@ -16,10 +15,10 @@ const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 async function populateSightingData(): Promise<SightingApiModel[]> {
     const response = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000");
     const response2 = await fetch("http://hotline.whalemuseum.org/api.json?limit=1000&page=2");
-    
+
     const json = await response.json();
     const json2 = await response2.json();
-    
+
 
     return json.concat(json2);
 }
@@ -40,13 +39,13 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     }, []);
 
     if (data.length === 0) {
-        return <div> Loading... </div>;
+        return <div data-testid="loading"> Loading... </div>;
     }
 
     return (
-
-        <ComposableMap className = "simple-map"
-            projection="geoEqualEarth">
+        <ComposableMap className="simple-map"
+            projection="geoEqualEarth"
+            data-testid="simple-map">
             <ZoomableGroup zoom={1}>
                 <Geographies geography={geoUrl}>
                     {({ geographies }) =>
@@ -55,13 +54,13 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
                             geography={geo}
                             fill={fillColour}
                             stroke="#FFF"
-                        // fill="#EAEAEC"
-                        // stroke="#D6D6DA"
                         />)
                     }
                 </Geographies>
                 {data.map(({ id, longitude, latitude }, index) => (
-                    <Marker key={index} coordinates={[longitude, latitude]} name=""
+                    <Marker
+                        data-testid={chosen !== undefined && id === chosen.id ? "chosen" : "not-chosen"}
+                        key={index} coordinates={[longitude, latitude]} name=""
                         onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
                         <circle r={2} fill={chosen !== undefined && id === chosen.id ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
                     </Marker>
