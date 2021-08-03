@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
+using WhaleSpotting.Data;
+
 
 namespace WhaleSpotting
 {
@@ -16,7 +18,7 @@ namespace WhaleSpotting
             var serviceProvider = scope.ServiceProvider;
             var dbContext = serviceProvider.GetService<WhaleSpottingContext>();
             dbContext!.Database.Migrate();
-            
+            ApiData.GetApiData();
             host.Run();
         }
 
