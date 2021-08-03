@@ -1,3 +1,4 @@
+/* eslint-disable */
 import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
@@ -6,7 +7,7 @@ import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSi
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
-    const [species, setSpecies] = useState("");
+    const [species, setSpecies] = useState<Species>(-1);
     const [quantity, setQuantity] = useState("");
     const [longitude, setLongitude] = useState("");
     const [latitude, setLatitude] = useState("");
@@ -14,41 +15,23 @@ export default function ReportSighting(): JSX.Element {
     const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
 
-    const speciesKeyValues = {
-        "Atlantic White Sided Dolphin": Species.AtlanticWhiteSidedDolphin,
-        "California Sea Lion": Species.CaliforniaSeaLion,
-        "Dalls Porpoise": Species.DallsPorpoise,
-        "Gray Whale": Species.GrayWhale,
-        "Harbor Porpoise": Species.HarborPorpoise,
-        "Harbor Seal": Species.HarborSeal,
-        "Humpback": Species.Humpback,
-        "Minke": Species.Minke,
-        "Northern Elephant Seal": Species.NorthernElephantSeal,
-        "Orca": Species.Orca,
-        "Pacific White Sided Dolphin": Species.PacificWhiteSidedDolphin,
-        "Sea Otter": Species.SeaOtter,
-        "Southern Elephant Seal": Species.SouthernElephantSeal,
-        "StellerSeaLion": Species.StellerSeaLion,
-        "Other": Species.Other,
-        "Unknown": Species.Unknown
-    };
-
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        // const sighting: CreateSightingApiModel = {
-        //         species: species,
-        //         Date:date,
-        //         Location: location,
-        //         Quanity: quantity,
-        //         longitude: parseInt(longitude),
-        //         latitude: parseInt(latitude),
-        //         orcaPod: orcaPod,
-        //         imageUrl: imageUrl,
-        //         description: description
-        // };
-        //         // eslint-disable-next-line no-console
-        //         console.log(sighting);
-        //         /a
+        const sighting: CreateSightingApiModel = {
+                species: species,
+                Date:date,
+                Location: location,
+                Quanity: quantity,
+                longitude: parseInt(longitude),
+                latitude: parseInt(latitude),
+                orcaPod: orcaPod,
+                imageUrl: imageUrl,
+                description: description
+        };
+                // eslint-disable-next-line no-console
+                console.log(sighting);
+                
+                //a
         // fetch post request to the correct endpoint. 
         // handle the reponse with catch.
         // make response object? 
@@ -77,30 +60,24 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                             <div className="input-box">
                                 <label>Species <span className="required">(required)</span></label>
-                                <select className="input-field" onChange={(e) =>{setSpecies(e.target.value);}}>
-                                    
-                                    <option value="AtlanticWhiteSidedDolphin">Atlantic White Sided Dolphin</option>,
-                                    <option value="CaliforniaSeaLion">California Sea Lion</option>,
-                                    <option value="DallsPorpoise">Dalls Porpoise</option>,
-                                    <option value="GrayWhale">Gray Whale</option>,
-                                    <option value="HarborPorpoise">Harbor Porpoise</option>,
-                                    <option value="HarborSeal">Harbor Seal</option>,
-                                    <option value="Humpback">Humpback</option>,
-                                    <option value="Minke">Minke</option>,
-                                    <option value="NorthernElephantSeal">Northern Elephant Seal</option>,
-                                    <option value="Orca">Orca</option>,
-                                    <option value="Other">Other</option>,
-                                    <option value="PacificWhiteSidedDolphin">Pacific White Sided Dolphin</option>,
-                                    <option value="SeaOtter">Sea Otter</option>,
-                                    <option value="SouthernElephantSeal">Southern Elephant Seal</option>,
-                                    <option value="StellerSeaLion">Steller Sea Lion</option>,
-                                    <option value="Unknown">Unknown</option>,
+                                <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value));}}>
+                                    <option value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
+                                    <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
+                                    <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
+                                    <option value={Species.GrayWhale}>Gray Whale</option>,
+                                    <option value={Species.HarborPorpoise}>Harbor Porpoise</option>,
+                                    <option value={Species.HarborSeal}>Harbor Seal</option>,
+                                    <option value={Species.Humpback}>Humpback</option>,
+                                    <option value={Species.Minke}>Minke</option>,
+                                    <option value={Species.NorthernElephantSeal}>Northern Elephant Seal</option>,
+                                    <option value={Species.Orca}>Orca</option>,
+                                    <option value={Species.Other}>Other</option>,
+                                    <option value={Species.PacificWhiteSidedDolphin}>Pacific White Sided Dolphin</option>,
+                                    <option value={Species.SeaOtter}>Sea Otter</option>,
+                                    <option value={Species.SouthernElephantSeal}>Southern Elephant Seal</option>,
+                                    <option value={Species.StellerSeaLion}>Steller Sea Lion</option>,
+                                    <option value={Species.Unknown}>Unknown</option>,
                                 </select>
-                                {/* <input className="input-field" type="text" name="species" placeholder="Enter species" required
-                                    value={species}
-                                    onChange={(e) => setSpecies(e.target.value)} /> */}
-
-
                             </div>
                             <div className="input-box">
                                 <label>Quantity</label>
