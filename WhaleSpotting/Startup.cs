@@ -1,6 +1,7 @@
-using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Http;
 
 namespace WhaleSpotting
 {
@@ -23,22 +26,54 @@ namespace WhaleSpotting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = ConfigurationHelper.GetDbConnectionString(Configuration);
+
+            services.AddDbContext<WhaleSpottingContext>(options =>
+                options.UseNpgsql(connectionString!));
+
+            services.AddDefaultIdentity<UserDbModel>()
+                .AddEntityFrameworkStores<WhaleSpottingContext>();
+
+            services.AddIdentityServer(options =>
+                {
+                    options.IssuerUri = ConfigurationHelper.GetIssuerUri(Configuration);
+                })
+                .AddApiAuthorization<UserDbModel, WhaleSpottingContext>();
+
+            services.AddAuthentication()
+                  .AddIdentityServerJwt();
+
             services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
 
-            var connectionString = ConnectionStringerHelper.GetConnectionString(Configuration);
-            
-            services.AddDbContext<WhaleSpottingContext>(options =>
-                options.UseNpgsql(connectionString!));
-
             services.AddTransient<ISightingsService, SightingsService>();
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardedHeaders();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -56,11 +91,23 @@ namespace WhaleSpotting
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
+            app.Use((context, next) =>
+            {
+                context.Request.Protocol = "https";
+                context.Request.Scheme = "https";
+                return next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>

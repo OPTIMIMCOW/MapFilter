@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
-using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using WhaleSpotting.Models.RequestModels;
+using WhaleSpotting.Models.Enums;
+using System;
+using WhaleSpotting.Models.ResponseModels;
 
 namespace WhaleSpotting.Services
 {
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
+        SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
     }
 
     public class SightingsService : ISightingsService
@@ -29,6 +33,36 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings;
+        }
+
+        public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
+        {
+            if (sightingRequestModel.SightedAt > DateTime.Now)
+            {
+                throw new Exception("Sighted At must be in the past");
+            }
+
+            var newSighting = new SightingDbModel
+            {
+                Species = sightingRequestModel.Species,
+                Quantity = sightingRequestModel.Quantity,
+                Description = sightingRequestModel.Description,
+                Longitude = sightingRequestModel.Longitude,
+                Latitude = sightingRequestModel.Latitude,
+                Location = sightingRequestModel.Location,
+                SightedAt = sightingRequestModel.SightedAt,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                OrcaType = sightingRequestModel.OrcaType,
+                OrcaPod = sightingRequestModel.OrcaPod,
+                Confirmed = false,
+                // TO DO - add User
+            };
+
+            _context.Sightings.Add(newSighting);
+            _context.SaveChanges();
+
+            return new SightingResponseModel(newSighting);
         }
     }
 }

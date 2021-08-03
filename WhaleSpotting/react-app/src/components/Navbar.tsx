@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();
     const removeSlash = location.pathname.slice(1);
     const pageName = removeSlash === "" ? "Home" : removeSlash.substr(0, 1).toUpperCase() + removeSlash.substr(1).toLowerCase();
     const [currentPage, setCurrentPage] = useState(pageName);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     function HandleLinkClick(currentPage: string) {
         setCurrentPage(currentPage);
     }
-    const loggedIn = false;
 
     useEffect(() => {
         setCurrentPage(pageName);
+        authService.isAuthenticated().then(isAuthenticated => setLoggedIn(isAuthenticated));
     }, [location]);
 
     function CheckCurrentPage(pageName: string) {
@@ -36,11 +38,11 @@ export default function Navbar(): JSX.Element {
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
                 <div className="changing-nav-links">
-                    <div hidden={loggedIn}>
-                        <Link to="/Register"
+                    <div hidden={loggedIn} >
+                        <Link to="/register"
                             className={CheckCurrentPage("Register")}
                             onClick={() => HandleLinkClick("Register")} >Register</Link>
-                        <Link to="/Login"
+                        <Link to="/login"
                             className={CheckCurrentPage("Login")}
                             onClick={() => HandleLinkClick("Login")}>Login</Link>
                     </div>
@@ -48,7 +50,7 @@ export default function Navbar(): JSX.Element {
                         <Link to="/Profile"
                             className={CheckCurrentPage("Profile")}
                             onClick={() => HandleLinkClick("Profile")}>Profile</Link>
-                        <Link to="/Logout"
+                        <Link to="/logout"
                             className={CheckCurrentPage("Logout")}
                             onClick={() => HandleLinkClick("Logout")}>Log Out</Link>
                     </div>

@@ -1,7 +1,7 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
-import React from "react";
-import { useState } from "react";
+import "../styles/Buttons.scss";
+import React, { useState } from "react";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import SightingApiModel from "../apiModels/SightingApiModel";
