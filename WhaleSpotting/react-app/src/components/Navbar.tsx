@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();
     const removeSlash = location.pathname.slice(1);
     const pageName = removeSlash === "" ? "Home" : removeSlash.substr(0, 1).toUpperCase() + removeSlash.substr(1).toLowerCase();
     const [currentPage, setCurrentPage] = useState(pageName);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     function HandleLinkClick(currentPage: string) {
         setCurrentPage(currentPage);
     }
 
-    const loggedIn = !!(localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
-        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-stg.herokuapp.com:WhaleSpotting")
-        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-prod.herokuapp.com:WhaleSpotting"));
-
     useEffect(() => {
         setCurrentPage(pageName);
-    }, [location, loggedIn]);
+        authService.isAuthenticated().then(isAuthenticated => setLoggedIn(isAuthenticated));
+    }, [location]);
 
     function CheckCurrentPage(pageName: string) {
         return currentPage === pageName ? "navbar-link selected" : "navbar-link";
