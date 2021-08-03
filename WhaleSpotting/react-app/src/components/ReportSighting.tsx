@@ -1,5 +1,6 @@
 import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
+import { BannerImage } from "./BannerImage";
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState("");
@@ -15,12 +16,12 @@ export default function ReportSighting(): JSX.Element {
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const sighting = { date, location, species, quantity, longitude, latitude, orcaPod, imageUrl, description };
-        console.log(sighting);
+        //TODO - Implement this
     };
 
     return (
         <div className="report-sighting" data-testid="report-sighting">
-            <img className="banner-image" src="https://ssl.tzoo-img.com/images/tzoo.1.0.685904.shutterstock_567677317.jpg" alt="whale" />
+            <BannerImage />
             <div className="container">
                 <div className="title">Report Your Sighting</div>
                 <form>
