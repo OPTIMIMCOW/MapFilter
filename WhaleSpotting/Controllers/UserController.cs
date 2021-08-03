@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using WhaleSpotting.Constants;
 using WhaleSpotting.Models.DbModels;
 
 namespace WhaleSpotting.Controllers
@@ -32,8 +33,8 @@ namespace WhaleSpotting.Controllers
             {
                 return Ok();
             }
-            await _roleManager.CreateAsync(new IdentityRole("Admin"));
-            await _userManager.AddToRoleAsync(currentUser, "Admin");
+            await _roleManager.CreateAsync(new IdentityRole(AuthConstants.Admin));
+            await _userManager.AddToRoleAsync(currentUser, AuthConstants.Admin);
             await _signInManager.RefreshSignInAsync(currentUser);
             return Ok();
         }
@@ -48,7 +49,7 @@ namespace WhaleSpotting.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = AuthConstants.Admin)]
         [HttpGet]
         public IActionResult CheckAdmin()
         {
