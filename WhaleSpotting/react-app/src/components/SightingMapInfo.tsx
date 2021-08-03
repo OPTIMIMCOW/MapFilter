@@ -29,7 +29,7 @@ export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
     }, [chosen]);
 
     if (!chosen || !chosen.lat || !chosen.lon || !weatherData) {
-        return <div className="weather-component-empty" data-testid="loading">Loading...</div>;
+        return <div className="weather-component-empty" data-testid="loading"></div>;
     }
 
     return (

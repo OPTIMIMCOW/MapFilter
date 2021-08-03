@@ -6,11 +6,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 describe("Map Chart component tests", () => {
     test("Renders MapChart", () => {
         const chosen = {id: 1, lon: 0, lat: 0};
-        function setChosen(){};
+        //eslint-disable-next-line
+        const setChosen = () => {};
         render(<Router><MapChart chosen={chosen} setChosen={setChosen}/></Router>);
 
         const simpleMap = screen.getByTestId("loading");
         expect(simpleMap).toBeInTheDocument();
     });
-
 });
