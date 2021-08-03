@@ -40,6 +40,7 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             border: 1px solid $primaryColour;
+            box-sizing:border-box;
 
             
             &:focus{
@@ -82,12 +83,11 @@
             width: 100%;
             font-size: $mobileBodyFontSize;
         }
+        
         .title{
             font-size: $mobileTitleFontSize;
         }
-        .card-component{
-            padding-right: 7px;
-        }
+
         .submit-button{
             margin: 10px 0 25px 0;
         }
