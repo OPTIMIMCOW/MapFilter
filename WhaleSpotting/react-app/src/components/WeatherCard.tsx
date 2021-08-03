@@ -6,9 +6,8 @@ interface infoProps {
     place: { lon: number, lat: number };
 }
 
-
-// export default function SightingMapInfo({place}: infoProps): JSX.Element {
-export default function SightingMapInfo(props: any): JSX.Element {
+export default function WeatherCard({place}: infoProps): JSX.Element {
+//export default function SightingMapInfo(props: any): JSX.Element {
 
     //TODO - fetch weather api with the sighting model
     //props.lon, props.lat
@@ -26,15 +25,17 @@ export default function SightingMapInfo(props: any): JSX.Element {
         fetchWeather();
     }, []);
 
-    if (!weatherData) {
-        return <div> Loading.. </div>;
+    console.log(weatherData == undefined);
+    if (weatherData === undefined) {
+        return <div> Loading... </div>;
+    } else {
+        return (
+            <div className="weather-component" data-testid="weather">
+                <h4>Current weather at this sighting</h4>
+                <div>lon {weatherData.lon} lat {weatherData.lat}</div>
+                <div>weather {weatherData.current.weather[0].main} temp {weatherData.current.temp} wind {weatherData.current.wind_speed} visibility {weatherData.current.visibility}</div>
+            </div>
+        );
     }
 
-    return (
-        <div className="weather-component" data-testid="weather">
-            <h4>Current weather at this sighting</h4>
-            <div>lon {weatherData.lon} lat {weatherData.lat}</div>
-            <div>weather {weatherData.current.weather[0].main} temp {weatherData.current.temp} wind {weatherData.current.wind_speed} visibility {weatherData.current.visibility}</div>
-        </div>
-    );
 }

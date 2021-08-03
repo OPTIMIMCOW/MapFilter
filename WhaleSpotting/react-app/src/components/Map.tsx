@@ -10,7 +10,11 @@ import SightingMapInfo from "./WeatherCard";
 
 export default function Map(): JSX.Element {
 
-    const [chosen, setChosen] = useState<{id:number, lat: number, lon:number} >({id:0, lat:0, lon:0});
+    const [chosen, setChosen] = useState<{ id: number, lat: number, lon: number }>({ id: 0, lat: 0, lon: 0 });
+    const mapChartProp = {
+        chose: chosen,
+        setChoose: setChosen
+    };
 
     return (
         <div className="map-component">
@@ -19,11 +23,16 @@ export default function Map(): JSX.Element {
             <h2>MAP OF SIGHTINGS</h2>
             <div className="map-container">
                 <div className="map">
-                    <MapChart props={setChosen}/>
+                    <MapChart props={mapChartProp} />
                 </div>
             </div>
             <div className="map-info">
-                <SightingMapInfo chosen={chosen} setChosen={setChosen} />
+                
+                {chosen.id !== 0 ?
+                    <SightingMapInfo chosen={chosen} setChosen={setChosen} />
+                    :
+                    <div></div>
+                }
                 list of spieces
             </div>
         </div>
