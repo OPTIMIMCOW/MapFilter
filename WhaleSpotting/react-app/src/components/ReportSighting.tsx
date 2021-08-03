@@ -5,29 +5,41 @@ import { BannerImage } from "./BannerImage";
 import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSightingApiModel";
 
 export default function ReportSighting(): JSX.Element {
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState<Date>(new Date());
     const [location, setLocation] = useState("");
     const [species, setSpecies] = useState<Species>(-1);
-    const [quantity, setQuantity] = useState("");
+    const [quantity, setQuantity] = useState(0);
     const [longitude, setLongitude] = useState("");
     const [latitude, setLatitude] = useState("");
     const [orcaPod, setOrcaPod] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [orcaType, setorcaType] = useState<OrcaType>(-1);
     const [description, setDescription] = useState("");
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const sighting: CreateSightingApiModel = {
                 species: species,
-                Date:date,
-                Location: location,
-                Quanity: quantity,
+                quantity: quantity,
+                description: description,
                 longitude: parseInt(longitude),
                 latitude: parseInt(latitude),
+                location: location,
+                sightedAt: date,
                 orcaPod: orcaPod,
-                imageUrl: imageUrl,
-                description: description
+                orcaType: orcaType
         };
+        
+        // species: Species;
+        // quantity: number;
+        // description: string;
+        // longitude: number;
+        // latitude: number;
+        // location: string;
+        // sightedAt: Date;
+        // orcaType: OrcaType | null;
+        // orcaPod: string;
+        // userId: number;
+
                 // eslint-disable-next-line no-console
                 console.log(sighting);
                 

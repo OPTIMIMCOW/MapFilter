@@ -34,5 +34,4 @@ export interface CreateSightingApiModel {
     sightedAt: Date;
     orcaType: OrcaType | null;
     orcaPod: string;
-    userId: number;
 }
