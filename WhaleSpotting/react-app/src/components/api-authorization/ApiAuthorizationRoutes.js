@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component, Fragment } from "react";
 import { Route } from "react-router";
 import { Login } from "./Login";

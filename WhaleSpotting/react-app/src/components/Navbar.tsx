@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.scss";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function Navbar(): JSX.Element {
     const location = useLocation();
@@ -10,13 +11,11 @@ export default function Navbar(): JSX.Element {
     const [closeBurger, setBurgerState] = useState(true);
     const ref = useRef<HTMLDivElement>(null);
     useOnClickOutside(ref, () => { setBurgerState(true); });
-    const loggedIn = !!(localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
-        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-stg.herokuapp.com:WhaleSpotting")
-        || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-prod.herokuapp.com:WhaleSpotting"));
-
+    const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
         setCurrentPage(pageName);
-    }, [location, loggedIn]);
+        authService.isAuthenticated().then(isAuthenticated => setLoggedIn(isAuthenticated));
+    }, [location]);
 
     function HandleLinkClick(currentPage: string) {
         setCurrentPage(currentPage);

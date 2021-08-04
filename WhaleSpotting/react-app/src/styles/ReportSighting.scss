@@ -4,12 +4,6 @@
     padding-bottom: $footerHeight;
     margin-top: $headerHeight;
     
-    .banner-image{
-        height: 40vh;
-        object-fit: cover;
-        width: 100%;
-    }
-
     .required{
         color: $secondaryDark;
         font-size: $mobileBodyFontSize;
