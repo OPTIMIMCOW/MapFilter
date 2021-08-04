@@ -2,15 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Net;
 using RestSharp;
 using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WhaleSpotting.Controllers
 {
+ 
     [ApiController]
-    [Route("[controller]")]
+    [Route("/getapidata")]
     public class ApiDataController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -20,7 +24,7 @@ namespace WhaleSpotting.Controllers
             _sightings = sightings;
         }
 
-        [HttpPost]
+        [HttpPost("")]
         public async Task<OkResult> GetApiData()
         {
             var page = 1;
@@ -35,7 +39,7 @@ namespace WhaleSpotting.Controllers
                 var apiSightings = await client.GetAsync<List<SightingApiModel>>(request);
                 if (apiSightings.Any())
                 {
-                    sightingsToAdd.AddRange(apiSightings.Select(apiSighting => new SightingDbModel(apiSighting)).ToList());
+                    sightingsToAdd.AddRange(apiSightings.Select(apiSighting => apiSighting.ToDbModel()).ToList());
                     page++;
                 }
                 else

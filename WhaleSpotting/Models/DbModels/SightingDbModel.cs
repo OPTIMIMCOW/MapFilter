@@ -29,18 +29,5 @@ namespace WhaleSpotting.Models.DbModels
         {
 
         }
-
-        public SightingDbModel(SightingApiModel apiModel)
-        {
-            ApiId = apiModel.Id;
-            Species = (Species)Enum.Parse(typeof(Species), Regex.Replace(apiModel.Species, @"\s+", ""));
-            Quantity = apiModel.Quantity;
-            Location = apiModel.Location;
-            Latitude = apiModel.Latitude;
-            Longitude = apiModel.Longitude;
-            Description = apiModel.Description;
-            SightedAt = apiModel.SightedAt;
-            CreatedAt = apiModel.CreatedAt;
-        }
-    }
+     }
 }
