@@ -9,6 +9,8 @@ interface infoProps {
 
 export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
 
+    const key = process.env.REACT_APP_WEATHER_API_KEY;
+    
     const response = {
         lon: chosen?.lon,
         lat: chosen?.lat,
@@ -18,7 +20,7 @@ export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
     const [weatherData, setWeatherData] = useState<WeatherApiModel>();
     async function fetchWeather(): Promise<WeatherApiModel | void> {
         //eslint-disable-next-line
-        return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen!.lat}&lon=${chosen!.lon}&units=metric&Appid=35d29d97cfc38cae6b23aa34bc4af423`)
+        return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen!.lat}&lon=${chosen!.lon}&units=metric&Appid=${key}`)
             .then(response => response.json())
             .then(response => setWeatherData(response));
     }
