@@ -95,13 +95,15 @@
     
     @media(max-width: $mobileScreenSize) {
 
+        justify-content: left;
+        padding-left: 5px;
+
         .burger-button {
             display: block;
         }
 
         .current-page-mobile {
             display: flow-root;
-            margin-inline-end: 55%;
             background-color: $primaryDark;
             color: $textOnPrimary;
             border-radius: 5px;
