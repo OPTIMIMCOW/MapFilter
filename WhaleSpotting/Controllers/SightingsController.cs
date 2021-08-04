@@ -7,12 +7,14 @@ using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [ValidateModel]
+    //[ValidateModel]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -29,8 +31,14 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost("/create")]
-        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
+        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel, [FromServices] IOptions<ApiBehaviorOptions> apiBehaviorOptions)
         {
+            if (sightingRequestModel.SightedAt > DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(sightingRequestModel.SightedAt), "Date of sighting must be in the past");
+                return apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
+            }
+
             try
             {
                 var newSighting =_sightings.CreateSighting(sightingRequestModel);
@@ -39,20 +47,8 @@ namespace WhaleSpotting.Controllers
             }
             catch (Exception e)
             {
-                var modelState = new ModelStateDictionary();
-                modelState.AddModelError("errors", e.Message);
-                return BadRequest(modelState);
-            }
-        }
-
-        public class ValidateModelAttribute : ActionFilterAttribute
-        {
-            public override void OnActionExecuting(ActionExecutingContext context)
-            {
-                if (!context.ModelState.IsValid)
-                {
-                    context.Result = new BadRequestObjectResult(context.ModelState);
-                }
+                ModelState.AddModelError("errors", e.Message);
+                return apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
             }
         }
     }

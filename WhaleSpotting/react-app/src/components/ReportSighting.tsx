@@ -30,6 +30,8 @@ export default function ReportSighting(): JSX.Element {
             orcaType: orcaType
         };
 
+        console.log(JSON.stringify(sighting));
+        let isError = false;
         const response = await fetch(`/create`, {
             method: "POST",
             headers: {
@@ -38,48 +40,35 @@ export default function ReportSighting(): JSX.Element {
             body: JSON.stringify(sighting),
         })
             .then(r => {
-                // eslint-disable-next-line no-console
-                console.log("this hit the .then")
                 if (r.status === 400) {
-                    return r.json();                    
+                    isError = true;
+                    return r.json();
                 }
                 return r.json();
             })
-            .catch(r => r.text());
-
-        ConfigureResultMessage(response);
+            .catch(r => {
+                isError = true;
+                return r.json()
+            });
+        if (isError) {
+            handleError(response);
+        } else {
+            setResponseMessage("Successful submission. An admin will review it shortly.");
+        }
     };
 
-    function ConfigureResultMessage(response: any) {
-        //if (typeof (response) === "string") {
-        //    setResponseMessage("Unsuccessful submission: " + response);
-        //} else {
-        //    setResponseMessage("Successful submission. An admin will review it shortly.");
-        //}
-
-        try {
-
-            console.log(response);
-            const error = response.errors[0];
-            console.log(error);
-            console.log(error.count);
-            error.toString();
-            console.log(error);
-            setResponseMessage(error);
-        } catch (e) {
-            console.log("got caught in the catch in ConfigureResultMessage");
-        }
+    function handleError(response: any) {
+        const keys = Object.keys(response.errors);
+        setResponseMessage(response.errors[keys[0]][0]);
     }
 
-    function ShowResultMessage(): JSX.Element {
+    function ShowResultMessage(): JSX.Element | void {
         if (responseMessage) {
             return (
                 <p className="response-message card-component">
                     {responseMessage}
                 </p>)
         }
-
-        return <div></div>
     }
 
     return (
