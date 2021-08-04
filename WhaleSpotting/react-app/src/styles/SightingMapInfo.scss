@@ -4,13 +4,11 @@
     border-radius: 10px;
     background-color: $primaryCard;
     margin: 15px 0;
-    width: 100%;
     text-align: center;
 
     .sighting-info {
         display: inline-flex;
         padding: 10px 2%;
-        width: 96%;
         text-align: left;
     }
 
@@ -50,6 +48,7 @@
         .species {
             width: 100%; 
         }
+        
         .whale-image-container {
             display: none;
         }

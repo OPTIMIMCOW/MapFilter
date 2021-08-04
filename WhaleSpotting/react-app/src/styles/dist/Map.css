@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap%27");
+.map-component {
+  margin: 6vh auto 6vh auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 1024px;
+  align-items: center;
+}
+
+.map-container {
+  background-color: #98d5f5;
+  width: 80%;
+  border-radius: 10px;
+}
+
+.map-info {
+  width: 80%;
+}
+
+@media (max-width: 445px) {
+  .map-container {
+    width: 95%;
+  }
+
+  .map-info {
+    width: 95%;
+    font-size: 14px;
+  }
+}

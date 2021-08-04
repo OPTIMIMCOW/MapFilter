@@ -4,42 +4,28 @@
     margin: $headerHeight auto $footerHeight auto;
     display: flex;
     flex-direction: column;
-    font-family: $fontFamily;
-    color: $textOnSecondary;
     max-width: $bodyWidth;
     align-items: center;
 }
 
 .map-container {
     background-color: #98d5f5;
-    display: flex;
-    justify-content: center;
     width: 80%;
-}
-
-.map-header{
-    text-align: center;
-}
-
-.simple-map {
-    width: 100%;
+    border-radius: 10px;
 }
 
 .map-info {
-    font-family: $fontFamily;
-    color: $textOnSecondary;
     width: 80%;
 }
 
 @media (max-width: $mobileScreenSize) {
 
     .map-container {
-        width: 100%;
+        width: 95%;
     }
 
     .map-info {
         width: 95%;
         font-size: $mobileBodyFontSize;
-    }
-    
+    }  
 }

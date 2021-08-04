@@ -51,7 +51,7 @@ function MapChart(_a) {
     if (data.length === 0) {
         return react_1["default"].createElement("div", { "data-testid": "loading" }, " Loading... ");
     }
-    return (react_1["default"].createElement(react_simple_maps_1.ComposableMap, { className: "simple-map", projection: "geoEqualEarth", "data-testid": "simple-map" },
+    return (react_1["default"].createElement(react_simple_maps_1.ComposableMap, { projection: "geoEqualEarth", "data-testid": "simple-map" },
         react_1["default"].createElement(react_simple_maps_1.ZoomableGroup, { zoom: 1 },
             react_1["default"].createElement(react_simple_maps_1.Geographies, { geography: geoUrl }, function (_a) {
                 var geographies = _a.geographies;

@@ -30,7 +30,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     }
 
     return (
-        <ComposableMap className="simple-map"
+        <ComposableMap
             projection="geoEqualEarth"
             data-testid="simple-map">
             <ZoomableGroup zoom={1}>
@@ -51,7 +51,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
                         key={index} coordinates={[longitude, latitude]} name=""
                         onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
                         <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
-                    </Marker>
+                    </Marker>;
                 }
                 )}
             </ZoomableGroup>

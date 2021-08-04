@@ -16,7 +16,7 @@ export default function Map(): JSX.Element {
 
     return (
         <div className="map-component" data-testid="map-component">
-            <h2 className="map-header">MAP OF SIGHTINGS</h2>
+            <h2 className="map-header">Map of Sightings</h2>
             <div className="map-container" data-testid="map-container">
                 <MapChart chosen={chosen} setChosen={setChosen} />
             </div>
