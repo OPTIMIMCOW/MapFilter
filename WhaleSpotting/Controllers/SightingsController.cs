@@ -39,5 +39,21 @@ namespace WhaleSpotting.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPut("/?confirmed=false")]
+        public IActionResult ConfirmSighting([FromBody] ConfirmSightingRequestModel confirmSighting)
+        {
+            try
+            {
+                var sightingToConfirm = _sightings.ConfirmSighting(confirmSighting.Id);
+                //TODO check with Oskar what is better to return: the sighting? the profile page?
+                return RedirectToAction("ConfirmSighting"); 
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }
