@@ -10,6 +10,7 @@
     align-items: center;
     height: $headerHeight;
 
+
     .nav-bar {
         display: flex;
         width: 100%;
@@ -95,6 +96,7 @@
     @media(max-width: $mobileScreenSize) {
 
         justify-content: left;
+        padding-left: 5px;
 
         .burger-button {
             display: block;
@@ -107,7 +109,6 @@
             border-radius: 5px;
             width: max-content;
             padding: 5px;
-            margin-left: 5px;
         }
 
         .fixed-nav-links {
