@@ -14,9 +14,7 @@ export default function ReportSighting(): JSX.Element {
     const [orcaPod, setOrcaPod] = useState("");
     const [orcaType, setorcaType] = useState<OrcaType>(1);
     const [description, setDescription] = useState("");
-
     const [responseMessage, setResponseMessage] = useState("");
-
 
     async function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
@@ -32,61 +30,33 @@ export default function ReportSighting(): JSX.Element {
             orcaType: orcaType
         };
 
-        // eslint-disable-next-line no-console
-        console.log(sighting);
-
         const response = await fetch(`/create`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(sighting),
-            })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sighting),
+        })
             .then(r => {
                 if (r.status === 400) {
                     return r.text();
                 }
                 return r.json();
-            });
-        //.then(handleErrors)
-        //.then(function (response) {
-        //   // eslint-disable-next-line no-console
-        //    console.log("ok");
-        //}).catch(function (error: Error) {
-        //    // eslint-disable-next-line no-console
-        //    console.log(error.message);
-        //});
-        // eslint-disable-next-line no-console
-        console.log(response);
-        //debugger;
-        function handleErrors(response: Response) {
-            if (!response.ok) {
-                console.log(response);
-                //throw Error(response.);
-            }
-            return response;
-        }
+            })
+            .catch(r => r.text());
 
-        //try {
-        //    const test = await response.json();
-        //    setResponseMessage("Your sighting was submitted successfully. An admin will review it shortly.");
-        //} catch (e){
-        //    setResponseMessage("Unsuccessful submission" + e.Message);
-        //}
-        //// eslint-disable-next-line no-console
-        //console.log(test);
-        //setResponseMessage((response.ok) ? "Your sighting was submitted successfully. An admin will review it shortly." : "Unsuccessful submission" + test);
-
-        //debugger;
-        //.catch(e => {
-        //    //
-        //    console.log(e)
-        //});
-
+        ConfigureResultMessage(response);
     };
 
-    function ShowResultMessage(): JSX.Element {
+    function ConfigureResultMessage(response: string | object) {
+        if (typeof (response) === "string") {
+            setResponseMessage("Unsuccessful submission: " + response);
+        } else {
+            setResponseMessage("Successful submission. An admin will review it shortly.");
+        }
+    }
 
+    function ShowResultMessage(): JSX.Element {
         return (
             <p className="response-message">
                 {responseMessage}
