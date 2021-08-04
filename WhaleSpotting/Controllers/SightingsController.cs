@@ -40,18 +40,18 @@ namespace WhaleSpotting.Controllers
             }
         }
 
-        [HttpPut("/?confirmed=false")]
-        public IActionResult ConfirmSighting([FromBody] ConfirmSightingRequestModel confirmSighting)
+        [HttpPut("/{id}/confirm")]
+        public IActionResult ConfirmSighting([FromRoute] int id)
         {
             try
             {
-                var sightingToConfirm = _sightings.ConfirmSighting(confirmSighting.Id);
+                var sightingToConfirm = _sightings.ConfirmSighting(id);
                 //TODO check with Oskar what is better to return: the sighting? the profile page?
-                return RedirectToAction("ConfirmSighting"); 
+                return RedirectToAction($"/?confirmed=false"); 
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest(e.Message);
+                return NotFound();
             }
         }
 
