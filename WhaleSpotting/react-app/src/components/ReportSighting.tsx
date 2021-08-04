@@ -38,8 +38,11 @@ export default function ReportSighting(): JSX.Element {
             body: JSON.stringify(sighting),
         })
             .then(r => {
+                // eslint-disable-next-line no-console
+                console.log("this hit the .then")
                 if (r.status === 400) {
-                    return r.text();
+                    const json = r.json();
+                    const error = json.toString();
                 }
                 return r.json();
             })
@@ -57,10 +60,14 @@ export default function ReportSighting(): JSX.Element {
     }
 
     function ShowResultMessage(): JSX.Element {
-        return (
-            <p className="response-message">
-                {responseMessage}
-            </p>)
+        if (responseMessage) {
+            return (
+                <p className="response-message card-component">
+                    {responseMessage}
+                </p>)
+        }
+
+        return <div></div>
     }
 
     return (

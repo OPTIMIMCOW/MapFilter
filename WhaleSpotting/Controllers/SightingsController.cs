@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace WhaleSpotting.Controllers
 {
@@ -36,11 +37,9 @@ namespace WhaleSpotting.Controllers
             }
             catch (Exception e)
             {
-                //var test = new BadRequestErrorMessageResult(e.Message);
-                var test = new BadRequestObjectResult(e);
-                var test2 = BadRequest(e.Message);
-                //return BadRequest(e.Message);
-                return test2;
+                var modelState = new ModelStateDictionary();
+                modelState.AddModelError("errors", e.Message);
+                return BadRequest(modelState);
             }
         }
     }
