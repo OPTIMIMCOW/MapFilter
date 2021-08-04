@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import MapChart from "../../components/MapChart";
+import { MapChart } from "../../components/MapChart";
 import { BrowserRouter as Router } from "react-router-dom";
 
 describe("Map Chart component tests", () => {
