@@ -41,8 +41,7 @@ export default function ReportSighting(): JSX.Element {
                 // eslint-disable-next-line no-console
                 console.log("this hit the .then")
                 if (r.status === 400) {
-                    const json = r.json();
-                    const error = json.toString();
+                    return r.json();                    
                 }
                 return r.json();
             })
@@ -51,11 +50,24 @@ export default function ReportSighting(): JSX.Element {
         ConfigureResultMessage(response);
     };
 
-    function ConfigureResultMessage(response: string | object) {
-        if (typeof (response) === "string") {
-            setResponseMessage("Unsuccessful submission: " + response);
-        } else {
-            setResponseMessage("Successful submission. An admin will review it shortly.");
+    function ConfigureResultMessage(response: any) {
+        //if (typeof (response) === "string") {
+        //    setResponseMessage("Unsuccessful submission: " + response);
+        //} else {
+        //    setResponseMessage("Successful submission. An admin will review it shortly.");
+        //}
+
+        try {
+
+            console.log(response);
+            const error = response.errors[0];
+            console.log(error);
+            console.log(error.count);
+            error.toString();
+            console.log(error);
+            setResponseMessage(error);
+        } catch (e) {
+            console.log("got caught in the catch in ConfigureResultMessage");
         }
     }
 
