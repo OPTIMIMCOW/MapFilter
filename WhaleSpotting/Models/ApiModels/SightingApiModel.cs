@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
@@ -23,32 +24,41 @@ namespace WhaleSpotting.Models.ApiModels
 
         public SightingDbModel ToDbModel()
         {
-            var cities = new Dictionary<string, int>()
+            var species = new Dictionary<string, int>()
             {
-                { "AtlanticWhiteSidedDolphin", 1 },
-                { "CaliforniaSeaLion", 2},
-                { "DallsPorpoise", 3},
-                { "GrayWhale", 4},
-                { "HarborPorpoise", 5},
-                { "HarborSeal", 6},
-                { "Humpback", 7},
-                { "Minke", 8},
-                { "NorthernElephantSeal", 9},
-                { "Orca", 10},
-                { "Other", 11},
-                { "PacificWhiteSidedDolphin", 12},
-                { "SeaOtter", 13},
-                { "SouthernElephantSeal", 14},
-                { "StellerSeaLion", 15},
-                { "Unknown", 16}
+                { "atlanticwhite-sideddolphin", 1 },
+                { "californiasealion", 2},
+                { "dallsporpoise", 3},
+                { "graywhale", 4},
+                { "harborporpoise", 5},
+                { "harborSeal", 6},
+                { "humpback", 7},
+                { "minke", 8},
+                { "northernelephantseal", 9},
+                { "orca", 10},
+                { "other", 11},
+                { "pacificwhite-sideddolphin", 12},
+                { "seaotter", 13},
+                { "southernelephantseal", 14},
+                { "stellersealion", 15},
+                { "unknown", 16}
 
             };
 
+            var orcatype = new Dictionary<string, int>()
+            {
+                { "northernresident", 1 },
+                { "offshore", 2 },
+                { "southernresident", 3 },
+                { "transient", 4 },
+                { "unknown", 5 }
+            };
 
+            // Enum.Parse(typeof(Species), Regex.Replace((species.FirstOrDefault(x => x.Value == Species).Key), @"\s+", "")),
             return new SightingDbModel
             {
                 ApiId = Id,
-                Species = (Species)Enum.Parse(typeof(Species), Regex.Replace(Species, @"\s+", "")),
+                Species = (Species)species[Regex.Replace(Species, @"\s+", "")],
                 Quantity = Quantity,
                 Location = Location,
                 Latitude = Latitude,
@@ -56,6 +66,7 @@ namespace WhaleSpotting.Models.ApiModels
                 Description = Description,
                 SightedAt = SightedAt,
                 CreatedAt = CreatedAt,
+                OrcaType = (OrcaType)orcatype[Regex.Replace(OrcaType, @"\s+", "")]
             };
     }
 
