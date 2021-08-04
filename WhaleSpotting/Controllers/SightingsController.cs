@@ -6,11 +6,13 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ValidateModel]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -42,5 +44,18 @@ namespace WhaleSpotting.Controllers
                 return BadRequest(modelState);
             }
         }
+
+        public class ValidateModelAttribute : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext context)
+            {
+                if (!context.ModelState.IsValid)
+                {
+                    context.Result = new BadRequestObjectResult(context.ModelState);
+                }
+            }
+        }
     }
+
+
 }
