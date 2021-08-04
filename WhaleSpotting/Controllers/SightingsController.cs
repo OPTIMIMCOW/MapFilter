@@ -41,13 +41,13 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPut("/{id}/confirm")]
-        public IActionResult ConfirmSighting([FromRoute] int id)
+        public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
             try
             {
-                var sightingToConfirm = _sightings.ConfirmSighting(id);
+                var sighting = await _sightings.ConfirmSighting(id);
                 //TODO check with Oskar what is better to return: the sighting? the profile page?
-                return RedirectToAction($"/?confirmed=false"); 
+                return sighting; 
             }
             catch
             {

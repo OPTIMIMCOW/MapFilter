@@ -120,5 +120,38 @@ namespace WhaleSpotting.UnitTests.Controllers
             var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
             badRequestResult.Value.Should().Be("Sighted At must be in the past");
         }
+
+        [Fact]
+        public async void ConfirmSighting_CalledWithId_ReturnsSighting()
+        {
+            // Arrange
+            var id = 1;
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = true,
+            };
+
+            A.CallTo(() => _sightings.ConfirmSighting(id))
+                .Returns(sightingResponse);
+
+            // Act
+            var result = await _underTest.ConfirmSighting(id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<SightingResponseModel>>();
+        }
     }
 }
