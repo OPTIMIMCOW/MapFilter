@@ -13,6 +13,7 @@ export default function Home() : JSX.Element {
     }
 
     const orca: SightingApiModel = {
+        id: 1,
         sightedAt: new Date(),
         species: "whale",
         quantity: 1,
@@ -28,6 +29,7 @@ export default function Home() : JSX.Element {
     };
     
     const orcaConfirmed: SightingApiModel = {
+        id: 2,
         sightedAt: new Date(),
         species: "orca",
         quantity: 3,

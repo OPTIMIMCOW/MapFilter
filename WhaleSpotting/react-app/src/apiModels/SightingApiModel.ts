@@ -1,4 +1,5 @@
 interface SightingApiModel {
+    id: number;
     sightedAt: Date;
     species: string;
     quantity: number;
