@@ -13,9 +13,7 @@ import ReportSighting from "./components/ReportSighting";
 function App(): JSX.Element {
     return (
         <Fragment>
-
-            <Navbar />
-            
+            <Navbar />         
             <Route exact path="/map" />
             <Route exact path="/reportsighting" component={ReportSighting}/>
             <Route exact path="/profile" component={Profile}/>

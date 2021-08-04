@@ -10,7 +10,6 @@ export default function Navbar(): JSX.Element {
     const [closeBurger, setBurgerState] = useState(true);
     const ref = useRef<HTMLDivElement>(null);
     useOnClickOutside(ref, () => { setBurgerState(true); });
-
     const loggedIn = !!(localStorage.getItem("WhaleSpottinguser:https://localhost:5001:WhaleSpotting")
         || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-stg.herokuapp.com:WhaleSpotting")
         || localStorage.getItem("WhaleSpottinguser:https://whale-spotting-prod.herokuapp.com:WhaleSpotting"));
@@ -42,19 +41,19 @@ export default function Navbar(): JSX.Element {
                         className={CheckCurrentPage("Reportsighting")}
                         onClick={() => HandleLinkClick("Reportsighting")}>Report Sighting</Link>
                 </div>
-                <div className="changing-nav-links" >
+                <div className="changing-nav-links">
                     <div hidden={loggedIn} >
-                        <div className="changing-nav-links-mobile" >
+                        <div className="changing-nav-links-mobile">
                             <Link to="/register"
                                 className={CheckCurrentPage("Register")}
-                                onClick={() => HandleLinkClick("Register")} >Register</Link>
+                                onClick={() => HandleLinkClick("Register")}>Register</Link>
                             <Link to="/login"
                                 className={CheckCurrentPage("Login")}
                                 onClick={() => HandleLinkClick("Login")}>Login</Link>
                         </div>
                     </div>
                     <div hidden={!loggedIn}>
-                        <div className="changing-nav-links-mobile" >
+                        <div className="changing-nav-links-mobile">
                             <Link to="/Profile"
                                 className={CheckCurrentPage("Profile")}
                                 onClick={() => HandleLinkClick("Profile")}>Profile</Link>
@@ -65,13 +64,13 @@ export default function Navbar(): JSX.Element {
                     </div>
                 </div>
             </nav>
+            <div className={closeBurger ? "current-page-mobile" : "nav-bar"}>{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
             <div className="burger-button"
                 onClick={() => setBurgerState(!closeBurger)}>
                 <div className={closeBurger ? "opened-bar-1" : "closed-bar-1"}></div>
                 <div className={closeBurger ? "opened-bar-2" : "closed-bar-2"}></div>
                 <div className={closeBurger ? "opened-bar-3" : "closed-bar-3"}></div>
             </div>
-            <div className={closeBurger ? "current-page-mobile" : "nav-bar"}>{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
         </div>
     );
 }
