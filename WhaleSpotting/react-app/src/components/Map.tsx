@@ -1,7 +1,7 @@
 import "../styles/Map.scss";
 import "../styles/Home.scss";
 import React, { useState } from "react";
-import MapChart from "./MapChart";
+import { MapChart } from "./MapChart";
 import SightingMapInfo from "./SightingMapInfo";
 
 export interface Chosen {

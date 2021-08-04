@@ -3,14 +3,14 @@ import WeatherApiModel from "../apiModels/WeatherApiModel";
 import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
 
-interface infoProps {
+interface SightingMapInfoProps {
     chosen: Chosen | undefined;
 }
 
-export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
+export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.Element {
 
     const key = process.env.REACT_APP_WEATHER_API_KEY;
-    
+
     const response = {
         lon: chosen?.lon,
         lat: chosen?.lat,
@@ -31,7 +31,7 @@ export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
         }
     }, [chosen]);
 
-    if (!chosen || !chosen.lat || !chosen.lon || !weatherData) {
+    if (!chosen || !weatherData) {
         return <div className="weather-component-empty" data-testid="loading"></div>;
     }
 
@@ -47,10 +47,14 @@ export default function SightingMapInfo({ chosen }: infoProps): JSX.Element {
                         <li>Visibility: {weatherData.current.visibility} m</li>
                     </ul>
                 </div>
-                <div className="species">Species spotted here: <ul className="list">{response.species.map((s, index) => <li key={index}>{s}</li>)}</ul></div>
-                <div className="whale-image-container"><img className="whale-image" src="whaleicon512.png" alt="whale"></img></div>
+                <div className="species">Species spotted here:
+                    <ul className="list">{response.species.map(s =>
+                        <li key={s}>{s}</li>)}</ul>
+                </div>
+                <div className="whale-image-container">
+                    <img className="whale-image" src="whaleicon512.png" alt="whale" />
+                </div>
             </div>
         </div>
     );
-
 }
