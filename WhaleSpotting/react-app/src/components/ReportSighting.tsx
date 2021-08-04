@@ -36,20 +36,56 @@ export default function ReportSighting(): JSX.Element {
         console.log(sighting);
 
         const response = await fetch(`/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(sighting),
-        })
-            .then(response => setResponseMessage((response.ok) ? "Your sighting was submitted successfully. An admin will review it shortly." : "Unsuccessful submission" + (response as any).Message));
-            //.catch(e => {
-            //    //
-            //    console.log(e)
-            //});
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sighting),
+            })
+            .then(r => {
+                if (r.status === 400) {
+                    return r.text();
+                }
+                return r.json();
+            });
+        //.then(handleErrors)
+        //.then(function (response) {
+        //   // eslint-disable-next-line no-console
+        //    console.log("ok");
+        //}).catch(function (error: Error) {
+        //    // eslint-disable-next-line no-console
+        //    console.log(error.message);
+        //});
+        // eslint-disable-next-line no-console
+        console.log(response);
+        //debugger;
+        function handleErrors(response: Response) {
+            if (!response.ok) {
+                console.log(response);
+                //throw Error(response.);
+            }
+            return response;
+        }
+
+        //try {
+        //    const test = await response.json();
+        //    setResponseMessage("Your sighting was submitted successfully. An admin will review it shortly.");
+        //} catch (e){
+        //    setResponseMessage("Unsuccessful submission" + e.Message);
+        //}
+        //// eslint-disable-next-line no-console
+        //console.log(test);
+        //setResponseMessage((response.ok) ? "Your sighting was submitted successfully. An admin will review it shortly." : "Unsuccessful submission" + test);
+
+        //debugger;
+        //.catch(e => {
+        //    //
+        //    console.log(e)
+        //});
+
     };
 
-    function ShowResultMessage() : JSX.Element {
+    function ShowResultMessage(): JSX.Element {
 
         return (
             <p className="response-message">

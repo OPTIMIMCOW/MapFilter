@@ -36,7 +36,11 @@ namespace WhaleSpotting.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                //var test = new BadRequestErrorMessageResult(e.Message);
+                var test = new BadRequestObjectResult(e);
+                var test2 = BadRequest(e.Message);
+                //return BadRequest(e.Message);
+                return test2;
             }
         }
     }
