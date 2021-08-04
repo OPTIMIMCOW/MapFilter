@@ -64,7 +64,7 @@ export default function Navbar(): JSX.Element {
                     </div>
                 </div>
             </nav>
-            <div className={closeBurger ? "current-page-mobile" : "nav-bar"}>{currentPage == "Reportsighting" ? "Report Sighting" : currentPage}</div>
+            <div className={closeBurger ? "current-page-mobile" : "nav-bar"}>{currentPage === "Reportsighting" ? "Report Sighting" : currentPage}</div>
             <div className="burger-button"
                 onClick={() => setBurgerState(!closeBurger)}>
                 <div className={closeBurger ? "opened-bar-1" : "closed-bar-1"}></div>
