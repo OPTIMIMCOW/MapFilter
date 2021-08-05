@@ -24,6 +24,7 @@
 
     @media (max-width: $mobileScreenSize) {
         padding-bottom: $mobileFooterHeight;
+        margin-top: $mobileHeaderHeight;
 
         .report-button-container {
             margin: 5px 0;
