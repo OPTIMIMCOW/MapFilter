@@ -69,7 +69,6 @@ namespace WhaleSpotting.Services
         public async Task<SightingResponseModel> ConfirmSighting(int id)
         {
             var sighting = await _context.Sightings
-                //TODO include user
                 .SingleOrDefaultAsync(s => s.Id == id);
 
             if (sighting == null)
