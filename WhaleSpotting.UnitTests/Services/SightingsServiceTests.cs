@@ -122,25 +122,27 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.SaveChangesAsync();
 
             // Act
-            var result = _underTest.ConfirmSighting(id);
+            var result = await _underTest.ConfirmSighting(id);
 
             // Assert
-            result.Should().BeOfType<Task<SightingResponseModel>>();
+            result.Should().BeOfType<SightingResponseModel>();
+            result.Confirmed.Should().Be(true);
             var sightingDbModel = Context.Sightings.Single();
             sightingDbModel.Confirmed.Should().Be(true);
         }
 
         [Fact]
-        public void ConfirmSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
+        public async void ConfirmSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
         {
             // Arrange
             const int id = 1;
 
             // Act
-            var nullResult = _underTest.ConfirmSighting(id);
+            var nullResult = await _underTest.ConfirmSighting(id);
 
             // Assert
-            nullResult.Should().BeOfType<Task<SightingResponseModel>>(null);
+            nullResult.Should().BeOfType<SightingResponseModel>(null);
+            nullResult.Should().Be(null);
         }
     }
 }
