@@ -48,7 +48,7 @@ namespace WhaleSpotting.Controllers
 
             if (sightingsToAdd.Any())
             {
-                _sightings.AddNewSightings(sightingsToAdd);
+                _sightings.CreateSightings(sightingsToAdd);
             }
             
             return Ok();

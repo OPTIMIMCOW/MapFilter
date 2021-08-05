@@ -15,7 +15,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
-        void AddNewSightings(List<SightingDbModel> sightingsToAdd);
+        List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
     }
 
     public class SightingsService : ISightingsService
@@ -37,23 +37,25 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public void AddNewSightings(List<SightingDbModel> sightingsToAdd)
+        public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
         {
             var newSightingIds =
                 sightingsToAdd.Select(s => s.ApiId).Distinct().ToArray();
-            var SightingsInDb =
+            var sightingsInDb =
                 _context
                     .Sightings
                     .Where(s => newSightingIds.Contains(s.ApiId))
                     .Select(s => s.ApiId)
                     .ToArray();
-            var SightingsNotInDb =
-                sightingsToAdd.Where(s => !SightingsInDb.Contains(s.ApiId));
-            SightingsNotInDb
+            var sightingsNotInDb =
+                sightingsToAdd.Where(s => !sightingsInDb.Contains(s.ApiId));
+            sightingsNotInDb
                 .ToList();
       
-            _context.Sightings.AddRange(SightingsNotInDb.ToArray());
+            _context.Sightings.AddRange(sightingsNotInDb.ToArray());
             _context.SaveChanges();
+
+            return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
         public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)

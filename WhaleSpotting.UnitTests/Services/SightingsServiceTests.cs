@@ -44,8 +44,9 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task AddNewSightings_CalledWithSightings_AddSightingsToDb()
+        public void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
         {
+            // Arrange
             var sightingToAdd = new List<SightingDbModel>();
 
             var whaleSighting = new SightingApiModel
@@ -62,15 +63,22 @@ namespace WhaleSpotting.UnitTests.Services
                 OrcaType = "unknown",
                 OrcaPod = "j"
             };
-
+            
+            sightingToAdd.Add(whaleSighting.ToDbModel());
             sightingToAdd.Add(whaleSighting.ToDbModel());
 
-             _underTest.AddNewSightings(sightingToAdd);
-         
-            var result = await _underTest.GetSightings();
+            // Act
+            var result = _underTest.CreateSightings(sightingToAdd);
 
-            result.Should().HaveCount(1);
+            // Assert
+            result.Should().BeOfType<List<SightingResponseModel>>();
+            result.Should().HaveCount(2);
+
+            var whaleSightingsDbModels = Context.Sightings.Where(s => s.Description == whaleSighting.Description).ToList();
+            whaleSightingsDbModels.Should().HaveCount(2);
+            whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
         }
+    
 
         [Fact]
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
