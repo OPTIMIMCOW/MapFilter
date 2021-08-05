@@ -1,10 +1,19 @@
-/* eslint-disable */
 import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
 import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSightingApiModel";
 
-export default function ReportSighting(): JSX.Element {
+export function ShowResultMessage({ responseMessage } : any): JSX.Element {
+    if (responseMessage) {
+        return (
+            <p data-testid="response-result" className="response-message card-component">
+                {responseMessage}
+            </p>);
+    }
+    return <div></div>;
+}
+
+export function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
     const [location, setLocation] = useState("");
     const [species, setSpecies] = useState<Species>(1);
@@ -15,6 +24,7 @@ export default function ReportSighting(): JSX.Element {
     const [orcaType, setorcaType] = useState<OrcaType>(1);
     const [description, setDescription] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
+
 
     async function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
@@ -30,9 +40,8 @@ export default function ReportSighting(): JSX.Element {
             orcaType: orcaType
         };
 
-        console.log(JSON.stringify(sighting));
         let isError = false;
-        const response = await fetch(`/create`, {
+        const response = await fetch("/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -48,27 +57,18 @@ export default function ReportSighting(): JSX.Element {
             })
             .catch(r => {
                 isError = true;
-                return r.json()
+                return r.json();
             });
         if (isError) {
             handleError(response);
         } else {
             setResponseMessage("Successful submission. An admin will review it shortly.");
         }
-    };
+    }
 
     function handleError(response: any) {
         const keys = Object.keys(response.errors);
         setResponseMessage(response.errors[keys[0]][0]);
-    }
-
-    function ShowResultMessage(): JSX.Element | void {
-        if (responseMessage) {
-            return (
-                <p className="response-message card-component">
-                    {responseMessage}
-                </p>)
-        }
     }
 
     return (
@@ -155,7 +155,7 @@ export default function ReportSighting(): JSX.Element {
                     <button onClick={handleSubmit} className="submit-button">
                         Submit Sighting
                     </button>
-                    {ShowResultMessage()}
+                    <ShowResultMessage responseMessage={responseMessage}/>
                 </form>
             </div>
         </div>
