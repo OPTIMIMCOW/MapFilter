@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WhaleSpotting.Controllers
 {
@@ -40,6 +41,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
