@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WhaleSpotting.Controllers
 {
-
     [ApiController]
     [Route("/getapidata")]
     public class ApiDataController : ControllerBase
@@ -30,7 +29,6 @@ namespace WhaleSpotting.Controllers
             var page = 1;
             var hasResults = true;
             var sightingsToAdd = new List<SightingDbModel>();
-
             var client = new RestClient("https://hotline.whalemuseum.org/");
 
             while (hasResults)
@@ -52,7 +50,7 @@ namespace WhaleSpotting.Controllers
             {
                 _sightings.AddNewSightings(sightingsToAdd);
             }
-
+            
             return Ok();
         }
     }

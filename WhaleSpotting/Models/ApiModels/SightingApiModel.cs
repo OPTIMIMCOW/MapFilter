@@ -23,38 +23,37 @@ namespace WhaleSpotting.Models.ApiModels
         public string OrcaType { get; set; }
         public string OrcaPod { get; set; }
 
-
         public SightingDbModel ToDbModel()
         {
-            var speciesLookup = new Dictionary<string, int>()
+            var speciesLookup = new Dictionary<string, Species>()
             {
-                { "atlanticwhitesideddolphin", 1 },
-                { "californiasealion", 2},
-                { "dallsporpoise", 3},
-                { "graywhale", 4},
-                { "harborporpoise", 5},
-                { "harborseal", 6},
-                { "humpback", 7},
-                { "humpbackwhale", 7},
-                { "minke", 8},
-                { "minkewhale", 8},
-                { "northernelephantseal", 9},
-                { "orca", 10},
-                { "other", 11},
-                { "pacificwhitesideddolphin", 12},
-                { "seaotter", 13},
-                { "southernelephantseal", 14},
-                { "stellersealion", 15},
-                { "unknown", 16}
+                { "atlanticwhitesideddolphin", (Species)1 },
+                { "californiasealion",(Species) 2},
+                { "dallsporpoise", (Species)3},
+                { "graywhale", (Species)4},
+                { "harborporpoise", (Species)5},
+                { "harborseal", (Species)6},
+                { "humpback", (Species)7},
+                { "humpbackwhale", (Species)7},
+                { "minke", (Species)8},
+                { "minkewhale", (Species)8},
+                { "northernelephantseal", (Species)9},
+                { "orca", (Species)10},
+                { "other", (Species)11},
+                { "pacificwhitesideddolphin", (Species)12},
+                { "seaotter", (Species)13},
+                { "southernelephantseal", (Species)14},
+                { "stellersealion", (Species)15},
+                { "unknown", (Species)16}
             };
 
-            var orcaTypeLookup = new Dictionary<string, int>()
+            var orcaTypeLookup = new Dictionary<string, OrcaType>()
             {
-                { "northernresident", 1 },
-                { "offshore", 2 },
-                { "southernresident", 3 },
-                { "transient", 4 },
-                { "unknown", 5 }
+                { "northernresident", (OrcaType)1 },
+                { "offshore", (OrcaType)2 },
+                { "southernresident", (OrcaType)3 },
+                { "transient", (OrcaType)4 },
+                { "unknown", (OrcaType)5 }
             };
 
             if (!int.TryParse(Quantity, out var quantity))
@@ -64,19 +63,17 @@ namespace WhaleSpotting.Models.ApiModels
 
             Species? species = string.IsNullOrEmpty(Species)
                 ? null
-                : (Species)speciesLookup[Regex.Replace(
+                : speciesLookup[Regex.Replace(
                     Species,
                     @"[^a-zA-Z]+", 
                     "")];
             OrcaType? orcaType = string.IsNullOrEmpty(OrcaType)
                 ? null
-                : (OrcaType)orcaTypeLookup[Regex.Replace(
+                : orcaTypeLookup[Regex.Replace(
                     OrcaType,
                     @"\s+",
                     "")];
 
-
-            // Enum.Parse(typeof(Species), Regex.Replace((species.FirstOrDefault(x => x.Value == Species).Key), @"\s+", "")),
             return new SightingDbModel
             {
                 ApiId = Id,
