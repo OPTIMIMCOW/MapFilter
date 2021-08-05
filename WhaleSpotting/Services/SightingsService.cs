@@ -13,7 +13,7 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
-        List<SightingResponseModel> SearchSightings(SearchSightingRequestModel searchSightingRequestModel);
+        List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
 
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
     }
@@ -37,7 +37,7 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public List<SightingResponseModel> SearchSightings(SearchSightingRequestModel searchSighting)
+        public List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSighting)
         {
             var sightings = _context.Sightings
                 .Where(s => s.Species  == searchSighting.Species)

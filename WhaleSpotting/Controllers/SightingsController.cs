@@ -26,11 +26,12 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("/search")]
-        public ActionResult<List<SightingResponseModel>> SearchSightings([FromQuery] SearchSightingRequestModel searchSighting)
+        public ActionResult<List<SightingResponseModel>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
         {
             try
             {
-                return _sightings.SearchSightings(searchSighting);
+                var result = _sightings.SearchSighting(searchSighting);
+                return result;
             }
             catch (Exception e)
             {
