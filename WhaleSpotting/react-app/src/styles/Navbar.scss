@@ -24,14 +24,14 @@
         white-space: nowrap;
         color: $textOnPrimary;
         border-radius: 5px;
-        text-decoration: none;  
-        font-size: $bodyFontSize;  
+        text-decoration: none;
+        font-size: $bodyFontSize;
 
         &.selected, &:hover {
             background-color: $primaryDark;
             text-decoration: none;
             color: $textOnPrimary;
-            border-radius: 5px; 
+            border-radius: 5px;
             width: max-content;
         }
     }
@@ -71,30 +71,27 @@
     .opened-bar-1, .opened-bar-2, .opened-bar-3 {
         @include bar;
     }
-
     /* Rotate first bar */
     .closed-bar-1 {
         @include bar;
         -webkit-transform: rotate(-45deg) translate(-8px, 7px);
         transform: rotate(-45deg) translate(-8px, 7px);
     }
-
     /* Fade out the second bar */
     .closed-bar-2 {
         @include bar;
         opacity: 0;
     }
-
     /* Rotate last bar */
     .closed-bar-3 {
         @include bar;
         -webkit-transform: rotate(45deg) translate(-8px, -8px);
         transform: rotate(45deg) translate(-8px, -8px);
     }
-    
-    @media(max-width: $mobileScreenSize) {
 
+    @media(max-width: $mobileScreenSize) {
         justify-content: left;
+        height: $mobileHeaderHeight;
 
         .burger-button {
             display: block;
@@ -115,7 +112,7 @@
             flex-direction: column;
         }
 
-        .changing-nav-links-mobile{
+        .changing-nav-links-mobile {
             display: flex;
             flex-direction: column;
         }
@@ -126,7 +123,7 @@
             z-index: 3;
             background-color: $primaryColour;
         }
- 
+
         .nav-bar, .current-page {
             display: none;
         }

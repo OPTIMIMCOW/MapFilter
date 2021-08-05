@@ -3,7 +3,7 @@
 .weather-component {
     border-radius: 10px;
     background-color: $primaryCard;
-    margin: 15px 0;
+    margin-bottom: $guttersTopBottom;
     text-align: center;
 
     .sighting-info {
@@ -22,7 +22,7 @@
     }
 
     .species {
-        width: 40%; 
+        width: 40%;
     }
 
     .whale-image-container {
@@ -46,9 +46,9 @@
         }
 
         .species {
-            width: 100%; 
+            width: 100%;
         }
-        
+
         .whale-image-container {
             display: none;
         }
