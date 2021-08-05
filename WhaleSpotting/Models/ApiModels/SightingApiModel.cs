@@ -28,7 +28,7 @@ namespace WhaleSpotting.Models.ApiModels
         {
             var speciesLookup = new Dictionary<string, int>()
             {
-                { "atlanticwhite-sideddolphin", 1 },
+                { "atlanticwhitesideddolphin", 1 },
                 { "californiasealion", 2},
                 { "dallsporpoise", 3},
                 { "graywhale", 4},
@@ -41,7 +41,7 @@ namespace WhaleSpotting.Models.ApiModels
                 { "northernelephantseal", 9},
                 { "orca", 10},
                 { "other", 11},
-                { "pacificwhite-sideddolphin", 12},
+                { "pacificwhitesideddolphin", 12},
                 { "seaotter", 13},
                 { "southernelephantseal", 14},
                 { "stellersealion", 15},
@@ -66,7 +66,7 @@ namespace WhaleSpotting.Models.ApiModels
                 ? null
                 : (Species)speciesLookup[Regex.Replace(
                     Species,
-                    @"\s+",
+                    @"[^a-zA-Z]+", 
                     "")];
             OrcaType? orcaType = string.IsNullOrEmpty(OrcaType)
                 ? null
