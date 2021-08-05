@@ -12,4 +12,4 @@ test("Renders Result Message", () => {
     render(<ShowResultMessage responseMessage="success" />);
     const message = screen.getByTestId("response-result");
     expect(message).toBeInTheDocument();
-})
+});

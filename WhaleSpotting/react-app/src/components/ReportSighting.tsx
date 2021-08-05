@@ -25,7 +25,6 @@ export function ReportSighting(): JSX.Element {
     const [description, setDescription] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
 
-
     async function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
         const sighting: CreateSightingApiModel = {
