@@ -28,10 +28,10 @@ export interface CreateSightingApiModel {
     species: Species;
     quantity: number;
     description: string;
-    longitude: number;
-    latitude: number;
+    longitude: number | null;
+    latitude: number | null;
     location: string;
-    sightedAt: Date;
+    sightedAt: Date | undefined;
     orcaType: OrcaType | null;
-    orcaPod: string;
+    orcaPod: string | undefined;
 }

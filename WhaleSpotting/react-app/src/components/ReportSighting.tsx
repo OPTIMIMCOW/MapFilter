@@ -14,30 +14,34 @@ export function ShowResultMessage({ responseMessage } : any): JSX.Element {
 }
 
 export function ReportSighting(): JSX.Element {
-    const [date, setDate] = useState<Date>(new Date());
-    const [location, setLocation] = useState("");
+    const [date, setDate] = useState<Date>();
+    const [location, setLocation] = useState<string>("");
     const [species, setSpecies] = useState<Species>(1);
     const [quantity, setQuantity] = useState(0);
-    const [longitude, setLongitude] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [orcaPod, setOrcaPod] = useState("");
-    const [orcaType, setorcaType] = useState<OrcaType>(1);
-    const [description, setDescription] = useState("");
-    const [responseMessage, setResponseMessage] = useState("");
+    const [longitude, setLongitude] = useState<number | null>(null);
+    const [latitude, setLatitude] = useState<number | null>(null);
+    const [orcaPod, setOrcaPod] = useState<string>();
+    const [orcaType, setorcaType] = useState<OrcaType>(0);
+    const [description, setDescription] = useState<string>("");
+    const [responseMessage, setResponseMessage] = useState<string>();
 
-    async function handleSubmit(event: React.MouseEvent<HTMLButtonElement>) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        // eslint-disable-next-line no-console
+        console.log(longitude);
         const sighting: CreateSightingApiModel = {
             species: species,
             quantity: quantity,
             description: description,
-            longitude: parseInt(longitude),
-            latitude: parseInt(latitude),
+            longitude: longitude,
+            latitude: latitude,
             location: location,
             sightedAt: date,
             orcaPod: orcaPod,
-            orcaType: orcaType
+            orcaType: orcaType === 0 ? null : orcaType
         };
+        // eslint-disable-next-line no-console
+        console.log(sighting);
 
         let isError = false;
         const response = await fetch("/create", {
@@ -75,7 +79,7 @@ export function ReportSighting(): JSX.Element {
             <BannerImage />
             <div className="container">
                 <div className="title">Report Your Sighting</div>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="card-component">
                         <div className="sighting-details">
                             <div className="input-box">
@@ -111,27 +115,28 @@ export function ReportSighting(): JSX.Element {
                                 </select>
                             </div>
                             <div className="input-box">
-                                <label>Quantity</label>
+                                <label>Quantity <span className="required">(required)</span></label>
                                 <input className="input-field" type="number" placeholder="Enter quantity"
                                     value={quantity}
                                     onChange={(e) => setQuantity(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
-                                <label>Longitude</label>
-                                <input className="input-field coordinates" type="number" placeholder="Enter your longitude"
-                                    value={longitude}
-                                    onChange={(e) => setLongitude(e.target.value)} />
+                                <label>Longitude <span className="required">(required)</span></label>
+                                <input className="input-field coordinates" type="number" placeholder="Enter your longitude" required
+   
+                                    onChange={(e) => setLongitude(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
-                                <label>Latitude</label>
-                                <input className="input-field coordinates" type="number" placeholder="Enter your latitude"
-                                    value={latitude}
-                                    onChange={(e) => setLatitude(e.target.value)} />
+                                <label>Latitude <span className="required">(required)</span></label>
+                                <input className="input-field coordinates" type="number" placeholder="Enter your latitude" required
+               
+                                    onChange={(e) => setLatitude(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
-                                <label>Orca Type <span className="required">(required)</span></label>
+                                <label>Orca Type</label>
                                 <select className="input-field" onChange={(e) => { setorcaType(parseInt(e.target.value)); }}>
-                                    <option selected value={OrcaType.NorthernResident}>Northern Resident</option>,
+                                    <option selected value={0}>N/A</option>,
+                                    <option value={OrcaType.NorthernResident}>Northern Resident</option>,
                                     <option value={OrcaType.Offshore}>Offshore</option>,
                                     <option value={OrcaType.SouthernResident}>Southern Resident</option>,
                                     <option value={OrcaType.Transient}>Transient</option>,
@@ -151,7 +156,7 @@ export function ReportSighting(): JSX.Element {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleSubmit} className="submit-button">
+                    <button type="submit" className="submit-button">
                         Submit Sighting
                     </button>
                     <ShowResultMessage responseMessage={responseMessage}/>
