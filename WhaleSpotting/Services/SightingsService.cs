@@ -14,7 +14,6 @@ namespace WhaleSpotting.Services
     {
         Task<List<SightingResponseModel>> GetSightings();
         List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
-
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
     }
 
