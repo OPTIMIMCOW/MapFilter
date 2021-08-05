@@ -12,8 +12,8 @@ namespace WhaleSpotting.Models.DbModels
         public int Id { get; set; }
 
         public string ApiId { get; set; }
-        public Species Species { get; set; }
-        public int Quantity { get; set; }
+        public Species? Species { get; set; }
+        public int? Quantity { get; set; }
         public string Description { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }

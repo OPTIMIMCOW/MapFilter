@@ -27,26 +27,26 @@ namespace WhaleSpotting.Controllers
         [HttpPost("")]
         public async Task<OkResult> GetApiData()
         {
-            var page = 4;
-            //var HasResults = true;
+            var page = 1;
+            var HasResults = true;
             List<SightingDbModel> sightingsToAdd = new List<SightingDbModel>();
 
             var client = new RestClient("http://hotline.whalemuseum.org/");
 
-            //while (HasResults == true)
-           // {
+            while (HasResults == true)
+           {
                 var request = new RestRequest($"api.json?limit=1000&page={page}", DataFormat.Json);
                 var apiSightings = await client.GetAsync<List<SightingApiModel>>(request);
                 if (apiSightings.Any())
                 {
                     sightingsToAdd.AddRange(apiSightings.Select(apiSighting => apiSighting.ToDbModel()).ToList());
-                    //page++;
+                    page++;
                 }
-                //else
-                //{
-                //    HasResults = false;
-                //}
-           // }
+                else
+                {
+                   HasResults = false;
+                }
+            }
 
 
             if (sightingsToAdd.Any())

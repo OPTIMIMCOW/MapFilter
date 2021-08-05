@@ -11,7 +11,7 @@ namespace WhaleSpotting.Models.ApiModels
     {
         public string Id { get; set; }
         public string Species { get; set; }
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
         public double Latitude { get; set; }
@@ -21,6 +21,8 @@ namespace WhaleSpotting.Models.ApiModels
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string OrcaType { get; set; }
+        public string OrcaPod { get; set; }
+
 
         public SightingDbModel ToDbModel()
         {
@@ -33,6 +35,7 @@ namespace WhaleSpotting.Models.ApiModels
                 { "harborporpoise", 5},
                 { "harborSeal", 6},
                 { "humpback", 7},
+                { "humpbackwhale", 7},
                 { "minke", 8},
                 { "northernelephantseal", 9},
                 { "orca", 10},
@@ -42,6 +45,7 @@ namespace WhaleSpotting.Models.ApiModels
                 { "southernelephantseal", 14},
                 { "stellersealion", 15},
                 { "unknown", 16}
+                
 
             };
 
@@ -54,19 +58,21 @@ namespace WhaleSpotting.Models.ApiModels
                 { "unknown", 5 }
             };
 
+            
             // Enum.Parse(typeof(Species), Regex.Replace((species.FirstOrDefault(x => x.Value == Species).Key), @"\s+", "")),
             return new SightingDbModel
             {
                 ApiId = Id,
-                Species = (Species)species[Regex.Replace(Species, @"\s+", "")],
-                Quantity = Quantity,
+                //Species = (Species)species[Regex.Replace(Species, @"\s+", "")],
+                Quantity = Quantity ?? 0,
                 Location = Location,
                 Latitude = Latitude,
                 Longitude = Longitude,
                 Description = Description,
                 SightedAt = SightedAt,
                 CreatedAt = CreatedAt,
-                OrcaType = (OrcaType)orcatype[Regex.Replace(OrcaType, @"\s+", "")]
+                //OrcaType = (OrcaType)orcatype[Regex.Replace(OrcaType, @"\s+", "")],
+                OrcaPod = OrcaPod
             };
     }
 
