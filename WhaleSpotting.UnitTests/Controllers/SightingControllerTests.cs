@@ -150,45 +150,72 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.SearchSighting(searchSighting))
                 .Returns(new List<SightingResponseModel> { sightingResponse });
-      
+
             // Act
             var response = _underTest.SearchSighting(searchSighting);
 
             // Assert
-          
+
             var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
             searchResult.Should().Contain(sightingResponse);
         }
+        [Fact]
+        public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
 
-        //[Fact]
-        //public void CreateSighting_CalledWithInvalidNewSighting_ReturnsBadRequest()
-        //{
-        //    // Arrange
-        //    var newSighting = new SightingRequestModel
-        //    {
-        //        Species = Species.AtlanticWhiteSidedDolphin,
-        //        Quantity = 2,
-        //        Description = "was nice",
-        //        Longitude = -100.010,
-        //        Latitude = -22.010,
-        //        Location = "atlantic ocean",
-        //        SightedAt = DateTime.Now.AddDays(1),
-        //        OrcaType = null,
-        //        OrcaPod = "",
-        //        UserId = 5,
-        //    };
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+            .Returns(new List<SightingResponseModel> { });
 
-        //    var exception = new Exception("Sighted At must be in the past");
+            // Act
+            var response = _underTest.SearchSighting(searchSighting);
 
-        //    A.CallTo(() => _sightings.CreateSighting(newSighting))
-        //        .Throws(exception);
+            // Assert
+            response.Result.Should().BeOfType<NotFoundResult>();
+        }
 
-        //    // Act
-        //    var response = _underTest.CreateSighting(newSighting);
 
-        //    // Assert
-        //    var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
-        //    badRequestResult.Value.Should().Be("Sighted At must be in the past");
-        //}
+        [Fact]
+        public void SearchSighting_ValidSearchSighting_ReturnsFilteredSearchResult()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin
+
+            };
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = false,
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+                .Returns(new List<SightingResponseModel> { sightingResponse });
+
+            // Act
+            var response = _underTest.SearchSighting(searchSighting);
+
+            // Assert
+
+            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
+            searchResult.Should().Contain(sightingResponse);
+        }
     }
 }

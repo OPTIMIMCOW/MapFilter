@@ -96,5 +96,59 @@ namespace WhaleSpotting.UnitTests.Services
             exception.Single().Message.Should().Be("Sighted At must be in the past");
             Context.Sightings.Should().BeEmpty();
         }
+
+         [Fact]
+        public void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = ""
+            }); 
+             Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = "" 
+             });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
+
+            // Act
+            var result = _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
     }
 }

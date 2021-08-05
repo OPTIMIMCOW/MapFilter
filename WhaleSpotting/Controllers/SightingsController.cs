@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using System.Linq;
 
 namespace WhaleSpotting.Controllers
 {
@@ -28,15 +29,8 @@ namespace WhaleSpotting.Controllers
         [HttpGet("/search")]
         public ActionResult<List<SightingResponseModel>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
         {
-            try
-            {
-                var result = _sightings.SearchSighting(searchSighting);
-                return result;
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var result = _sightings.SearchSighting(searchSighting);
+            return result.Any() ? result : NotFound();
         }
 
 
@@ -45,7 +39,7 @@ namespace WhaleSpotting.Controllers
         {
             try
             {
-                var newSighting =_sightings.CreateSighting(sightingRequestModel);
+                var newSighting = _sightings.CreateSighting(sightingRequestModel);
                 return Created($"/sighting/{newSighting.Id}", newSighting);
                 // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
             }
