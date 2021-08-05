@@ -70,11 +70,16 @@ namespace WhaleSpotting.Services
         {
             var sighting = await _context.Sightings
                 //TODO include user
-                .SingleAsync(s => s.Id == id);
+                .SingleOrDefaultAsync(s => s.Id == id);
 
+            if (sighting==null)
+            {
+                return null;
+            }
+            
             sighting.Confirmed = true;
             _context.SaveChanges();
-            
+
             return new SightingResponseModel(sighting);
         }
     }

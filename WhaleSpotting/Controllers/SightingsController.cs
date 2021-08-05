@@ -30,7 +30,7 @@ namespace WhaleSpotting.Controllers
         {
             try
             {
-                var newSighting =_sightings.CreateSighting(sightingRequestModel);
+                var newSighting = _sightings.CreateSighting(sightingRequestModel);
                 return Created($"/sighting/{newSighting.Id}", newSighting);
                 // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
             }
@@ -43,16 +43,12 @@ namespace WhaleSpotting.Controllers
         [HttpPut("/{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
-            try
-            {
-                var sighting = await _sightings.ConfirmSighting(id);
-                //TODO check with Oskar what is better to return: the sighting? the profile page?
-                return sighting; 
-            }
-            catch
+            var sighting = await _sightings.ConfirmSighting(id);
+            if (sighting == null)
             {
                 return NotFound();
             }
+            return sighting;
         }
     }
 }
