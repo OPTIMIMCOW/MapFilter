@@ -8,14 +8,15 @@
     .card-info {
         display: inline-flex;
         padding: 10px 10px;
+        width: calc(100% - 20px);
     }
 
     .first-column {
-        width: 35vw;
+        width: 50%;
     }
 
     .second-column {
-        width: 35vw;
+        width: 50%;
     }
 
     .pending {

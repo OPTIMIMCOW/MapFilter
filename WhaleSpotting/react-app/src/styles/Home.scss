@@ -5,12 +5,9 @@
     margin-top: $headerHeight;
 
     .home-contents {
-        display: flex;
-        flex-direction: column;
-        margin: auto;
+        margin: $guttersTopBottom auto;
+        padding: 0 $guttersSide;
         max-width: $bodyWidth;
-        margin-bottom: $guttersTopBottom;
-        padding: 4% 5%;
     }
 
     .report-button-container {
@@ -26,6 +23,7 @@
     }
 
     @media (max-width: $mobileScreenSize) {
+        padding-bottom: $mobileFooterHeight;
 
         .report-button-container {
             margin: 5px 0;
