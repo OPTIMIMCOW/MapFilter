@@ -44,11 +44,7 @@ namespace WhaleSpotting.Controllers
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
             var sighting = await _sightings.ConfirmSighting(id);
-            if (sighting == null)
-            {
-                return NotFound();
-            }
-            return sighting;
+            return sighting == null ? NotFound() : sighting;
         }
     }
 }

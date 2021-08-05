@@ -96,5 +96,51 @@ namespace WhaleSpotting.UnitTests.Services
             exception.Single().Message.Should().Be("Sighted At must be in the past");
             Context.Sightings.Should().BeEmpty();
         }
+
+        [Fact]
+        public async void ConfirmSighting_CalledWithId_ReturnsSightingResponseModelAndConfirmedIsTrueInDb()
+        {
+            // Arrange
+            const int id = 1;
+
+            var sighting = new SightingDbModel
+            {
+                Id = 1,
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = _underTest.ConfirmSighting(id);
+
+            // Assert
+            result.Should().BeOfType<Task<SightingResponseModel>>();
+            var sightingDbModel = Context.Sightings.Single();
+            sightingDbModel.Confirmed.Should().Be(true);
+        }
+
+        [Fact]
+        public void ConfirmSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
+        {
+            // Arrange
+            const int id = 1;
+
+            // Act
+            var nullResult = _underTest.ConfirmSighting(id);
+
+            // Assert
+            nullResult.Should().BeOfType<Task<SightingResponseModel>>(null);
+        }
     }
 }
