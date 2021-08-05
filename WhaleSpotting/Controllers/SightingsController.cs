@@ -31,24 +31,17 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpPost("/create")]
-        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel, [FromServices] IOptions<ApiBehaviorOptions> apiBehaviorOptions)
+        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
-            if (sightingRequestModel.SightedAt > DateTime.Now)
-            {
-                ModelState.AddModelError(nameof(sightingRequestModel.SightedAt), "Date of sighting must be in the past");
-                return apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
-            }
-
             try
             {
                 var newSighting =_sightings.CreateSighting(sightingRequestModel);
                 return Created($"/sighting/{newSighting.Id}", newSighting);
-                // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("errors", e.Message);
-                return apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
+                ModelState.AddModelError("Thrown Error", e.Message);
+                return ValidationProblem();
             }
         }
     }

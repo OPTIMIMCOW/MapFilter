@@ -37,6 +37,11 @@ namespace WhaleSpotting.Services
 
         public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
         {
+            if (sightingRequestModel.SightedAt > DateTime.Now)
+            {
+                throw new Exception("Date of sighting must be in the past");
+            }
+
             var newSighting = new SightingDbModel
             {
                 Species = sightingRequestModel.Species,
