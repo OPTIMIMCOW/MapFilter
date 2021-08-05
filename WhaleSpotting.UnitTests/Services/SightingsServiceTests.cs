@@ -39,7 +39,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task AddSightings_CheckNuberOfAddedSightings()
+        public async Task AddNewSightings_CalledWithSightings_AddSightingsToDb()
         {
             var sightingToAdd = new List<SightingDbModel>();
 
