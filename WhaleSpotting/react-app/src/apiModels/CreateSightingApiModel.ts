@@ -33,5 +33,5 @@ export interface CreateSightingApiModel {
     location: string;
     sightedAt: Date | undefined;
     orcaType: OrcaType | null;
-    orcaPod: string | undefined;
+    orcaPod: string;
 }

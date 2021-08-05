@@ -20,15 +20,13 @@ export function ReportSighting(): JSX.Element {
     const [quantity, setQuantity] = useState(0);
     const [longitude, setLongitude] = useState<number | null>(null);
     const [latitude, setLatitude] = useState<number | null>(null);
-    const [orcaPod, setOrcaPod] = useState<string>();
+    const [orcaPod, setOrcaPod] = useState<string>("");
     const [orcaType, setorcaType] = useState<OrcaType>(0);
     const [description, setDescription] = useState<string>("");
     const [responseMessage, setResponseMessage] = useState<string>();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        // eslint-disable-next-line no-console
-        console.log(longitude);
         const sighting: CreateSightingApiModel = {
             species: species,
             quantity: quantity,
@@ -40,8 +38,6 @@ export function ReportSighting(): JSX.Element {
             orcaPod: orcaPod,
             orcaType: orcaType === 0 ? null : orcaType
         };
-        // eslint-disable-next-line no-console
-        console.log(sighting);
 
         let isError = false;
         const response = await fetch("/create", {
