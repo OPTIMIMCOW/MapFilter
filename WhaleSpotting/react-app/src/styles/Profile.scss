@@ -81,10 +81,9 @@
 }
 
 @media(max-width: $mobileScreenSize) {
-
     .body {
         flex-direction: column;
-        margin: $headerHeight auto $mobileFooterHeight auto;
+        margin: $mobileHeaderHeight auto $mobileFooterHeight auto;
     }
 
     .profile-pane {

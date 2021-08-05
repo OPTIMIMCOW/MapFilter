@@ -9,12 +9,13 @@ import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import FetchWeatherData from "./components/FetchWeatherData";
 import { ReportSighting } from "./components/ReportSighting";
+import Map from "./components/Map";
 
 function App(): JSX.Element {
     return (
         <Fragment>
             <Navbar />
-            <Route exact path="/map" />
+            <Route exact path="/map" component={Map}/>
             <Route exact path="/reportsighting" component={ReportSighting}/>
             <Route exact path="/profile" component={Profile}/>
             <Route exact path="/login">

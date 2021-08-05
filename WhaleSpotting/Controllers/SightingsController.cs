@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 
 namespace WhaleSpotting.Controllers
 {
@@ -30,12 +27,12 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
-        [HttpPost("/create")]
+        [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
             {
-                var newSighting =_sightings.CreateSighting(sightingRequestModel);
+                var newSighting = _sightings.CreateSighting(sightingRequestModel);
                 return Created($"/sighting/{newSighting.Id}", newSighting);
             }
             catch (Exception e)
@@ -43,6 +40,14 @@ namespace WhaleSpotting.Controllers
                 ModelState.AddModelError("Thrown Error", e.Message);
                 return ValidationProblem();
             }
+        }
+
+        [Authorize]
+        [HttpPut("{id}/confirm")]
+        public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.ConfirmSighting(id);
+            return sighting == null ? NotFound() : sighting;
         }
     }
 

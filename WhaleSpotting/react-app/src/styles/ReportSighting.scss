@@ -1,26 +1,26 @@
 @import "./Constants.scss";
 
-.report-sighting{
+.report-sighting {
     padding-bottom: $footerHeight;
     margin-top: $headerHeight;
-    
-    .required{
+
+    .required {
         color: $secondaryDark;
         font-size: $mobileBodyFontSize;
     }
 
-    .container{
-        margin: auto;
-        max-width: 800px;
-        padding: 4% 5%;
+    .container {
+        margin: $guttersTopBottom auto;
+        padding: 0 $guttersSide;
+        max-width: $bodyWidth;
     }
 
-    .title{
+    .title {
         text-align: center;
         font-size: $titleFontSize;
     }
 
-    .sighting-details{
+    .sighting-details {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -36,8 +36,8 @@
         margin: 3% 0;
         width: 46%;
         font-size: $bodyFontSize;
-    
-        .input-field{
+
+        .input-field {
             height: 85%;
             width: 100%;
             padding-left: 10px;
@@ -46,19 +46,19 @@
             border: 1px solid $primaryColour;
             box-sizing:border-box;
 
-            
-            &:focus{
+
+            &:focus {
                 outline: none;
                 border: 1.25px solid $primaryDark;
-            } 
+            }
         }
     }
 
-    .description{
+    .description {
         width: 200%;
     }
-        
-    .submit-button{
+
+    .submit-button {
         height: 45px;
         margin: 35px 0;
         width: 100%;
@@ -67,22 +67,22 @@
         font-size: $bodyFontSize;
         border-radius: 5px;
         background: $primaryDark;
-        
-        &:hover{
+
+        &:hover {
             background: $primaryColour;
         }
     }
 
-    .coordinates::-webkit-inner-spin-button, 
-    .coordinates::-webkit-outer-spin-button { 
+    .coordinates::-webkit-inner-spin-button,
+    .coordinates::-webkit-outer-spin-button {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        margin: 0; 
+        margin: 0;
     }
-    
+
     @media (max-width: 544px) {
-        .sighting-details .input-box{
+        .sighting-details .input-box {
             margin-bottom: 15px;
             width: 100%;
             font-size: $mobileBodyFontSize;
@@ -92,18 +92,22 @@
             font-size: $mobileTitleFontSize;
         }
 
-        .submit-button{
+        .card-component {
+            padding-right: 7px;
+        }
+
+        .submit-button {
             margin: 10px 0 25px 0;
         }
-
     }
-    @media (max-width: $minMobileScreenSize){
+
+    @media (max-width: $minMobileScreenSize) {
         padding-bottom: $mobileFooterHeight;
-        
-        .title{
+        margin-top: $mobileHeaderHeight;
+
+        .title {
             font-size: $smallMobileTitleFontSize;
         }
-
     }
 }
 

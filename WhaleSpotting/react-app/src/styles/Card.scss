@@ -8,7 +8,7 @@
     .card-info {
         display: inline-flex;
         padding: 10px 10px;
-        width: 100%;
+        width: calc(100% - 20px);
     }
 
     .first-column {
