@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WhaleSpotting.Controllers
 {
- 
+
     [ApiController]
     [Route("/getapidata")]
     public class ApiDataController : ControllerBase
@@ -28,13 +28,13 @@ namespace WhaleSpotting.Controllers
         public async Task<OkResult> GetApiData()
         {
             var page = 1;
-            var HasResults = true;
-            List<SightingDbModel> sightingsToAdd = new List<SightingDbModel>();
+            var hasResults = true;
+            var sightingsToAdd = new List<SightingDbModel>();
 
-            var client = new RestClient("http://hotline.whalemuseum.org/");
+            var client = new RestClient("https://hotline.whalemuseum.org/");
 
-            while (HasResults == true)
-           {
+            while (hasResults)
+            {
                 var request = new RestRequest($"api.json?limit=1000&page={page}", DataFormat.Json);
                 var apiSightings = await client.GetAsync<List<SightingApiModel>>(request);
                 if (apiSightings.Any())
@@ -44,10 +44,9 @@ namespace WhaleSpotting.Controllers
                 }
                 else
                 {
-                   HasResults = false;
+                    hasResults = false;
                 }
             }
-
 
             if (sightingsToAdd.Any())
             {
@@ -55,8 +54,6 @@ namespace WhaleSpotting.Controllers
             }
 
             return Ok();
-
         }
-
     }
 }

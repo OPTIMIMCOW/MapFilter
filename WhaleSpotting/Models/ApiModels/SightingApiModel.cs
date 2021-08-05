@@ -11,7 +11,7 @@ namespace WhaleSpotting.Models.ApiModels
     {
         public string Id { get; set; }
         public string Species { get; set; }
-        public int? Quantity { get; set; }
+        public string Quantity { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
         public double Latitude { get; set; }
@@ -26,17 +26,18 @@ namespace WhaleSpotting.Models.ApiModels
 
         public SightingDbModel ToDbModel()
         {
-            var species = new Dictionary<string, int>()
+            var speciesLookup = new Dictionary<string, int>()
             {
                 { "atlanticwhite-sideddolphin", 1 },
                 { "californiasealion", 2},
                 { "dallsporpoise", 3},
                 { "graywhale", 4},
                 { "harborporpoise", 5},
-                { "harborSeal", 6},
+                { "harborseal", 6},
                 { "humpback", 7},
                 { "humpbackwhale", 7},
                 { "minke", 8},
+                { "minkewhale", 8},
                 { "northernelephantseal", 9},
                 { "orca", 10},
                 { "other", 11},
@@ -45,11 +46,9 @@ namespace WhaleSpotting.Models.ApiModels
                 { "southernelephantseal", 14},
                 { "stellersealion", 15},
                 { "unknown", 16}
-                
-
             };
 
-            var orcatype = new Dictionary<string, int>()
+            var orcaTypeLookup = new Dictionary<string, int>()
             {
                 { "northernresident", 1 },
                 { "offshore", 2 },
@@ -58,24 +57,40 @@ namespace WhaleSpotting.Models.ApiModels
                 { "unknown", 5 }
             };
 
-            
+            if (!int.TryParse(Quantity, out var quantity))
+            {
+                quantity = 0;
+            }
+
+            Species? species = string.IsNullOrEmpty(Species)
+                ? null
+                : (Species)speciesLookup[Regex.Replace(
+                    Species,
+                    @"\s+",
+                    "")];
+            OrcaType? orcaType = string.IsNullOrEmpty(OrcaType)
+                ? null
+                : (OrcaType)orcaTypeLookup[Regex.Replace(
+                    OrcaType,
+                    @"\s+",
+                    "")];
+
+
             // Enum.Parse(typeof(Species), Regex.Replace((species.FirstOrDefault(x => x.Value == Species).Key), @"\s+", "")),
             return new SightingDbModel
             {
                 ApiId = Id,
-                //Species = (Species)species[Regex.Replace(Species, @"\s+", "")],
-                Quantity = Quantity ?? 0,
+                Species = species,
+                Quantity = quantity,
                 Location = Location,
                 Latitude = Latitude,
                 Longitude = Longitude,
                 Description = Description,
                 SightedAt = SightedAt,
                 CreatedAt = CreatedAt,
-                //OrcaType = (OrcaType)orcatype[Regex.Replace(OrcaType, @"\s+", "")],
+                OrcaType = orcaType,
                 OrcaPod = OrcaPod
             };
+        }
     }
-
-
-}
 }
