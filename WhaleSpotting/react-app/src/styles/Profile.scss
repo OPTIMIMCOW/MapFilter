@@ -75,11 +75,6 @@
     border-radius: 5%;
 }
 
-.primary-button{
-    margin:5px;
-    width: 70%;
-}
-
 @media(max-width: $mobileScreenSize) {
     .body {
         flex-direction: column;
@@ -87,7 +82,7 @@
     }
 
     .profile-pane {
-        height: 290px;
+        height: 300px;
         width:100vw;
         min-height: unset;
     }

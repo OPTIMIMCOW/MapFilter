@@ -1,15 +1,31 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
 import "../styles/Buttons.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import SightingApiModel from "../api/models/SightingApiModel";
 import Card from "./Card";
 import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import authService from "./api-authorization/AuthorizeService";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
+    const [itAdmin, setIsAdmin] = useState(false);
+
+    async function checkifAdmin() {
+        setIsAdmin(await checkAdmin());
+    }
+
+    async function makeAdminHandler() {
+        await makeAdmin()
+            .then(() => setIsAdmin(true));
+    }
+
+    async function removeAdminHandler() {
+        await removeAdmin()
+            .then(() => setIsAdmin(false));
+    }
 
     const orca: SightingApiModel = {
         id: 1,
@@ -66,21 +82,26 @@ export function Profile(): JSX.Element {
                             style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle" />
+                            dataTestId="approval-toggle"
+                            forAdmin={true}
+                            isAdmin={itAdmin}
+                        />
                         <Button
-                            style={Style.primary}
+                            style={Style.secondary}
                             text="Make Admin"
-                            onClick={makeAdmin}
+                            onClick={makeAdminHandler}
                             dataTestId="make-admin" />
                         <Button
-                            style={Style.primary}
+                            style={Style.secondary}
                             text="Check Admin"
-                            onClick={checkAdmin}
+                            onClick={checkifAdmin}
                             dataTestId="check-admin" />
                         <Button
-                            style={Style.primary}
+                            style={Style.secondary}
                             text="Remove Admin"
-                            onClick={removeAdmin}
+                            onClick={removeAdminHandler}
+                            forAdmin={true}
+                            isAdmin={itAdmin}
                             dataTestId="remove-admin" />
                     </div>
                 </div>

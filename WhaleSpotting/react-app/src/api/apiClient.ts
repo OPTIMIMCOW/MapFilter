@@ -14,7 +14,8 @@ export async function checkAdmin() {
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
     });
     //eslint-disable-next-line
-    console.log(response);
+    console.log(response)
+    return !response.redirected;
 }
 export async function removeAdmin() {
     const token = await authService.getAccessToken();

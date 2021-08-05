@@ -15,9 +15,11 @@ interface ButtonProps {
     dataTestId?: string;
     minWidth25?: boolean;
     link?: string;
+    forAdmin?: boolean;
+    isAdmin?: boolean;
 }
 
-export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link }: ButtonProps): JSX.Element {
+export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link, forAdmin = false, isAdmin = false }: ButtonProps): JSX.Element {
     const width = minWidth25 ? "minWidth25" : "";
     let styleClass;
 
@@ -41,6 +43,18 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
                 to={link}>
                 {text}
             </Link>
+        );
+    }
+
+    if(forAdmin) {
+        return (
+            <button
+                data-testid={dataTestId}
+                className={`${styleClass} ${width}`}
+                onClick={onClick}
+                hidden={!isAdmin}>
+                {text}
+            </button>
         );
     }
 
