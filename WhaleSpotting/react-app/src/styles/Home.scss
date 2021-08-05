@@ -3,21 +3,11 @@
 .home {
     padding-bottom: $footerHeight;
     margin-top: $headerHeight;
-    display: flex;
-    flex-direction: column;
-    font-family: $fontFamily;
-  
-    .banner-image{
-        height: 40vh;
-        object-fit: cover;
-        width: 100%;
-    }    
 
     .home-contents {
-        margin: auto;
+        margin: $guttersTopBottom auto;
+        padding: 0 $guttersSide;
         max-width: $bodyWidth;
-        width: 100%;
-        margin-bottom: $guttersTopBottom;
     }
 
     .report-button-container {
@@ -33,16 +23,14 @@
     }
 
     @media (max-width: $mobileScreenSize) {
-
-        .banner-image {
-            height: 80vw;
-        }
+        padding-bottom: $mobileFooterHeight;
+        margin-top: $mobileHeaderHeight;
 
         .report-button-container {
             margin: 5px 0;
 
             .report-button {
-                width:100%;
+                width: 100%;
             }
         }
     }

@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import { CreateSightingApiModel, Species, OrcaType } from "../../apiModels/CreateSightingApiModel";
+import { CreateSightingApiModel, Species} from "../../apiModels/CreateSightingApiModel";
 
 test("check species enum works correctly", () => {
     const test: CreateSightingApiModel = {

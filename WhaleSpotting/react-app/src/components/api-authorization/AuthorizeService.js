@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { ApplicationPaths, ApplicationName } from "./ApiAuthorizationConstants";
 
@@ -47,6 +48,7 @@ export class AuthorizeService {
             return this.success(state);
         } catch (silentError) {
             // User might not be authenticated, fallback to popup authentication
+            // eslint-disable-next-line no-console
             console.log("Silent authentication error: ", silentError);
 
             try {
@@ -62,6 +64,7 @@ export class AuthorizeService {
                     // The user explicitly cancelled the login action by closing an opened popup.
                     return this.error("The user closed the window.");
                 } else if (!this._popUpDisabled) {
+                    // eslint-disable-next-line no-console
                     console.log("Popup authentication error: ", popUpError);
                 }
 
@@ -70,6 +73,7 @@ export class AuthorizeService {
                     await this.userManager.signinRedirect(this.createArguments(state));
                     return this.redirect();
                 } catch (redirectError) {
+                    // eslint-disable-next-line no-console
                     console.log("Redirect authentication error: ", redirectError);
                     return this.error(redirectError);
                 }
@@ -84,6 +88,7 @@ export class AuthorizeService {
             this.updateState(user);
             return this.success(user && user.state);
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.log("There was an error signing in: ", error);
             return this.error("There was an error signing in.");
         }
@@ -105,11 +110,13 @@ export class AuthorizeService {
             this.updateState(undefined);
             return this.success(state);
         } catch (popupSignOutError) {
+            // eslint-disable-next-line no-console
             console.log("Popup signout error: ", popupSignOutError);
             try {
                 await this.userManager.signoutRedirect(this.createArguments(state));
                 return this.redirect();
             } catch (redirectSignOutError) {
+                // eslint-disable-next-line no-console
                 console.log("Redirect signout error: ", redirectSignOutError);
                 return this.error(redirectSignOutError);
             }
@@ -123,6 +130,7 @@ export class AuthorizeService {
             this.updateState(null);
             return this.success(response && response.data);
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.log(`There was an error trying to log out '${error}'.`);
             return this.error(error);
         }
