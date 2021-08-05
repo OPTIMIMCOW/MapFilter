@@ -25,7 +25,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
-        [HttpPost("/create")]
+        [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
@@ -40,7 +40,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
-        [HttpPut("/{id}/confirm")]
+        [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
             var sighting = await _sightings.ConfirmSighting(id);

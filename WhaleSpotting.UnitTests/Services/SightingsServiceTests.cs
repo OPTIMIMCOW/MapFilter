@@ -141,7 +141,6 @@ namespace WhaleSpotting.UnitTests.Services
             var nullResult = await _underTest.ConfirmSighting(id);
 
             // Assert
-            nullResult.Should().BeOfType<SightingResponseModel>(null);
             nullResult.Should().Be(null);
         }
     }

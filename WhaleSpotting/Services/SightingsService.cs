@@ -72,7 +72,7 @@ namespace WhaleSpotting.Services
                 //TODO include user
                 .SingleOrDefaultAsync(s => s.Id == id);
 
-            if (sighting==null)
+            if (sighting == null)
             {
                 return null;
             }
