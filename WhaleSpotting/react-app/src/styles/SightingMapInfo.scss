@@ -1,0 +1,56 @@
+@import "./Constants.scss";
+
+.weather-component {
+    border-radius: 10px;
+    background-color: $primaryCard;
+    margin-bottom: $guttersTopBottom;
+    text-align: center;
+
+    .sighting-info {
+        display: inline-flex;
+        padding: 10px 2%;
+        text-align: left;
+    }
+
+    .list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .weather-info {
+        width: 40%;
+    }
+
+    .species {
+        width: 40%;
+    }
+
+    .whale-image-container {
+        width: 20%;
+    }
+
+    .whale-image {
+        width: 80%;
+    }
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .weather-component {
+        .sighting-info{
+            display: block;
+        }
+
+        .weather-info {
+            width: 100%;
+        }
+
+        .species {
+            width: 100%;
+        }
+
+        .whale-image-container {
+            display: none;
+        }
+    }
+}

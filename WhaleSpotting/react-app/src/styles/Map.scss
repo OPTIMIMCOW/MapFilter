@@ -1,0 +1,32 @@
+@import "./Constants.scss";
+
+.map-component {
+    margin: $headerHeight auto $footerHeight auto;
+    display: flex;
+    flex-direction: column;
+    max-width: $bodyWidth;
+    align-items: center;
+}
+
+.map-container {
+    background-color: #98d5f5;
+    width: 80%;
+    border-radius: 10px;
+    margin-bottom: $guttersTopBottom;
+}
+
+.map-info {
+    width: 80%;
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .map-container {
+        width: 95%;
+    }
+
+    .map-info {
+        width: 95%;
+        font-size: $mobileBodyFontSize;
+    }
+}

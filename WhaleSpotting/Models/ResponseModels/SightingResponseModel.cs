@@ -2,10 +2,13 @@ using Newtonsoft.Json;
 using System;
 using WhaleSpotting.Models.DbModels;
 
-namespace WhaleSpotting.Models.ApiModels
+namespace WhaleSpotting.Models.ResponseModels
 {
     public class SightingResponseModel
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("sighted_at")]
         public DateTime SightedAt { get; set; }
 
@@ -46,6 +49,7 @@ namespace WhaleSpotting.Models.ApiModels
 
         public SightingResponseModel(SightingDbModel sighting)
         {
+            Id = sighting.Id;
             SightedAt = sighting.SightedAt;
             Species = sighting.Species.ToString();
             Quantity = sighting.Quantity;
