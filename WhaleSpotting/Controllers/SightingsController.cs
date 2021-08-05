@@ -25,6 +25,20 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
+        [HttpGet("/search")]
+        public ActionResult<List<SightingResponseModel>> SearchSightings([FromQuery] SearchSightingRequestModel searchSighting)
+        {
+            try
+            {
+                return _sightings.SearchSightings(searchSighting);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
         [HttpPost("/create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {

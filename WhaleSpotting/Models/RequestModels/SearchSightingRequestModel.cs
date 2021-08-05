@@ -13,19 +13,19 @@ namespace WhaleSpotting.Models.RequestModels
         public Species Species { get; set; }
 
         [Range(-180.00, 180.00, ErrorMessage = "Longitude must be between -180 and 180 degrees")]
-        public double Longitude { get; set; }
+        public double? Longitude { get; set; }
 
         [Range(-90.00, 90.00, ErrorMessage = "Latitude must be between -90 and 90 degrees")]
-        public double Latitude { get; set; }
+        public double? Latitude { get; set; }
 
-        public string Location { get; set; }
+        public string Location { get; set; } = null;
 
         [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
-        public DateTime SightedAt { get; set; }
+        public DateTime? SightedAt { get; set; }
 
         [Range(1, 4, ErrorMessage = "OrcaType must be between 1 and 4")]
         public OrcaType? OrcaType { get; set; }
 
-        public string OrcaPod { get; set; }
+        public string OrcaPod { get; set; } = null;
     }
 }
