@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import WeatherApiModel from "../apiModels/WeatherApiModel";
+import WeatherApiModel from "../api/models/WeatherApiModel";
 import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
 

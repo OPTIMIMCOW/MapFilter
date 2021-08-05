@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import WeatherForecastApiModel from "../apiModels/WeatherForecastApiModel";
+import WeatherForecastApiModel from "../api/models/WeatherForecastApiModel";
 import authService from "./api-authorization/AuthorizeService";
 
 // example of auth being used for a fetch to an endpoint (line 10-12)- look at weatherforecastcontroller for backend
@@ -20,6 +20,7 @@ export default function FetchWeatherData(): JSX.Element {
         const response = await fetch("User/MakeAdmin", {
             headers: !token ? {} : { "Authorization": `Bearer ${token}` }
         });
+        //eslint-disable-next-line
         console.log(response);
     }
     async function checkAdmin() {
@@ -27,6 +28,7 @@ export default function FetchWeatherData(): JSX.Element {
         const response = await fetch("User/CheckAdmin", {
             headers: !token ? {} : { "Authorization": `Bearer ${token}` }
         });
+        //eslint-disable-next-line
         console.log(response);
     }
     async function removeAdmin() {
@@ -34,6 +36,7 @@ export default function FetchWeatherData(): JSX.Element {
         const response = await fetch("User/RemoveAdmin", {
             headers: !token ? {} : { "Authorization": `Bearer ${token}` }
         });
+        //eslint-disable-next-line
         console.log(response);
     }
 

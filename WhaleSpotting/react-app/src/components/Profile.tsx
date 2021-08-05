@@ -4,8 +4,9 @@ import "../styles/Buttons.scss";
 import React, { useState } from "react";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import SightingApiModel from "../api/models/SightingApiModel";
 import Card from "./Card";
+import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -57,15 +58,30 @@ export function Profile(): JSX.Element {
                         <img className="profile-image" alt="Profile Image" src="https://picsum.photos/id/237/200" />
                     </div>
                     <div className="button-container">
-                        <Button 
-                            style={Style.primary} 
+                        <Button
+                            style={Style.primary}
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")}/>
-                        <Button 
-                            style={Style.primary} 
+                            onClick={() => setFeedToggle("Sightings")} />
+                        <Button
+                            style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle"/>
+                            dataTestId="approval-toggle" />
+                        <Button
+                            style={Style.primary}
+                            text="Make Admin"
+                            onClick={makeAdmin}
+                            dataTestId="make-admin" />
+                        <Button
+                            style={Style.primary}
+                            text="Check Admin"
+                            onClick={checkAdmin}
+                            dataTestId="check-admin" />
+                        <Button
+                            style={Style.primary}
+                            text="Remove Admin"
+                            onClick={removeAdmin}
+                            dataTestId="remove-admin" />
                     </div>
                 </div>
             </div>

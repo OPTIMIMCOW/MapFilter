@@ -6,6 +6,7 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using Microsoft.AspNetCore.Authorization;
+using WhaleSpotting.Constants;
 
 namespace WhaleSpotting.Controllers
 {
@@ -26,6 +27,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
+        [Authorize]
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
@@ -41,7 +43,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = AuthConstants.Admin )]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
