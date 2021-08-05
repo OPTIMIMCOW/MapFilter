@@ -12,6 +12,7 @@
     background-color: #98d5f5;
     width: 80%;
     border-radius: 10px;
+    margin-bottom: $guttersTopBottom;
 }
 
 .map-info {
@@ -27,5 +28,5 @@
     .map-info {
         width: 95%;
         font-size: $mobileBodyFontSize;
-    }  
+    }
 }
