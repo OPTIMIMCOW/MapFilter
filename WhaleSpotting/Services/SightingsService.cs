@@ -14,6 +14,7 @@ namespace WhaleSpotting.Services
     {
         Task<List<SightingResponseModel>> GetSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
+        Task<SightingResponseModel> ConfirmSighting(int id);
     }
 
     public class SightingsService : ISightingsService
@@ -63,6 +64,22 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(newSighting);
+        }
+
+        public async Task<SightingResponseModel> ConfirmSighting(int id)
+        {
+            var sighting = await _context.Sightings
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (sighting == null)
+            {
+                return null;
+            }
+            
+            sighting.Confirmed = true;
+            _context.SaveChanges();
+
+            return new SightingResponseModel(sighting);
         }
     }
 }
