@@ -92,7 +92,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsBadRequest()
+        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
         {
             // Arrange
             var newSighting = new SightingRequestModel
@@ -118,8 +118,10 @@ namespace WhaleSpotting.UnitTests.Controllers
             var response = _underTest.CreateSighting(newSighting);
 
             // Assert
-            var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Sighted At must be in the past");
+            var validationErrorResult = response.Should().BeOfType<ObjectResult>();
+            var validationProblemDetails = validationErrorResult.Subject.Value as ValidationProblemDetails;
+            var errorMessage = validationProblemDetails.Errors["Thrown Error"][0];
+            errorMessage.Should().Be("Sighted At must be in the past");
         }
     }
 }

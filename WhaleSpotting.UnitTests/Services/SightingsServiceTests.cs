@@ -93,7 +93,7 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             var exception = act.Should().Throw<Exception>().Subject;
-            exception.Single().Message.Should().Be("Sighted At must be in the past");
+            exception.Single().Message.Should().Be("Date of sighting must be in the past");
             Context.Sightings.Should().BeEmpty();
         }
     }
