@@ -54,6 +54,10 @@ namespace WhaleSpotting
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+            });
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "react-app/build"; });
