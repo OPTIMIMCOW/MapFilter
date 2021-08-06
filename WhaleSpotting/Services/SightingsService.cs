@@ -40,7 +40,7 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting)
         {
             var sightings = await _context.Sightings
-                .Where(s => searchSighting.Species == null || s.Species  == searchSighting.Species)
+                .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
                 .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
                 .Where(s => searchSighting.OrcaPod == null || s.OrcaPod == searchSighting.OrcaPod)
@@ -91,7 +91,7 @@ namespace WhaleSpotting.Services
             {
                 return null;
             }
-            
+
             sighting.Confirmed = true;
             _context.SaveChanges();
 

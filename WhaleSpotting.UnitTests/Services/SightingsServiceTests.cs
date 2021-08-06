@@ -98,7 +98,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
          [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModelForSpecies_ReturnsFilteredBySpeciesSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModelForSpecies_ReturnsFilteredBySpeciesSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -145,14 +145,14 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             result.Should().HaveCount(2);
         }
 
         [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModelByDateRange_ReturnsFilteredByDateRangeSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRange_ReturnsFilteredByDateRangeSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -200,14 +200,14 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             result.Should().HaveCount(1);
         }
 
         [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModelByDateRangeAndOrcaPod_ReturnsFilteredByDateRangeAndOrcaPodSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRangeAndOrcaPod_ReturnsFilteredByDateRangeAndOrcaPodSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -256,14 +256,14 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             result.Should().HaveCount(2);
         }
 
         [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModelByLocation_ReturnsFilteredByLocationSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModelByLocation_ReturnsFilteredByLocationSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -310,7 +310,7 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             result.Should().HaveCount(1);
