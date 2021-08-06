@@ -8,7 +8,7 @@ import {Profile} from "./components/Profile";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
 import FetchWeatherData from "./components/FetchWeatherData";
-import { ReportSighting } from "./components/ReportSighting";
+import ReportSighting from "./components/ReportSighting";
 import Map from "./components/Map";
 
 function App(): JSX.Element {

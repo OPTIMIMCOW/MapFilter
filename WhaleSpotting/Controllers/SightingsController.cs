@@ -11,7 +11,6 @@ namespace WhaleSpotting.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    //[ValidateModel]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -37,7 +36,7 @@ namespace WhaleSpotting.Controllers
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("Thrown Error", e.Message);
+                ModelState.AddModelError(nameof(SightingRequestModel.SightedAt), e.Message);
                 return ValidationProblem();
             }
         }
@@ -50,6 +49,4 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
     }
-
-
 }

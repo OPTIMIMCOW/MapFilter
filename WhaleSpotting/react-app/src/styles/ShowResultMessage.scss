@@ -1,0 +1,14 @@
+@import "./Constants.scss";
+
+.response-message-card {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $primaryCard;
+    margin-top: -20px;
+}
+
+@media (max-width: 544px) {
+    .response-message-card {
+        padding-right: 7px;
+    }
+}

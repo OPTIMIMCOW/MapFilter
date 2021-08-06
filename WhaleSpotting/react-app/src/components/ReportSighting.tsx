@@ -1,27 +1,18 @@
 import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
+import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSightingApiModel";
 
-export function ShowResultMessage({ responseMessage } : any): JSX.Element {
-    if (responseMessage) {
-        return (
-            <p data-testid="response-result" className="response-message card-component">
-                {responseMessage}
-            </p>);
-    }
-    return <div></div>;
-}
-
-export function ReportSighting(): JSX.Element {
-    const [date, setDate] = useState<Date>();
+export default function ReportSighting(): JSX.Element {
+    const [date, setDate] = useState<Date>(new Date());
     const [location, setLocation] = useState<string>("");
     const [species, setSpecies] = useState<Species>(1);
     const [quantity, setQuantity] = useState(0);
     const [longitude, setLongitude] = useState<number | null>(null);
     const [latitude, setLatitude] = useState<number | null>(null);
     const [orcaPod, setOrcaPod] = useState<string>("");
-    const [orcaType, setorcaType] = useState<OrcaType>(0);
+    const [orcaType, setOrcaType] = useState<OrcaType | number>(0);
     const [description, setDescription] = useState<string>("");
     const [responseMessage, setResponseMessage] = useState<string>();
 
@@ -40,7 +31,7 @@ export function ReportSighting(): JSX.Element {
         };
 
         let isError = false;
-        const response = await fetch("/create", {
+        const response = await fetch("https://localhost:5001/sightings/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -58,6 +49,7 @@ export function ReportSighting(): JSX.Element {
                 isError = true;
                 return r.json();
             });
+
         if (isError) {
             handleError(response);
         } else {
@@ -67,7 +59,7 @@ export function ReportSighting(): JSX.Element {
 
     function handleError(response: any) {
         const keys = Object.keys(response.errors);
-        setResponseMessage(response.errors[keys[0]][0]);
+        setResponseMessage("Unsuccessful submission: " + response.errors[keys[0]][0]);
     }
 
     return (
@@ -119,18 +111,18 @@ export function ReportSighting(): JSX.Element {
                             <div className="input-box">
                                 <label>Longitude <span className="required">(required)</span></label>
                                 <input className="input-field coordinates" type="number" placeholder="Enter your longitude" required
-   
+
                                     onChange={(e) => setLongitude(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
                                 <label>Latitude <span className="required">(required)</span></label>
                                 <input className="input-field coordinates" type="number" placeholder="Enter your latitude" required
-               
+
                                     onChange={(e) => setLatitude(parseInt(e.target.value))} />
                             </div>
                             <div className="input-box">
                                 <label>Orca Type</label>
-                                <select className="input-field" onChange={(e) => { setorcaType(parseInt(e.target.value)); }}>
+                                <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }}>
                                     <option selected value={0}>N/A</option>,
                                     <option value={OrcaType.NorthernResident}>Northern Resident</option>,
                                     <option value={OrcaType.Offshore}>Offshore</option>,
@@ -155,7 +147,7 @@ export function ReportSighting(): JSX.Element {
                     <button type="submit" className="submit-button">
                         Submit Sighting
                     </button>
-                    <ShowResultMessage responseMessage={responseMessage}/>
+                    <ShowResultMessage responseMessage={responseMessage} />
                 </form>
             </div>
         </div>

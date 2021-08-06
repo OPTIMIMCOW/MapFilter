@@ -1,7 +1,6 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -118,8 +117,8 @@ namespace WhaleSpotting.UnitTests.Controllers
             var response = _underTest.CreateSighting(newSighting);
 
             // Assert
-            var validationErrorResult = response.Should().BeOfType<ObjectResult>();
-            var validationProblemDetails = validationErrorResult.Subject.Value as ValidationProblemDetails;
+            var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
+            var validationProblemDetails = validationErrorResult.Value.Should().BeOfType<ValidationProblemDetails>().Subject;
             var errorMessage = validationProblemDetails.Errors["Thrown Error"][0];
             errorMessage.Should().Be("Sighted At must be in the past");
         }

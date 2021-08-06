@@ -31,7 +31,7 @@ export interface CreateSightingApiModel {
     longitude: number | null;
     latitude: number | null;
     location: string;
-    sightedAt: Date | undefined;
+    sightedAt: Date;
     orcaType: OrcaType | null;
     orcaPod: string;
 }
