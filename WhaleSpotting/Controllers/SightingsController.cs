@@ -21,7 +21,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetInfo()
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             return await _sightings.GetSightings();
         }
