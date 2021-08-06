@@ -8,6 +8,7 @@ export async function makeAdmin() {
     //eslint-disable-next-line
     console.log(response);
 }
+
 export async function checkAdmin() {
     const token = await authService.getAccessToken();
     const response = await fetch("User/CheckAdmin", {
@@ -19,6 +20,7 @@ export async function checkAdmin() {
     const regexMatch = /(AccessDenied)/;
     return !response.url.match(regexMatch);
 }
+
 export async function removeAdmin() {
     const token = await authService.getAccessToken();
     const response = await fetch("User/RemoveAdmin", {

@@ -17,7 +17,7 @@ function App(): JSX.Element {
             <Navbar />
             <Route exact path="/map" component={Map}/>
             <Route exact path="/reportsighting" component={ReportSighting}/>
-            <AuthorizeRoute exact path="/profile" component={Profile}/>
+            <Route exact path="/profile" component={Profile}/>
             <Route exact path="/login">
                 <Redirect to={ApplicationPaths.Login} />
             </Route>
