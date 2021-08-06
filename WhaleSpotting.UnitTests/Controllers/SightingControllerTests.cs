@@ -208,6 +208,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
             searchResult.Should().Contain(sightingResponse);
         }
+
         [Fact]
         public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
         {

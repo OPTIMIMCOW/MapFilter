@@ -40,7 +40,11 @@ namespace WhaleSpotting.Services
         public List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSighting)
         {
             var sightings = _context.Sightings
-                .Where(s => s.Species  == searchSighting.Species)
+                .Where(s => searchSighting.Species == null || s.Species  == searchSighting.Species)
+                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
+                .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
+                .Where(s => searchSighting.OrcaPod == null || s.OrcaPod == searchSighting.OrcaPod)
+                .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToList();
