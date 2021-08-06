@@ -13,7 +13,7 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
-        List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
+        Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
     }
@@ -37,9 +37,9 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSighting)
+        public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting)
         {
-            var sightings = _context.Sightings
+            var sightings = await _context.Sightings
                 .Where(s => searchSighting.Species == null || s.Species  == searchSighting.Species)
                 .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
@@ -47,7 +47,7 @@ namespace WhaleSpotting.Services
                 .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
-                .ToList();
+                .ToListAsync();
 
             return sightings;
         }
