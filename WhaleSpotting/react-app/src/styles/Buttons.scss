@@ -5,6 +5,7 @@
     color: $textOnPrimary;
     border-radius: 10px;
     border: 0;
+    height:50px;
 
     &:hover
     {
@@ -33,6 +34,7 @@
     text-decoration: none;
     text-align: center;
     padding: 15px 0px;
+    height:unset;
 }
 
 @media (max-width: $mobileScreenSize) {
