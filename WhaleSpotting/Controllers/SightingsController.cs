@@ -48,5 +48,12 @@ namespace WhaleSpotting.Controllers
             var sighting = await _sightings.ConfirmSighting(id);
             return sighting == null ? NotFound() : sighting;
         }
+
+        [Authorize]
+        [HttpGet("pending")]
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
+        {
+            return await _sightings.GetNotConfirmedSightings();
+        }
     }
 }
