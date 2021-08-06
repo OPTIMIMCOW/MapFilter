@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -32,7 +32,7 @@ namespace WhaleSpotting.Controllers
             try
             {
                 var newSighting = _sightings.CreateSighting(sightingRequestModel);
-                return Created($"/sighting/{newSighting.Id}", newSighting);
+                return Created($"api/sighting/{newSighting.Id}", newSighting);
                 // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
             }
             catch (Exception e)
