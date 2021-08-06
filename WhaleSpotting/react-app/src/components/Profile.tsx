@@ -11,20 +11,25 @@ import authService from "./api-authorization/AuthorizeService";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
-    const [itAdmin, setIsAdmin] = useState(false);
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
+
+    useEffect(() => {
+        checkifAdmin();
+    }, []);
 
     async function checkifAdmin() {
-        setIsAdmin(await checkAdmin());
+        setIsUserAdmin(await checkAdmin());
     }
 
     async function makeAdminHandler() {
         await makeAdmin()
-            .then(() => setIsAdmin(true));
+            .then(() => setIsUserAdmin(true));
     }
 
     async function removeAdminHandler() {
         await removeAdmin()
-            .then(() => setIsAdmin(false));
+            .then(() => setIsUserAdmin(false))
+            .then(() => setFeedToggle("Sightings"));
     }
 
     const orca: SightingApiModel = {
@@ -84,24 +89,21 @@ export function Profile(): JSX.Element {
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
                             forAdmin={true}
-                            isAdmin={itAdmin}
+                            isAdmin={isUserAdmin}
                         />
                         <Button
                             style={Style.secondary}
                             text="Make Admin"
                             onClick={makeAdminHandler}
+                            forAdmin={true}
+                            isAdmin={!isUserAdmin}
                             dataTestId="make-admin" />
-                        <Button
-                            style={Style.secondary}
-                            text="Check Admin"
-                            onClick={checkifAdmin}
-                            dataTestId="check-admin" />
                         <Button
                             style={Style.secondary}
                             text="Remove Admin"
                             onClick={removeAdminHandler}
                             forAdmin={true}
-                            isAdmin={itAdmin}
+                            isAdmin={isUserAdmin}
                             dataTestId="remove-admin" />
                     </div>
                 </div>
