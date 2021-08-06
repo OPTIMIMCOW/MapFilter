@@ -85,19 +85,21 @@ namespace WhaleSpotting.Services
 
         public async Task<IEnumerable<string>> GetSpeciesByCoordinates(string latitude, string longitude)
         {
-            var fiftyKmInCoords = 0.45;
-            var upperLatitude = double.Parse(latitude) + fiftyKmInCoords;
-            var lowerLatitude = double.Parse(latitude) - fiftyKmInCoords;
+            //var fiftyKmInCoords = 0.45;
+            //var upperLatitude = double.Parse(latitude) + fiftyKmInCoords;
+            //var lowerLatitude = double.Parse(latitude) - fiftyKmInCoords;
 
-            var upperLongitude = double.Parse(longitude) + fiftyKmInCoords;
-            var lowerLongitude = double.Parse(longitude) - fiftyKmInCoords;
+            //var upperLongitude = double.Parse(longitude) + fiftyKmInCoords;
+            //var lowerLongitude = double.Parse(longitude) - fiftyKmInCoords;
 
-            var species = await _context.Sightings
-                .Where(s => s.Latitude > lowerLatitude)
+            //var species = await _context.Sightings
+            //    .Where(s => s.Latitude > lowerLatitude)
 
-                .ToListAsync();
-            
-            return species.Select(species => species.Species.ToString());
+            //    .ToListAsync();
+
+            //return species.Select(species => species.Species.ToString());
+            var test2 = new List<string>() { "test", "test2", "test3" };
+            return test2;
         }
     }
 }
