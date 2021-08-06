@@ -119,7 +119,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             // Assert
             var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
             var validationProblemDetails = validationErrorResult.Value.Should().BeOfType<ValidationProblemDetails>().Subject;
-            var errorMessage = validationProblemDetails.Errors["Thrown Error"][0];
+            var errorMessage = validationProblemDetails.Errors["SightedAt"][0];
             errorMessage.Should().Be("Sighted At must be in the past");
         }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { ReportSighting, ShowResultMessage} from "../../components/ReportSighting";
+import ReportSighting from "../../components/ReportSighting";
+import ShowResultMessage from "../../components/ShowResultMessage";
 
 test("Renders Report Sightings page", () => {
     render(<ReportSighting />);
