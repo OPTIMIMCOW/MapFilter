@@ -54,7 +54,8 @@ namespace WhaleSpotting.Controllers
         {
             try
             {
-                return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
+                var test = await _sightings.GetSpeciesByCoordinates(latitude, longitude);
+                return test as ActionResult;
             }
             catch (Exception e)
             {
