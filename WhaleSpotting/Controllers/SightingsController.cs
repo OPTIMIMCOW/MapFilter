@@ -48,5 +48,19 @@ namespace WhaleSpotting.Controllers
             var sighting = await _sightings.ConfirmSighting(id);
             return sighting == null ? NotFound() : sighting;
         }
+
+        [HttpGet("/LocalSpecies")]
+        public async Task<ActionResult<IEnumerable<string>>> GetSpeciesByCoordinates([FromQuery] string latitude, string longitude)
+        {
+            try
+            {
+                return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(nameof(SightingRequestModel.SightedAt), e.Message);
+                return ValidationProblem();
+            }
+        }
     }
 }

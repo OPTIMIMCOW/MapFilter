@@ -15,6 +15,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
+        Task<IEnumerable<string>> GetSpeciesByCoordinates(string latitude, string longitude);
     }
 
     public class SightingsService : ISightingsService
@@ -80,6 +81,23 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
+        }
+
+        public async Task<IEnumerable<string>> GetSpeciesByCoordinates(string latitude, string longitude)
+        {
+            var fiftyKmInCoords = 0.45;
+            var upperLatitude = double.Parse(latitude) + fiftyKmInCoords;
+            var lowerLatitude = double.Parse(latitude) - fiftyKmInCoords;
+
+            var upperLongitude = double.Parse(longitude) + fiftyKmInCoords;
+            var lowerLongitude = double.Parse(longitude) - fiftyKmInCoords;
+
+            var species = await _context.Sightings
+                .Where(s => s.Latitude > lowerLatitude)
+
+                .ToListAsync();
+            
+            return species.Select(species => species.Species.ToString());
         }
     }
 }
