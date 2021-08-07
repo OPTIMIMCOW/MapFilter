@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styles/PageNav.scss";
 import { Button, Style } from "./Button";
 
-export default function PageNav(): JSX.Element {
-    const [page, setPage] = useState(1);
+interface pageNavProps {
+    nextPage: () => void;
+    previousPage: () => void;
+}
+
+export default function PageNav({ nextPage, previousPage }: pageNavProps): JSX.Element {
 
     return (
         <div className="page-nav" data-testid="page-nav">
             <Button
                 style={Style.secondary}
                 text="Previous Page"
-                onClick={() => setPage(page - 1)}
+                onClick={() => previousPage()}
                 minWidth25={true}
             />
             <Button
                 style={Style.secondary}
                 text="Next Page"
-                onClick={() => setPage(page + 1)}
+                onClick={() => nextPage()}
                 minWidth25={true}
             />
         </div>

@@ -9,6 +9,7 @@ import Card from "./Card";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
+    const [page, setPage] = useState(1);
 
     const orca: SightingApiModel = {
         id: 1,
@@ -41,6 +42,14 @@ export function Profile(): JSX.Element {
         userId: 2,
         username: "FakeUserConfirmed"
     };
+
+    function nextPage() {
+        setPage(page + 1);
+    }
+
+    function previousPage() {
+        setPage(page - 1);
+    }
 
     return (
         <div className="body">
@@ -78,7 +87,7 @@ export function Profile(): JSX.Element {
                     <Card sighting={orcaConfirmed} />
                     <Card sighting={orcaConfirmed} />
                 </div>
-                <PageNav />
+                <PageNav nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );

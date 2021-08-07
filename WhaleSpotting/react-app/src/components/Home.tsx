@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
@@ -6,7 +6,8 @@ import Card from "./Card";
 import SightingApiModel from "../apiModels/SightingApiModel";
 import { BannerImage } from "./BannerImage";
 
-export default function Home() : JSX.Element {
+export default function Home(): JSX.Element {
+    const [page, setPage] = useState(1);
 
     function orderFeedBy():void {
         //TODO "this needs to be implemented";
@@ -44,6 +45,14 @@ export default function Home() : JSX.Element {
         username: "FakeUserConfirmed"
     };
 
+    function nextPage() {
+        setPage(page + 1);
+    }
+
+    function previousPage() {
+        setPage(page - 1);
+    }
+
     return (
         <div className="home" data-testid="home">
             <BannerImage />
@@ -71,8 +80,7 @@ export default function Home() : JSX.Element {
                     <Card sighting={orcaConfirmed}/>
                     <Card sighting={orca}/>
                 </div>
-
-                <PageNav />
+                <PageNav nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );
