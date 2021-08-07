@@ -177,5 +177,37 @@ namespace WhaleSpotting.UnitTests.Services
             result.Should().HaveCount(1);
             result.Should().Contain("AtlanticWhiteSidedDolphin");
         }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithValidLatLong_ReturnsEmptyList()
+        {
+            // Arrange
+            var lat = "2";
+            var lon = "2";
+
+            var sighting = new SightingDbModel
+            {
+                Id = 1,
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = 100,
+                Latitude = 20,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            result.Should().HaveCount(0);
+        }
     }
 }
