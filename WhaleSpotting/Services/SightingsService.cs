@@ -76,7 +76,7 @@ namespace WhaleSpotting.Services
             {
                 return null;
             }
-            
+
             sighting.Confirmed = true;
             _context.SaveChanges();
 

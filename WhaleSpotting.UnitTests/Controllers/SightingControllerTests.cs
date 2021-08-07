@@ -171,7 +171,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsIEnumerableOfStrings()
+        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsListOfStrings()
         {
             // Arrange
             var lat = "2";
