@@ -162,12 +162,32 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.ConfirmSighting(id))
                 .Returns<SightingResponseModel>(null);
-                
+
             // Act
             var result = await _underTest.ConfirmSighting(id);
 
             // Assert
             result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsIEnumerableOfStrings()
+        {
+            // Arrange
+            var lat = "2";
+            var lon = "2";
+
+            var serviceResponse = new List<string>() { "AtlanticWhiteSidedDolphin" };
+
+            A.CallTo(() => _sightings.GetSpeciesByCoordinates(lat, lon))
+                .Returns(serviceResponse);
+
+            // Act
+            var controllerResponse = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            controllerResponse.Should().BeOfType<List<string>>();
+            controllerResponse.Should().Contain("AtlanticWhiteSidedDolphin");
         }
     }
 }
