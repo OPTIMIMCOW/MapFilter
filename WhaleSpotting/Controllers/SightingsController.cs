@@ -49,7 +49,7 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
 
-        [HttpGet("LocalSpecies")]
+        [HttpGet("localspecies")]
         public async Task<IEnumerable<string>> GetSpeciesByCoordinates([FromQuery] string latitude, string longitude)
         {
             return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
