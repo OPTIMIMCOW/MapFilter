@@ -92,12 +92,12 @@ namespace WhaleSpotting.Services
             var upperLongitude = double.Parse(longitude) + fiftyKmInCoords;
             var lowerLongitude = double.Parse(longitude) - fiftyKmInCoords;
 
-            var species = await _context.Sightings
+            var sightings = await _context.Sightings
                 .Where(s => s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
-                .Where(s => s.Longitude > lowerLatitude && s.Longitude < upperLongitude)
+                .Where(s => s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
                 .ToListAsync();
 
-            return species.Select(species => species.Species.ToString()).Distinct();
+            return sightings.Select(sightings => sightings.Species.ToString()).Distinct();
         }
     }
 }
