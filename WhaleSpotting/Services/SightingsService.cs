@@ -16,6 +16,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
+        List<SightingResponseModel> Pagination(PageFilter pageFilter);
     }
 
     public class SightingsService : ISightingsService
@@ -31,10 +32,12 @@ namespace WhaleSpotting.Services
         {
             var sightings = await _context.Sightings
                 .OrderBy(s => s.SightedAt)
-                .Select(s => new SightingResponseModel(s))
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
+                .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
+
+
 
             return sightings;
         }
@@ -83,6 +86,6 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
-        }
+        }List<SightingResponseModel> sightings, sightings
     }
 }
