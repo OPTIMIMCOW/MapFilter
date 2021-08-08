@@ -1,15 +1,17 @@
 import "../styles/Profile.scss";
 import "../styles/Home.scss";
 import "../styles/Buttons.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
+import { fetchPendingSightings } from "../api/apiClient";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
-
+    const [data, setData] = useState<SightingApiModel[]>([]);
+    
     const orca: SightingApiModel = {
         id: 1,
         sightedAt: new Date(),
@@ -25,7 +27,7 @@ export function Profile(): JSX.Element {
         userId: 2,
         username: "FakeUser1"
     };
-
+    
     const orcaConfirmed: SightingApiModel = {
         id: 2,
         sightedAt: new Date(),
@@ -41,6 +43,19 @@ export function Profile(): JSX.Element {
         userId: 2,
         username: "FakeUserConfirmed"
     };
+
+    if (feedToggle == "Approvals") {
+        useEffect(() => {
+            fetchPendingSightings()
+                .then(data => setData(data));
+        }, []);
+    }
+
+    else {
+        setData(data.concat(orca, orcaConfirmed)) 
+    }
+
+    var cards = data.map(s => <Card sighting={s} />);
 
     return (
         <div className="body">
@@ -72,11 +87,7 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h1 className="heading">Your {feedToggle}</h1>
                 <div className="card-holder">
-                    <Card sighting={orca} />
-                    <Card sighting={orca} />
-                    <Card sighting={orcaConfirmed} />
-                    <Card sighting={orcaConfirmed} />
-                    <Card sighting={orcaConfirmed} />
+                    {cards}
                 </div>
                 <PageNav />
             </div>

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;

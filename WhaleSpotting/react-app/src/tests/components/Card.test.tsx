@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Card from "../../components/Card";
-import SightingApiModel from "../../apiModels/SightingApiModel";
+import SightingApiModel from "../../api/SightingApiModel";
 import userEvent from "@testing-library/user-event";
 
 const exampleConfirmed: SightingApiModel = {

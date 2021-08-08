@@ -1,4 +1,4 @@
-interface SightingApiModel {
+export interface SightingApiModel {
     id: number;
     sightedAt: Date;
     species: string;
@@ -13,5 +13,3 @@ interface SightingApiModel {
     userId: number;
     username: string;
 }
-
-export default SightingApiModel;

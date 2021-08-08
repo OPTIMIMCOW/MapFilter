@@ -3,7 +3,7 @@ import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
 
 export default function Home() : JSX.Element {

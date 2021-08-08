@@ -1,4 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { SightingApiModel } from "../api/models/SightingApiModel";
+import "../styles/Map.scss";
 import {
     ComposableMap,
     Geographies,
@@ -6,9 +8,7 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import SightingApiModel from "../apiModels/SightingApiModel";
 import { Chosen } from "./Map";
-import "../styles/Map.scss";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 

@@ -1,6 +1,6 @@
 import "../styles/Card.scss";
 import React, { useState } from "react";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import {SightingApiModel} from "../api/models/SightingApiModel";
 
 interface CardProps {
     sighting: SightingApiModel;
