@@ -16,7 +16,6 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
-        List<SightingResponseModel> Pagination(PageFilter pageFilter);
     }
 
     public class SightingsService : ISightingsService
@@ -86,6 +85,6 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
-        }List<SightingResponseModel> sightings, sightings
+        }
     }
 }
