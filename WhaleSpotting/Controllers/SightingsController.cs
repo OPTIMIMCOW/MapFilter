@@ -26,6 +26,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
+        [Authorize]
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
