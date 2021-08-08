@@ -7,12 +7,13 @@ using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.Enums;
 using System;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Filters;
 
 namespace WhaleSpotting.Services
 {
     public interface ISightingsService
     {
-        Task<List<SightingResponseModel>> GetSightings();
+        Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
     }
@@ -26,11 +27,13 @@ namespace WhaleSpotting.Services
             _context = context;
         }
 
-        public async Task<List<SightingResponseModel>> GetSightings()
+        public async Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter)
         {
             var sightings = await _context.Sightings
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
                 .ToListAsync();
 
             return sightings;

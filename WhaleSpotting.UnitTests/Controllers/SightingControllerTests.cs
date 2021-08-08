@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
+using WhaleSpotting.Filters;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
@@ -24,7 +25,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task GetInfo_Called_ReturnsSightings()
+        public async Task GetInfo_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
             var serviceResponse = new List<SightingResponseModel>
@@ -33,11 +34,13 @@ namespace WhaleSpotting.UnitTests.Controllers
                 new SightingResponseModel()
             };
 
-            A.CallTo(() => _sightings.GetSightings())
+            var pageFilter = new PageFilter();
+
+            A.CallTo(() => _sightings.GetSightings(pageFilter))
                 .Returns(serviceResponse);
 
             // Act
-            var result = await _underTest.GetInfo();
+            var result = await _underTest.GetInfo(pageFilter);
 
             // Assert
             result.Should().HaveCount(2);

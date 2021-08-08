@@ -6,6 +6,7 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using Microsoft.AspNetCore.Authorization;
+using WhaleSpotting.Filters;
 
 namespace WhaleSpotting.Controllers
 {
@@ -21,9 +22,9 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetInfo()
+        public async Task<List<SightingResponseModel>> GetInfo([FromQuery] PageFilter pageFilter)
         {
-            return await _sightings.GetSightings();
+            return await _sightings.GetSightings(pageFilter);
         }
 
         [HttpPost("create")]

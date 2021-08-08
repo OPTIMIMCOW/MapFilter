@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhaleSpotting.Filters;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
@@ -21,24 +23,40 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetSightings_Called_ReturnsSightings()
+        public async Task GetSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
-            var whaleSighting = new SightingDbModel
+            var sightings = new List<SightingDbModel>
             {
-                Quantity = 5,
-                Description = "Whales at sea",
-                SightedAt = System.DateTime.Now
+                new SightingDbModel
+                {
+                    Id = 1
+                },
+                new SightingDbModel
+                {
+                    Id = 2
+                },
+                new SightingDbModel
+                {
+                    Id = 3
+                }
             };
 
-            await Context.Sightings.AddRangeAsync(new SightingDbModel(), whaleSighting);
+            await Context.Sightings.AddRangeAsync(sightings);
             await Context.SaveChangesAsync();
 
+            var pageFilter = new PageFilter
+            {
+                PageNumber = 2,
+                PageSize = 1
+            };
+
             // Act
-            var result = await _underTest.GetSightings();
+            var result = await _underTest.GetSightings(pageFilter);
 
             // Assert
-            result.Should().HaveCount(2);
+            result.Should().HaveCount(1);
+            result[0].Id.Should().Be(2);
         }
 
         [Fact]
