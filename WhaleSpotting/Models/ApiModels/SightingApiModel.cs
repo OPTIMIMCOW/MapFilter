@@ -86,7 +86,8 @@ namespace WhaleSpotting.Models.ApiModels
                 SightedAt = SightedAt,
                 CreatedAt = CreatedAt,
                 OrcaType = orcaType,
-                OrcaPod = OrcaPod
+                OrcaPod = OrcaPod,
+                Confirmed = true
             };
         }
     }
