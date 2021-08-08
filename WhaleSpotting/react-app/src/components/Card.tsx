@@ -19,7 +19,7 @@ export default function Card({sighting}: CardProps) : JSX.Element {
             <div className="card-info"
                 onClick={() => setCardState(!closeCard)} data-testid="card">
                 <div className="first-column">
-                    <div>Sighted At: {sighting.sightedAt.toDateString()}</div>
+                    <div>Sighted At: {sighting.sightedAt}</div>
                     <div>Species: {sighting.species}</div>
                     <div>Location: {sighting.location}</div>
                     <div>Quantity: {sighting.quantity}</div>

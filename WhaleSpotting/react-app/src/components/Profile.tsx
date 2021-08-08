@@ -11,10 +11,10 @@ import { fetchPendingSightings } from "../api/apiClient";
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
     const [data, setData] = useState<SightingApiModel[]>([]);
-    
+
     const orca: SightingApiModel = {
         id: 1,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "whale",
         quantity: 1,
         location: "Deep Ocean",
@@ -27,10 +27,10 @@ export function Profile(): JSX.Element {
         userId: 2,
         username: "FakeUser1"
     };
-    
+
     const orcaConfirmed: SightingApiModel = {
         id: 2,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "orca",
         quantity: 3,
         location: "Sea",
@@ -44,18 +44,17 @@ export function Profile(): JSX.Element {
         username: "FakeUserConfirmed"
     };
 
-    if (feedToggle == "Approvals") {
-        useEffect(() => {
+    useEffect(() => {
+        if (feedToggle == "Approvals") {
             fetchPendingSightings()
                 .then(data => setData(data));
-        }, []);
-    }
+        }
+        else {
+            setData([orca, orcaConfirmed]);
+        }
+    }, [feedToggle]);
 
-    else {
-        setData(data.concat(orca, orcaConfirmed)) 
-    }
-
-    var cards = data.map(s => <Card sighting={s} />);
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     return (
         <div className="body">
@@ -72,15 +71,15 @@ export function Profile(): JSX.Element {
                         <img className="profile-image" alt="Profile Image" src="https://picsum.photos/id/237/200" />
                     </div>
                     <div className="button-container">
-                        <Button 
-                            style={Style.primary} 
+                        <Button
+                            style={Style.primary}
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")}/>
-                        <Button 
-                            style={Style.primary} 
+                            onClick={() => setFeedToggle("Sightings")} />
+                        <Button
+                            style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle"/>
+                            dataTestId="approval-toggle" />
                     </div>
                 </div>
             </div>

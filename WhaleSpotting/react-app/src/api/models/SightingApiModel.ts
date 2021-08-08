@@ -1,6 +1,6 @@
 export interface SightingApiModel {
     id: number;
-    sightedAt: Date;
+    sightedAt: string;
     species: string;
     quantity: number;
     location: string;
