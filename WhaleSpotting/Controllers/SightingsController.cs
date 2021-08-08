@@ -48,5 +48,13 @@ namespace WhaleSpotting.Controllers
             var sighting = await _sightings.ConfirmSighting(id);
             return sighting == null ? NotFound() : sighting;
         }
+
+        [Authorize]
+        [HttpDelete("{id}/reject")]
+        public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.DeleteSighting(id);
+            return sighting == null ? NotFound() : sighting;
+        }
     }
 }

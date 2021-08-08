@@ -143,5 +143,50 @@ namespace WhaleSpotting.UnitTests.Services
             // Assert
             nullResult.Should().Be(null);
         }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
+        {
+            // Arrange
+            const int id = 1;
+
+            var sighting = new SightingDbModel
+            {
+                Id = 1,
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.DeleteSighting(id);
+
+            // Assert
+            result.Should().BeOfType<SightingResponseModel>();
+            Context.Sightings.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
+        {
+            // Arrange
+            const int id = 1;
+
+            // Act
+            var nullResult = await _underTest.DeleteSighting(id);
+
+            // Assert
+            nullResult.Should().Be(null);
+        }
     }
 }

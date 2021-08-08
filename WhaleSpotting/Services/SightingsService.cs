@@ -15,6 +15,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
+        Task<SightingResponseModel> DeleteSighting(int id);
     }
 
     public class SightingsService : ISightingsService
@@ -77,6 +78,22 @@ namespace WhaleSpotting.Services
             }
             
             sighting.Confirmed = true;
+            _context.SaveChanges();
+
+            return new SightingResponseModel(sighting);
+        }
+
+        public async Task<SightingResponseModel> DeleteSighting(int id)
+        {
+            var sighting = await _context.Sightings
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (sighting == null)
+            {
+                return null;
+            }
+
+            _context.Entry(sighting).State = EntityState.Deleted;
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
