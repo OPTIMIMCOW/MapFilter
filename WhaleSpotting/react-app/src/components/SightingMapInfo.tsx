@@ -12,7 +12,7 @@ interface SightingMapInfoProps {
 interface IResponse {
     lon: number | void,
     lat: number | void,
-    species: Array<number>,
+    species: Species[]
 }
 
 export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.Element {
@@ -20,7 +20,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     const key = process.env.REACT_APP_WEATHER_API_KEY;
 
     const [weatherData, setWeatherData] = useState<WeatherApiModel>();
-    const [speciesData, setSpeciesData] = useState([]);
+    const [speciesData, setSpeciesData] = useState<Species[]>([]);
 
     useEffect(() => {
         if (chosen) {
@@ -30,7 +30,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
         }
     }, [chosen]);
 
-    const response: IResponse = {
+    const response : IResponse = {
         lon: chosen?.lon,
         lat: chosen?.lat,
         species: speciesData,
@@ -81,8 +81,8 @@ function getSingleWhaleImage(response: IResponse): string {
         const value = response.species[0];
         const speciesEnum = Species[response.species[0]];
         console.log(speciesEnum);
-        console.log(WhaleImageDictionary[speciesEnum]);
-        return WhaleImageDictionary[speciesEnum];
+        console.log(WhaleImageDictionary[value]);
+        return WhaleImageDictionary[value];
     }
     return "whaleicon512.png";
 }
@@ -90,7 +90,7 @@ function getSingleWhaleImage(response: IResponse): string {
 function getHumanReadableWhaleNames(response: IResponse): Array<string> {
     const humanNames = [];
     for (let i = 0; i < response.species.length; i++) {
-        const speciesEnum = Species[response.species[i] as keyof typeof Species];
+        const speciesEnum = response.species[i];
         humanNames.push(WhaleVisualTextDictionary[speciesEnum]);
     }
     return humanNames;
