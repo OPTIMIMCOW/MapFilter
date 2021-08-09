@@ -2,7 +2,8 @@ import "../styles/ReportSighting.scss";
 import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
-import { CreateSightingApiModel, Species, OrcaType } from "../apiModels/CreateSightingApiModel";
+import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
+import { Species, OrcaType } from "../apiModels/ApiEnums"
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
