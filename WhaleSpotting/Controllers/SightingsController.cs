@@ -45,11 +45,11 @@ namespace WhaleSpotting.Controllers
             {
                 var newSighting = _sightings.CreateSighting(sightingRequestModel);
                 return Created($"/sighting/{newSighting.Id}", newSighting);
-                // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError(nameof(SightingRequestModel.SightedAt), e.Message);
+                return ValidationProblem();
             }
         }
 

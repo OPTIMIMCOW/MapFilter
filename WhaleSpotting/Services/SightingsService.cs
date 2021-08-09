@@ -80,7 +80,7 @@ namespace WhaleSpotting.Services
         {
             if (sightingRequestModel.SightedAt > DateTime.Now)
             {
-                throw new Exception("Sighted At must be in the past");
+                throw new Exception("Date of sighting must be in the past");
             }
 
             var newSighting = new SightingDbModel
