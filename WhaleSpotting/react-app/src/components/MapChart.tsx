@@ -8,7 +8,6 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import SightingApiModel from "../apiModels/SightingApiModel";
 import { Chosen } from "./Map";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
