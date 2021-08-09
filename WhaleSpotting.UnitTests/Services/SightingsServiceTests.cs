@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Models.DbModels;
@@ -142,6 +143,66 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             nullResult.Should().Be(null);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsSightings()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = false
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = false
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsNull()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().BeEmpty();
         }
 
         [Fact]

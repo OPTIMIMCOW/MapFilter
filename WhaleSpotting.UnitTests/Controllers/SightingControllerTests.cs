@@ -24,7 +24,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task GetInfo_Called_ReturnsSightings()
+        public async Task GetAllSightings_Called_ReturnsSightings()
         {
             // Arrange
             var serviceResponse = new List<SightingResponseModel>
@@ -37,7 +37,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 .Returns(serviceResponse);
 
             // Act
-            var result = await _underTest.GetInfo();
+            var result = await _underTest.GetAllSightings();
 
             // Assert
             result.Should().HaveCount(2);
@@ -162,12 +162,33 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.ConfirmSighting(id))
                 .Returns<SightingResponseModel>(null);
-                
+
             // Act
             var result = await _underTest.ConfirmSighting(id);
 
             // Assert
             result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
+        {
+            // Arrange
+            var serviceResponse = new List<SightingResponseModel>
+            {
+                new SightingResponseModel(),
+                new SightingResponseModel(),
+                new SightingResponseModel()
+            };
+
+            A.CallTo(() => _sightings.GetNotConfirmedSightings())
+                .Returns(serviceResponse);
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().HaveCount(3);
         }
 
         [Fact]
