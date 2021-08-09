@@ -80,7 +80,7 @@ export default function Home(): JSX.Element {
                     <Card sighting={orcaConfirmed}/>
                     <Card sighting={orca}/>
                 </div>
-                <PageNav nextPage={nextPage} previousPage={previousPage} />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );

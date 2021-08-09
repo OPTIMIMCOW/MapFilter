@@ -87,7 +87,7 @@ export function Profile(): JSX.Element {
                     <Card sighting={orcaConfirmed} />
                     <Card sighting={orcaConfirmed} />
                 </div>
-                <PageNav nextPage={nextPage} previousPage={previousPage} />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );

@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 export enum Style {
     primary,
     secondary,
-    reject
+    reject,
+    hidden
 }
 
 interface ButtonProps {
@@ -31,13 +32,16 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
     case Style.reject:
         styleClass = "reject-button";
         break;
+    case Style.hidden:
+        styleClass = "hidden";
+        break;
     }
 
     if (link) {
         return (
-            <Link 
-                data-testid={dataTestId} 
-                className={`${styleClass} ${width} link`} 
+            <Link
+                data-testid={dataTestId}
+                className={`${styleClass} ${width} link`}
                 to={link}>
                 {text}
             </Link>

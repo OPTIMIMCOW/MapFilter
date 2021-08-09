@@ -25,6 +25,10 @@
     @include button($rejectButton);
 }
 
+.hidden {
+    display: none;
+}
+
 .minWidth25{
     width:25%;
 }
