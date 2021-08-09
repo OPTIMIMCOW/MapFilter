@@ -39,7 +39,7 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
             <Link
                 data-testid={dataTestId}
                 className={`${styleClass} ${width} link ${hidden ? "hidden" : "" }`}
-                to={link}>
+                to={link}
                 hidden={hidden}>
                 {text}
             </Link>
@@ -49,7 +49,7 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
         <button
             data-testid={dataTestId}
             className={`${styleClass} ${width} ${hidden ? "hidden" : "" }`}
-            onClick={onClick}>
+            onClick={onClick}
             hidden={hidden}>
             {text}
         </button>
