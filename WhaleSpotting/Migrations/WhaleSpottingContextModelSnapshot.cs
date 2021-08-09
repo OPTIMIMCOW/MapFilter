@@ -290,13 +290,13 @@ namespace WhaleSpotting.Migrations
                     b.Property<int?>("OrcaType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("SightedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Species")
+                    b.Property<int?>("Species")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")

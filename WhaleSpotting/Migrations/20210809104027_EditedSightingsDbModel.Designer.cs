@@ -10,8 +10,8 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    [Migration("20210804101051_editedSightingsDbModel")]
-    partial class editedSightingsDbModel
+    [Migration("20210809104027_EditedSightingsDbModel")]
+    partial class EditedSightingsDbModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -292,13 +292,13 @@ namespace WhaleSpotting.Migrations
                     b.Property<int?>("OrcaType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("SightedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Species")
+                    b.Property<int?>("Species")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
