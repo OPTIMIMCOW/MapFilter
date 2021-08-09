@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
@@ -42,6 +44,40 @@ namespace WhaleSpotting.UnitTests.Services
             result.Should().HaveCount(2);
         }
 
+        [Fact]
+        public void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
+        {
+            // Arrange
+            var sightingToAdd = new List<SightingDbModel>();
+            var whaleSighting = new SightingApiModel
+            {
+                Species = "orca",
+                Quantity = "50",
+                Location = "Southend",
+                Latitude = 48.6213,
+                Longitude = -123.2828,
+                Description = "Sighted near lighthouse",
+                SightedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                OrcaType = "unknown",
+                OrcaPod = "j"
+            };
+            
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+
+            // Act
+            var result = _underTest.CreateSightings(sightingToAdd);
+
+            // Assert
+            result.Should().BeOfType<List<SightingResponseModel>>();
+            result.Should().HaveCount(2);
+
+            var whaleSightingsDbModels = Context.Sightings.Where(s => s.Description == whaleSighting.Description).ToList();
+            whaleSightingsDbModels.Should().HaveCount(2);
+            whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
+        }
+    
         [Fact]
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
         {
