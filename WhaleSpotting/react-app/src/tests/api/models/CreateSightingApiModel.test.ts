@@ -1,4 +1,4 @@
-import { CreateSightingApiModel, Species} from "../../api/models/CreateSightingApiModel";
+import { CreateSightingApiModel, Species} from "../../../api/models/CreateSightingApiModel";
 
 test("check species enum works correctly", () => {
     const test: CreateSightingApiModel = {
@@ -33,4 +33,3 @@ test("check orcaType nullable enum works correctly", () => {
 
     expect(test.orcaType).toBe(null);
 });
-

@@ -38,7 +38,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     return (
         <div className="weather-component" data-testid="weather">
             <div>Information about this sighting</div>
-            <div className="location">Longitude: {weatherData.lon}° Latitude: {weatherData.lat}°</div>
+            <div className="location">Latitude: {weatherData.lat}°  Longitude: {weatherData.lon}°</div>
             <div className="sighting-info">
                 <div className="weather-info">Current Weather: {weatherData.current.weather[0].main}
                     <ul className="list">

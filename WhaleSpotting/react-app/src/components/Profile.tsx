@@ -7,12 +7,34 @@ import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
 import { fetchPendingSightings } from "../api/apiClient";
+import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import authService from "./api-authorization/AuthorizeService";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     //TODO get page from nav component state
     const pageNumber = 1;
+
+    useEffect(() => {
+        checkifAdmin();
+    }, []);
+
+    async function checkifAdmin() {
+        setIsUserAdmin(await checkAdmin());
+    }
+
+    async function makeAdminHandler() {
+        await makeAdmin()
+            .then(() => setIsUserAdmin(true));
+    }
+
+    async function removeAdminHandler() {
+        await removeAdmin()
+            .then(() => setIsUserAdmin(false))
+            .then(() => setFeedToggle("Sightings"));
+    }
 
     const orca: SightingApiModel = {
         id: 1,
@@ -81,7 +103,21 @@ export function Profile(): JSX.Element {
                             style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle" />
+                            dataTestId="approval-toggle"
+                            hidden={!isUserAdmin}
+                        />
+                        <Button
+                            style={Style.secondary}
+                            text="Make Admin"
+                            onClick={makeAdminHandler}
+                            hidden={isUserAdmin}
+                            dataTestId="make-admin" />
+                        <Button
+                            style={Style.secondary}
+                            text="Remove Admin"
+                            onClick={removeAdminHandler}
+                            hidden={!isUserAdmin}
+                            dataTestId="remove-admin" />
                     </div>
                 </div>
             </div>

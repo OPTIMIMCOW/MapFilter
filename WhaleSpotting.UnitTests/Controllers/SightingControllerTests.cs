@@ -171,6 +171,62 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
+        public async void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin
+            };
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = false,
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+                .Returns(new List<SightingResponseModel> { sightingResponse });
+
+            // Act
+            var response = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
+            searchResult.Should().Contain(sightingResponse);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+                .Returns(new List<SightingResponseModel>());
+
+            // Act
+            var response = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            response.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
         public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
         {
             // Arrange
@@ -189,6 +245,55 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             // Assert
             result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithId_ReturnsSighting()
+        {
+            // Arrange
+            const int id = 1;
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = true,
+            };
+
+            A.CallTo(() => _sightings.DeleteSighting(id))
+                .Returns(sightingResponse);
+
+            // Act
+            var result = await _underTest.DeleteSighting(id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<SightingResponseModel>>();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithInvalidId_ReturnsNotFound()
+        {
+            // Arrange
+            const int id = 1;
+
+            A.CallTo(() => _sightings.DeleteSighting(id))
+                .Returns<SightingResponseModel>(null);
+
+            // Act
+            var result = await _underTest.DeleteSighting(id);
+
+            // Assert
+            result.Result.Should().BeOfType<NotFoundResult>();
         }
     }
 }
