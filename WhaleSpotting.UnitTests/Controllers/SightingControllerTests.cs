@@ -24,7 +24,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task GetInfo_Called_ReturnsSightings()
+        public async Task GetAllSightings_Called_ReturnsSightings()
         {
             // Arrange
             var serviceResponse = new List<SightingResponseModel>
@@ -37,7 +37,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 .Returns(serviceResponse);
 
             // Act
-            var result = await _underTest.GetInfo();
+            var result = await _underTest.GetAllSightings();
 
             // Assert
             result.Should().HaveCount(2);
@@ -162,7 +162,7 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.ConfirmSighting(id))
                 .Returns<SightingResponseModel>(null);
-                
+
             // Act
             var result = await _underTest.ConfirmSighting(id);
 
@@ -204,7 +204,6 @@ namespace WhaleSpotting.UnitTests.Controllers
             var response = await _underTest.SearchSighting(searchSighting);
 
             // Assert
-
             var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
             searchResult.Should().Contain(sightingResponse);
         }
@@ -219,7 +218,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             };
 
             A.CallTo(() => _sightings.SearchSighting(searchSighting))
-            .Returns(new List<SightingResponseModel> { });
+                .Returns(new List<SightingResponseModel>());
 
             // Act
             var response = await _underTest.SearchSighting(searchSighting);
@@ -228,16 +227,32 @@ namespace WhaleSpotting.UnitTests.Controllers
             response.Result.Should().BeOfType<NotFoundResult>();
         }
 
-
         [Fact]
-        public async void SearchSighting_ValidSearchSighting_ReturnsFilteredSearchResult()
+        public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
         {
             // Arrange
-            var searchSighting = new SearchSightingRequestModel
+            var serviceResponse = new List<SightingResponseModel>
             {
-                Species = Species.AtlanticWhiteSidedDolphin
-
+                new SightingResponseModel(),
+                new SightingResponseModel(),
+                new SightingResponseModel()
             };
+
+            A.CallTo(() => _sightings.GetNotConfirmedSightings())
+                .Returns(serviceResponse);
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithId_ReturnsSighting()
+        {
+            // Arrange
+            const int id = 1;
 
             var sightingResponse = new SightingResponseModel
             {
@@ -253,19 +268,33 @@ namespace WhaleSpotting.UnitTests.Controllers
                 OrcaPod = "",
                 UserId = 5,
                 Username = "FakeUser",
-                Confirmed = false,
+                Confirmed = true,
             };
 
-            A.CallTo(() => _sightings.SearchSighting(searchSighting))
-                .Returns(new List<SightingResponseModel> { sightingResponse });
+            A.CallTo(() => _sightings.DeleteSighting(id))
+                .Returns(sightingResponse);
 
             // Act
-            var response = await _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.DeleteSighting(id);
 
             // Assert
+            result.Should().BeOfType<ActionResult<SightingResponseModel>>();
+        }
 
-            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
-            searchResult.Should().Contain(sightingResponse);
+        [Fact]
+        public async void DeleteSighting_CalledWithInvalidId_ReturnsNotFound()
+        {
+            // Arrange
+            const int id = 1;
+
+            A.CallTo(() => _sightings.DeleteSighting(id))
+                .Returns<SightingResponseModel>(null);
+
+            // Act
+            var result = await _underTest.DeleteSighting(id);
+
+            // Assert
+            result.Result.Should().BeOfType<NotFoundResult>();
         }
     }
 }

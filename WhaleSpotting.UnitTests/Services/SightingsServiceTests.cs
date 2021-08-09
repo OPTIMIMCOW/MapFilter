@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Models.DbModels;
@@ -97,8 +98,8 @@ namespace WhaleSpotting.UnitTests.Services
             Context.Sightings.Should().BeEmpty();
         }
 
-         [Fact]
-        public async void SearchSighting_CalledWithValidSightingRequestModelForSpecies_ReturnsFilteredBySpeciesSightingResponseModel()
+        [Fact]
+        public void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -113,7 +114,7 @@ namespace WhaleSpotting.UnitTests.Services
                 OrcaType = null,
                 OrcaPod = ""
             }); 
-             Context.Add(new SightingDbModel
+            Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
                 Quantity = 2,
@@ -124,7 +125,7 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = "" 
-             });
+            });
             Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
@@ -358,6 +359,109 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Act
             var nullResult = await _underTest.ConfirmSighting(id);
+
+            // Assert
+            nullResult.Should().Be(null);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsSightings()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = false
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = false
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsNull()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
+        {
+            // Arrange
+
+            var sighting = new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.DeleteSighting(sighting.Id);
+
+            // Assert
+            result.Should().BeOfType<SightingResponseModel>();
+            Context.Sightings.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
+        {
+            // Arrange
+            const int id = 1;
+
+            // Act
+            var nullResult = await _underTest.DeleteSighting(id);
 
             // Assert
             nullResult.Should().Be(null);

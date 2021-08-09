@@ -22,7 +22,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetInfo()
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             return await _sightings.GetSightings();
         }
@@ -33,7 +33,6 @@ namespace WhaleSpotting.Controllers
             var result =  await _sightings.SearchSighting(searchSighting);
             return result.Any() ? result: NotFound();
         }
-
 
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
@@ -50,11 +49,28 @@ namespace WhaleSpotting.Controllers
             }
         }
 
+        //TODO use admin role
         [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
             var sighting = await _sightings.ConfirmSighting(id);
+            return sighting == null ? NotFound() : sighting;
+        }
+
+        [Authorize]
+        [HttpGet("pending")]
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
+        {
+            return await _sightings.GetNotConfirmedSightings();
+        }
+
+        //TODO use admin role
+        [Authorize]
+        [HttpDelete("{id}/reject")]
+        public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.DeleteSighting(id);
             return sighting == null ? NotFound() : sighting;
         }
     }
