@@ -94,7 +94,6 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
     );
     const addAdminButton = screen.getByTestId("make-admin");
     expect(addAdminButton).not.toHaveAttribute("hidden");
-    // userEvent.click(makeAdminButton);
 
     render(
         <Router>
