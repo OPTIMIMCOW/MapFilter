@@ -19,8 +19,6 @@ namespace WhaleSpotting.Models.DbModels
         public OrcaType? OrcaType { get; set; }
         public string OrcaPod { get; set; }
         public bool Confirmed { get; set; }
-     }
-
-    // TODO - Add UserDbModel
-    //public UserDbModel User {get; set; }
+        public UserDbModel User {get; set; }
+    }
 }

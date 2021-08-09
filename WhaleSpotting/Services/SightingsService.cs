@@ -32,6 +32,7 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> GetSightings()
         {
             var sightings = await _context.Sightings
+                .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
