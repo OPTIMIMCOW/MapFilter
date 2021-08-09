@@ -95,6 +95,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Where(s => s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
                 .Where(s => s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
+                .Where(s => s.Confirmed)
                 .ToListAsync();
 
             return sightings.Select(sightings => sightings.Species).Distinct();
