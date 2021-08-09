@@ -15,9 +15,10 @@ interface ButtonProps {
     dataTestId?: string;
     minWidth25?: boolean;
     link?: string;
+    hidden?: boolean;
 }
 
-export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link }: ButtonProps): JSX.Element {
+export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link, hidden = false }: ButtonProps): JSX.Element {
     const width = minWidth25 ? "minWidth25" : "";
     let styleClass;
 
@@ -35,20 +36,21 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
 
     if (link) {
         return (
-            <Link 
-                data-testid={dataTestId} 
-                className={`${styleClass} ${width} link`} 
-                to={link}>
+            <Link
+                data-testid={dataTestId}
+                className={`${styleClass} ${width} link`}
+                to={link}
+                hidden={hidden}>
                 {text}
             </Link>
         );
     }
-
     return (
         <button
             data-testid={dataTestId}
             className={`${styleClass} ${width}`}
-            onClick={onClick}>
+            onClick={onClick}
+            hidden={hidden}>
             {text}
         </button>
     );
