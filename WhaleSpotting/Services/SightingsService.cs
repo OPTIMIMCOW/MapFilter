@@ -13,9 +13,11 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> GetSightings();
+        List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
         Task<List<SightingResponseModel>> GetNotConfirmedSightings();
+        Task<SightingResponseModel> DeleteSighting(int id);
     }
 
     public class SightingsService : ISightingsService
@@ -33,6 +35,17 @@ namespace WhaleSpotting.Services
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
+
+            return sightings;
+        }
+
+        public List<SightingResponseModel> SearchSighting(SearchSightingRequestModel searchSighting)
+        {
+            var sightings = _context.Sightings
+                .Where(s => s.Species  == searchSighting.Species)
+                .OrderBy(s => s.SightedAt)
+                .Select(s => new SightingResponseModel(s))
+                .ToList();
 
             return sightings;
         }
@@ -92,6 +105,22 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings;
+        }
+
+        public async Task<SightingResponseModel> DeleteSighting(int id)
+        {
+            var sighting = await _context.Sightings
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (sighting == null)
+            {
+                return null;
+            }
+
+            _context.Sightings.Remove(sighting);
+            _context.SaveChanges();
+
+            return new SightingResponseModel(sighting);
         }
     }
 }

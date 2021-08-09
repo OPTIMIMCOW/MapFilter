@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using WhaleSpotting.Constants;
 
@@ -28,6 +29,13 @@ namespace WhaleSpotting.Controllers
         }
 
         [Authorize]
+        [HttpGet("/search")]
+        public ActionResult<List<SightingResponseModel>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
+        {
+            var result = _sightings.SearchSighting(searchSighting);
+            return result.Any() ? result : NotFound();
+        }
+
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
@@ -56,6 +64,15 @@ namespace WhaleSpotting.Controllers
         public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
         {
             return await _sightings.GetNotConfirmedSightings();
+        }
+
+        //TODO use admin role
+        [Authorize]
+        [HttpDelete("{id}/reject")]
+        public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.DeleteSighting(id);
+            return sighting == null ? NotFound() : sighting;
         }
     }
 }
