@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhaleSpotting.Models.DbModels;
@@ -9,9 +10,10 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    partial class WhaleSpottingContextModelSnapshot : ModelSnapshot
+    [Migration("20210803110046_UpdateForIdentityRoles")]
+    partial class UpdateForIdentityRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,9 +261,6 @@ namespace WhaleSpotting.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ApiId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Confirmed")
                         .HasColumnType("boolean");
 
@@ -286,13 +285,13 @@ namespace WhaleSpotting.Migrations
                     b.Property<int?>("OrcaType")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("SightedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("Species")
+                    b.Property<int>("Species")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
