@@ -171,6 +171,63 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
+        public void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin
+
+            };
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                UserId = 5,
+                Username = "FakeUser",
+                Confirmed = false,
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+                .Returns(new List<SightingResponseModel> { sightingResponse });
+
+            // Act
+            var response = _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
+            searchResult.Should().Contain(sightingResponse);
+        }
+
+        [Fact]
+        public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
+        {
+            // Arrange
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting))
+                .Returns(new List<SightingResponseModel>());
+
+            // Act
+            var response = _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            response.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
         public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
         {
             // Arrange

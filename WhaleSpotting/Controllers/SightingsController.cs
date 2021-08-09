@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WhaleSpotting.Controllers
@@ -24,6 +25,13 @@ namespace WhaleSpotting.Controllers
         public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             return await _sightings.GetSightings();
+        }
+
+        [HttpGet("/search")]
+        public ActionResult<List<SightingResponseModel>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
+        {
+            var result = _sightings.SearchSighting(searchSighting);
+            return result.Any() ? result : NotFound();
         }
 
         [HttpPost("create")]
