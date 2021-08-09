@@ -99,7 +99,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -146,10 +146,175 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRange_ReturnsFilteredByDateRangeSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-9),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-10),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                SightedFrom = DateTime.Now.AddDays(-7),
+                SightedTo = DateTime.Now.AddDays(-1),
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRangeAndOrcaPod_ReturnsFilteredByDateRangeAndOrcaPodSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-7),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-1),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                SightedFrom = DateTime.Now.AddDays(-7),
+                SightedTo = DateTime.Now.AddDays(-1),
+                OrcaPod = "k"
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByLocation_ReturnsFilteredByLocationSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "pacific ocean",
+                SightedAt = DateTime.Now.AddDays(-7),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-1),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Location = "pacific ocean"
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(1);
         }
 
         [Fact]
@@ -263,7 +428,6 @@ namespace WhaleSpotting.UnitTests.Services
         public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
         {
             // Arrange
-
             var sighting = new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
