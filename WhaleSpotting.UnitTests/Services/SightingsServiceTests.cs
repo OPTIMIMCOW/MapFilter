@@ -99,7 +99,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
+        public async void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
         {
             // Arrange
             Context.Add(new SightingDbModel
@@ -428,7 +428,6 @@ namespace WhaleSpotting.UnitTests.Services
         public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
         {
             // Arrange
-
             var sighting = new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,

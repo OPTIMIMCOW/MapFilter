@@ -177,7 +177,6 @@ namespace WhaleSpotting.UnitTests.Controllers
             var searchSighting = new SearchSightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin
-
             };
 
             var sightingResponse = new SightingResponseModel

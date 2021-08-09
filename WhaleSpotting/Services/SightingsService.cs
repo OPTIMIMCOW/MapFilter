@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
-using WhaleSpotting.Models.Enums;
 using System;
 using WhaleSpotting.Models.ResponseModels;
 

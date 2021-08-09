@@ -17,10 +17,10 @@ namespace WhaleSpotting.Models.RequestModels
 
         public string Location { get; set; } = null;
 
-        [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
+        [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedFrom { get; set; }
         
-        [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
+        [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedTo { get; set; }
 
         [Range(1, 4, ErrorMessage = "OrcaType must be between 1 and 4")]
