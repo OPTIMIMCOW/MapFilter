@@ -59,19 +59,20 @@ namespace WhaleSpotting.Services
 
         public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
         {
-            var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct();
-           
+            var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct().ToList();
+
             var sightingsInDbIds = _context.Sightings
                 .Where(s => newSightingIds.Contains(s.ApiId))
-                .Select(s => s.ApiId);
-           
+                .Select(s => s.ApiId)
+                .ToList();
+
             var sightingsNotInDb = sightingsToAdd
                 .Where(s => !sightingsInDbIds.Contains(s.ApiId))
                 .ToList();
-           
+
             _context.Sightings.AddRange(sightingsNotInDb);
             _context.SaveChanges();
-           
+
             return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
