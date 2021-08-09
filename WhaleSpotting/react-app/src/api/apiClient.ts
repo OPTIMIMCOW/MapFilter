@@ -1,10 +1,5 @@
 import authService from "../components/api-authorization/AuthorizeService";
 
-export async  function getHeaders(): Promise<any> {
-    const token = await authService.getAccessToken();
-    return !token ? {} : { "Authorization": `Bearer ${token}` };
-}
-
 export async function makeAdmin() {
     const headers = await getHeaders();
     const response = await fetch("User/MakeAdmin", {
@@ -27,4 +22,9 @@ export async function removeAdmin() {
     const response = await fetch("User/RemoveAdmin", {
         headers: headers
     });
+}
+
+async function getHeaders(): Promise<any> {
+    const token = await authService.getAccessToken();
+    return !token ? {} : {"Authorization": `Bearer ${token}`};
 }

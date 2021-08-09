@@ -39,7 +39,8 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
             <Link
                 data-testid={dataTestId}
                 className={`${styleClass} ${width} link`}
-                to={link}>
+                to={link}
+                hidden={hidden}>
                 {text}
             </Link>
         );
