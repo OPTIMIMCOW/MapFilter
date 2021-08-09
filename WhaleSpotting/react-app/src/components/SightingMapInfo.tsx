@@ -1,9 +1,9 @@
-/* eslint-disable */ 
 import React, { useEffect, useState } from "react";
 import WeatherApiModel from "../apiModels/WeatherApiModel";
 import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
-import { Species, WhaleImageDictionary, WhaleVisualTextDictionary } from "../apiModels/CreateSightingApiModel";
+import { Species } from "../apiModels/ApiEnums";
+import { WhaleImageDictionary, WhaleVisualTextDictionary } from "../apiModels/ApiLookups";
 
 interface SightingMapInfoProps {
     chosen: Chosen | undefined;
@@ -26,7 +26,6 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
         if (chosen) {
             fetchWeather();
             fetchSpecies();
-            console.log(speciesData);
         }
     }, [chosen]);
 
@@ -77,14 +76,9 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
 }
 
 function getSingleWhaleImage(response: IResponse): string {
-    if (response.species.length != 0) {
-        const value = response.species[0];
-        const speciesEnum = Species[response.species[0]];
-        console.log(speciesEnum);
-        console.log(WhaleImageDictionary[value]);
-        return WhaleImageDictionary[value];
-    }
-    return "whaleicon512.png";
+    return response.species.length != 0
+        ? WhaleImageDictionary[response.species[0]]
+        : "whaleicon512.png";
 }
 
 function getHumanReadableWhaleNames(response: IResponse): Array<string> {

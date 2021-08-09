@@ -1,4 +1,5 @@
-import { CreateSightingApiModel, Species} from "../../apiModels/CreateSightingApiModel";
+import { CreateSightingApiModel } from "../../apiModels/CreateSightingApiModel";
+import { Species } from "../../apiModels/ApiEnums";
 
 test("check species enum works correctly", () => {
     const test: CreateSightingApiModel = {
