@@ -148,11 +148,9 @@ namespace WhaleSpotting.UnitTests.Services
         public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
         {
             // Arrange
-            const int id = 1;
 
             var sighting = new SightingDbModel
             {
-                Id = 1,
                 Species = Species.AtlanticWhiteSidedDolphin,
                 Quantity = 2,
                 Description = "was nice",
@@ -169,7 +167,7 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.SaveChangesAsync();
 
             // Act
-            var result = await _underTest.DeleteSighting(id);
+            var result = await _underTest.DeleteSighting(sighting.Id);
 
             // Assert
             result.Should().BeOfType<SightingResponseModel>();

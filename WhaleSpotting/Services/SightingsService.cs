@@ -93,7 +93,7 @@ namespace WhaleSpotting.Services
                 return null;
             }
 
-            _context.Entry(sighting).State = EntityState.Deleted;
+            _context.Sightings.Remove(sighting);
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
