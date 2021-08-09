@@ -6,7 +6,7 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import SightingApiModel from "../apiModels/SightingApiModel";
+import SightingApiModel from "../api/models/SightingApiModel";
 import { Chosen } from "./Map";
 import "../styles/Map.scss";
 

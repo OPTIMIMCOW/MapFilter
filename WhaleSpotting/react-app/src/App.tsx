@@ -1,13 +1,12 @@
 import React, { Fragment } from "react";
-import {Redirect, Route} from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import Home from "./components/Home";
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
-import {Profile} from "./components/Profile";
+import { Profile } from "./components/Profile";
 import { Footer } from "./components/Footer";
 import Navbar from "./components/Navbar";
-import FetchWeatherData from "./components/FetchWeatherData";
 import ReportSighting from "./components/ReportSighting";
 import Map from "./components/Map";
 
@@ -15,9 +14,9 @@ function App(): JSX.Element {
     return (
         <Fragment>
             <Navbar />
-            <Route exact path="/map" component={Map}/>
-            <Route exact path="/reportsighting" component={ReportSighting}/>
-            <Route exact path="/profile" component={Profile}/>
+            <Route exact path="/map" component={Map} />
+            <Route exact path="/reportsighting" component={ReportSighting} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/login">
                 <Redirect to={ApplicationPaths.Login} />
             </Route>
@@ -27,7 +26,6 @@ function App(): JSX.Element {
             <Route exact path="/logout">
                 <Redirect to={{ pathname: `${ApplicationPaths.LogOut}`, state: { local: true } }} />
             </Route>
-            <AuthorizeRoute exact path="/weather" component={FetchWeatherData} />
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             <Route exact path="/" component={Home} />
             <Route exact path="/Home" component={Home} />
