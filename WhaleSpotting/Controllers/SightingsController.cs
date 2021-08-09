@@ -61,6 +61,7 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
 
+        //TODO add admin role
         [Authorize]
         [HttpGet("pending")]
         public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()

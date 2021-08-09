@@ -1,4 +1,13 @@
+﻿import { SightingApiModel } from "./models/SightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
+
+export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
+    const headers = await getHeaders();
+    return await fetch(`https://localhost:5001/sightings/pending?page=${pageNumber}&pageSize=10`, {
+        headers: headers }
+    )
+        .then(r => r.json());
+}
 
 export async function makeAdmin() {
     const headers = await getHeaders();

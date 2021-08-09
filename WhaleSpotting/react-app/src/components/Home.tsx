@@ -3,7 +3,7 @@ import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";
-import SightingApiModel from "../api/models/SightingApiModel";
+import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
 
 export default function Home(): JSX.Element {
@@ -15,7 +15,7 @@ export default function Home(): JSX.Element {
 
     const orca: SightingApiModel = {
         id: 1,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "whale",
         quantity: 1,
         location: "Deep Ocean",
@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
     
     const orcaConfirmed: SightingApiModel = {
         id: 2,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "orca",
         quantity: 3,
         location: "Sea",
