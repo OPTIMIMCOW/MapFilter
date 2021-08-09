@@ -16,7 +16,6 @@ namespace WhaleSpotting
             var serviceProvider = scope.ServiceProvider;
             var dbContext = serviceProvider.GetService<WhaleSpottingContext>();
             dbContext!.Database.Migrate();
-            
             host.Run();
         }
 

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
-using WhaleSpotting.Models.Enums;
 using System;
 using WhaleSpotting.Models.ResponseModels;
 using WhaleSpotting.Filters;
@@ -13,9 +12,13 @@ namespace WhaleSpotting.Services
 {
     public interface ISightingsService
     {
+        Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
         Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
+        Task<List<SightingResponseModel>> GetNotConfirmedSightings();
+        Task<SightingResponseModel> DeleteSighting(int id);
+        List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
     }
 
     public class SightingsService : ISightingsService
@@ -39,6 +42,39 @@ namespace WhaleSpotting.Services
 
 
             return sightings;
+        }
+
+        public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting)
+        {
+            var sightings = await _context.Sightings
+                .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
+                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
+                .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
+                .Where(s => searchSighting.OrcaPod == null || s.OrcaPod == searchSighting.OrcaPod)
+                .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
+                .OrderBy(s => s.SightedAt)
+                .Select(s => new SightingResponseModel(s))
+                .ToListAsync();
+
+            return sightings;
+        }
+
+        public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
+        {
+            var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct();
+           
+            var sightingsInDbIds = _context.Sightings
+                .Where(s => newSightingIds.Contains(s.ApiId))
+                .Select(s => s.ApiId);
+           
+            var sightingsNotInDb = sightingsToAdd
+                .Where(s => !sightingsInDbIds.Contains(s.ApiId))
+                .ToList();
+           
+            _context.Sightings.AddRange(sightingsNotInDb);
+            _context.SaveChanges();
+           
+            return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
         public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
@@ -80,8 +116,35 @@ namespace WhaleSpotting.Services
             {
                 return null;
             }
-            
+
             sighting.Confirmed = true;
+            _context.SaveChanges();
+
+            return new SightingResponseModel(sighting);
+        }
+
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
+        {
+            var sightings = await _context.Sightings
+                .Where(s => s.Confirmed == false)
+                .OrderBy(s => s.SightedAt)
+                .Select(s => new SightingResponseModel(s))
+                .ToListAsync();
+
+            return sightings;
+        }
+
+        public async Task<SightingResponseModel> DeleteSighting(int id)
+        {
+            var sighting = await _context.Sightings
+                .SingleOrDefaultAsync(s => s.Id == id);
+
+            if (sighting == null)
+            {
+                return null;
+            }
+
+            _context.Sightings.Remove(sighting);
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);

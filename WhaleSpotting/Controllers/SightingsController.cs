@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using WhaleSpotting.Constants;
 using WhaleSpotting.Filters;
 
 namespace WhaleSpotting.Controllers
@@ -23,8 +25,17 @@ namespace WhaleSpotting.Controllers
 
         [HttpGet]
         public async Task<List<SightingResponseModel>> GetInfo([FromQuery] PageFilter pageFilter)
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             return await _sightings.GetSightings(pageFilter);
+        }
+
+        [Authorize]
+        [HttpGet("/search")]
+        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
+        {
+            var result = await _sightings.SearchSighting(searchSighting);
+            return result.Any() ? result: NotFound();
         }
 
         [HttpPost("create")]
@@ -42,11 +53,27 @@ namespace WhaleSpotting.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = AuthConstants.Admin )]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
             var sighting = await _sightings.ConfirmSighting(id);
+            return sighting == null ? NotFound() : sighting;
+        }
+
+        [Authorize]
+        [HttpGet("pending")]
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
+        {
+            return await _sightings.GetNotConfirmedSightings();
+        }
+
+        //TODO use admin role
+        [Authorize]
+        [HttpDelete("{id}/reject")]
+        public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.DeleteSighting(id);
             return sighting == null ? NotFound() : sighting;
         }
     }
