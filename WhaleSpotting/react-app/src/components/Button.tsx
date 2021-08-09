@@ -15,11 +15,10 @@ interface ButtonProps {
     dataTestId?: string;
     minWidth25?: boolean;
     link?: string;
-    forAdmin?: boolean;
-    isAdmin?: boolean;
+    hidden?: boolean;
 }
 
-export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link, forAdmin = false, isAdmin = false }: ButtonProps): JSX.Element {
+export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link, hidden = false }: ButtonProps): JSX.Element {
     const width = minWidth25 ? "minWidth25" : "";
     let styleClass;
 
@@ -37,32 +36,20 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
 
     if (link) {
         return (
-            <Link 
-                data-testid={dataTestId} 
-                className={`${styleClass} ${width} link`} 
+            <Link
+                data-testid={dataTestId}
+                className={`${styleClass} ${width} link`}
                 to={link}>
                 {text}
             </Link>
         );
     }
-
-    if(forAdmin) {
-        return (
-            <button
-                data-testid={dataTestId}
-                className={`${styleClass} ${width}`}
-                onClick={onClick}
-                hidden={!isAdmin}>
-                {text}
-            </button>
-        );
-    }
-
     return (
         <button
             data-testid={dataTestId}
             className={`${styleClass} ${width}`}
-            onClick={onClick}>
+            onClick={onClick}
+            hidden={hidden}>
             {text}
         </button>
     );

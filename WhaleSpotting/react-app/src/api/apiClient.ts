@@ -1,31 +1,30 @@
 import authService from "../components/api-authorization/AuthorizeService";
 
-export async function makeAdmin() {
+export async  function getHeaders(): Promise<any> {
     const token = await authService.getAccessToken();
+    return !token ? {} : { "Authorization": `Bearer ${token}` };
+}
+
+export async function makeAdmin() {
+    const headers = await getHeaders();
     const response = await fetch("User/MakeAdmin", {
-        headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        headers: headers
     });
-    //eslint-disable-next-line
-    console.log(response);
 }
 
 export async function checkAdmin() {
-    const token = await authService.getAccessToken();
+    const headers = await getHeaders();
     const response = await fetch("User/CheckAdmin", {
-        headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        headers: headers
     });
-    //eslint-disable-next-line
-    console.log(response);
 
     const regexMatch = /(AccessDenied)/;
     return !response.url.match(regexMatch);
 }
 
 export async function removeAdmin() {
-    const token = await authService.getAccessToken();
+    const headers = await getHeaders();
     const response = await fetch("User/RemoveAdmin", {
-        headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+        headers: headers
     });
-    //eslint-disable-next-line
-    console.log(response);
 }

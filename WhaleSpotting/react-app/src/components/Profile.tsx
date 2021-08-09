@@ -88,22 +88,19 @@ export function Profile(): JSX.Element {
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
-                            forAdmin={true}
-                            isAdmin={isUserAdmin}
+                            hidden={!isUserAdmin}
                         />
                         <Button
                             style={Style.secondary}
                             text="Make Admin"
                             onClick={makeAdminHandler}
-                            forAdmin={true}
-                            isAdmin={!isUserAdmin}
+                            hidden={isUserAdmin}
                             dataTestId="make-admin" />
                         <Button
                             style={Style.secondary}
                             text="Remove Admin"
                             onClick={removeAdminHandler}
-                            forAdmin={true}
-                            isAdmin={isUserAdmin}
+                            hidden={!isUserAdmin}
                             dataTestId="remove-admin" />
                     </div>
                 </div>
