@@ -69,12 +69,16 @@ export function Profile(): JSX.Element {
                         <Button 
                             style={Style.primary} 
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")}/>
+                            onClick={() => setFeedToggle("Sightings")}
+                            hidden={false}
+                        />
                         <Button 
                             style={Style.primary} 
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
-                            dataTestId="approval-toggle"/>
+                            dataTestId="approval-toggle"
+                            hidden={false}
+                        />
                     </div>
                 </div>
             </div>

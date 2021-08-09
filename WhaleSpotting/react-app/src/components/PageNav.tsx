@@ -13,10 +13,11 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
     return (
         <div className="page-nav" data-testid="page-nav">
             <Button
-                style={page <= 1 ? Style.hidden : Style.secondary}
+                style={Style.secondary}
                 text="Previous Page"
                 onClick={() => previousPage()}
                 minWidth25={true}
+                hidden={page <= 1 ? true : false}
             />
             <div />
             <Button
@@ -24,6 +25,7 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                 text="Next Page"
                 onClick={() => nextPage()}
                 minWidth25={true}
+                hidden={false}
             />
         </div>
     );

@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 export enum Style {
     primary,
     secondary,
-    reject,
-    hidden
+    reject
 }
 
 interface ButtonProps {
@@ -16,9 +15,10 @@ interface ButtonProps {
     dataTestId?: string;
     minWidth25?: boolean;
     link?: string;
+    hidden: boolean;
 }
 
-export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link }: ButtonProps): JSX.Element {
+export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link , hidden = false}: ButtonProps): JSX.Element {
     const width = minWidth25 ? "minWidth25" : "";
     let styleClass;
 
@@ -32,16 +32,13 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
     case Style.reject:
         styleClass = "reject-button";
         break;
-    case Style.hidden:
-        styleClass = "hidden";
-        break;
     }
 
     if (link) {
         return (
             <Link
                 data-testid={dataTestId}
-                className={`${styleClass} ${width} link`}
+                className={`${styleClass} ${width} link ${hidden ? "hidden" : "" }`}
                 to={link}>
                 {text}
             </Link>
@@ -51,7 +48,7 @@ export function Button({ style, text, onClick, dataTestId, minWidth25 = false, l
     return (
         <button
             data-testid={dataTestId}
-            className={`${styleClass} ${width}`}
+            className={`${styleClass} ${width} ${hidden ? "hidden" : "" }`}
             onClick={onClick}>
             {text}
         </button>
