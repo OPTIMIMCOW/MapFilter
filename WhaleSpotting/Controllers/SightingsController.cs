@@ -77,7 +77,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("localspecies")]
-        public async Task<IEnumerable<Species>> GetSpeciesByCoordinates([FromQuery] double latitude, double longitude)
+        public async Task<IEnumerable<Species?>> GetSpeciesByCoordinates([FromQuery] double latitude, double longitude)
         {
             return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
         }
