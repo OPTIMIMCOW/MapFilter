@@ -45,8 +45,7 @@ test("User is admin, check RemoveAdmin & CheckApprovals do not have hidden attri
             <Button
                 style={Style.secondary}
                 text="Make Admin"
-                forAdmin={true}
-                isAdmin={!isUserAdmin}
+                hidden={isUserAdmin}
                 dataTestId="make-admin" />
         </Router>
     );
@@ -58,8 +57,7 @@ test("User is admin, check RemoveAdmin & CheckApprovals do not have hidden attri
             <Button
                 style={Style.secondary}
                 text="Remove Admin"
-                forAdmin={true}
-                isAdmin={isUserAdmin}
+                hidden={!isUserAdmin}
                 dataTestId="remove-admin" />
         </Router>
     );
@@ -71,8 +69,7 @@ test("User is admin, check RemoveAdmin & CheckApprovals do not have hidden attri
             <Button
                 style={Style.secondary}
                 text="Approvals"
-                forAdmin={true}
-                isAdmin={isUserAdmin}
+                hidden={!isUserAdmin}
                 dataTestId="approval-toggle" />
         </Router>
     );
@@ -87,8 +84,7 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
             <Button
                 style={Style.secondary}
                 text="Make Admin"
-                forAdmin={true}
-                isAdmin={!isUserAdmin}
+                hidden={isUserAdmin}
                 dataTestId="make-admin" />
         </Router>
     );
@@ -100,8 +96,7 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
             <Button
                 style={Style.secondary}
                 text="Remove Admin"
-                forAdmin={true}
-                isAdmin={isUserAdmin}
+                hidden={!isUserAdmin}
                 dataTestId="remove-admin" />
         </Router>
     );
@@ -113,8 +108,7 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
             <Button
                 style={Style.secondary}
                 text="Approvals"
-                forAdmin={true}
-                isAdmin={isUserAdmin}
+                hidden={!isUserAdmin}
                 dataTestId="approval-toggle" />
         </Router>
     );
