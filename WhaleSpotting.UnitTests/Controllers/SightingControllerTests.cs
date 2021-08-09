@@ -227,8 +227,6 @@ namespace WhaleSpotting.UnitTests.Controllers
             response.Result.Should().BeOfType<NotFoundResult>();
         }
 
-    }    
-
         [Fact]
         public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
         {
