@@ -299,12 +299,7 @@ namespace WhaleSpotting.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Sightings");
                 });
@@ -422,20 +417,6 @@ namespace WhaleSpotting.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WhaleSpotting.Models.DbModels.SightingDbModel", b =>
-                {
-                    b.HasOne("WhaleSpotting.Models.DbModels.UserDbModel", "User")
-                        .WithMany("Sightings")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WhaleSpotting.Models.DbModels.UserDbModel", b =>
-                {
-                    b.Navigation("Sightings");
                 });
 #pragma warning restore 612, 618
         }
