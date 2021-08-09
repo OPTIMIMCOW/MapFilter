@@ -98,7 +98,7 @@ namespace WhaleSpotting.UnitTests.Services
             Context.Sightings.Should().BeEmpty();
         }
 
-         [Fact]
+        [Fact]
         public void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
         {
             // Arrange
@@ -125,7 +125,7 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = "" 
-             });
+            });
             Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
