@@ -263,9 +263,6 @@ namespace WhaleSpotting.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ApiId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Confirmed")
                         .HasColumnType("boolean");
 
@@ -290,13 +287,13 @@ namespace WhaleSpotting.Migrations
                     b.Property<int?>("OrcaType")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("SightedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("Species")
+                    b.Property<int>("Species")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
