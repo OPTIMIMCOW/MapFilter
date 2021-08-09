@@ -41,6 +41,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
+        //TODO use admin role
         [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
@@ -54,6 +55,15 @@ namespace WhaleSpotting.Controllers
         public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
         {
             return await _sightings.GetNotConfirmedSightings();
+        }
+
+        //TODO use admin role
+        [Authorize]
+        [HttpDelete("{id}/reject")]
+        public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
+        {
+            var sighting = await _sightings.DeleteSighting(id);
+            return sighting == null ? NotFound() : sighting;
         }
     }
 }
