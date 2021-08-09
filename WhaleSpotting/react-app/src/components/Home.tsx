@@ -63,7 +63,6 @@ export default function Home(): JSX.Element {
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
                         link="/Reportsighting"
-                        hidden={false}
                     />
                 </div>
                 <div className="sightings-header">
@@ -74,7 +73,6 @@ export default function Home(): JSX.Element {
                         dataTestId="filter-button"
                         onClick={orderFeedBy}
                         minWidth25={true}
-                        hidden={false}
                     />
                 </div>
                 <div className="card-holder">

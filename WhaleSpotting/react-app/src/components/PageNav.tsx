@@ -25,7 +25,6 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                 text="Next Page"
                 onClick={() => nextPage()}
                 minWidth25={true}
-                hidden={false}
             />
         </div>
     );

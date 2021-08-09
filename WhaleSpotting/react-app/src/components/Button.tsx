@@ -15,7 +15,7 @@ interface ButtonProps {
     dataTestId?: string;
     minWidth25?: boolean;
     link?: string;
-    hidden: boolean;
+    hidden?: boolean;
 }
 
 export function Button({ style, text, onClick, dataTestId, minWidth25 = false, link , hidden = false}: ButtonProps): JSX.Element {
