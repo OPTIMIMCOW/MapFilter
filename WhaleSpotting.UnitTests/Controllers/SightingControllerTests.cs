@@ -76,7 +76,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -94,7 +94,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsBadRequest()
+        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
         {
             // Arrange
             var newSighting = new SightingRequestModel
@@ -120,8 +120,10 @@ namespace WhaleSpotting.UnitTests.Controllers
             var response = _underTest.CreateSighting(newSighting);
 
             // Assert
-            var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be(exceptionMessage);
+            var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
+            var validationProblemDetails = validationErrorResult.Value.Should().BeOfType<ValidationProblemDetails>().Subject;
+            var errorMessage = validationProblemDetails.Errors["SightedAt"][0];
+            errorMessage.Should().Be("Sighted At must be in the past");
         }
 
         [Fact]
@@ -146,7 +148,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -222,7 +224,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -271,7 +273,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -300,6 +302,26 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             // Assert
             result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsListOfSpecies()
+        {
+            // Arrange
+            var lat = 2.00;
+            var lon = 2.00;
+
+            var serviceResponse = new List<Species?>() { Species.AtlanticWhiteSidedDolphin };
+
+            A.CallTo(() => _sightings.GetSpeciesByCoordinates(lat, lon))
+                .Returns(serviceResponse);
+
+            // Act
+            var controllerResponse = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            controllerResponse.Should().BeOfType<List<Species?>>();
+            controllerResponse.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
     }
 }

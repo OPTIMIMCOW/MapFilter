@@ -11,7 +11,7 @@ namespace WhaleSpotting.Models.RequestModels
         public Species Species { get; set; }
 
         [Required(ErrorMessage = "Quantity is required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than {1}")]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than 0")]
         public int Quantity { get; set; }
 
         public string Description { get; set; }

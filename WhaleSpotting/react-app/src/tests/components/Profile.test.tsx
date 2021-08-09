@@ -4,6 +4,8 @@ import { Profile } from "../../components/Profile";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { Button, Style } from "../../components/Button";
+import {SightingApiModel} from "../../api/models/SightingApiModel";
+import { fetchPendingSightings } from "../../api/apiClient";
 
 test("renders the Profile information", () => {
     render(
@@ -25,7 +27,14 @@ test("renders the Sightings feed", () => {
     expect(title).toBeInTheDocument();
 });
 
-test("on click of Approval button and change feed", () => {
+test("When approval selected get data from API and change heading to Your Approvals", () => {
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        fetchPendingSightings: jest.fn(async (pageNumber: number) : Promise<SightingApiModel[]> => {
+            return Promise.resolve([]);
+        })
+    }));
+
     render(
         <Router>
             <Profile />
@@ -33,6 +42,10 @@ test("on click of Approval button and change feed", () => {
     );
     const approvalButton = screen.getByTestId("approval-toggle");
     userEvent.click(approvalButton);
+
+    setTimeout(()=>{
+        expect(fetchPendingSightings).toBeCalled();
+    }, 100);
 
     const title = screen.getByText("Your Approvals");
     expect(title).toBeInTheDocument();

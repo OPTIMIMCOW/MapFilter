@@ -10,5 +10,6 @@ namespace WhaleSpotting.Models.DbModels
     [Table("Users")]
     public class UserDbModel : IdentityUser
     {
+        public ICollection<SightingDbModel> Sightings { get; set; }
     }
 }

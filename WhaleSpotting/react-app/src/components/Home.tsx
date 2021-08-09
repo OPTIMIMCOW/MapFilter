@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";
-import SightingApiModel from "../api/models/SightingApiModel";
+import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
 
-export default function Home() : JSX.Element {
+export default function Home(): JSX.Element {
+    const [page, setPage] = useState(1);
 
     function orderFeedBy():void {
         //TODO "this needs to be implemented";
@@ -14,7 +15,7 @@ export default function Home() : JSX.Element {
 
     const orca: SightingApiModel = {
         id: 1,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "whale",
         quantity: 1,
         location: "Deep Ocean",
@@ -30,7 +31,7 @@ export default function Home() : JSX.Element {
     
     const orcaConfirmed: SightingApiModel = {
         id: 2,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "orca",
         quantity: 3,
         location: "Sea",
@@ -44,6 +45,14 @@ export default function Home() : JSX.Element {
         username: "FakeUserConfirmed"
     };
 
+    function nextPage() {
+        setPage(page + 1);
+    }
+
+    function previousPage() {
+        setPage(page - 1);
+    }
+
     return (
         <div className="home" data-testid="home">
             <BannerImage />
@@ -53,7 +62,8 @@ export default function Home() : JSX.Element {
                         style={Style.primary}
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
-                        link="/Reportsighting"/>
+                        link="/Reportsighting"
+                    />
                 </div>
                 <div className="sightings-header">
                     <h2>Recent Sightings</h2>
@@ -71,8 +81,7 @@ export default function Home() : JSX.Element {
                     <Card sighting={orcaConfirmed}/>
                     <Card sighting={orca}/>
                 </div>
-
-                <PageNav />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );

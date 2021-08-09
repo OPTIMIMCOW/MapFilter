@@ -15,12 +15,10 @@ namespace WhaleSpotting.Areas.Identity.Pages.Account
     {
 
         private readonly UserManager<UserDbModel> _userManager;
-        private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<UserDbModel> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<UserDbModel> userManager)
         {
             _userManager = userManager;
-            _sender = sender;
         }
 
         public string Email { get; set; }
