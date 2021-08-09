@@ -162,7 +162,7 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.ConfirmSighting(id))
                 .Returns<SightingResponseModel>(null);
-                
+
             // Act
             var result = await _underTest.ConfirmSighting(id);
 
@@ -204,10 +204,10 @@ namespace WhaleSpotting.UnitTests.Controllers
             var response = _underTest.SearchSighting(searchSighting);
 
             // Assert
-
             var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
             searchResult.Should().Contain(sightingResponse);
         }
+
         [Fact]
         public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
         {
@@ -218,7 +218,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             };
 
             A.CallTo(() => _sightings.SearchSighting(searchSighting))
-            .Returns(new List<SightingResponseModel> { });
+            .Returns(new List<SightingResponseModel>());
 
             // Act
             var response = _underTest.SearchSighting(searchSighting);
@@ -227,44 +227,5 @@ namespace WhaleSpotting.UnitTests.Controllers
             response.Result.Should().BeOfType<NotFoundResult>();
         }
 
-
-        [Fact]
-        public void SearchSighting_ValidSearchSighting_ReturnsFilteredSearchResult()
-        {
-            // Arrange
-            var searchSighting = new SearchSightingRequestModel
-            {
-                Species = Species.AtlanticWhiteSidedDolphin
-
-            };
-
-            var sightingResponse = new SightingResponseModel
-            {
-                Id = 1,
-                SightedAt = DateTime.Now,
-                Species = "AtlanticWhiteSidedDolphin",
-                Quantity = 2,
-                Location = "atlantic ocean",
-                Longitude = -100.010,
-                Latitude = -22.010,
-                Description = "was nice",
-                OrcaType = "",
-                OrcaPod = "",
-                UserId = 5,
-                Username = "FakeUser",
-                Confirmed = false,
-            };
-
-            A.CallTo(() => _sightings.SearchSighting(searchSighting))
-                .Returns(new List<SightingResponseModel> { sightingResponse });
-
-            // Act
-            var response = _underTest.SearchSighting(searchSighting);
-
-            // Assert
-
-            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
-            searchResult.Should().Contain(sightingResponse);
-        }
-    }
+    }    
 }

@@ -34,7 +34,6 @@ namespace WhaleSpotting.Controllers
             return result.Any() ? result : NotFound();
         }
 
-
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {

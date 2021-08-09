@@ -113,7 +113,7 @@ namespace WhaleSpotting.UnitTests.Services
                 OrcaType = null,
                 OrcaPod = ""
             }); 
-             Context.Add(new SightingDbModel
+            Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
                 Quantity = 2,

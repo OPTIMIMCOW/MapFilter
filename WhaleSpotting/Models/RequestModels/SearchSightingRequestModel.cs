@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.RequestModels
@@ -20,7 +17,7 @@ namespace WhaleSpotting.Models.RequestModels
 
         public string Location { get; set; } = null;
 
-        [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
+        [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedAt { get; set; }
 
         [Range(1, 4, ErrorMessage = "OrcaType must be between 1 and 4")]
