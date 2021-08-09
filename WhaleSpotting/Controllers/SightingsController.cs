@@ -7,6 +7,7 @@ using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using WhaleSpotting.Constants;
 
 namespace WhaleSpotting.Controllers
 {
@@ -27,6 +28,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings();
         }
 
+        [Authorize]
         [HttpGet("/search")]
         public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
         {
@@ -49,8 +51,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
-        //TODO use admin role
-        [Authorize]
+        [Authorize(Roles = AuthConstants.Admin )]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
