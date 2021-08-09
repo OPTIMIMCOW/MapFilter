@@ -98,6 +98,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async Task GetSightings_Called_ReturnsSightingsWithUser()
         {
             // Arrange
+            var pageFilter = new PageFilter();
+
             var user = new UserDbModel
             {   
                 NormalizedEmail = "test@example.com"                
@@ -114,7 +116,7 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.SaveChangesAsync();
 
             // Act
-            var result = await _underTest.GetSightings();
+            var result = await _underTest.GetSightings(pageFilter);
 
             // Assert
             var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
