@@ -8,8 +8,7 @@
 }
 
 .profile-pane {
-    min-height: 100%;
-    box-sizing: border-box;
+    min-height: calc(100vh - #{$footerHeight} - #{$headerHeight});
     width: 250px;
     background-color: $secondaryDark;
 }
