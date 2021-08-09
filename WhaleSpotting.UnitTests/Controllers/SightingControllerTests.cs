@@ -171,13 +171,12 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
+        public async void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
         {
             // Arrange
             var searchSighting = new SearchSightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin
-
             };
 
             var sightingResponse = new SightingResponseModel
@@ -201,7 +200,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 .Returns(new List<SightingResponseModel> { sightingResponse });
 
             // Act
-            var response = _underTest.SearchSighting(searchSighting);
+            var response = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
@@ -209,7 +208,7 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
+        public async void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
         {
             // Arrange
             var searchSighting = new SearchSightingRequestModel
@@ -221,7 +220,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 .Returns(new List<SightingResponseModel>());
 
             // Act
-            var response = _underTest.SearchSighting(searchSighting);
+            var response = await _underTest.SearchSighting(searchSighting);
 
             // Assert
             response.Result.Should().BeOfType<NotFoundResult>();

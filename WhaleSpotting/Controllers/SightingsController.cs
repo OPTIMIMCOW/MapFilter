@@ -28,10 +28,10 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("/search")]
-        public ActionResult<List<SightingResponseModel>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
+        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
         {
-            var result = _sightings.SearchSighting(searchSighting);
-            return result.Any() ? result : NotFound();
+            var result = await _sightings.SearchSighting(searchSighting);
+            return result.Any() ? result: NotFound();
         }
 
         [HttpPost("create")]
