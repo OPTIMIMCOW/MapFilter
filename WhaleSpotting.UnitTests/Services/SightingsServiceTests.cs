@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
@@ -41,6 +44,40 @@ namespace WhaleSpotting.UnitTests.Services
             result.Should().HaveCount(2);
         }
 
+        [Fact]
+        public void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
+        {
+            // Arrange
+            var sightingToAdd = new List<SightingDbModel>();
+            var whaleSighting = new SightingApiModel
+            {
+                Species = "orca",
+                Quantity = "50",
+                Location = "Southend",
+                Latitude = 48.6213,
+                Longitude = -123.2828,
+                Description = "Sighted near lighthouse",
+                SightedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                OrcaType = "unknown",
+                OrcaPod = "j"
+            };
+            
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+
+            // Act
+            var result = _underTest.CreateSightings(sightingToAdd);
+
+            // Assert
+            result.Should().BeOfType<List<SightingResponseModel>>();
+            result.Should().HaveCount(2);
+
+            var whaleSightingsDbModels = Context.Sightings.Where(s => s.Description == whaleSighting.Description).ToList();
+            whaleSightingsDbModels.Should().HaveCount(2);
+            whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
+        }
+    
         [Fact]
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
         {
@@ -98,6 +135,225 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = ""
+            }); 
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = "" 
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(1),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRange_ReturnsFilteredByDateRangeSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-9),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-10),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                SightedFrom = DateTime.Now.AddDays(-7),
+                SightedTo = DateTime.Now.AddDays(-1),
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByDateRangeAndOrcaPod_ReturnsFilteredByDateRangeAndOrcaPodSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-7),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-1),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                SightedFrom = DateTime.Now.AddDays(-7),
+                SightedTo = DateTime.Now.AddDays(-1),
+                OrcaPod = "k"
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithValidSightingRequestModelByLocation_ReturnsFilteredByLocationSightingResponseModel()
+        {
+            // Arrange
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "pacific ocean",
+                SightedAt = DateTime.Now.AddDays(-7),
+                OrcaType = null,
+                OrcaPod = ""
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-1),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+            Context.Add(new SightingDbModel
+            {
+                Species = Species.Minke,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now.AddDays(-5),
+                OrcaType = null,
+                OrcaPod = "k"
+            });
+
+            Context.SaveChanges();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Location = "pacific ocean"
+            };
+
+            // Act
+            var result = await _underTest.SearchSighting(searchSighting);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
         public async void ConfirmSighting_CalledWithId_ReturnsSightingResponseModelAndConfirmedIsTrueInDb()
         {
             // Arrange
@@ -139,6 +395,108 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Act
             var nullResult = await _underTest.ConfirmSighting(id);
+
+            // Assert
+            nullResult.Should().Be(null);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsSightings()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = false
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = false
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsNull()
+        {
+            // Arrange
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings();
+
+            // Assert
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithId_ReturnsSightingResponseModelAndDeletedInDb()
+        {
+            // Arrange
+            var sighting = new SightingDbModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.DeleteSighting(sighting.Id);
+
+            // Assert
+            result.Should().BeOfType<SightingResponseModel>();
+            Context.Sightings.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async void DeleteSighting_CalledWithInvalidId_ReturnsNullSightingResponseModel()
+        {
+            // Arrange
+            const int id = 1;
+
+            // Act
+            var nullResult = await _underTest.DeleteSighting(id);
 
             // Assert
             nullResult.Should().Be(null);
