@@ -5,7 +5,7 @@
     color: $textOnPrimary;
     border-radius: 10px;
     border: 0;
-    height:50px;
+    height: 50px;
 
     &:hover
     {
@@ -27,14 +27,14 @@
 }
 
 .minWidth25{
-    width:25%;
+    width: 25%;
 }
 
 .link {
     text-decoration: none;
     text-align: center;
     padding: 15px 0px;
-    height:unset;
+    height: unset;
 }
 
 @media (max-width: $mobileScreenSize) {

@@ -5,11 +5,9 @@ interface ShowResultMessageProps {
 }
 
 export default function ShowResultMessage({ responseMessage }: ShowResultMessageProps): JSX.Element {
-    if (responseMessage) {
-        return (
-            <p data-testid="response-result" className="response-message-card">
-                {responseMessage}
-            </p>);
-    }
-    return <div></div>;
+    return responseMessage
+        ? <p data-testid="response-result" className="response-message-card">
+            {responseMessage}
+        </p>
+        : <div />;
 }
