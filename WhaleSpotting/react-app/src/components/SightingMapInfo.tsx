@@ -2,32 +2,64 @@ import React, { useEffect, useState } from "react";
 import WeatherApiModel from "../apiModels/WeatherApiModel";
 import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
+import { Species, WhaleImageDictionary, WhaleVisualTextDictionary } from "../apiModels/CreateSightingApiModel";
 
 interface SightingMapInfoProps {
     chosen: Chosen | undefined;
+}
+
+interface IResponse {
+    lon: number | void,
+    lat: number | void,
+    species: Array<string>,
 }
 
 export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.Element {
 
     const key = process.env.REACT_APP_WEATHER_API_KEY;
 
-    const response = {
+    const [speciesData, setSpeciesData] = useState([]);
+
+    const response: IResponse = {
         lon: chosen?.lon,
         lat: chosen?.lat,
-        species: ["Whale", "Orca", "Dolphin"]
+        species: speciesData,
     };
 
     const [weatherData, setWeatherData] = useState<WeatherApiModel>();
     async function fetchWeather(): Promise<WeatherApiModel | void> {
-        //eslint-disable-next-line
         return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen!.lat}&lon=${chosen!.lon}&units=metric&Appid=${key}`)
             .then(response => response.json())
             .then(response => setWeatherData(response));
     }
 
+    async function fetchSpecies(): Promise<Array<string> | void> {
+        await fetch(`https://localhost:5001/sightings/LocalSpecies?longitude=${chosen!.lon}&latitude=${chosen!.lat}`)
+            .then(response => response.json())
+            .then(response => setSpeciesData(response));
+    }
+
+    function getSingleWhaleImage(response: IResponse): string {
+        if (response.species.length != 0) {
+            const speciesEnum = Species[response.species[0] as keyof typeof Species];
+            return WhaleImageDictionary[speciesEnum];
+        }
+        return "whaleicon512.png";
+    }
+
+    function getHumanReadableWhaleNames(response: IResponse): Array<string> {
+        const humanNames = [];
+        for (let i = 0; i < response.species.length; i++) {
+            const speciesEnum = Species[response.species[i] as keyof typeof Species];
+            humanNames.push(WhaleVisualTextDictionary[speciesEnum]);
+        }
+        return humanNames;
+    }
+
     useEffect(() => {
         if (chosen) {
             fetchWeather();
+            fetchSpecies();
         }
     }, [chosen]);
 
@@ -48,11 +80,11 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                     </ul>
                 </div>
                 <div className="species">Species spotted here:
-                    <ul className="list">{response.species.map(s =>
+                    <ul className="list">{getHumanReadableWhaleNames(response).map(s =>
                         <li key={s}>{s}</li>)}</ul>
                 </div>
                 <div className="whale-image-container">
-                    <img className="whale-image" src="whaleicon512.png" alt="whale" />
+                    <img className="whale-image" src={getSingleWhaleImage(response)} alt="local species" />
                 </div>
             </div>
         </div>
