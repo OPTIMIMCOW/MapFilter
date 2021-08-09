@@ -24,17 +24,16 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetInfo([FromQuery] PageFilter pageFilter)
-        public async Task<List<SightingResponseModel>> GetAllSightings()
+        public async Task<List<SightingResponseModel>> GetAllSightings([FromQuery] PageFilter pageFilter)
         {
             return await _sightings.GetSightings(pageFilter);
         }
 
         [Authorize]
         [HttpGet("/search")]
-        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting)
+        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
-            var result = await _sightings.SearchSighting(searchSighting);
+            var result = await _sightings.SearchSighting(searchSighting, pageFilter);
             return result.Any() ? result: NotFound();
         }
 
@@ -53,6 +52,13 @@ namespace WhaleSpotting.Controllers
             }
         }
 
+        [Authorize(Roles = AuthConstants.Admin)]
+        [HttpGet("pending")]
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings([FromQuery] PageFilter pageFilter)
+        {
+            return await _sightings.GetNotConfirmedSightings(pageFilter);
+        }
+
         [Authorize(Roles = AuthConstants.Admin )]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
@@ -61,15 +67,7 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
 
-        [Authorize]
-        [HttpGet("pending")]
-        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
-        {
-            return await _sightings.GetNotConfirmedSightings();
-        }
-
-        //TODO use admin role
-        [Authorize]
+        [Authorize(Roles = AuthConstants.Admin)]
         [HttpDelete("{id}/reject")]
         public async Task<ActionResult<SightingResponseModel>> DeleteSighting([FromRoute] int id)
         {
