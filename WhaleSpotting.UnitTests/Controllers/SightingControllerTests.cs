@@ -300,10 +300,10 @@ namespace WhaleSpotting.UnitTests.Controllers
         public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsListOfStrings()
         {
             // Arrange
-            var lat = "2";
-            var lon = "2";
+            var lat = 2.00;
+            var lon = 2.00;
 
-            var serviceResponse = new List<string>() { "AtlanticWhiteSidedDolphin" };
+            var serviceResponse = new List<Species>() { Species.AtlanticWhiteSidedDolphin };
 
             A.CallTo(() => _sightings.GetSpeciesByCoordinates(lat, lon))
                 .Returns(serviceResponse);
@@ -312,8 +312,8 @@ namespace WhaleSpotting.UnitTests.Controllers
             var controllerResponse = await _underTest.GetSpeciesByCoordinates(lat, lon);
 
             // Assert
-            controllerResponse.Should().BeOfType<List<string>>();
-            controllerResponse.Should().Contain("AtlanticWhiteSidedDolphin");
+            controllerResponse.Should().BeOfType<List<Species>>();
+            controllerResponse.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
     }
 }

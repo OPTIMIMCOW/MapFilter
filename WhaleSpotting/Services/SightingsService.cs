@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
 using System;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Services
 {

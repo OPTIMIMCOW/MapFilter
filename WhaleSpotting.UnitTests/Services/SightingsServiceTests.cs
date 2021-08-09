@@ -470,8 +470,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async void GetSpeciesByCoordinates_CalledWithValidLatLong_ReturnsListOfStrings()
         {
             // Arrange
-            var lat = "2";
-            var lon = "2";
+            var lat = 2.00;
+            var lon = 2.00;
 
             var sighting = new SightingDbModel
             {
@@ -479,13 +479,13 @@ namespace WhaleSpotting.UnitTests.Services
                 Species = Species.AtlanticWhiteSidedDolphin,
                 Quantity = 2,
                 Description = "was nice",
-                Longitude = Double.Parse(lon),
-                Latitude = Double.Parse(lat),
+                Longitude = lon,
+                Latitude = lat,
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
                 OrcaPod = "",
-                Confirmed = false,
+                Confirmed = true,
             };
 
             await Context.Sightings.AddAsync(sighting);
@@ -496,15 +496,15 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             result.Should().HaveCount(1);
-            result.Should().Contain("AtlanticWhiteSidedDolphin");
+            result.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
 
         [Fact]
         public async void GetSpeciesByCoordinates_CalledWithValidLatLong_ReturnsEmptyList()
         {
             // Arrange
-            var lat = "2";
-            var lon = "2";
+            var lat = 2.00;
+            var lon = 2.00;
 
             var sighting = new SightingDbModel
             {
