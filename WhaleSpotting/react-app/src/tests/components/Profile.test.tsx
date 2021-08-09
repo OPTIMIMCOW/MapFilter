@@ -26,21 +26,7 @@ test("renders the Sightings feed", () => {
     expect(title).toBeInTheDocument();
 });
 
-
-test("on click of Approval button and change heading", () => {
-    render(
-        <Router>
-            <Profile />
-        </Router>
-    );
-    const approvalButton = screen.getByTestId("approval-toggle");
-    userEvent.click(approvalButton);
-
-    const title = screen.getByText("Your Approvals");
-    expect(title).toBeInTheDocument();
-});
-
-test("When approval selected get data from API", () => {
+test("When approval selected get data from API and change heading to Your Approvals", () => {
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
         fetchPendingSightings: jest.fn(async (pageNumber: number) : Promise<SightingApiModel[]> => {
@@ -59,4 +45,7 @@ test("When approval selected get data from API", () => {
     setTimeout(()=>{
         expect(fetchPendingSightings).toBeCalled();
     }, 100);
+
+    const title = screen.getByText("Your Approvals");
+    expect(title).toBeInTheDocument();
 });
