@@ -11,6 +11,7 @@ import authService from "./api-authorization/AuthorizeService";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
+    const [page, setPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     useEffect(() => {
@@ -64,6 +65,14 @@ export function Profile(): JSX.Element {
         username: "FakeUserConfirmed"
     };
 
+    function nextPage() {
+        setPage(page + 1);
+    }
+
+    function previousPage() {
+        setPage(page - 1);
+    }
+
     return (
         <div className="body">
             <div className="profile-pane">
@@ -82,9 +91,10 @@ export function Profile(): JSX.Element {
                         <Button
                             style={Style.primary}
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")} />
-                        <Button
-                            style={Style.primary}
+                            onClick={() => setFeedToggle("Sightings")}
+                        />
+                        <Button 
+                            style={Style.primary} 
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
@@ -114,7 +124,7 @@ export function Profile(): JSX.Element {
                     <Card sighting={orcaConfirmed} />
                     <Card sighting={orcaConfirmed} />
                 </div>
-                <PageNav />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );
