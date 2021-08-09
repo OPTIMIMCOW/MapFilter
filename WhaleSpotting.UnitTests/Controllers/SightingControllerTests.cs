@@ -218,7 +218,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             };
 
             A.CallTo(() => _sightings.SearchSighting(searchSighting))
-            .Returns(new List<SightingResponseModel>());
+                .Returns(new List<SightingResponseModel>());
 
             // Act
             var response = _underTest.SearchSighting(searchSighting);
