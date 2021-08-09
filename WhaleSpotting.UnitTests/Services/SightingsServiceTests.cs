@@ -48,10 +48,8 @@ namespace WhaleSpotting.UnitTests.Services
         {
             // Arrange
             var sightingToAdd = new List<SightingDbModel>();
-
             var whaleSighting = new SightingApiModel
             {
-                
                 Species = "orca",
                 Quantity = "50",
                 Location = "Southend",

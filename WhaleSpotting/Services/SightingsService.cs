@@ -41,12 +41,12 @@ namespace WhaleSpotting.Services
             var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct();
            
             var sightingsInDbIds = _context.Sightings
-                                   .Where(s => newSightingIds.Contains(s.ApiId))
-                                   .Select(s => s.ApiId);
+                .Where(s => newSightingIds.Contains(s.ApiId))
+                .Select(s => s.ApiId);
            
             var sightingsNotInDb = sightingsToAdd
-                                   .Where(s => !sightingsInDbIds.Contains(s.ApiId))
-                                   .ToList();
+                .Where(s => !sightingsInDbIds.Contains(s.ApiId))
+                .ToList();
            
             _context.Sightings.AddRange(sightingsNotInDb);
             _context.SaveChanges();
