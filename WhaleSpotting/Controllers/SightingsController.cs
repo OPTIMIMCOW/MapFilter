@@ -6,6 +6,7 @@ using WhaleSpotting.Services;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
 using Microsoft.AspNetCore.Authorization;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Controllers
 {
@@ -50,7 +51,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("localspecies")]
-        public async Task<IEnumerable<string>> GetSpeciesByCoordinates([FromQuery] string latitude, string longitude)
+        public async Task<IEnumerable<Species>> GetSpeciesByCoordinates([FromQuery] double latitude, double longitude)
         {
             return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
         }

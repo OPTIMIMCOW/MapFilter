@@ -15,7 +15,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
         Task<SightingResponseModel> ConfirmSighting(int id);
-        Task<IEnumerable<string>> GetSpeciesByCoordinates(string latitude, string longitude);
+        Task<IEnumerable<Species>> GetSpeciesByCoordinates(double latitude, double longitude);
     }
 
     public class SightingsService : ISightingsService
@@ -83,21 +83,21 @@ namespace WhaleSpotting.Services
             return new SightingResponseModel(sighting);
         }
 
-        public async Task<IEnumerable<string>> GetSpeciesByCoordinates(string latitude, string longitude)
+        public async Task<IEnumerable<Species>> GetSpeciesByCoordinates(double latitude, double longitude)
         {
             var fiftyKmInCoords = 0.45;
-            var upperLatitude = double.Parse(latitude) + fiftyKmInCoords;
-            var lowerLatitude = double.Parse(latitude) - fiftyKmInCoords;
+            var upperLatitude = latitude + fiftyKmInCoords;
+            var lowerLatitude = latitude - fiftyKmInCoords;
 
-            var upperLongitude = double.Parse(longitude) + fiftyKmInCoords;
-            var lowerLongitude = double.Parse(longitude) - fiftyKmInCoords;
+            var upperLongitude = longitude + fiftyKmInCoords;
+            var lowerLongitude = longitude - fiftyKmInCoords;
 
             var sightings = await _context.Sightings
                 .Where(s => s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
                 .Where(s => s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
                 .ToListAsync();
 
-            return sightings.Select(sightings => sightings.Species.ToString()).Distinct();
+            return sightings.Select(sightings => sightings.Species).Distinct();
         }
     }
 }
