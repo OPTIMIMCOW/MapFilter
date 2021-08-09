@@ -8,6 +8,7 @@ using WhaleSpotting.Models.ResponseModels;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using WhaleSpotting.Constants;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Controllers
 {
@@ -74,6 +75,12 @@ namespace WhaleSpotting.Controllers
         {
             var sighting = await _sightings.DeleteSighting(id);
             return sighting == null ? NotFound() : sighting;
+        }
+
+        [HttpGet("localspecies")]
+        public async Task<IEnumerable<Species?>> GetSpeciesByCoordinates([FromQuery] double latitude, double longitude)
+        {
+            return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
         }
     }
 }
