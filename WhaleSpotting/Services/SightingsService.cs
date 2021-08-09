@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
-using WhaleSpotting.Models.Enums;
 using System;
 using WhaleSpotting.Models.ResponseModels;
 
@@ -29,6 +28,7 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> GetSightings()
         {
             var sightings = await _context.Sightings
+                .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();

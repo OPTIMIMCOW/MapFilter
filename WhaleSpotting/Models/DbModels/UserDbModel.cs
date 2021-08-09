@@ -10,7 +10,6 @@ namespace WhaleSpotting.Models.DbModels
     [Table("Users")]
     public class UserDbModel : IdentityUser
     {
-        //[PersonalData]
-        public ICollection<SightingDbModel> Sightings { get; set; } = new List<SightingDbModel>();
+        public ICollection<SightingDbModel> Sightings { get; set; }
     }
 }

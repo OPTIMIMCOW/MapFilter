@@ -20,7 +20,6 @@ namespace WhaleSpotting.Models.DbModels
         public OrcaType? OrcaType { get; set; }
         public string OrcaPod { get; set; }
         public bool Confirmed { get; set; }
-        public int UserId { get; set; }
         public UserDbModel User {get; set; }
     }
 }

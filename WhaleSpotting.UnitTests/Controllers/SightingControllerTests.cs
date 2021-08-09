@@ -73,7 +73,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -139,7 +139,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Models.DbModels;
@@ -39,6 +40,34 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetSightings_Called_ReturnsSightingsWithUser()
+        {
+            // Arrange
+            var user = new UserDbModel
+            {   
+                NormalizedEmail = "test@example.com"                
+            };
+            var whaleSighting = new SightingDbModel
+            {
+                Quantity = 5,
+                Description = "Whales at sea",
+                SightedAt = DateTime.Now,
+                User = user
+            };
+
+            await Context.Sightings.AddAsync(whaleSighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetSightings();
+
+            // Assert
+            var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
+            sighting.UserId.Should().Be(user.Id);
+            sighting.Username.Should().Be(user.NormalizedEmail);
         }
 
         [Fact]
