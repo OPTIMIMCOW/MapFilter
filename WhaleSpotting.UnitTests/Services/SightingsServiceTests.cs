@@ -58,8 +58,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Latitude = 48.6213,
                 Longitude = -123.2828,
                 Description = "Sighted near lighthouse",
-                SightedAt = System.DateTime.Now,
-                CreatedAt = System.DateTime.Now,
+                SightedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
                 OrcaType = "unknown",
                 OrcaPod = "j"
             };
@@ -79,7 +79,6 @@ namespace WhaleSpotting.UnitTests.Services
             whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
         }
     
-
         [Fact]
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
         {

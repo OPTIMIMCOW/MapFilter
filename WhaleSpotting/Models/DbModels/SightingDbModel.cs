@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
-using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.DbModels

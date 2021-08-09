@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
-using WhaleSpotting.Models.Enums;
 using System;
 using WhaleSpotting.Models.ResponseModels;
 
@@ -39,22 +38,19 @@ namespace WhaleSpotting.Services
 
         public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
         {
-            var newSightingIds =
-                sightingsToAdd.Select(s => s.ApiId).Distinct().ToArray();
-            var sightingsInDb =
-                _context
-                    .Sightings
-                    .Where(s => newSightingIds.Contains(s.ApiId))
-                    .Select(s => s.ApiId)
-                    .ToArray();
-            var sightingsNotInDb =
-                sightingsToAdd.Where(s => !sightingsInDb.Contains(s.ApiId));
-            sightingsNotInDb
-                .ToList();
-      
-            _context.Sightings.AddRange(sightingsNotInDb.ToArray());
+            var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct();
+           
+            var sightingsInDbIds = _context.Sightings
+                                   .Where(s => newSightingIds.Contains(s.ApiId))
+                                   .Select(s => s.ApiId);
+           
+            var sightingsNotInDb = sightingsToAdd
+                                   .Where(s => !sightingsInDbIds.Contains(s.ApiId))
+                                   .ToList();
+           
+            _context.Sightings.AddRange(sightingsNotInDb);
             _context.SaveChanges();
-
+           
             return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
