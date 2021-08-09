@@ -10,8 +10,8 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    [Migration("20210804101051_editedSightingsDbModel")]
-    partial class editedSightingsDbModel
+    [Migration("20210803110046_UpdateForIdentityRoles")]
+    partial class UpdateForIdentityRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,12 +201,10 @@ namespace WhaleSpotting.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
@@ -243,12 +241,10 @@ namespace WhaleSpotting.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
@@ -264,9 +260,6 @@ namespace WhaleSpotting.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ApiId")
-                        .HasColumnType("text");
 
                     b.Property<bool>("Confirmed")
                         .HasColumnType("boolean");

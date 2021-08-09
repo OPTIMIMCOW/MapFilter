@@ -2,15 +2,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WhaleSpotting.Controllers;
 using WhaleSpotting.Models.DbModels;
-
 
 namespace WhaleSpotting
 {
     public class Program
     {
-        public static async System.Threading.Tasks.Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             

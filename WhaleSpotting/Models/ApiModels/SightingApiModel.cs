@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
@@ -86,7 +85,8 @@ namespace WhaleSpotting.Models.ApiModels
                 SightedAt = SightedAt,
                 CreatedAt = CreatedAt,
                 OrcaType = orcaType,
-                OrcaPod = OrcaPod
+                OrcaPod = OrcaPod,
+                Confirmed = true
             };
         }
     }

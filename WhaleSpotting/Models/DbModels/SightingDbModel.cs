@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.RegularExpressions;
-using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.DbModels
@@ -10,7 +6,6 @@ namespace WhaleSpotting.Models.DbModels
     public class SightingDbModel
     {
         public int Id { get; set; }
-
         public string ApiId { get; set; }
         public Species? Species { get; set; }
         public int? Quantity { get; set; }
@@ -24,10 +19,8 @@ namespace WhaleSpotting.Models.DbModels
         public OrcaType? OrcaType { get; set; }
         public string OrcaPod { get; set; }
         public bool Confirmed { get; set; }
-
-        public SightingDbModel ()
-        {
-
-        }
      }
+
+    // TODO - Add UserDbModel
+    //public UserDbModel User {get; set; }
 }
