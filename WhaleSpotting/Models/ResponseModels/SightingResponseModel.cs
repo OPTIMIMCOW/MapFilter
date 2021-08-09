@@ -47,14 +47,6 @@ namespace WhaleSpotting.Models.ResponseModels
             Username = "Whale Museum";
         }
 
-        public SightingResponseModel(bool confirmed)
-        {
-            Confirmed = confirmed;
-            //TODO - Use real UserId and Username
-            UserId = 4;
-            Username = "FakeUser";
-        }
-
         public SightingResponseModel(SightingDbModel sighting)
         {
             Id = sighting.Id;
