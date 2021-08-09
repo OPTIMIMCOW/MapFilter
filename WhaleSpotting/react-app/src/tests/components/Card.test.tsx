@@ -1,12 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Card from "../../components/Card";
-import SightingApiModel from "../../api/SightingApiModel";
+import { SightingApiModel } from "../../api/models/SightingApiModel";
 import userEvent from "@testing-library/user-event";
 
 const exampleConfirmed: SightingApiModel = {
     id: 1,
-    sightedAt: new Date(),
+    sightedAt: new Date().toDateString(),
     species: "orca",
     quantity: 3,
     location: "Sea",
@@ -22,7 +22,7 @@ const exampleConfirmed: SightingApiModel = {
 
 const exampleUnconfirmed: SightingApiModel = {
     id: 2,
-    sightedAt: new Date(),
+    sightedAt: new Date().toDateString(),
     species: "orca",
     quantity: 3,
     location: "Sea",
