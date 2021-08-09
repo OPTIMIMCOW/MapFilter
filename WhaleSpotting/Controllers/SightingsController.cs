@@ -41,6 +41,7 @@ namespace WhaleSpotting.Controllers
             }
         }
 
+        //TODO add admin role
         [Authorize]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
@@ -49,7 +50,8 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
 
-        //[Authorize]
+        //TODO add admin role
+        [Authorize]
         [HttpGet("pending")]
         public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
         {

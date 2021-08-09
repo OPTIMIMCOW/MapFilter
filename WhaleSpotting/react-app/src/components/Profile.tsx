@@ -11,6 +11,8 @@ import { fetchPendingSightings } from "../api/apiClient";
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
     const [data, setData] = useState<SightingApiModel[]>([]);
+    //TODO get page from nav component state
+    const pageNumber = 1;
 
     const orca: SightingApiModel = {
         id: 1,
@@ -46,7 +48,7 @@ export function Profile(): JSX.Element {
 
     useEffect(() => {
         if (feedToggle == "Approvals") {
-            fetchPendingSightings()
+            fetchPendingSightings(pageNumber)
                 .then(data => setData(data));
         }
         else {
