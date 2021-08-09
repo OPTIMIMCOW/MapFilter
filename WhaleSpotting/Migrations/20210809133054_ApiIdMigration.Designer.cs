@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhaleSpotting.Models.DbModels;
@@ -9,9 +10,10 @@ using WhaleSpotting.Models.DbModels;
 namespace WhaleSpotting.Migrations
 {
     [DbContext(typeof(WhaleSpottingContext))]
-    partial class WhaleSpottingContextModelSnapshot : ModelSnapshot
+    [Migration("20210809133054_ApiIdMigration")]
+    partial class ApiIdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,12 +300,7 @@ namespace WhaleSpotting.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Sightings");
                 });
@@ -421,20 +418,6 @@ namespace WhaleSpotting.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WhaleSpotting.Models.DbModels.SightingDbModel", b =>
-                {
-                    b.HasOne("WhaleSpotting.Models.DbModels.UserDbModel", "User")
-                        .WithMany("Sightings")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WhaleSpotting.Models.DbModels.UserDbModel", b =>
-                {
-                    b.Navigation("Sightings");
                 });
 #pragma warning restore 612, 618
         }

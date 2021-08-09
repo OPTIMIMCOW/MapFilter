@@ -6,5 +6,6 @@
         Offshore,
         SouthernResident,
         Transient,
+        Unknown
     }
 }

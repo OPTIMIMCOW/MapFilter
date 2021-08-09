@@ -73,7 +73,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -139,7 +139,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -191,7 +191,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -265,7 +265,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
+                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -294,6 +294,26 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             // Assert
             result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsListOfSpecies()
+        {
+            // Arrange
+            var lat = 2.00;
+            var lon = 2.00;
+
+            var serviceResponse = new List<Species?>() { Species.AtlanticWhiteSidedDolphin };
+
+            A.CallTo(() => _sightings.GetSpeciesByCoordinates(lat, lon))
+                .Returns(serviceResponse);
+
+            // Act
+            var controllerResponse = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            controllerResponse.Should().BeOfType<List<Species?>>();
+            controllerResponse.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
     }
 }

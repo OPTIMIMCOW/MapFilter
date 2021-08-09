@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhaleSpotting.Models.ApiModels;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
@@ -40,6 +41,68 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
+        {
+            // Arrange
+            var sightingToAdd = new List<SightingDbModel>();
+            var whaleSighting = new SightingApiModel
+            {
+                Species = "orca",
+                Quantity = "50",
+                Location = "Southend",
+                Latitude = 48.6213,
+                Longitude = -123.2828,
+                Description = "Sighted near lighthouse",
+                SightedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                OrcaType = "unknown",
+                OrcaPod = "j"
+            };
+            
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+            sightingToAdd.Add(whaleSighting.ToDbModel());
+
+            // Act
+            var result = _underTest.CreateSightings(sightingToAdd);
+
+            // Assert
+            result.Should().BeOfType<List<SightingResponseModel>>();
+            result.Should().HaveCount(2);
+
+            var whaleSightingsDbModels = Context.Sightings.Where(s => s.Description == whaleSighting.Description).ToList();
+            whaleSightingsDbModels.Should().HaveCount(2);
+            whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
+        }
+    
+        [Fact]
+        public async Task GetSightings_Called_ReturnsSightingsWithUser()
+        {
+            // Arrange
+            var user = new UserDbModel
+            {   
+                NormalizedEmail = "test@example.com"                
+            };
+            var whaleSighting = new SightingDbModel
+            {
+                Quantity = 5,
+                Description = "Whales at sea",
+                SightedAt = DateTime.Now,
+                User = user
+            };
+
+            await Context.Sightings.AddAsync(whaleSighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetSightings();
+
+            // Assert
+            var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
+            sighting.UserId.Should().Be(user.Id);
+            sighting.Username.Should().Be(user.NormalizedEmail);
         }
 
         [Fact]
@@ -464,6 +527,71 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             nullResult.Should().Be(null);
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithValidLatLong_ReturnsListOfStrings()
+        {
+            // Arrange
+            var lat = 2.00;
+            var lon = 2.00;
+
+            var sighting = new SightingDbModel
+            {
+                Id = 1,
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = lon,
+                Latitude = lat,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = true,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.Should().Contain(Species.AtlanticWhiteSidedDolphin);
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithValidLatLong_ReturnsEmptyList()
+        {
+            // Arrange
+            var lat = 2.00;
+            var lon = 2.00;
+
+            var sighting = new SightingDbModel
+            {
+                Id = 1,
+                Species = Species.AtlanticWhiteSidedDolphin,
+                Quantity = 2,
+                Description = "was nice",
+                Longitude = 100,
+                Latitude = 20,
+                Location = "atlantic ocean",
+                SightedAt = DateTime.Now,
+                OrcaType = null,
+                OrcaPod = "",
+                Confirmed = false,
+            };
+
+            await Context.Sightings.AddAsync(sighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            result.Should().HaveCount(0);
         }
     }
 }

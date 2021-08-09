@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
 using System;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Services
 {
@@ -17,6 +18,8 @@ namespace WhaleSpotting.Services
         Task<SightingResponseModel> ConfirmSighting(int id);
         Task<List<SightingResponseModel>> GetNotConfirmedSightings();
         Task<SightingResponseModel> DeleteSighting(int id);
+        List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
+        Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
     }
 
     public class SightingsService : ISightingsService
@@ -31,6 +34,7 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> GetSightings()
         {
             var sightings = await _context.Sightings
+                .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
@@ -51,6 +55,25 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings;
+        }
+
+        public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
+        {
+            var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct().ToList();
+
+            var sightingsInDbIds = _context.Sightings
+                .Where(s => newSightingIds.Contains(s.ApiId))
+                .Select(s => s.ApiId)
+                .ToList();
+
+            var sightingsNotInDb = sightingsToAdd
+                .Where(s => !sightingsInDbIds.Contains(s.ApiId))
+                .ToList();
+
+            _context.Sightings.AddRange(sightingsNotInDb);
+            _context.SaveChanges();
+
+            return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
         public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
@@ -124,6 +147,24 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
+        }
+
+        public async Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude)
+        {
+            var fiftyKmInCoords = 0.45;
+            var upperLatitude = latitude + fiftyKmInCoords;
+            var lowerLatitude = latitude - fiftyKmInCoords;
+
+            var upperLongitude = longitude + fiftyKmInCoords;
+            var lowerLongitude = longitude - fiftyKmInCoords;
+
+            var sightings = await _context.Sightings
+                .Where(s => s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
+                .Where(s => s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
+                .Where(s => s.Confirmed)
+                .ToListAsync();
+
+            return sightings.Select(sightings => sightings.Species).Distinct();
         }
     }
 }
