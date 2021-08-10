@@ -69,7 +69,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     }
 
     async function fetchSpecies(): Promise<Array<string> | void> {
-        await fetch(`https://localhost:5001/api/sightings/LocalSpecies?longitude=${chosen!.lon}&latitude=${chosen!.lat}`)
+        await fetch(`api/sightings/LocalSpecies?longitude=${chosen!.lon}&latitude=${chosen!.lat}`)
             .then(response => response.json())
             .then(response => setSpeciesData(response));
     }
