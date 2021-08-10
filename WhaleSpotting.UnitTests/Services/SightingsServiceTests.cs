@@ -78,7 +78,7 @@ namespace WhaleSpotting.UnitTests.Services
                 OrcaType = "unknown",
                 OrcaPod = "j"
             };
-            
+
             sightingToAdd.Add(whaleSighting.ToDbModel());
             sightingToAdd.Add(whaleSighting.ToDbModel());
 
@@ -93,7 +93,7 @@ namespace WhaleSpotting.UnitTests.Services
             whaleSightingsDbModels.Should().HaveCount(2);
             whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
         }
-    
+
         [Fact]
         public async Task GetSightings_Called_ReturnsSightingsWithUser()
         {
@@ -101,8 +101,8 @@ namespace WhaleSpotting.UnitTests.Services
             var pageFilter = new PageFilter();
 
             var user = new UserDbModel
-            {   
-                NormalizedEmail = "test@example.com"                
+            {
+                NormalizedEmail = "test@example.com"
             };
             var whaleSighting = new SightingDbModel
             {
@@ -128,6 +128,10 @@ namespace WhaleSpotting.UnitTests.Services
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "1"
+            };
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -138,16 +142,15 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             // Act
-            var result = _underTest.CreateSighting(newSighting);
+            var result = _underTest.CreateSighting(newSighting, currentUser);
 
             // Assert
             result.Should().BeOfType<SightingResponseModel>();
-            result.Id.Should().Be(1);
+            result.Id.ToString().Should().Be(currentUser.Id);
             var sightingDbModel = Context.Sightings.Single();
             sightingDbModel.Species.Should().Be(newSighting.Species);
             sightingDbModel.OrcaType.Should().Be(newSighting.OrcaType);
@@ -157,6 +160,10 @@ namespace WhaleSpotting.UnitTests.Services
         public void CreateSighting_CalledWithInvalidSightingRequestModel_ThrowsAnExceptionDoesNotAddToDb()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "1"
+            };
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -167,12 +174,11 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             // Act
-            Action act = () => _underTest.CreateSighting(newSighting);
+            Action act = () => _underTest.CreateSighting(newSighting, currentUser);
 
             // Assert
             var exception = act.Should().Throw<Exception>().Subject;
@@ -197,7 +203,7 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = ""
-            }); 
+            });
             Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
@@ -208,7 +214,7 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "" 
+                OrcaPod = ""
             });
             Context.Add(new SightingDbModel
             {

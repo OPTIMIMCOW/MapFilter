@@ -4,6 +4,8 @@ import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
 import { Species, OrcaType } from "../apiModels/ApiEnums";
+import authService from "./api-authorization/AuthorizeService";
+import { createSighting } from "../api/apiClient";
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
@@ -32,13 +34,7 @@ export default function ReportSighting(): JSX.Element {
         };
 
         let isError = false;
-        const response = await fetch("api/sightings/create", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(sighting),
-        })
+        const response = await createSighting(sighting)
             .then(r => {
                 if (r.status === 400) {
                     isError = true;
