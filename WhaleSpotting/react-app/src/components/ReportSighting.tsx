@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
-import { Species, OrcaType } from "../apiModels/ApiEnums";
+import { Species, OrcaType } from "../api/ApiEnums";
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
