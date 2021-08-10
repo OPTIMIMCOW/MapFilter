@@ -25,6 +25,7 @@ namespace WhaleSpotting.Controllers
         {
             var page = 1;
             var hasResults = true;
+            var sightingsToAdd = new List<SightingDbModel>();
             var client = new RestClient("https://hotline.whalemuseum.org/");
 
             while (hasResults)
@@ -34,13 +35,8 @@ namespace WhaleSpotting.Controllers
 
                 if (apiSightings.Any())
                 {
-                    var sightingsToAdd = apiSightings.Select(apiSighting => apiSighting.ToDbModel()).ToList();
+                    sightingsToAdd.AddRange(apiSightings.Select(apiSighting => apiSighting.ToDbModel()).ToList());
                     page++;
-
-                    if (sightingsToAdd.Any())
-                    {
-                        await _sightings.CreateSightingsAsync(sightingsToAdd);
-                    }
                 }
                 else
                 {
@@ -48,6 +44,11 @@ namespace WhaleSpotting.Controllers
                 }
             }
 
+            if (sightingsToAdd.Any())
+            {
+                _sightings.CreateSightings(sightingsToAdd);
+            }
+            
             return Ok();
         }
     }
