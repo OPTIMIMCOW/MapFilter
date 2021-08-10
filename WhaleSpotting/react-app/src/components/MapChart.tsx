@@ -9,6 +9,7 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import { Chosen } from "./Map";
+import { fetchAllSightings } from "../api/apiClient";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -21,7 +22,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
 
     useEffect(() => {
-        populateSightingData()
+        fetchAllSightings()
             .then(data => setData(data));
     }, []);
 
@@ -59,13 +60,13 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     );
 }
 
-async function populateSightingData(): Promise<SightingApiModel[]> {
-    const response = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000");
-    const response2 = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000&page=2");
+//async function populateSightingData(): Promise<SightingApiModel[]> {
+//    const response = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000");
+//    const response2 = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000&page=2");
 
-    const json = await response.json();
-    const json2 = await response2.json();
+//    const json = await response.json();
+//    const json2 = await response2.json();
 
 
-    return json.concat(json2);
-}
+//    return json.concat(json2);
+//}
