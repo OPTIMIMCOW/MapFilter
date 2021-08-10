@@ -11,8 +11,7 @@ test("check species enum works correctly", () => {
         location: "atlantic ocean",
         sightedAt: new Date("July 30, 2021 16:00:00"),
         orcaType: null,
-        orcaPod: "",
-        userId: 5,
+        orcaPod: ""
     };
 
     expect(test.species).toBe(1);
@@ -28,8 +27,7 @@ test("check orcaType nullable enum works correctly", () => {
         location: "atlantic ocean",
         sightedAt: new Date("July 30, 2021 16:00:00"),
         orcaType: null,
-        orcaPod: "",
-        userId: 5,
+        orcaPod: ""
     };
 
     expect(test.orcaType).toBe(null);

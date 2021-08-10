@@ -32,7 +32,7 @@ export default function ReportSighting(): JSX.Element {
         };
 
         let isError = false;
-        const response = await fetch("https://localhost:5001/sightings/create", {
+        const response = await fetch("api/sightings/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
