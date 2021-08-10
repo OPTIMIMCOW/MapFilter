@@ -5,7 +5,8 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { Button, Style } from "../../components/Button";
 import {SightingApiModel} from "../../api/models/SightingApiModel";
-import { fetchPendingSightings } from "../../api/apiClient";
+import { UserApiModel } from "../../api/models/UserApiModel";
+import { fetchPendingSightings, fetchCurrentUser } from "../../api/apiClient";
 
 test("renders the Profile information", () => {
     render(
@@ -127,4 +128,27 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
     );
     const approvalsButton = screen.getByTestId("approval-toggle");
     expect(approvalsButton).toHaveAttribute("hidden");
+});
+
+test("When profile renders, it calls API and gets current user", () => {
+    const user: UserApiModel = {
+        username: "test"
+    }
+    
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        fetchCurrentUser: jest.fn(async () : Promise<UserApiModel> => {
+            return Promise.resolve(user);
+        })
+    }));
+
+    render(
+        <Router>
+            <Profile />
+        </Router>
+    );
+    
+    setTimeout(()=>{
+        expect(fetchCurrentUser).toBeCalled();
+    }, 100);
 });
