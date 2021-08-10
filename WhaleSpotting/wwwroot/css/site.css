@@ -133,7 +133,66 @@ body {
     max-width:1024px;
     justify-self:center;
     margin:auto;
-    padding: 0 20px;
+}
+.form-container {
+    margin: 0 20px;
+    padding-top: 1px;
+}
+
+.text-title {
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+.text-subtitle {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.form-group {
+    font-size: 1rem;
+    padding: 3px 0;
+}
+
+.label-email {
+    margin-right:39px;
+}
+
+.label-password {
+    margin-right: 10px;
+}
+
+.register-label-email {
+    margin-right: 100px;
+}
+
+.register-label-password {
+    margin-right: 71px;
+}
+
+.register-label-confirm-password {
+    margin-right: 10px;
+}
+
+.text-danger {
+    font-size: 0.75rem;
+    color:red;
+}
+
+.btn-primary {
+    background-color: #004785;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    font-size: 1rem;
+    margin-top:5px;
+}
+
+.text-register {
+    font-size: 1rem;
+    color: #004785;
 }
 
 .footer {
