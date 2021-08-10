@@ -1,4 +1,4 @@
-import { Species, OrcaType } from "../../apiModels/ApiEnums";
+import { Species, OrcaType } from "../ApiEnums";
 
 export interface CreateSightingApiModel {
     species: Species;

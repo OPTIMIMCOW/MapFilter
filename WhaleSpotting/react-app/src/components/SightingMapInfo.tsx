@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import WeatherApiModel from "../api/models/WeatherApiModel";
 import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
-import { Species } from "../apiModels/ApiEnums";
-import { WhaleImageDictionary, WhaleVisualTextDictionary } from "../apiModels/ApiLookups";
+import { Species } from "../api/ApiEnums";
+import { WhaleImageDictionary, WhaleVisualTextDictionary } from "../api/ApiLookups";
 
 interface SightingMapInfoProps {
     chosen: Chosen | undefined;
