@@ -102,7 +102,7 @@ namespace WhaleSpotting.UnitTests.Services
 
             var user = new UserDbModel
             {   
-                NormalizedEmail = "test@example.com"                
+                UserName = "test@example.com"                
             };
             var whaleSighting = new SightingDbModel
             {
@@ -120,8 +120,7 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
-            sighting.UserId.Should().Be(user.Id);
-            sighting.Username.Should().Be(user.NormalizedEmail);
+            sighting.Username.Should().Be(user.UserName);
         }
 
         [Fact]

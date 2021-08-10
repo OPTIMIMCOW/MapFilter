@@ -29,6 +29,7 @@ export function Profile(): JSX.Element {
     }
     //eslint-disable-next-line
     console.log(currentUser);
+
     async function checkifAdmin() {
         setIsUserAdmin(await checkAdmin());
     }
@@ -56,7 +57,6 @@ export function Profile(): JSX.Element {
         orcaType: "Whale",
         orcaPod: "k",
         confirmed: false,
-        userId: 2,
         username: "FakeUser1"
     };
 
@@ -72,7 +72,6 @@ export function Profile(): JSX.Element {
         orcaType: "Orca",
         orcaPod: "",
         confirmed: true,
-        userId: 2,
         username: "FakeUserConfirmed"
     };
 
@@ -101,9 +100,9 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div>
-                        <h1 className="heading">{currentUser?.username.split("@")[0]}</h1>
+                        <h1 className="heading">{currentUser?.username}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text"> {currentUser?.sightings.length}</p>
+                            <p className="feature-text"> 15</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
                         </div>

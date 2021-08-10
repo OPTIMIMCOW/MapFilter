@@ -10,6 +10,5 @@ export interface SightingApiModel {
     orcaType: string;
     orcaPod: string;
     confirmed: boolean;
-    userId: number;
     username: string;
 }

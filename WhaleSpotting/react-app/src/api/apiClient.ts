@@ -29,7 +29,6 @@ export async function removeAdmin() {
     });
 }
 
-
 export async function fetchCurrentUser(): Promise<UserApiModel> {
     const headers = await getHeaders();
     return await fetch("api/user/GetCurrentUser", {

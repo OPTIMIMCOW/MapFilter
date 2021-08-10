@@ -28,10 +28,6 @@
 
 .little-text{
     margin: 0;
-
-    &.joined{
-        margin-top:-7px;
-    }
     
     &.reported{
         margin-left: 10px;
@@ -44,7 +40,7 @@
 }
 
 .heading{
-    font-size: $titleFontSize;
+    font-size: 0.8rem;
     margin:0;
 }
 
@@ -100,7 +96,7 @@
     }
 
     .heading {
-        font-size: $mobileTitleFontSize;
+        font-size: 3vw;
     }
 
     .outer-container{
