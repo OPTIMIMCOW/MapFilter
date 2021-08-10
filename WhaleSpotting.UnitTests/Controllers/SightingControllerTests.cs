@@ -59,8 +59,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Id = "1",
                 NormalizedEmail = "Test"
             };
-            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
-                .Returns(currentUser);
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -95,6 +93,9 @@ namespace WhaleSpotting.UnitTests.Controllers
             A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Returns(sightingResponse);
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
             var response = await _underTest.CreateSighting(newSighting);
 
@@ -105,13 +106,14 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
+        public async void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
         {
             // Arrange
             var currentUser = new UserDbModel
             {
                 Id = "5"
             };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -131,8 +133,11 @@ namespace WhaleSpotting.UnitTests.Controllers
             A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Throws(new Exception(exceptionMessage));
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
             var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
