@@ -15,6 +15,8 @@ export function Profile(): JSX.Element {
     const [page, setPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
+    //TODO - get username from user api model
+    const username = "username";
     //TODO get page from nav component state
     const pageNumber = 1;
 
@@ -101,7 +103,7 @@ export function Profile(): JSX.Element {
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
                         </div>
-                        <img className="profile-image" alt="Profile Image" src="https://picsum.photos/id/237/200" />
+                        <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${username}?set=any&bgset=any`} />
                     </div>
                     <div className="button-container">
                         <Button
