@@ -8,20 +8,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - whale-spotting</title>
-    <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/Identity/css/site.css" />
-    <link rel="stylesheet" href="~/css/site.css" /
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" href="~/">Whale Spotting</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+    <header class="header">
+        <nav class="nav-bar ">
+            <div class="fixed-nav-links">
+                    <a class="navbar-brand" href="~/">Home</a>
                     @{
                         var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
                     }
@@ -35,19 +28,30 @@
                             "usually located at '/Pages/_LoginPartial' or at '/Views/Shared/_LoginPartial' to work. Based on your configuration " +
                             $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
                     }
-                </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
+    <div class="body-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <footer class="footer border-top text-muted">
-        <div class="container">
-            &copy; 2021 - whale-spotting - <a asp-area="" asp-page="Privacy">Privacy</a>
+    <footer class="footer">
+        <div class="footer-logo-container">
+            <a class="link whale-link" href="https://whalemuseum.org/">
+                <img class="logo"
+                     data-testid="whale-museum-logo"
+                     src="https://cdn.shopify.com/s/files/1/0249/1083/t/3/assets/wm-logo-sm.png"
+                     alt="The Whale Museum logo" />
+            </a>
+            <a class="link" href="https://www.techswitch.co.uk/">
+                Made By:
+                <img class="logo techswitch-logo"
+                     data-testid="techswitch-logo"
+                     src="https://www.techswitch.co.uk/images/logo.svg"
+                     alt="TechSwitch logo" />
+            </a>
         </div>
     </footer>
     <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
