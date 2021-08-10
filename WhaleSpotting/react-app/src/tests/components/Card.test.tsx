@@ -16,7 +16,6 @@ const exampleConfirmed: SightingApiModel = {
     orcaType: "Orca",
     orcaPod: "",
     confirmed: true,
-    userId: 2,
     username: "FakeUserConfirmed"
 };
 
@@ -32,7 +31,6 @@ const exampleUnconfirmed: SightingApiModel = {
     orcaType: "Orca",
     orcaPod: "",
     confirmed: false,
-    userId: 2,
     username: "FakeUserNotConfirmed"
 };
 

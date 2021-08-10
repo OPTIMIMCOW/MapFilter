@@ -99,7 +99,7 @@ export function Profile(): JSX.Element {
         <div className="body">
             <div className="profile-pane">
                 <div className="outer-container">
-                    <div>
+                    <div className="inner-container">
                         <h1 className="heading">{currentUser?.username}</h1>
                         <div className="trophy-container">
                             <p className="feature-text"> 15</p>
@@ -114,8 +114,8 @@ export function Profile(): JSX.Element {
                             text="Sightings"
                             onClick={() => setFeedToggle("Sightings")}
                         />
-                        <Button 
-                            style={Style.primary} 
+                        <Button
+                            style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
