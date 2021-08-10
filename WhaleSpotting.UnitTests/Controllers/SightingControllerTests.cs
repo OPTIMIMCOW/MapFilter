@@ -1,9 +1,11 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
+using IdentityServer4.EntityFramework.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
 using WhaleSpotting.Filters;
@@ -49,14 +51,16 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
+        public async void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
         {
             // Arrange
             var currentUser = new UserDbModel
             {
                 Id = "1",
+                NormalizedEmail = "Test"
             };
-            A.CallTo(() => _userManager.GetUserAsync(User));
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -83,8 +87,8 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "0",
-                Username = "FakeUser",
+                UserId = currentUser.Id,
+                Username = currentUser.NormalizedEmail,
                 Confirmed = false,
             };
 
@@ -92,7 +96,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 .Returns(sightingResponse);
 
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
             var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
