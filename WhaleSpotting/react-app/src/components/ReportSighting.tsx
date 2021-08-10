@@ -5,6 +5,7 @@ import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
 import { Species, OrcaType } from "../apiModels/ApiEnums";
 import authService from "./api-authorization/AuthorizeService";
+import { createSighting } from "../api/apiClient";
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
@@ -33,17 +34,7 @@ export default function ReportSighting(): JSX.Element {
         };
 
         let isError = false;
-
-        const token = await authService.getAccessToken();
-        const response = await fetch("sightings/create", {
-            method: "POST",
-            headers: !token ? {}
-                : {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-            body: JSON.stringify(sighting),
-        })
+        const response = await createSighting(sighting)
             .then(r => {
                 if (r.status === 400) {
                     isError = true;
