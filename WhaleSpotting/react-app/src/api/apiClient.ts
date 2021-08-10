@@ -3,7 +3,7 @@ import authService from "../components/api-authorization/AuthorizeService";
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
     const headers = await getHeaders();
-    return await fetch(`https://localhost:5001/sightings/pending?page=${pageNumber}&pageSize=10`, {
+    return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, {
         headers: headers }
     )
         .then(r => r.json());
@@ -11,14 +11,14 @@ export async function fetchPendingSightings(pageNumber: number): Promise<Sightin
 
 export async function makeAdmin() {
     const headers = await getHeaders();
-    const response = await fetch("User/MakeAdmin", {
+    const response = await fetch("api/User/MakeAdmin", {
         headers: headers
     });
 }
 
 export async function checkAdmin() {
     const headers = await getHeaders();
-    const response = await fetch("User/CheckAdmin", {
+    const response = await fetch("api/User/CheckAdmin", {
         headers: headers
     });
 
@@ -28,7 +28,7 @@ export async function checkAdmin() {
 
 export async function removeAdmin() {
     const headers = await getHeaders();
-    const response = await fetch("User/RemoveAdmin", {
+    const response = await fetch("api/User/RemoveAdmin", {
         headers: headers
     });
 }
