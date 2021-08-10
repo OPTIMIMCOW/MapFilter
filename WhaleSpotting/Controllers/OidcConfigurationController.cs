@@ -12,7 +12,7 @@ namespace WhaleSpotting.Controllers
 
         public IClientRequestParametersProvider ClientRequestParametersProvider { get; }
 
-        [HttpGet("api/_configuration/{clientId}")]
+        [HttpGet("/api/_configuration/{clientId}")]
         public IActionResult GetClientRequestParameters([FromRoute]string clientId)
         {
             var parameters = ClientRequestParametersProvider.GetClientParameters(HttpContext, clientId);

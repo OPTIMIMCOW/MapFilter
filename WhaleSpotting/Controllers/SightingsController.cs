@@ -44,7 +44,7 @@ namespace WhaleSpotting.Controllers
             try
             {
                 var newSighting = _sightings.CreateSighting(sightingRequestModel);
-                return Created($"/sighting/{newSighting.Id}", newSighting);
+                return Created($"api/sighting/{newSighting.Id}", newSighting);
             }
             catch (Exception e)
             {
