@@ -44,9 +44,9 @@ namespace WhaleSpotting.Controllers
 
     [Authorize]
     [HttpPost("create")]
-    public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
+    public async Task<IActionResult> CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
     {
-        var currentUser = _userManager.GetUserAsync(User).Result;
+        var currentUser = await _userManager.GetUserAsync(User);
         try
         {
             var newSighting = _sightings.CreateSighting(sightingRequestModel, currentUser);

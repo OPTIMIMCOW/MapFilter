@@ -128,6 +128,10 @@ namespace WhaleSpotting.UnitTests.Services
         public void CreateSighting_CalledWithSightingRequestModel_ReturnsSightingResponseModelAndAddsToDb()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = 1.ToString()
+            };
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -139,15 +143,15 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now,
                 OrcaType = null,
                 OrcaPod = "",
-                UserId = 5,
+                UserId = currentUser.Id
             };
 
             // Act
-            var result = _underTest.CreateSighting(newSighting);
+            var result = _underTest.CreateSighting(newSighting, currentUser);
 
             // Assert
             result.Should().BeOfType<SightingResponseModel>();
-            result.Id.Should().Be(1);
+            result.Id.ToString().Should().Be(currentUser.Id);
             var sightingDbModel = Context.Sightings.Single();
             sightingDbModel.Species.Should().Be(newSighting.Species);
             sightingDbModel.OrcaType.Should().Be(newSighting.OrcaType);
@@ -157,6 +161,10 @@ namespace WhaleSpotting.UnitTests.Services
         public void CreateSighting_CalledWithInvalidSightingRequestModel_ThrowsAnExceptionDoesNotAddToDb()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = 1.ToString()
+            };
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -168,11 +176,11 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = "",
-                UserId = 5,
+                UserId = currentUser.Id,
             };
 
             // Act
-            Action act = () => _underTest.CreateSighting(newSighting);
+            Action act = () => _underTest.CreateSighting(newSighting, currentUser);
 
             // Assert
             var exception = act.Should().Throw<Exception>().Subject;
