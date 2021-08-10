@@ -4,6 +4,7 @@ import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
 import { Species, OrcaType } from "../apiModels/ApiEnums";
+import authService from "./api-authorization/AuthorizeService";
 
 export default function ReportSighting(): JSX.Element {
     const [date, setDate] = useState<Date>(new Date());
@@ -32,11 +33,15 @@ export default function ReportSighting(): JSX.Element {
         };
 
         let isError = false;
-        const response = await fetch("https://localhost:5001/sightings/create", {
+
+        const token = await authService.getAccessToken();
+        const response = await fetch("sightings/create", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: !token ? {}
+                : {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
             body: JSON.stringify(sighting),
         })
             .then(r => {
