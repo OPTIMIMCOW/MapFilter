@@ -69,8 +69,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = currentUser.Id
+                OrcaPod = ""
             };
 
             var sightingResponse = new SightingResponseModel
@@ -125,8 +124,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = "5"
+                OrcaPod = ""
             };
 
             const string exceptionMessage = "Sighted At must be in the past";
@@ -296,7 +294,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 OrcaPod = "",
                 UserId = "5",
                 Username = "FakeUser",
-                Confirmed = true,
+                Confirmed = true
             };
 
             A.CallTo(() => _sightings.DeleteSighting(id))

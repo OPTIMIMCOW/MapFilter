@@ -142,8 +142,7 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = currentUser.Id
+                OrcaPod = ""
             };
 
             // Act
@@ -175,8 +174,7 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = currentUser.Id,
+                OrcaPod = ""
             };
 
             // Act
