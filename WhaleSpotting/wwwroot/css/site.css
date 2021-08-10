@@ -1,39 +1,60 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap%27');
 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    align-self: center;
+    color: white;
+    text-decoration: none;
+    float: left;
 }
 
 .header {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     background-color: #0072B5;
     display: flex;
-    justify-content: center;
+/*    justify-content: center;*/
     align-items: center;
     height: 60px;
+}
+
+.fixed-nav-links {
+    display:flex;
+    justify-self: flex-start;
+}
+
+.changing-nav-links {
+    justify-self: flex-end;
 }
 
 .text-container {
     width: 100%;
 }
 
-.navbar {
-    display: flex;
-    width: 80%;
+.nav-bar {
     max-width: 1024px;
-    flex-direction: row;
+    width: 100%;
     justify-content: space-between;
-    align-items: center;
+    display: flex;
+    margin:auto;
 }
 
-.navbar-nav {
+.list {
     list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    justify-self: center;
+}
+
+.nav-item {
+    align-self: center;
+    display: flex;
 }
 
 .nav-link {
@@ -43,7 +64,7 @@ a.navbar-brand {
     color: white;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 16px;
 }
 
     .nav-link:hover {
@@ -65,14 +86,7 @@ a.navbar-brand {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-    font-size: 14px;
     width: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
 }
 
 .container {
@@ -108,13 +122,23 @@ html {
 }
 
 body {
-    margin: 60px 0 60px 0;
+   margin: 60px 0 60px 0;
+  font-family: 'IBM Plex Sans', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+.body-container{
+    width:100%;
+    max-width:1024px;
+    justify-self:center;
+    margin:auto;
+    padding: 0 20px;
 }
 
 .footer {
     position: fixed;
     bottom: 0;
-    left: 0;
     background-color: #0072B5;
     display: flex;
     justify-content: center;
@@ -124,7 +148,7 @@ body {
 
 .footer-logo-container {
     max-width: 1024px;
-    width: 85%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
