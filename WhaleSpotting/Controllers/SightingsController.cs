@@ -13,7 +13,7 @@ using WhaleSpotting.Models.Enums;
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
@@ -44,7 +44,7 @@ namespace WhaleSpotting.Controllers
             try
             {
                 var newSighting = _sightings.CreateSighting(sightingRequestModel);
-                return Created($"/sighting/{newSighting.Id}", newSighting);
+                return Created($"api/sighting/{newSighting.Id}", newSighting);
             }
             catch (Exception e)
             {

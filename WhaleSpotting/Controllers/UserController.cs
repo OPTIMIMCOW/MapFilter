@@ -10,7 +10,7 @@ namespace WhaleSpotting.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("/api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
         private readonly SignInManager<UserDbModel> _signInManager;
