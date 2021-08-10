@@ -4,14 +4,19 @@ import "../styles/Buttons.scss";
 import React, { useState, useEffect } from "react";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
-import SightingApiModel from "../api/models/SightingApiModel";
+import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
+import { fetchPendingSightings } from "../api/apiClient";
 import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
 import authService from "./api-authorization/AuthorizeService";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
+    const [page, setPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [data, setData] = useState<SightingApiModel[]>([]);
+    //TODO get page from nav component state
+    const pageNumber = 1;
 
     useEffect(() => {
         checkifAdmin();
@@ -34,7 +39,7 @@ export function Profile(): JSX.Element {
 
     const orca: SightingApiModel = {
         id: 1,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "whale",
         quantity: 1,
         location: "Deep Ocean",
@@ -50,7 +55,7 @@ export function Profile(): JSX.Element {
 
     const orcaConfirmed: SightingApiModel = {
         id: 2,
-        sightedAt: new Date(),
+        sightedAt: new Date().toDateString(),
         species: "orca",
         quantity: 3,
         location: "Sea",
@@ -63,6 +68,26 @@ export function Profile(): JSX.Element {
         userId: 2,
         username: "FakeUserConfirmed"
     };
+
+    function nextPage() {
+        setPage(page + 1);
+    }
+
+    function previousPage() {
+        setPage(page - 1);
+    }
+
+    useEffect(() => {
+        if (feedToggle == "Approvals") {
+            fetchPendingSightings(pageNumber)
+                .then(data => setData(data));
+        }
+        else {
+            setData([orca, orcaConfirmed]);
+        }
+    }, [feedToggle]);
+
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     return (
         <div className="body">
@@ -82,9 +107,10 @@ export function Profile(): JSX.Element {
                         <Button
                             style={Style.primary}
                             text="Sightings"
-                            onClick={() => setFeedToggle("Sightings")} />
-                        <Button
-                            style={Style.primary}
+                            onClick={() => setFeedToggle("Sightings")}
+                        />
+                        <Button 
+                            style={Style.primary} 
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
@@ -108,13 +134,9 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h1 className="heading">Your {feedToggle}</h1>
                 <div className="card-holder">
-                    <Card sighting={orca} />
-                    <Card sighting={orca} />
-                    <Card sighting={orcaConfirmed} />
-                    <Card sighting={orcaConfirmed} />
-                    <Card sighting={orcaConfirmed} />
+                    {cards}
                 </div>
-                <PageNav />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
         </div>
     );

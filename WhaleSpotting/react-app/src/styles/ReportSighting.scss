@@ -28,7 +28,11 @@
         padding: 2% 5% 5% 5%;
     }
 
-    .input-box {
+    .response-message {
+        padding: 10px;
+    }
+
+    .input-box{
         margin: 3% 0;
         width: 46%;
         font-size: $bodyFontSize;
@@ -40,6 +44,7 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             border: 1px solid $primaryColour;
+            box-sizing:border-box;
 
 
             &:focus {
@@ -82,8 +87,8 @@
             width: 100%;
             font-size: $mobileBodyFontSize;
         }
-
-        .title {
+        
+        .title{
             font-size: $mobileTitleFontSize;
         }
 

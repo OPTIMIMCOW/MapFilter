@@ -8,6 +8,7 @@ using WhaleSpotting.Models.ResponseModels;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using WhaleSpotting.Constants;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Controllers
 {
@@ -36,18 +37,19 @@ namespace WhaleSpotting.Controllers
             return result.Any() ? result: NotFound();
         }
 
+        [Authorize]
         [HttpPost("create")]
         public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
             try
             {
                 var newSighting = _sightings.CreateSighting(sightingRequestModel);
-                return Created($"api/sighting/{newSighting.Id}", newSighting);
-                // TODO note the url parameter above is to be updated if a get sighting by id endpoint is created. 
+                return Created($"/sighting/{newSighting.Id}", newSighting);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                ModelState.AddModelError(nameof(SightingRequestModel.SightedAt), e.Message);
+                return ValidationProblem();
             }
         }
 
@@ -59,6 +61,7 @@ namespace WhaleSpotting.Controllers
             return sighting == null ? NotFound() : sighting;
         }
 
+        //TODO add admin role
         [Authorize]
         [HttpGet("pending")]
         public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
@@ -73,6 +76,12 @@ namespace WhaleSpotting.Controllers
         {
             var sighting = await _sightings.DeleteSighting(id);
             return sighting == null ? NotFound() : sighting;
+        }
+
+        [HttpGet("localspecies")]
+        public async Task<IEnumerable<Species?>> GetSpeciesByCoordinates([FromQuery] double latitude, double longitude)
+        {
+            return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
         }
     }
 }
