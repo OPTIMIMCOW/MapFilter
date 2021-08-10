@@ -34,8 +34,5 @@ namespace WhaleSpotting.Models.RequestModels
         public OrcaType? OrcaType { get; set; }
 
         public string OrcaPod { get; set; }
-
-        [Required(ErrorMessage = "UserId is required")]
-        public int UserId { get; set; }
     }
 }
