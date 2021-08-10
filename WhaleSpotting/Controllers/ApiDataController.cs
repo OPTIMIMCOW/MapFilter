@@ -10,7 +10,7 @@ using WhaleSpotting.Services;
 namespace WhaleSpotting.Controllers
 {
     [ApiController]
-    [Route("/getapidata")]
+    [Route("/api/getapidata")]
     public class ApiDataController : ControllerBase
     {
         private readonly ISightingsService _sightings;

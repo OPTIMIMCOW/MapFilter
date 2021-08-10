@@ -5,7 +5,7 @@ import PageNav from "../../components/PageNav";
 const voidFunction = () => null;
 
 test("Renders page nav", () => {
-    render(<PageNav nextPage={voidFunction} previousPage={voidFunction} />);
+    render(<PageNav nextPage={voidFunction} previousPage={voidFunction} page={1}/>);
     const pageNav = screen.getByTestId("page-nav");
     expect(pageNav).toBeInTheDocument();
 });
