@@ -5,12 +5,18 @@ import { Button, Style } from "./Button";
 import Card from "./Card";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
+import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
 
-    function orderFeedBy():void {
+    function orderFeedBy(): void {
+        
         //TODO "this needs to be implemented";
+    }
+    async function getSightings(pageNumber: number, pageSize: number) {
+        const sightings = await getConfirmedSightings({ "confirmed": true }, pageNumber, pageSize)
+        .then ()
     }
     
 
