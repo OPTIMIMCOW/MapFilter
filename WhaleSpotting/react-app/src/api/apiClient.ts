@@ -2,6 +2,11 @@
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 
+export async function fetchAllSightings(): Promise<SightingApiModel[]> {
+    return await fetch("api/sightings", await getGetSettings())
+        .then(r => r.json());
+}
+
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
     return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, await getGetSettings())
         .then(r => r.json());
