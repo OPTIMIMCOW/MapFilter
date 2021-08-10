@@ -19,7 +19,7 @@ namespace WhaleSpotting.Services
         Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter);
         Task<SightingResponseModel> ConfirmSighting(int id);
         Task<SightingResponseModel> DeleteSighting(int id);
-        List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
+        Task<List<SightingResponseModel>> CreateSightingsAsync(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
     }
 
@@ -62,7 +62,7 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
+        public async Task<List<SightingResponseModel>> CreateSightingsAsync(List<SightingDbModel> sightingsToAdd)
         {
             var newSightingIds = sightingsToAdd.Select(s => s.ApiId).Distinct().ToList();
 
@@ -75,8 +75,8 @@ namespace WhaleSpotting.Services
                 .Where(s => !sightingsInDbIds.Contains(s.ApiId))
                 .ToList();
 
-            _context.Sightings.AddRange(sightingsNotInDb);
-            _context.SaveChanges();
+            await _context.Sightings.AddRangeAsync(sightingsNotInDb);
+            await _context.SaveChangesAsync();
 
             return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }

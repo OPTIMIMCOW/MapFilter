@@ -61,7 +61,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
+        public async void CreateSightings_CalledWithSightingsApiModel_ReturnListSightingResponseModelAndAddsToDb()
         {
             // Arrange
             var sightingToAdd = new List<SightingDbModel>();
@@ -83,7 +83,7 @@ namespace WhaleSpotting.UnitTests.Services
             sightingToAdd.Add(whaleSighting.ToDbModel());
 
             // Act
-            var result = _underTest.CreateSightings(sightingToAdd);
+            var result = await _underTest.CreateSightingsAsync(sightingToAdd);
 
             // Assert
             result.Should().BeOfType<List<SightingResponseModel>>();
