@@ -6,25 +6,29 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchCurrentUser, fetchPendingSightings } from "../api/apiClient";
-import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
 import authService from "./api-authorization/AuthorizeService";
+import { UserApiModel } from "../api/models/UserApiModel";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
     const [page, setPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
-    //TODO - get username from user api model
-    const username = "username";
+    const [currentUser, setCurrentUser] = useState<UserApiModel>();
     //TODO get page from nav component state
     const pageNumber = 1;
 
     useEffect(() => {
         checkifAdmin();
-        const currentUser = fetchCurrentUser();
+        getUser();
     }, []);
 
+    async function getUser() {
+        setCurrentUser(await fetchCurrentUser());
+    }
+    //eslint-disable-next-line
+    console.log(currentUser);
     async function checkifAdmin() {
         setIsUserAdmin(await checkAdmin());
     }
@@ -97,14 +101,13 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div>
-                        <h1 className="heading">UserName</h1>
-                        <p className="joined little-text"> Joined: June 2004</p>
+                        <h1 className="heading">{currentUser?.username.split("@")[0]}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text"> 15</p>
+                            <p className="feature-text"> {currentUser?.sightings.length}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
                         </div>
-                        <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${username}?set=any&bgset=any`} />
+                        <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>
                     <div className="button-container">
                         <Button

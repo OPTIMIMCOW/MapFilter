@@ -32,9 +32,9 @@ export async function removeAdmin() {
 
 export async function fetchCurrentUser(): Promise<UserApiModel> {
     const headers = await getHeaders();
-    return await fetch(`api/user/GetCurrentUser`, {
+    return await fetch("api/user/GetCurrentUser", {
         headers: headers }
-        )
+    )
         .then(r => r.json());
 }
 
