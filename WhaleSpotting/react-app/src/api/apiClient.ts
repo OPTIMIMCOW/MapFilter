@@ -2,24 +2,20 @@
 import authService from "../components/api-authorization/AuthorizeService";
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
-    const headers = await getHeaders();
     return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, {
-        headers: headers }
-    )
+        headers: await getHeaders() })
         .then(r => r.json());
 }
 
 export async function makeAdmin() {
-    const headers = await getHeaders();
-    const response = await fetch("api/User/MakeAdmin", {
-        headers: headers
+    await fetch("api/User/MakeAdmin", {
+        headers: await getHeaders()
     });
 }
 
 export async function checkAdmin() {
-    const headers = await getHeaders();
     const response = await fetch("api/User/CheckAdmin", {
-        headers: headers
+        headers: await getHeaders()
     });
 
     const regexMatch = /(AccessDenied)/;
@@ -27,9 +23,8 @@ export async function checkAdmin() {
 }
 
 export async function removeAdmin() {
-    const headers = await getHeaders();
-    const response = await fetch("api/User/RemoveAdmin", {
-        headers: headers
+    await fetch("api/User/RemoveAdmin", {
+        headers: await getHeaders()
     });
 }
 
