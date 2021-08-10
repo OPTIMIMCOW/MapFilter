@@ -59,14 +59,3 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
         </ComposableMap>
     );
 }
-
-//async function populateSightingData(): Promise<SightingApiModel[]> {
-//    const response = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000");
-//    const response2 = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000&page=2");
-
-//    const json = await response.json();
-//    const json2 = await response2.json();
-
-
-//    return json.concat(json2);
-//}
