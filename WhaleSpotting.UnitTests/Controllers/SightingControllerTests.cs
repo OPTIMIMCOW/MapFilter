@@ -59,6 +59,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Id = "1",
                 NormalizedEmail = "Test"
             };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -111,7 +112,8 @@ namespace WhaleSpotting.UnitTests.Controllers
             // Arrange
             var currentUser = new UserDbModel
             {
-                Id = "5"
+                Id = "5",
+                NormalizedEmail = "Test"
             };
 
             var newSighting = new SightingRequestModel

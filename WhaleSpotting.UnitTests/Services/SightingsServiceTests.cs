@@ -78,7 +78,7 @@ namespace WhaleSpotting.UnitTests.Services
                 OrcaType = "unknown",
                 OrcaPod = "j"
             };
-            
+
             sightingToAdd.Add(whaleSighting.ToDbModel());
             sightingToAdd.Add(whaleSighting.ToDbModel());
 
@@ -93,7 +93,7 @@ namespace WhaleSpotting.UnitTests.Services
             whaleSightingsDbModels.Should().HaveCount(2);
             whaleSightingsDbModels.Should().BeOfType<List<SightingDbModel>>();
         }
-    
+
         [Fact]
         public async Task GetSightings_Called_ReturnsSightingsWithUser()
         {
@@ -101,8 +101,8 @@ namespace WhaleSpotting.UnitTests.Services
             var pageFilter = new PageFilter();
 
             var user = new UserDbModel
-            {   
-                NormalizedEmail = "test@example.com"                
+            {
+                NormalizedEmail = "test@example.com"
             };
             var whaleSighting = new SightingDbModel
             {
@@ -130,7 +130,7 @@ namespace WhaleSpotting.UnitTests.Services
             // Arrange
             var currentUser = new UserDbModel
             {
-                Id = 1.ToString()
+                Id = "1"
             };
             var newSighting = new SightingRequestModel
             {
@@ -163,7 +163,7 @@ namespace WhaleSpotting.UnitTests.Services
             // Arrange
             var currentUser = new UserDbModel
             {
-                Id = 1.ToString()
+                Id = "1"
             };
             var newSighting = new SightingRequestModel
             {
@@ -205,7 +205,7 @@ namespace WhaleSpotting.UnitTests.Services
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
                 OrcaPod = ""
-            }); 
+            });
             Context.Add(new SightingDbModel
             {
                 Species = Species.Minke,
@@ -216,7 +216,7 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "" 
+                OrcaPod = ""
             });
             Context.Add(new SightingDbModel
             {

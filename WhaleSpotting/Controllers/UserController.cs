@@ -24,13 +24,6 @@ namespace WhaleSpotting.Controllers
             _userManager = userManager;
         }
         
-        //[Authorize]
-        //[HttpGet]
-        //public async Task<UserDbModel> GetCurrentUser()
-        //{
-        //    return await _userManager.GetUserAsync(User);
-        //}
-        
         [HttpGet]
         public async Task<IActionResult> MakeAdmin()
         {

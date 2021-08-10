@@ -21,7 +21,6 @@ namespace WhaleSpotting.Services
         Task<SightingResponseModel> DeleteSighting(int id);
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
-
     }
 
     public class SightingsService : ISightingsService
