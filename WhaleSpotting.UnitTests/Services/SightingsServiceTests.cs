@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Models.ApiModels;
+using WhaleSpotting.Filters;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
@@ -23,24 +24,40 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetSightings_Called_ReturnsSightings()
+        public async Task GetSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
-            var whaleSighting = new SightingDbModel
+            var sightings = new List<SightingDbModel>
             {
-                Quantity = 5,
-                Description = "Whales at sea",
-                SightedAt = System.DateTime.Now
+                new SightingDbModel
+                {
+                    Id = 1
+                },
+                new SightingDbModel
+                {
+                    Id = 2
+                },
+                new SightingDbModel
+                {
+                    Id = 3
+                }
             };
 
-            await Context.Sightings.AddRangeAsync(new SightingDbModel(), whaleSighting);
+            await Context.Sightings.AddRangeAsync(sightings);
             await Context.SaveChangesAsync();
 
+            var pageFilter = new PageFilter
+            {
+                PageNumber = 2,
+                PageSize = 1
+            };
+
             // Act
-            var result = await _underTest.GetSightings();
+            var result = await _underTest.GetSightings(pageFilter);
 
             // Assert
-            result.Should().HaveCount(2);
+            result.Should().HaveCount(1);
+            result[0].Id.Should().Be(2);
         }
 
         [Fact]
@@ -81,6 +98,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async Task GetSightings_Called_ReturnsSightingsWithUser()
         {
             // Arrange
+            var pageFilter = new PageFilter();
+
             var user = new UserDbModel
             {   
                 NormalizedEmail = "test@example.com"                
@@ -97,7 +116,7 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.SaveChangesAsync();
 
             // Act
-            var result = await _underTest.GetSightings();
+            var result = await _underTest.GetSightings(pageFilter);
 
             // Assert
             var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
@@ -165,6 +184,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async void SearchSighting_CalledWithValidSightingRequestModel_ReturnsFilteredSightingResponseModel()
         {
             // Arrange
+            var pageFilter = new PageFilter();
+
             Context.Add(new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -209,7 +230,7 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = await _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting, pageFilter);
 
             // Assert
             result.Should().HaveCount(2);
@@ -219,6 +240,7 @@ namespace WhaleSpotting.UnitTests.Services
         public async void SearchSighting_CalledWithValidSightingRequestModelByDateRange_ReturnsFilteredByDateRangeSightingResponseModel()
         {
             // Arrange
+            var pageFilter = new PageFilter();
             Context.Add(new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -264,7 +286,7 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = await _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting, pageFilter);
 
             // Assert
             result.Should().HaveCount(1);
@@ -274,6 +296,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async void SearchSighting_CalledWithValidSightingRequestModelByDateRangeAndOrcaPod_ReturnsFilteredByDateRangeAndOrcaPodSightingResponseModel()
         {
             // Arrange
+            var pageFilter = new PageFilter();
+
             Context.Add(new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -320,7 +344,7 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = await _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting, pageFilter);
 
             // Assert
             result.Should().HaveCount(2);
@@ -330,6 +354,8 @@ namespace WhaleSpotting.UnitTests.Services
         public async void SearchSighting_CalledWithValidSightingRequestModelByLocation_ReturnsFilteredByLocationSightingResponseModel()
         {
             // Arrange
+            var pageFilter = new PageFilter();
+
             Context.Add(new SightingDbModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -374,10 +400,73 @@ namespace WhaleSpotting.UnitTests.Services
             };
 
             // Act
-            var result = await _underTest.SearchSighting(searchSighting);
+            var result = await _underTest.SearchSighting(searchSighting, pageFilter);
 
             // Assert
             result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsSightings()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = false
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = false
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings(pageFilter);
+
+            // Assert
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsNull()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                },
+                new SightingDbModel
+                {
+                    Confirmed = true
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings(pageFilter);
+
+            // Assert
+            result.Should().BeEmpty();
         }
 
         [Fact]
@@ -425,66 +514,6 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             nullResult.Should().Be(null);
-        }
-
-        [Fact]
-        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsSightings()
-        {
-            // Arrange
-            var sightings = new List<SightingDbModel>
-            {
-                new SightingDbModel
-                {
-                    Confirmed = false
-                },
-                new SightingDbModel
-                {
-                    Confirmed = true
-                },
-                new SightingDbModel
-                {
-                    Confirmed = false
-                }
-            };
-
-            await Context.Sightings.AddRangeAsync(sightings);
-            await Context.SaveChangesAsync();
-
-            // Act
-            var result = await _underTest.GetNotConfirmedSightings();
-
-            // Assert
-            result.Should().HaveCount(2);
-        }
-
-        [Fact]
-        public async Task GetNotConfirmedSightings_Called_UnconfirmedReturnsNull()
-        {
-            // Arrange
-            var sightings = new List<SightingDbModel>
-            {
-                new SightingDbModel
-                {
-                    Confirmed = true
-                },
-                new SightingDbModel
-                {
-                    Confirmed = true
-                },
-                new SightingDbModel
-                {
-                    Confirmed = true
-                }
-            };
-
-            await Context.Sightings.AddRangeAsync(sightings);
-            await Context.SaveChangesAsync();
-
-            // Act
-            var result = await _underTest.GetNotConfirmedSightings();
-
-            // Assert
-            result.Should().BeEmpty();
         }
 
         [Fact]

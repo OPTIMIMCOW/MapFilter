@@ -6,17 +6,18 @@ using Microsoft.EntityFrameworkCore;
 using WhaleSpotting.Models.RequestModels;
 using System;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Filters;
 using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Services
 {
     public interface ISightingsService
     {
-        Task<List<SightingResponseModel>> GetSightings();
-        Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel);
+        Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel, PageFilter pageFilter);
+        Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
+        Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter);
         Task<SightingResponseModel> ConfirmSighting(int id);
-        Task<List<SightingResponseModel>> GetNotConfirmedSightings();
         Task<SightingResponseModel> DeleteSighting(int id);
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
@@ -31,18 +32,20 @@ namespace WhaleSpotting.Services
             _context = context;
         }
 
-        public async Task<List<SightingResponseModel>> GetSightings()
+        public async Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter)
         {
             var sightings = await _context.Sightings
                 .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 
             return sightings;
         }
 
-        public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting)
+        public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
             var sightings = await _context.Sightings
                 .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
@@ -51,6 +54,8 @@ namespace WhaleSpotting.Services
                 .Where(s => searchSighting.OrcaPod == null || s.OrcaPod == searchSighting.OrcaPod)
                 .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
                 .OrderBy(s => s.SightedAt)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 
@@ -106,6 +111,19 @@ namespace WhaleSpotting.Services
             return new SightingResponseModel(newSighting);
         }
 
+        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter)
+        {
+            var sightings = await _context.Sightings
+                .Where(s => s.Confirmed == false)
+                .OrderBy(s => s.SightedAt)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
+                .Select(s => new SightingResponseModel(s))
+                .ToListAsync();
+
+            return sightings;
+        }
+
         public async Task<SightingResponseModel> ConfirmSighting(int id)
         {
             var sighting = await _context.Sightings
@@ -120,17 +138,6 @@ namespace WhaleSpotting.Services
             _context.SaveChanges();
 
             return new SightingResponseModel(sighting);
-        }
-
-        public async Task<List<SightingResponseModel>> GetNotConfirmedSightings()
-        {
-            var sightings = await _context.Sightings
-                .Where(s => s.Confirmed == false)
-                .OrderBy(s => s.SightedAt)
-                .Select(s => new SightingResponseModel(s))
-                .ToListAsync();
-
-            return sightings;
         }
 
         public async Task<SightingResponseModel> DeleteSighting(int id)
