@@ -15,12 +15,13 @@ namespace WhaleSpotting.Services
     {
         Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel, PageFilter pageFilter);
         Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
-        SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
+        SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel, UserDbModel currentUser);
         Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter);
         Task<SightingResponseModel> ConfirmSighting(int id);
         Task<SightingResponseModel> DeleteSighting(int id);
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
+
     }
 
     public class SightingsService : ISightingsService
@@ -81,7 +82,7 @@ namespace WhaleSpotting.Services
             return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
-        public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
+        public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel, UserDbModel currentUser)
         {
             if (sightingRequestModel.SightedAt > DateTime.Now)
             {
@@ -102,7 +103,7 @@ namespace WhaleSpotting.Services
                 OrcaType = sightingRequestModel.OrcaType,
                 OrcaPod = sightingRequestModel.OrcaPod,
                 Confirmed = false,
-                // TO DO - add User
+                User = currentUser
             };
 
             _context.Sightings.Add(newSighting);
