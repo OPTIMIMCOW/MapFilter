@@ -6,7 +6,7 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchPendingSightings } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings } from "../api/apiClient";
 import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
 import authService from "./api-authorization/AuthorizeService";
 
@@ -22,6 +22,7 @@ export function Profile(): JSX.Element {
 
     useEffect(() => {
         checkifAdmin();
+        const currentUser = fetchCurrentUser();
     }, []);
 
     async function checkifAdmin() {

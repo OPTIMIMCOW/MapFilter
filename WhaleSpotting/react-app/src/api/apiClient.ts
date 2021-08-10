@@ -1,5 +1,6 @@
 ﻿import { SightingApiModel } from "./models/SightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
+import { UserApiModel } from "./models/UserApiModel";
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
     return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, {
@@ -26,6 +27,15 @@ export async function removeAdmin() {
     await fetch("api/User/RemoveAdmin", {
         headers: await getHeaders()
     });
+}
+
+
+export async function fetchCurrentUser(): Promise<UserApiModel> {
+    const headers = await getHeaders();
+    return await fetch(`api/user/GetCurrentUser`, {
+        headers: headers }
+        )
+        .then(r => r.json());
 }
 
 async function getHeaders(): Promise<any> {
