@@ -12,6 +12,7 @@ export default function Home(): JSX.Element {
     function orderFeedBy():void {
         //TODO "this needs to be implemented";
     }
+    
 
     const orca: SightingApiModel = {
         id: 1,
