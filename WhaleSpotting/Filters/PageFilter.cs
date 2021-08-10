@@ -10,6 +10,5 @@ namespace WhaleSpotting.Filters
             PageNumber = PageNumber > 1 ? PageNumber : 1;
             PageSize = PageSize > 0 ? PageSize : 10;
         }
-
     }
 }

@@ -28,13 +28,12 @@ namespace WhaleSpotting.UnitTests.Controllers
         public async Task GetAllSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
+            var pageFilter = new PageFilter();
             var serviceResponse = new List<SightingResponseModel>
             {
                 new SightingResponseModel(),
                 new SightingResponseModel()
             };
-
-            var pageFilter = new PageFilter();
 
             A.CallTo(() => _sightings.GetSightings(pageFilter))
                 .Returns(serviceResponse);
@@ -129,8 +128,8 @@ namespace WhaleSpotting.UnitTests.Controllers
         [Fact]
         public async void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
         {
-            var pageFilter = new PageFilter();
             // Arrange
+            var pageFilter = new PageFilter();
             var searchSighting = new SearchSightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin
