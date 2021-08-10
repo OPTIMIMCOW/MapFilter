@@ -9,6 +9,7 @@ import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
+    const [data, setData] = useState([]);
 
     function orderFeedBy(): void {
         
@@ -16,8 +17,29 @@ export default function Home(): JSX.Element {
     }
     async function getSightings(pageNumber: number, pageSize: number) {
         const sightings = await getConfirmedSightings({ "confirmed": true }, pageNumber, pageSize)
-        .then ()
+            .then(response => response.json())
+            .then(data => setData(data));
     }
+
+    //data.map(s => {
+    //    const whale: SightingApiModel =
+    //    {
+    //        id: s.Id,
+    //        sightedAt: new Date().toDateString(),
+    //        species: "whale",
+    //        quantity: 1,
+    //        location: "Deep Ocean",
+    //        longitude: 1.232,
+    //        latitude: 2.312,
+    //        description: "Whales at sea",
+    //        orcaType: "Whale",
+    //        orcaPod: "k",
+    //        confirmed: true,
+    //        userId: 2,
+    //        username: "FakeUser1"
+    //    };
+    //    return whale;
+    //});
     
 
     const orca: SightingApiModel = {

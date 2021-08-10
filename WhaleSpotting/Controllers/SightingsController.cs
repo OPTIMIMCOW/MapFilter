@@ -34,7 +34,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetSightings(pageFilter);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("/search")]
         public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
