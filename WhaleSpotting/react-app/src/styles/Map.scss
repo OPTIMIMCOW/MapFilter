@@ -1,5 +1,9 @@
 @import "./Constants.scss";
 
+.map-component-container {
+    margin-top: $headerHeight;
+}
+
 .map-component {
     margin: 0 auto $footerHeight auto;
     display: flex;

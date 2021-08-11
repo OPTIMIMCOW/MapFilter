@@ -16,7 +16,7 @@ export default function Map(): JSX.Element {
     const [chosen, setChosen] = useState<Chosen>();
 
     return (
-        <div>
+        <div className="map-component-container">
             <BannerImage />
             <div className="map-component" data-testid="map-component">
                 <h2 className="map-header">Map of Sightings</h2>
