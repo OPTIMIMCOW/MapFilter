@@ -6,22 +6,26 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchPendingSightings } from "../api/apiClient";
-import { makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import { UserApiModel } from "../api/models/UserApiModel";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
     const [page, setPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
-    //TODO - get username from user api model
-    const username = "username";
+    const [currentUser, setCurrentUser] = useState<UserApiModel>();
     //TODO get page from nav component state
     const pageNumber = 1;
 
     useEffect(() => {
         checkifAdmin();
+        getUser();
     }, []);
+
+    async function getUser() {
+        setCurrentUser(await fetchCurrentUser());
+    }
 
     async function checkifAdmin() {
         setIsUserAdmin(await checkAdmin());
@@ -50,7 +54,6 @@ export function Profile(): JSX.Element {
         orcaType: "Whale",
         orcaPod: "k",
         confirmed: false,
-        userId: 2,
         username: "FakeUser1"
     };
 
@@ -66,7 +69,6 @@ export function Profile(): JSX.Element {
         orcaType: "Orca",
         orcaPod: "",
         confirmed: true,
-        userId: 2,
         username: "FakeUserConfirmed"
     };
 
@@ -94,15 +96,14 @@ export function Profile(): JSX.Element {
         <div className="body">
             <div className="profile-pane">
                 <div className="outer-container">
-                    <div>
-                        <h1 className="heading">UserName</h1>
-                        <p className="joined little-text"> Joined: June 2004</p>
+                    <div className="inner-container">
+                        <h1 data-testid="username" className="heading">{currentUser?.username}</h1>
                         <div className="trophy-container">
                             <p className="feature-text"> 15</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
                         </div>
-                        <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${username}?set=any&bgset=any`} />
+                        <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>
                     <div className="button-container">
                         <Button
@@ -110,8 +111,8 @@ export function Profile(): JSX.Element {
                             text="Sightings"
                             onClick={() => setFeedToggle("Sightings")}
                         />
-                        <Button 
-                            style={Style.primary} 
+                        <Button
+                            style={Style.primary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"

@@ -28,10 +28,6 @@
 
 .little-text{
     margin: 0;
-
-    &.joined{
-        margin-top:-7px;
-    }
     
     &.reported{
         margin-left: 10px;
@@ -46,6 +42,7 @@
 .heading{
     font-size: $titleFontSize;
     margin:0;
+    overflow-wrap: break-word;
 }
 
 .button-container{
@@ -82,9 +79,8 @@
     }
 
     .profile-pane {
-        height: 290px;
         width:100vw;
-        min-height: unset;
+        min-height: 290px;
     }
 
     .little-text { 
@@ -105,10 +101,28 @@
 
     .outer-container{
         flex-direction: row;
-        padding-top: 0;
+        padding: 3px 0;
+    }
+    
+    .inner-container{
+        width: 50%;
+    }
+
+    .button-container{
+        width: 50%;
     }
 
     .profile-image{
         width: 170px;
+    }
+}
+
+@media(max-width: 335px) {
+    .button-container{
+        width: 40%;
+    }
+
+    .inner-container{
+        width: 60%;
     }
 }
