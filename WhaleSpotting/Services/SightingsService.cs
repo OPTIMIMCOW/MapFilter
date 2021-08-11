@@ -14,8 +14,8 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel, PageFilter pageFilter);
-        Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter);
-        SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel);
+        Task<List<SightingResponseModel>> GetAllSightings();
+        SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel, UserDbModel currentUser);
         Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter);
         Task<SightingResponseModel> ConfirmSighting(int id);
         Task<SightingResponseModel> DeleteSighting(int id);
@@ -32,13 +32,11 @@ namespace WhaleSpotting.Services
             _context = context;
         }
 
-        public async Task<List<SightingResponseModel>> GetSightings(PageFilter pageFilter)
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             var sightings = await _context.Sightings
                 .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
-                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
-                .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 
@@ -81,7 +79,7 @@ namespace WhaleSpotting.Services
             return sightingsNotInDb.Select(s => new SightingResponseModel(s)).ToList();
         }
 
-        public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel)
+        public SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel, UserDbModel currentUser)
         {
             if (sightingRequestModel.SightedAt > DateTime.Now)
             {
@@ -102,7 +100,7 @@ namespace WhaleSpotting.Services
                 OrcaType = sightingRequestModel.OrcaType,
                 OrcaPod = sightingRequestModel.OrcaPod,
                 Confirmed = false,
-                // TO DO - add User
+                User = currentUser
             };
 
             _context.Sightings.Add(newSighting);

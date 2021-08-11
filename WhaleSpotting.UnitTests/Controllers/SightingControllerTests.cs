@@ -1,11 +1,14 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
 using WhaleSpotting.Filters;
+using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
@@ -17,38 +20,44 @@ namespace WhaleSpotting.UnitTests.Controllers
     public class SightingsControllerTests
     {
         private readonly ISightingsService _sightings = A.Fake<ISightingsService>();
+        private readonly UserManager<UserDbModel> _userManager = A.Fake<UserManager<UserDbModel>>();
         private readonly SightingsController _underTest;
 
         public SightingsControllerTests()
         {
-            _underTest = new SightingsController(_sightings);
+            _underTest = new SightingsController(_sightings, _userManager);
         }
 
         [Fact]
         public async Task GetAllSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
-            var pageFilter = new PageFilter();
             var serviceResponse = new List<SightingResponseModel>
             {
                 new SightingResponseModel(),
                 new SightingResponseModel()
             };
 
-            A.CallTo(() => _sightings.GetSightings(pageFilter))
+            A.CallTo(() => _sightings.GetAllSightings())
                 .Returns(serviceResponse);
 
             // Act
-            var result = await _underTest.GetAllSightings(pageFilter);
+            var result = await _underTest.GetAllSightings();
 
             // Assert
             result.Should().HaveCount(2);
         }
 
         [Fact]
-        public void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
+        public async void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "1",
+                NormalizedEmail = "Test"
+            };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -59,8 +68,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             var sightingResponse = new SightingResponseModel
@@ -79,11 +87,14 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Confirmed = false,
             };
 
-            A.CallTo(() => _sightings.CreateSighting(newSighting))
+            A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Returns(sightingResponse);
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
             var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
@@ -92,9 +103,15 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
+        public async void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "5",
+                NormalizedEmail = "Test"
+            };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -105,17 +122,19 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             const string exceptionMessage = "Sighted At must be in the past";
 
-            A.CallTo(() => _sightings.CreateSighting(newSighting))
+            A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Throws(new Exception(exceptionMessage));
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
             var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
@@ -270,7 +289,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 OrcaType = "",
                 OrcaPod = "",
                 Username = "FakeUser",
-                Confirmed = true,
+                Confirmed = true
             };
 
             A.CallTo(() => _sightings.DeleteSighting(id))

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using WhaleSpotting.Constants;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Filters;
+using Microsoft.AspNetCore.Identity;
+using WhaleSpotting.Models.DbModels;
 
 namespace WhaleSpotting.Controllers
 {
@@ -18,16 +20,18 @@ namespace WhaleSpotting.Controllers
     public class SightingsController : ControllerBase
     {
         private readonly ISightingsService _sightings;
+        private readonly UserManager<UserDbModel> _userManager;
 
-        public SightingsController(ISightingsService sightings)
+        public SightingsController(ISightingsService sightings, UserManager<UserDbModel> userManager)
         {
             _sightings = sightings;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetAllSightings([FromQuery] PageFilter pageFilter)
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
-            return await _sightings.GetSightings(pageFilter);
+            return await _sightings.GetAllSightings();
         }
 
         [Authorize]
@@ -35,16 +39,17 @@ namespace WhaleSpotting.Controllers
         public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
             var result = await _sightings.SearchSighting(searchSighting, pageFilter);
-            return result.Any() ? result: NotFound();
+            return result.Any() ? result : NotFound();
         }
 
         [Authorize]
         [HttpPost("create")]
-        public IActionResult CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
+        public async Task<IActionResult> CreateSighting([FromBody] SightingRequestModel sightingRequestModel)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
             try
             {
-                var newSighting = _sightings.CreateSighting(sightingRequestModel);
+                var newSighting = _sightings.CreateSighting(sightingRequestModel, currentUser);
                 return Created($"api/sighting/{newSighting.Id}", newSighting);
             }
             catch (Exception e)
@@ -61,7 +66,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetNotConfirmedSightings(pageFilter);
         }
 
-        [Authorize(Roles = AuthConstants.Admin )]
+        [Authorize(Roles = AuthConstants.Admin)]
         [HttpPut("{id}/confirm")]
         public async Task<ActionResult<SightingResponseModel>> ConfirmSighting([FromRoute] int id)
         {
