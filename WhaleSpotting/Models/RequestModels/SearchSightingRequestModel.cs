@@ -16,7 +16,6 @@ namespace WhaleSpotting.Models.RequestModels
         public double? Latitude { get; set; }
         public string Location { get; set; } = null;
 
-
         [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedFrom { get; set; }
 

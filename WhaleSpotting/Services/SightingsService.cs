@@ -50,7 +50,7 @@ namespace WhaleSpotting.Services
                 .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
                 .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod == searchSighting.OrcaPod)
-                .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
+                .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location == searchSighting.Location)
                 .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
                 .OrderBy(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
