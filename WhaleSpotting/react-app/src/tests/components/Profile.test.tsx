@@ -133,7 +133,7 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
 test("When profile renders, it calls API and gets current user", () => {
     const user: UserApiModel = {
         username: "test"
-    }
+    };
     
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,

@@ -7,7 +7,6 @@ import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
 import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
-import authService from "./api-authorization/AuthorizeService";
 import { UserApiModel } from "../api/models/UserApiModel";
 
 export function Profile(): JSX.Element {
