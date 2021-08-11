@@ -20,7 +20,6 @@ const mockexample1: SightingApiModel = {
     orcaType: "Orca",
     orcaPod: "",
     confirmed: true,
-    userId: 2,
     username: "FakeUserConfirmed"
 };
 
@@ -36,18 +35,8 @@ const mockexample2: SightingApiModel = {
     orcaType: "Minke",
     orcaPod: "",
     confirmed: true,
-    userId: 2,
     username: "FakeUserConfirmed"
 };
-test("renders the Profile information", () => {
-    render(
-        <Router>
-            <Profile />
-        </Router>
-    );
-    const title = screen.getByText("UserName");
-    expect(title).toBeInTheDocument();
-});
 
 test("renders the Sightings feed", () => {
     render(
@@ -57,6 +46,32 @@ test("renders the Sightings feed", () => {
     );
     const title = screen.getByText("Your Sightings");
     expect(title).toBeInTheDocument();
+});
+
+test("When profile renders, it calls API and gets current user", () => {
+    const user: UserApiModel = {
+        username: "test"
+    };
+    
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        fetchCurrentUser: jest.fn(async () : Promise<UserApiModel> => {
+            return Promise.resolve(user);
+        })
+    }));
+
+    render(
+        <Router>
+            <Profile />
+        </Router>
+    );
+    
+    setTimeout(()=>{
+        expect(fetchCurrentUser).toBeCalled();
+    }, 100);
+
+    const username = screen.getByTestId("username");
+    expect(username).toBeInTheDocument();
 });
 
 test("When approval selected get data from API and change heading to Your Approvals", () => {
