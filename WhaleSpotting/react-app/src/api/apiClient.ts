@@ -2,6 +2,12 @@
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
+import { UserApiModel } from "./models/UserApiModel";
+
+export async function fetchAllSightings(): Promise<SightingApiModel[]> {
+    return await fetch("api/sightings", await getGetSettings())
+        .then(r => r.json());
+}
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
     return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, await getGetSettings())
@@ -25,6 +31,11 @@ export async function removeAdmin() {
 
 export async function createSighting(sighting: CreateSightingApiModel): Promise<any> {
     return await fetch("api/sightings/create", await getPostSettings(sighting));
+}
+
+export async function fetchCurrentUser(): Promise<UserApiModel> {
+    return await fetch("api/user/GetCurrentUser", await getGetSettings())
+        .then(r => r.json());
 }
 
 async function getPostSettings(apiModel: any): Promise<any> {

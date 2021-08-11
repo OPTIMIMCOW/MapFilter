@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
-import { Species, OrcaType } from "../apiModels/ApiEnums";
+import { Species, OrcaType } from "../api/ApiEnums";
 import authService from "./api-authorization/AuthorizeService";
 import { createSighting } from "../api/apiClient";
 

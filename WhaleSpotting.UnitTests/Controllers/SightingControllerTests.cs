@@ -32,18 +32,17 @@ namespace WhaleSpotting.UnitTests.Controllers
         public async Task GetAllSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
-            var pageFilter = new PageFilter();
             var serviceResponse = new List<SightingResponseModel>
             {
                 new SightingResponseModel(),
                 new SightingResponseModel()
             };
 
-            A.CallTo(() => _sightings.GetSightings(pageFilter))
+            A.CallTo(() => _sightings.GetAllSightings())
                 .Returns(serviceResponse);
 
             // Act
-            var result = await _underTest.GetAllSightings(pageFilter);
+            var result = await _underTest.GetAllSightings();
 
             // Assert
             result.Should().HaveCount(2);
@@ -56,7 +55,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "1",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel
@@ -84,8 +83,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = currentUser.Id,
-                Username = currentUser.NormalizedEmail,
+                Username = currentUser.UserName,
                 Confirmed = false,
             };
 
@@ -111,7 +109,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "5",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel
@@ -167,7 +165,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -243,7 +240,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -292,7 +288,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true
             };

@@ -24,7 +24,7 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetSightings_CalledWithPageFilter_ReturnsSightings()
+        public async Task GetAllSightings_Called_ReturnsSightings()
         {
             // Arrange
             var sightings = new List<SightingDbModel>
@@ -46,18 +46,11 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.Sightings.AddRangeAsync(sightings);
             await Context.SaveChangesAsync();
 
-            var pageFilter = new PageFilter
-            {
-                PageNumber = 2,
-                PageSize = 1
-            };
-
             // Act
-            var result = await _underTest.GetSightings(pageFilter);
+            var result = await _underTest.GetAllSightings();
 
             // Assert
-            result.Should().HaveCount(1);
-            result[0].Id.Should().Be(2);
+            result.Should().HaveCount(3);
         }
 
         [Fact]
@@ -98,11 +91,9 @@ namespace WhaleSpotting.UnitTests.Services
         public async Task GetSightings_Called_ReturnsSightingsWithUser()
         {
             // Arrange
-            var pageFilter = new PageFilter();
-
             var user = new UserDbModel
-            {
-                NormalizedEmail = "test@example.com"
+            {   
+                UserName = "test@example.com"                
             };
             var whaleSighting = new SightingDbModel
             {
@@ -116,12 +107,11 @@ namespace WhaleSpotting.UnitTests.Services
             await Context.SaveChangesAsync();
 
             // Act
-            var result = await _underTest.GetSightings(pageFilter);
+            var result = await _underTest.GetAllSightings();
 
             // Assert
             var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
-            sighting.UserId.Should().Be(user.Id);
-            sighting.Username.Should().Be(user.NormalizedEmail);
+            sighting.Username.Should().Be(user.UserName);
         }
 
         [Fact]

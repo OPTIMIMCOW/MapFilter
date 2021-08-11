@@ -35,8 +35,6 @@ namespace WhaleSpotting.Models.ResponseModels
 
         public string OrcaPod { get; set; }
 
-        public string UserId { get; set; }
-
         public string Username { get; set; }
 
         public bool Confirmed { get; set; }
@@ -60,8 +58,7 @@ namespace WhaleSpotting.Models.ResponseModels
             OrcaType = sighting.OrcaType.ToString();
             OrcaPod = sighting.OrcaPod;
             Confirmed = sighting.Confirmed;
-            UserId = sighting.User?.Id;
-            Username = sighting.User?.NormalizedEmail ?? "Whale Museum";
+            Username = sighting.User?.UserName ?? "Whale Museum";
         }
     }
 }

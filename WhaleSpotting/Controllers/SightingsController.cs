@@ -29,9 +29,9 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet]
-        public async Task<List<SightingResponseModel>> GetAllSightings([FromQuery] PageFilter pageFilter)
+        public async Task<List<SightingResponseModel>> GetAllSightings()
         {
-            return await _sightings.GetSightings(pageFilter);
+            return await _sightings.GetAllSightings();
         }
 
         //[Authorize]
