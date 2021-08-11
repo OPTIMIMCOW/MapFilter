@@ -65,13 +65,13 @@ a.navbar-brand {
     font-size: 16px;
 }
 
-    .nav-link:hover {
-        background-color: #004785;
-        text-decoration: none;
-        color: white;
-        border-radius: 5px;
-        width: max-content;
-    }
+        .nav-link:hover {
+            background-color: #004785;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            width: max-content;
+        }
 
 .selected {
     background-color: #004785;
@@ -169,10 +169,10 @@ body {
    
 }
 
-    .form-control:focus {
-        outline: unset;
-        border: 2px solid #004785;
-    }
+        .form-control:focus {
+            outline: unset;
+            border: 2px solid #004785;
+        }
 
 .input-row {
     width: 100%;
