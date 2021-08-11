@@ -88,7 +88,7 @@ export function Profile(): JSX.Element {
         }
     }, [feedToggle, page]);
 
-    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
+    const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
 
     return (
         <div className="body">
