@@ -14,12 +14,11 @@ namespace WhaleSpotting.Models.RequestModels
 
         [Range(-90.00, 90.00, ErrorMessage = "Latitude must be between -90 and 90 degrees")]
         public double? Latitude { get; set; }
-
         public string Location { get; set; } = null;
 
         [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedFrom { get; set; }
-        
+
         [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime? SightedTo { get; set; }
 
@@ -27,5 +26,6 @@ namespace WhaleSpotting.Models.RequestModels
         public OrcaType? OrcaType { get; set; }
 
         public string OrcaPod { get; set; } = null;
+        public bool? Confirmed { get; set; }
     }
 }
