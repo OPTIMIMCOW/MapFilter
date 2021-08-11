@@ -662,6 +662,5 @@ namespace WhaleSpotting.UnitTests.Services
             result.Should().HaveCount(2);
             result[0].Username.Should().Be(currentUser.UserName);
         }
-
     }
 }

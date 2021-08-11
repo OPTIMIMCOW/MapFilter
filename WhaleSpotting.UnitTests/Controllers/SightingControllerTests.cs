@@ -370,6 +370,7 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _sightings.GetUserSightings(currentUser, pageFilter))
                 .Returns(serviceResponse);
+
             // Act
             var result = await _underTest.GetCurrentUserSightings(pageFilter);
 
