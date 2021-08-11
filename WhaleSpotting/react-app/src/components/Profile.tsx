@@ -59,7 +59,7 @@ export function Profile(): JSX.Element {
         }
     }, [feedToggle, page]);
 
-    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
+    const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
 
     return (
         <div className="body">
@@ -103,13 +103,13 @@ export function Profile(): JSX.Element {
                 </div>
             </div>
             <div className="feed">
-                <h1 className="heading">Your {feedToggle}</h1>
+                <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
-                    {(cards.length === 0 && page === 1) ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
+                    {cards.length === 0 && page === 1 ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
-                {(cards.length === 0 && page === 1 && feedToggle === "Sightings") ?
-                    <div></div>
+                {cards.length === 0 && page === 1 ?
+                    <div />
                     :
                     <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />}
             </div>
