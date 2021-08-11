@@ -10,11 +10,11 @@ interface CardProps {
 }
 
 export default function Card({ sighting, admin = false }: CardProps): JSX.Element {
-
+    const [checked, setChecked] = useState(false);
     const [closeCard, setCardState] = useState(true);
     
     return (
-        <div>
+        <div className={checked ? "hidden" : "" }>
             <div className="card-component" data-testid="card-component">
                 {!sighting.confirmed && <div className="pending" data-testid="pending"> PENDING </div>}
                 <div className="card-info"
@@ -31,7 +31,6 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                         <div>Orca pod: {sighting.orcaPod}</div>
                         <div>Longitude: {sighting.longitude} </div>
                         <div>Latitude: {sighting.latitude} </div>
-                        <div hidden={!admin}>User Id: {sighting.userId}</div>
                         <div>Description: {sighting.description} </div>
                     </div>
                 </div>
@@ -40,13 +39,19 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                 <Button
                     style={Style.reject}
                     text="Reject"
-                    onClick={() => deleteSighting(sighting.id)}
+                    onClick={() => {
+                        deleteSighting(sighting.id);
+                        setChecked(true);
+                    }}
                     minWidth25={true}
                 />
                 <Button
                     style={Style.primary}
                     text="Approve"
-                    onClick={() => confirmSighting(sighting.id)}
+                    onClick={() => {
+                        confirmSighting(sighting.id);
+                        setChecked(true);
+                    }}
                     minWidth25={true}
                 />
             </div>}
