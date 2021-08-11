@@ -10,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Services;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Http;
 
 namespace WhaleSpotting
 {
@@ -31,7 +30,7 @@ namespace WhaleSpotting
             services.AddDbContext<WhaleSpottingContext>(options =>
                 options.UseNpgsql(connectionString!));
 
-            services.AddDefaultIdentity<UserDbModel>()
+            services.AddIdentity<UserDbModel, IdentityRole>()
                 .AddEntityFrameworkStores<WhaleSpottingContext>();
 
             services.AddIdentityServer(options =>
@@ -54,6 +53,10 @@ namespace WhaleSpotting
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
             });
 
             // In production, the React files will be served from this directory

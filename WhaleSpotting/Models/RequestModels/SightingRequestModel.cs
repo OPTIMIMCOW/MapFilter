@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.RequestModels
@@ -14,7 +11,7 @@ namespace WhaleSpotting.Models.RequestModels
         public Species Species { get; set; }
 
         [Required(ErrorMessage = "Quantity is required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than {1}")]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be greater than 0")]
         public int Quantity { get; set; }
 
         public string Description { get; set; }
@@ -30,15 +27,12 @@ namespace WhaleSpotting.Models.RequestModels
         public string Location { get; set; }
 
         [Required(ErrorMessage = "SightedAt is required")]
-        [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
+        [DataType(DataType.Date, ErrorMessage = "This field is receiving date format: dd/mm/yyyy")]
         public DateTime SightedAt { get; set; }
 
         [Range(1, 4, ErrorMessage = "OrcaType must be between 1 and 4")]
         public OrcaType? OrcaType { get; set; }
 
         public string OrcaPod { get; set; }
-
-        [Required(ErrorMessage = "UserId is required")]
-        public int UserId { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-interface SightingApiModel {
+export interface SightingApiModel {
     id: number;
-    sightedAt: Date;
+    sightedAt: string;
     species: string;
     quantity: number;
     location: string;
@@ -10,8 +10,5 @@ interface SightingApiModel {
     orcaType: string;
     orcaPod: string;
     confirmed: boolean;
-    userId: number;
     username: string;
 }
-
-export default SightingApiModel;

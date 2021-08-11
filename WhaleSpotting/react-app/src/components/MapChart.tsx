@@ -1,4 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { SightingApiModel } from "../api/models/SightingApiModel";
+import "../styles/Map.scss";
 import {
     ComposableMap,
     Geographies,
@@ -6,9 +8,8 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import SightingApiModel from "../apiModels/SightingApiModel";
 import { Chosen } from "./Map";
-import "../styles/Map.scss";
+import { fetchAllSightings } from "../api/apiClient";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -21,7 +22,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
 
     useEffect(() => {
-        populateSightingData()
+        fetchAllSightings()
             .then(data => setData(data));
     }, []);
 
@@ -57,15 +58,4 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
             </ZoomableGroup>
         </ComposableMap>
     );
-}
-
-async function populateSightingData(): Promise<SightingApiModel[]> {
-    const response = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000");
-    const response2 = await fetch("https://hotline.whalemuseum.org/api.json?limit=1000&page=2");
-
-    const json = await response.json();
-    const json2 = await response2.json();
-
-
-    return json.concat(json2);
 }

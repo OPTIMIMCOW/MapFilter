@@ -1,10 +1,14 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WhaleSpotting.Controllers;
+using WhaleSpotting.Filters;
+using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.Enums;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.ResponseModels;
@@ -16,15 +20,16 @@ namespace WhaleSpotting.UnitTests.Controllers
     public class SightingsControllerTests
     {
         private readonly ISightingsService _sightings = A.Fake<ISightingsService>();
+        private readonly UserManager<UserDbModel> _userManager = A.Fake<UserManager<UserDbModel>>();
         private readonly SightingsController _underTest;
 
         public SightingsControllerTests()
         {
-            _underTest = new SightingsController(_sightings);
+            _underTest = new SightingsController(_sightings, _userManager);
         }
 
         [Fact]
-        public async Task GetAllSightings_Called_ReturnsSightings()
+        public async Task GetAllSightings_CalledWithPageFilter_ReturnsSightings()
         {
             // Arrange
             var serviceResponse = new List<SightingResponseModel>
@@ -33,7 +38,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 new SightingResponseModel()
             };
 
-            A.CallTo(() => _sightings.GetSightings())
+            A.CallTo(() => _sightings.GetAllSightings())
                 .Returns(serviceResponse);
 
             // Act
@@ -44,9 +49,15 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
+        public async void CreateSighting_CalledWithNewSighting_ReturnsCreatedResult()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "1",
+                UserName = "Test"
+            };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -57,8 +68,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now,
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             var sightingResponse = new SightingResponseModel
@@ -73,16 +83,18 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
-                Username = "FakeUser",
+                Username = currentUser.UserName,
                 Confirmed = false,
             };
 
-            A.CallTo(() => _sightings.CreateSighting(newSighting))
+            A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Returns(sightingResponse);
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
             var createdResult = response.Should().BeOfType<CreatedResult>().Subject;
@@ -91,9 +103,15 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateSighting_CalledWithInvalidNewSighting_ReturnsBadRequest()
+        public async void CreateSighting_CalledWithInvalidNewSighting_ReturnsValidationError()
         {
             // Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "5",
+                UserName = "Test"
+            };
+
             var newSighting = new SightingRequestModel
             {
                 Species = Species.AtlanticWhiteSidedDolphin,
@@ -104,21 +122,104 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = "",
-                UserId = 5,
+                OrcaPod = ""
             };
 
             const string exceptionMessage = "Sighted At must be in the past";
 
-            A.CallTo(() => _sightings.CreateSighting(newSighting))
+            A.CallTo(() => _sightings.CreateSighting(newSighting, currentUser))
                 .Throws(new Exception(exceptionMessage));
 
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
             // Act
-            var response = _underTest.CreateSighting(newSighting);
+            var response = await _underTest.CreateSighting(newSighting);
 
             // Assert
-            var badRequestResult = response.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be(exceptionMessage);
+            var validationErrorResult = response.Should().BeOfType<ObjectResult>().Subject;
+            var validationProblemDetails = validationErrorResult.Value.Should().BeOfType<ValidationProblemDetails>().Subject;
+            var errorMessage = validationProblemDetails.Errors["SightedAt"][0];
+            errorMessage.Should().Be("Sighted At must be in the past");
+        }
+
+        [Fact]
+        public async void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.AtlanticWhiteSidedDolphin
+            };
+
+            var sightingResponse = new SightingResponseModel
+            {
+                Id = 1,
+                SightedAt = DateTime.Now,
+                Species = "AtlanticWhiteSidedDolphin",
+                Quantity = 2,
+                Location = "atlantic ocean",
+                Longitude = -100.010,
+                Latitude = -22.010,
+                Description = "was nice",
+                OrcaType = "",
+                OrcaPod = "",
+                Username = "FakeUser",
+                Confirmed = false,
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting, pageFilter))
+                .Returns(new List<SightingResponseModel> { sightingResponse });
+
+            // Act
+            var response = await _underTest.SearchSighting(searchSighting, pageFilter);
+
+            // Assert
+            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
+            searchResult.Should().Contain(sightingResponse);
+        }
+
+        [Fact]
+        public async void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+            var searchSighting = new SearchSightingRequestModel
+            {
+                Species = Species.Minke
+            };
+
+            A.CallTo(() => _sightings.SearchSighting(searchSighting, pageFilter))
+                .Returns(new List<SightingResponseModel>());
+
+            // Act
+            var response = await _underTest.SearchSighting(searchSighting, pageFilter);
+
+            // Assert
+            response.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+            var serviceResponse = new List<SightingResponseModel>
+            {
+                new SightingResponseModel(),
+                new SightingResponseModel(),
+                new SightingResponseModel()
+            };
+
+            A.CallTo(() => _sightings.GetNotConfirmedSightings(pageFilter))
+                .Returns(serviceResponse);
+
+            // Act
+            var result = await _underTest.GetNotConfirmedSightings(pageFilter);
+
+            // Assert
+            result.Should().HaveCount(3);
         }
 
         [Fact]
@@ -139,7 +240,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -171,84 +271,6 @@ namespace WhaleSpotting.UnitTests.Controllers
         }
 
         [Fact]
-        public void SearchSighting_ValidSearchSighting_ReturnsSearchResult()
-        {
-            // Arrange
-            var searchSighting = new SearchSightingRequestModel
-            {
-                Species = Species.AtlanticWhiteSidedDolphin
-
-            };
-
-            var sightingResponse = new SightingResponseModel
-            {
-                Id = 1,
-                SightedAt = DateTime.Now,
-                Species = "AtlanticWhiteSidedDolphin",
-                Quantity = 2,
-                Location = "atlantic ocean",
-                Longitude = -100.010,
-                Latitude = -22.010,
-                Description = "was nice",
-                OrcaType = "",
-                OrcaPod = "",
-                UserId = 5,
-                Username = "FakeUser",
-                Confirmed = false,
-            };
-
-            A.CallTo(() => _sightings.SearchSighting(searchSighting))
-                .Returns(new List<SightingResponseModel> { sightingResponse });
-
-            // Act
-            var response = _underTest.SearchSighting(searchSighting);
-
-            // Assert
-            var searchResult = response.Value.Should().BeOfType<List<SightingResponseModel>>().Subject;
-            searchResult.Should().Contain(sightingResponse);
-        }
-
-        [Fact]
-        public void SearchSighting_CalledWithInvalidSearchSighting_ReturnsNotFound()
-        {
-            // Arrange
-            var searchSighting = new SearchSightingRequestModel
-            {
-                Species = Species.Minke
-            };
-
-            A.CallTo(() => _sightings.SearchSighting(searchSighting))
-                .Returns(new List<SightingResponseModel>());
-
-            // Act
-            var response = _underTest.SearchSighting(searchSighting);
-
-            // Assert
-            response.Result.Should().BeOfType<NotFoundResult>();
-        }
-
-        [Fact]
-        public async Task GetNotConfirmedSightings_Called_ReturnsUnconfirmedSightings()
-        {
-            // Arrange
-            var serviceResponse = new List<SightingResponseModel>
-            {
-                new SightingResponseModel(),
-                new SightingResponseModel(),
-                new SightingResponseModel()
-            };
-
-            A.CallTo(() => _sightings.GetNotConfirmedSightings())
-                .Returns(serviceResponse);
-
-            // Act
-            var result = await _underTest.GetNotConfirmedSightings();
-
-            // Assert
-            result.Should().HaveCount(3);
-        }
-
-        [Fact]
         public async void DeleteSighting_CalledWithId_ReturnsSighting()
         {
             // Arrange
@@ -266,9 +288,8 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = 5,
                 Username = "FakeUser",
-                Confirmed = true,
+                Confirmed = true
             };
 
             A.CallTo(() => _sightings.DeleteSighting(id))
@@ -295,6 +316,26 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             // Assert
             result.Result.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public async void GetSpeciesByCoordinates_CalledWithLatLongInQuery_ReturnsListOfSpecies()
+        {
+            // Arrange
+            var lat = 2.00;
+            var lon = 2.00;
+
+            var serviceResponse = new List<Species?>() { Species.AtlanticWhiteSidedDolphin };
+
+            A.CallTo(() => _sightings.GetSpeciesByCoordinates(lat, lon))
+                .Returns(serviceResponse);
+
+            // Act
+            var controllerResponse = await _underTest.GetSpeciesByCoordinates(lat, lon);
+
+            // Assert
+            controllerResponse.Should().BeOfType<List<Species?>>();
+            controllerResponse.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
     }
 }
