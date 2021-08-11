@@ -19,7 +19,7 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                 minWidth25={true}
                 hidden={page <= 1 ? true : false}
             />
-            <div />
+            <div> Page {page} </div>
             <Button data-testid="next-page"
                 style={Style.secondary}
                 text="Next Page"
