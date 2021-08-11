@@ -53,6 +53,7 @@ namespace WhaleSpotting.Services
                 .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod == searchSighting.OrcaPod)
                 .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location == searchSighting.Location)
                 .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
+                .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
@@ -115,6 +116,7 @@ namespace WhaleSpotting.Services
         {
             var sightings = await _context.Sightings
                 .Where(s => s.Confirmed == false)
+                .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)

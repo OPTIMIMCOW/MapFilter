@@ -33,6 +33,16 @@ export async function createSighting(sighting: CreateSightingApiModel): Promise<
     return await fetch("api/sightings/create", await getPostSettings(sighting));
 }
 
+export async function confirmSighting(id: number): Promise<SightingApiModel> {
+    return await fetch(`api/sightings/${id}/confirm`, await getPutSettings())
+        .then(r => r.json());
+}
+
+export async function deleteSighting(id: number): Promise<SightingApiModel> {
+    return await fetch(`api/sightings/${id}/reject`, await getDeleteSettings())
+        .then(r => r.json());
+}
+
 export async function fetchCurrentUser(): Promise<UserApiModel> {
     return await fetch("api/user/GetCurrentUser", await getGetSettings())
         .then(r => r.json());
@@ -78,4 +88,36 @@ async function getGetSettings(): Promise<any> {
     return {
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
     };
+}
+
+async function getPutSettings(): Promise<any> {
+    const token = await authService.getAccessToken();
+    return {
+        method: "PUT",
+        headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+    };
+}
+
+async function getDeleteSettings(): Promise<any> {
+    const token = await authService.getAccessToken();
+    return {
+        method: "DELETE",
+        headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+    };
+}
+export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
+    return await fetch(`api/sightings/search?
+        ${search.species ? "species=" + search.species : ""}
+        ${search.longitude ? "&longitude=" + search.longitude : ""}
+        ${search.latitude ? "&latitude=" + search.latitude : ""}
+        ${search.location ? "&location=" + search.location : ""}
+        ${search.sightedFrom ? "&sightedFrom=" + search.sightedFrom : ""}
+        ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
+        ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
+        ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
+        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
+        ${pageNumber ? "&pageNumber=" + pageNumber : ""}
+        ${pageSize ? "&pageSize=" + pageSize : ""}`,
+    await getGetSettings())
+        .then(r => r.json());
 }
