@@ -21,9 +21,8 @@ export default function Home(): JSX.Element {
             .then(data => setData(data));
     }
 
-    function ReturnSightings(data: any): JSX.Element {
-        const [apiData, setApiData] = useState([]);
-        const info = data.map(s => {
+    function ReturnSightings(props: any): JSX.Element {
+        const info = props.data.map(s => {
         const sighting: SightingApiModel =
         {
             id: s.Id,
@@ -46,39 +45,6 @@ export default function Home(): JSX.Element {
             <Card sighting={s} />
         })
     }
-    
-
-    const orca: SightingApiModel = {
-        id: 1,
-        sightedAt: new Date().toDateString(),
-        species: "whale",
-        quantity: 1,
-        location: "Deep Ocean",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Whale",
-        orcaPod: "k",
-        confirmed: true,
-        userId: 2,
-        username: "FakeUser1"
-    };
-    
-    const orcaConfirmed: SightingApiModel = {
-        id: 2,
-        sightedAt: new Date().toDateString(),
-        species: "orca",
-        quantity: 3,
-        location: "Sea",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Orca",
-        orcaPod: "",
-        confirmed: true,
-        userId: 2,
-        username: "FakeUserConfirmed"
-    };
 
     function nextPage() {
         setPage(page + 1);
@@ -111,11 +77,7 @@ export default function Home(): JSX.Element {
                     />
                 </div>
                 <div className="card-holder">
-                    {/*{data ? <returnSightings> :"Loading" }*/}
-                    <Card sighting={orca} />
-                    <Card sighting={orca}/>
-                    <Card sighting={orcaConfirmed}/>
-                    <Card sighting={orca}/>
+                    {data ? <ReturnSightings props={data} /> :"Loading" }
                 </div>
                 <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
