@@ -12,7 +12,6 @@ export default function Home(): JSX.Element {
     const [data, setData] = useState< SightingApiModel[]>([]);
 
     function orderFeedBy(): void {
-
         //TODO "this needs to be implemented";
     }
 
