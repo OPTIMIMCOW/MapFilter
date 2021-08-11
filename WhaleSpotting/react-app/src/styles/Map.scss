@@ -1,7 +1,12 @@
 @import "./Constants.scss";
 
+.map-component-container {
+    margin-top: $headerHeight;
+    margin-bottom: $footerHeight;
+}
+
 .map-component {
-    margin: $headerHeight auto $footerHeight auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     max-width: $bodyWidth;
@@ -20,6 +25,10 @@
 }
 
 @media (max-width: $mobileScreenSize) {
+    .map-component-container {
+        margin-top: $mobileHeaderHeight;
+        margin-bottom: $mobileFooterHeight;
+    }
 
     .map-container {
         width: 95%;
