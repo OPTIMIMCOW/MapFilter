@@ -9,44 +9,15 @@ import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
-    const [data, setData] = useState<SightingApiModel[]>([]);
+    const [data, setData] = useState< SightingApiModel[]>([]);
 
     function orderFeedBy(): void {
 
         //TODO "this needs to be implemented";
     }
 
-
-   
-
-    //function ReturnSightings(props: any): JSX.Element {
-    //    const info = props.data.map(s => {
-    //    const sighting: SightingApiModel =
-    //    {
-    //        id: s.Id,
-    //        sightedAt: s.SightedAt,
-    //        species: s.Species,
-    //        quantity: s.Quantity,
-    //        location: s.Location,
-    //        longitude: s.Longitude,
-    //        latitude: s.Latitude,
-    //        description: s.Description,
-    //        orcaType: s.OrcaType,
-    //        orcaPod: s.OrcaPod,
-    //        confirmed: s.Confirmed,
-    //        userId: s.UserId,
-    //        username: s.Username
-    //    };
-    //    return sighting;
-    //    });
-    //    return info.map(s => {
-    //        <Card sighting={s} />
-    //    })
-    //}
-
     useEffect(() => {
         getConfirmedSightings({ "confirmed": true }, page, 10)
-            .then(response => response.json())
             .then(data => setData(data));
     }, [page]);
 

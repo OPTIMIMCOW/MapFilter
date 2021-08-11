@@ -47,7 +47,7 @@ async function getGetSettings(): Promise<any> {
     };
 }
 
-export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber=1, pageSize=10) {
+export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
     //search = {Key: value, Key: Value}
     return await fetch(`api/sightings/search?
         ${search.species ? "species=" + search.species : ""}
@@ -61,5 +61,6 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
         ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
         ${pageNumber ? "&pageNumber=" + pageNumber : ""}
         ${pageSize ? "&pageSize=" + pageSize : ""}
-    `, await getGetSettings());
+    `, await getGetSettings())
+        .then(r => r.json());
 }
