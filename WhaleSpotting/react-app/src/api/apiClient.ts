@@ -70,7 +70,7 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
         ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
         ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
         ${pageNumber ? "&pageNumber=" + pageNumber : ""}
-        ${pageSize ? "&pageSize=" + pageSize : ""}
-    `, await getGetSettings())
+        ${pageSize ? "&pageSize=" + pageSize : ""}`,
+        await getGetSettings())
         .then(r => r.json());
 }
