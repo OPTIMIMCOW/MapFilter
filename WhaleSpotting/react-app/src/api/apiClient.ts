@@ -32,16 +32,12 @@ export async function createSighting(sighting: CreateSightingApiModel): Promise<
     return await fetch("api/sightings/create", await getPostSettings(sighting));
 }
 
-async function getPostSettings(apiModel: any): Promise<any> {
 export async function fetchCurrentUser(): Promise<UserApiModel> {
-    const headers = await getHeaders();
-    return await fetch("api/user/GetCurrentUser", {
-        headers: headers }
-    )
+    return await fetch("api/user/GetCurrentUser", await getGetSettings())
         .then(r => r.json());
 }
 
-async function getHeaders(): Promise<any> {
+async function getPostSettings(apiModel: any): Promise<any> {
     const token = await authService.getAccessToken();
     return {
         method: "POST",
