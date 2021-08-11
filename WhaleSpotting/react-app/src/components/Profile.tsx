@@ -132,7 +132,7 @@ export function Profile(): JSX.Element {
                 </div>
             </div>
             <div className="feed">
-                <h1 className="heading">Your {feedToggle}</h1>
+                <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
                     {cards}
                 </div>
