@@ -1,6 +1,7 @@
 ﻿import { SightingApiModel } from "./models/SightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
+import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
 import { UserApiModel } from "./models/UserApiModel";
 
 export async function fetchAllSightings(): Promise<SightingApiModel[]> {
@@ -9,7 +10,7 @@ export async function fetchAllSightings(): Promise<SightingApiModel[]> {
 }
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
-    return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, await getGetSettings())
+    return await fetch(`api/sightings/pending?pageNumber=${pageNumber}&pageSize=10`, await getGetSettings())
         .then(r => r.json());
 }
 
@@ -55,4 +56,21 @@ async function getGetSettings(): Promise<any> {
     return {
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
     };
+}
+
+export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
+    return await fetch(`api/sightings/search?
+        ${search.species ? "species=" + search.species : ""}
+        ${search.longitude ? "&longitude=" + search.longitude : ""}
+        ${search.latitude ? "&latitude=" + search.latitude : ""}
+        ${search.location ? "&location=" + search.location : ""}
+        ${search.sightedFrom ? "&sightedFrom=" + search.sightedFrom : ""}
+        ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
+        ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
+        ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
+        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
+        ${pageNumber ? "&pageNumber=" + pageNumber : ""}
+        ${pageSize ? "&pageSize=" + pageSize : ""}`,
+    await getGetSettings())
+        .then(r => r.json());
 }

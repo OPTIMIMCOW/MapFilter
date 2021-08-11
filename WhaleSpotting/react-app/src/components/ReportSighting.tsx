@@ -66,7 +66,7 @@ export default function ReportSighting(): JSX.Element {
         <div className="report-sighting" data-testid="report-sighting">
             <BannerImage />
             <div className="container">
-                <div className="title">Report Your Sighting</div>
+                <h2 className="title">Report Your Sighting</h2>
                 {responseMessage && !isError
                     ? <ShowResultMessage responseMessage={responseMessage} />
                     :
@@ -87,7 +87,7 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Species <span className="required">(required)</span></label>
                                     <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }}>
-                                        <option selected value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
+                                    <option selected value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
                                     <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
                                     <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
                                     <option value={Species.GrayWhale}>Gray Whale</option>,
@@ -114,7 +114,6 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Longitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" placeholder="Enter your longitude" required
-
                                         onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -126,7 +125,8 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Orca Type</label>
                                     <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }}>
-                                        <option selected value={0}>N/A</option>,
+
+                                    <option selected value={0}>N/A</option>,
                                     <option value={OrcaType.NorthernResident}>Northern Resident</option>,
                                     <option value={OrcaType.Offshore}>Offshore</option>,
                                     <option value={OrcaType.SouthernResident}>Southern Resident</option>,

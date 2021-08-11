@@ -21,6 +21,7 @@ namespace WhaleSpotting.Services
         Task<SightingResponseModel> DeleteSighting(int id);
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
+        Task<List<SightingResponseModel>> GetUserSightings(UserDbModel currentUser, PageFilter pageFilter);
     }
 
     public class SightingsService : ISightingsService
@@ -49,8 +50,9 @@ namespace WhaleSpotting.Services
                 .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
                 .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
-                .Where(s => searchSighting.OrcaPod == null || s.OrcaPod == searchSighting.OrcaPod)
-                .Where(s => searchSighting.Location == null || s.Location == searchSighting.Location)
+                .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod == searchSighting.OrcaPod)
+                .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location == searchSighting.Location)
+                .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
                 .OrderBy(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
@@ -170,6 +172,19 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings.Select(sightings => sightings.Species).Distinct();
+        }
+
+        public async Task<List<SightingResponseModel>> GetUserSightings(UserDbModel currentUser, PageFilter pageFilter)
+        {
+            var sightings = await _context.Sightings
+                .Include(s => s.User)
+                .Where(s => s.User.Id == currentUser.Id)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
+                .Select(s => new SightingResponseModel(s))
+                .ToListAsync();
+
+            return sightings;
         }
     }
 }

@@ -1,65 +1,238 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap%27');
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    align-self: center;
+    color: white;
+    text-decoration: none;
+    float: left;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #0072B5;
+    display: flex;
+    height: 60px;
+}
+
+.fixed-nav-links {
+    display: flex;
+    justify-self: flex-start;
+}
+
+.changing-nav-links {
+    justify-self: flex-end;
+}
+
+.text-container {
+    width: 100%;
+}
+
+.nav-bar {
+    max-width: 1024px;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    margin: auto;
+}
+
+.list {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    justify-self: center;
+}
+
+.nav-item {
+    align-self: center;
+    display: flex;
+}
+
+.nav-link {
+    margin: 0 10px;
+    padding: 9px;
+    white-space: nowrap;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+        .nav-link:hover {
+            background-color: #004785;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            width: max-content;
+        }
+
+.selected {
+    background-color: #004785;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    width: max-content;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    width: 100%;
 }
 
 .container {
-  max-width: 960px;
+    max-width: 960px;
 }
 
 .pricing-header {
-  max-width: 700px;
+    max-width: 700px;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+.banner-image{
+    height: 40vh;
+    object-fit: cover;
+    width:100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin: 60px 0 60px 0;
+    font-family: 'IBM Plex Sans', monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
 }
+
+.body-container {
+    max-width: 375px;
+    margin: auto;
+}
+
+.form-container {
+    margin: 0 20px;
+    padding-top: 1px;
+}
+
+.text-title {
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+.text-subtitle {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.card-component {
+    border-radius: 10px;
+    background-color: #CDE9FF;
+    padding: 10px 30px;
+}
+
+.form-control {
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border: 1px solid #0072B5;
+    box-sizing: border-box;
+   
+}
+
+        .form-control:focus {
+            outline: unset;
+            border: 2px solid #004785;
+        }
+
+.input-row {
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.text-danger {
+    font-size: 0.75rem;
+    color: red;
+}
+
+.btn-primary {
+    background-color: #004785;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.register-button {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.text-register {
+    font-size: 1rem;
+    color: #004785;
+}
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  overflow: scroll;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+    position: fixed;
+    bottom: 0;
+    background-color: #0072B5;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+}
+
+.footer-logo-container {
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.link {
+    padding: 1%;
+    color: white;
+    font-family: 'IBM Plex Sans', monospace;
+    text-decoration: none;
+}
+
+.logo {
+    height: 100%;
+}
+
+.whale-link {
+    margin-left: 10%;
 }
