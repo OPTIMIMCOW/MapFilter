@@ -15,8 +15,6 @@ export function Profile(): JSX.Element {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
-    //TODO get page from nav component state
-    const pageNumber = 1;
 
     useEffect(() => {
         checkifAdmin();
@@ -82,13 +80,13 @@ export function Profile(): JSX.Element {
 
     useEffect(() => {
         if (feedToggle == "Approvals") {
-            fetchPendingSightings(pageNumber)
+            fetchPendingSightings(page)
                 .then(data => setData(data));
         }
         else {
             setData([orca, orcaConfirmed]);
         }
-    }, [feedToggle]);
+    }, [feedToggle, page]);
 
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
