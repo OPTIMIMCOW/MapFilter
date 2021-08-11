@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Constants;
 using WhaleSpotting.Models.DbModels;
+using WhaleSpotting.Models.ResponseModels;
 
 namespace WhaleSpotting.Controllers
 {
@@ -54,6 +55,13 @@ namespace WhaleSpotting.Controllers
         public IActionResult CheckAdmin()
         {
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<UserResponseModel> GetCurrentUser()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            return new UserResponseModel(currentUser);
         }
     }
 }

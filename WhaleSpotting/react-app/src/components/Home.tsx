@@ -1,49 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import Card from "./Card";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
+import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
+    const [data, setData] = useState< SightingApiModel[]>([]);
 
-    function orderFeedBy():void {
+    function orderFeedBy(): void {
         //TODO "this needs to be implemented";
     }
 
-    const orca: SightingApiModel = {
-        id: 1,
-        sightedAt: new Date().toDateString(),
-        species: "whale",
-        quantity: 1,
-        location: "Deep Ocean",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Whale",
-        orcaPod: "k",
-        confirmed: true,
-        userId: 2,
-        username: "FakeUser1"
-    };
-    
-    const orcaConfirmed: SightingApiModel = {
-        id: 2,
-        sightedAt: new Date().toDateString(),
-        species: "orca",
-        quantity: 3,
-        location: "Sea",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Orca",
-        orcaPod: "",
-        confirmed: true,
-        userId: 2,
-        username: "FakeUserConfirmed"
-    };
+    useEffect(() => {
+        getConfirmedSightings({ "confirmed": true }, page, 10)
+            .then(data => setData(data));
+    }, [page]);
+
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     function nextPage() {
         setPage(page + 1);
@@ -58,7 +35,7 @@ export default function Home(): JSX.Element {
             <BannerImage />
             <div className="home-contents">
                 <div className="report-button-container">
-                    <Button 
+                    <Button
                         style={Style.primary}
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
@@ -76,10 +53,7 @@ export default function Home(): JSX.Element {
                     />
                 </div>
                 <div className="card-holder">
-                    <Card sighting={orca} />
-                    <Card sighting={orca}/>
-                    <Card sighting={orcaConfirmed}/>
-                    <Card sighting={orca}/>
+                    {cards.length === 0 ? "Loading..." : cards}
                 </div>
                 <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>

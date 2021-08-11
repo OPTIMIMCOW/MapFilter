@@ -17,7 +17,6 @@ const mockexample: SightingApiModel = {
     orcaType: "Orca",
     orcaPod: "",
     confirmed: true,
-    userId: 2,
     username: "FakeUserConfirmed"
 };
 

@@ -55,7 +55,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "1",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel
@@ -83,8 +83,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = currentUser.Id,
-                Username = currentUser.NormalizedEmail,
+                Username = currentUser.UserName,
                 Confirmed = false,
             };
 
@@ -110,7 +109,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "5",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel
@@ -166,7 +165,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = false,
             };
@@ -242,7 +240,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true,
             };
@@ -291,7 +288,6 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                UserId = "5",
                 Username = "FakeUser",
                 Confirmed = true
             };

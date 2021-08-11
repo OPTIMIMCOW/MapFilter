@@ -12,7 +12,7 @@ interface CardProps {
 export default function Card({ sighting, admin = false }: CardProps): JSX.Element {
 
     const [closeCard, setCardState] = useState(true);
-
+    
     return (
         <div>
             <div className="card-component" data-testid="card-component">
