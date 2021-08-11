@@ -55,7 +55,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "1",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel
@@ -83,7 +83,7 @@ namespace WhaleSpotting.UnitTests.Controllers
                 Description = "was nice",
                 OrcaType = "",
                 OrcaPod = "",
-                Username = "FakeUser",
+                Username = currentUser.UserName,
                 Confirmed = false,
             };
 
@@ -109,7 +109,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             var currentUser = new UserDbModel
             {
                 Id = "5",
-                NormalizedEmail = "Test"
+                UserName = "Test"
             };
 
             var newSighting = new SightingRequestModel

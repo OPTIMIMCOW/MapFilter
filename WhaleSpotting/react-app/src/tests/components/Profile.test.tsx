@@ -8,16 +8,6 @@ import {SightingApiModel} from "../../api/models/SightingApiModel";
 import { UserApiModel } from "../../api/models/UserApiModel";
 import { fetchPendingSightings, fetchCurrentUser } from "../../api/apiClient";
 
-test("renders the Profile information", () => {
-    render(
-        <Router>
-            <Profile />
-        </Router>
-    );
-    const title = screen.getByTestId("heading");
-    expect(title).toBeInTheDocument();
-});
-
 test("renders the Sightings feed", () => {
     render(
         <Router>
@@ -151,4 +141,7 @@ test("When profile renders, it calls API and gets current user", () => {
     setTimeout(()=>{
         expect(fetchCurrentUser).toBeCalled();
     }, 100);
+
+    const username = screen.getByTestId("username");
+    expect(username).toBeInTheDocument();
 });
