@@ -16,8 +16,6 @@ export function Profile(): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
     //TODO - get username from user api model
     const username = "username";
-    //TODO get page from nav component state
-    const pageNumber = 1;
 
     useEffect(() => {
         checkifAdmin();
@@ -72,21 +70,25 @@ export function Profile(): JSX.Element {
 
     function nextPage() {
         setPage(page + 1);
+        //eslint-disable-next-line
+        console.log(page);
     }
 
     function previousPage() {
         setPage(page - 1);
+        //eslint-disable-next-line
+        console.log(page);
     }
 
     useEffect(() => {
         if (feedToggle == "Approvals") {
-            fetchPendingSightings(pageNumber)
+            fetchPendingSightings(page)
                 .then(data => setData(data));
         }
         else {
             setData([orca, orcaConfirmed]);
         }
-    }, [feedToggle]);
+    }, [feedToggle, page]);
 
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
