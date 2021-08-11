@@ -21,25 +21,31 @@ export default function Home(): JSX.Element {
             .then(data => setData(data));
     }
 
-    //data.map(s => {
-    //    const whale: SightingApiModel =
-    //    {
-    //        id: s.Id,
-    //        sightedAt: new Date().toDateString(),
-    //        species: "whale",
-    //        quantity: 1,
-    //        location: "Deep Ocean",
-    //        longitude: 1.232,
-    //        latitude: 2.312,
-    //        description: "Whales at sea",
-    //        orcaType: "Whale",
-    //        orcaPod: "k",
-    //        confirmed: true,
-    //        userId: 2,
-    //        username: "FakeUser1"
-    //    };
-    //    return whale;
-    //});
+    function ReturnSightings(data: any): JSX.Element {
+        const [apiData, setApiData] = useState([]);
+        const info = data.map(s => {
+        const sighting: SightingApiModel =
+        {
+            id: s.Id,
+            sightedAt: s.SightedAt,
+            species: s.Species,
+            quantity: s.Quantity,
+            location: s.Location,
+            longitude: s.Longitude,
+            latitude: s.Latitude,
+            description: s.Description,
+            orcaType: s.OrcaType,
+            orcaPod: s.OrcaPod,
+            confirmed: s.Confirmed,
+            userId: s.UserId,
+            username: s.Username
+        };
+        return sighting;
+        });
+        return info.map(s => {
+            <Card sighting={s} />
+        })
+    }
     
 
     const orca: SightingApiModel = {
@@ -105,6 +111,7 @@ export default function Home(): JSX.Element {
                     />
                 </div>
                 <div className="card-holder">
+                    {/*{data ? <returnSightings> :"Loading" }*/}
                     <Card sighting={orca} />
                     <Card sighting={orca}/>
                     <Card sighting={orcaConfirmed}/>
