@@ -14,7 +14,7 @@ test("renders the Profile information", () => {
             <Profile />
         </Router>
     );
-    const title = screen.getByText("UserName");
+    const title = screen.getByTestId("heading");
     expect(title).toBeInTheDocument();
 });
 
