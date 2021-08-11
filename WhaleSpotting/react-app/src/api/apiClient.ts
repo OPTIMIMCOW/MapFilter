@@ -71,6 +71,6 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
         ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
         ${pageNumber ? "&pageNumber=" + pageNumber : ""}
         ${pageSize ? "&pageSize=" + pageSize : ""}`,
-        await getGetSettings())
+    await getGetSettings())
         .then(r => r.json());
 }
