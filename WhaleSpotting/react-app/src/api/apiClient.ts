@@ -48,6 +48,28 @@ export async function fetchCurrentUser(): Promise<UserApiModel> {
         .then(r => r.json());
 }
 
+export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
+    return await fetch(`api/sightings/search?
+        ${search.species ? "species=" + search.species : ""}
+        ${search.longitude ? "&longitude=" + search.longitude : ""}
+        ${search.latitude ? "&latitude=" + search.latitude : ""}
+        ${search.location ? "&location=" + search.location : ""}
+        ${search.sightedFrom ? "&sightedFrom=" + search.sightedFrom : ""}
+        ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
+        ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
+        ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
+        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
+        ${pageNumber ? "&pageNumber=" + pageNumber : ""}
+        ${pageSize ? "&pageSize=" + pageSize : ""}`,
+    await getGetSettings())
+        .then(r => r.json());
+}
+
+export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {
+    return await fetch(`api/sightings/current?pageNumber=${pageNumber}&pageSize=10`, await getGetSettings())
+        .then(r => r.json());
+}
+
 async function getPostSettings(apiModel: any): Promise<any> {
     const token = await authService.getAccessToken();
     return {
@@ -82,20 +104,4 @@ async function getDeleteSettings(): Promise<any> {
         method: "DELETE",
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
     };
-}
-export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
-    return await fetch(`api/sightings/search?
-        ${search.species ? "species=" + search.species : ""}
-        ${search.longitude ? "&longitude=" + search.longitude : ""}
-        ${search.latitude ? "&latitude=" + search.latitude : ""}
-        ${search.location ? "&location=" + search.location : ""}
-        ${search.sightedFrom ? "&sightedFrom=" + search.sightedFrom : ""}
-        ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
-        ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
-        ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
-        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
-        ${pageNumber ? "&pageNumber=" + pageNumber : ""}
-        ${pageSize ? "&pageSize=" + pageSize : ""}`,
-    await getGetSettings())
-        .then(r => r.json());
 }
