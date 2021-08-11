@@ -137,7 +137,11 @@ export function Profile(): JSX.Element {
                 <div className="card-holder">
                     {(cards.length === 0 && page === 1) ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
-                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
+
+                {(cards.length === 0 && page === 1 && feedToggle === "Sightings") ?
+                    <div></div>
+                    :
+                    <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />}
             </div>
         </div>
     );
