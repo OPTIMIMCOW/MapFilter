@@ -25,7 +25,6 @@ export default function Home(): JSX.Element {
         orcaType: "Whale",
         orcaPod: "k",
         confirmed: true,
-        userId: 2,
         username: "FakeUser1"
     };
     
@@ -41,7 +40,6 @@ export default function Home(): JSX.Element {
         orcaType: "Orca",
         orcaPod: "",
         confirmed: true,
-        userId: 2,
         username: "FakeUserConfirmed"
     };
 
