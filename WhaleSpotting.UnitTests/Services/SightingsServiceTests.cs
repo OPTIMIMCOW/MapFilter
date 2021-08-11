@@ -92,8 +92,8 @@ namespace WhaleSpotting.UnitTests.Services
         {
             // Arrange
             var user = new UserDbModel
-            {   
-                UserName = "test@example.com"                
+            {
+                UserName = "test@example.com"
             };
             var whaleSighting = new SightingDbModel
             {
@@ -617,6 +617,50 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void GetUsersSightings_Returns_ListOfSightings()
+        {
+            // Arrange
+            var pageFilter = new PageFilter();
+            var currentUser = new UserDbModel
+            {
+                Id = "1",
+                UserName = "ThisOne"
+            };
+
+            var otherUser = new UserDbModel
+            {
+                Id = "2",
+                UserName = "Other"
+            };
+
+            var sightings = new List<SightingDbModel>
+            {
+                new SightingDbModel
+                {
+                    User = currentUser
+                },
+                new SightingDbModel
+                {
+                    User = currentUser
+                },
+                new SightingDbModel
+                {
+                    User = otherUser
+                }
+            };
+
+            await Context.Sightings.AddRangeAsync(sightings);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = await _underTest.GetUserSightings(currentUser, pageFilter);
+
+            // Assert
+            result.Should().HaveCount(2);
+            result[0].Username.Should().Be(currentUser.UserName);
         }
     }
 }
