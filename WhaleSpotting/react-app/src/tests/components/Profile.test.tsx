@@ -87,12 +87,12 @@ test("When click next page approvals load new records", () => {
         __esModule: true,
         fetchPendingSightings: jest.fn(async (pageNumber: number): Promise<SightingApiModel[]> => {
             switch (pageNumber) {
-                case 1:
-                    return Promise.resolve([mockexample1]);
-                case 2:
-                    return Promise.resolve([mockexample2]);
-                default:
-                    return Promise.resolve([]);
+            case 1:
+                return Promise.resolve([mockexample1]);
+            case 2:
+                return Promise.resolve([mockexample2]);
+            default:
+                return Promise.resolve([]);
             }
         })
     }));
