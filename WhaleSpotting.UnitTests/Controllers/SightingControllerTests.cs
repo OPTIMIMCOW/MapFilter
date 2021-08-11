@@ -337,5 +337,45 @@ namespace WhaleSpotting.UnitTests.Controllers
             controllerResponse.Should().BeOfType<List<Species?>>();
             controllerResponse.Should().Contain(Species.AtlanticWhiteSidedDolphin);
         }
+
+        [Fact]
+        public async void GetCurrentUserSightings_Called_ReturnsCurrentUsersSightings()
+        {
+            //Arrange
+            var currentUser = new UserDbModel
+            {
+                Id = "1",
+                UserName = "Test"
+            };
+
+            var pageFilter = new PageFilter();
+            var serviceResponse = new List<SightingResponseModel>
+            {
+                new SightingResponseModel
+                {
+                    Username = "Test"
+                },
+                new SightingResponseModel
+                {
+                    Username = "Test"
+                },
+                new SightingResponseModel
+                {
+                    Username = "Test"
+                },
+            };
+
+            A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
+                .Returns(currentUser);
+
+            A.CallTo(() => _sightings.GetUserSightings(currentUser, pageFilter))
+                .Returns(serviceResponse);
+            // Act
+            var result = await _underTest.GetCurrentUserSightings(pageFilter);
+
+            // Assert
+            result.Should().HaveCount(3);
+            result[0].Username.Should().Be(currentUser.UserName);
+        }
     }
 }

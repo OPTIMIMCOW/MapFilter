@@ -34,8 +34,7 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetAllSightings();
         }
 
-        [Authorize]
-        [HttpGet("/search")]
+        [HttpGet("search")]
         public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
             var result = await _sightings.SearchSighting(searchSighting, pageFilter);
@@ -89,7 +88,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [Authorize]
-        [HttpGet("currentuser")]
+        [HttpGet("current")]
         public async Task<List<SightingResponseModel>> GetCurrentUserSightings([FromQuery] PageFilter pageFilter)
         {
             var currentUser = await _userManager.GetUserAsync(User);
