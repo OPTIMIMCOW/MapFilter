@@ -21,6 +21,7 @@ namespace WhaleSpotting.Services
         Task<SightingResponseModel> DeleteSighting(int id);
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
+        Task<List<SightingResponseModel>> GetUserSightings(UserDbModel currentUser, PageFilter pageFilter);
     }
 
     public class SightingsService : ISightingsService
@@ -171,6 +172,19 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             return sightings.Select(sightings => sightings.Species).Distinct();
+        }
+
+        public async Task<List<SightingResponseModel>> GetUserSightings(UserDbModel currentUser, PageFilter pageFilter)
+        {
+            var sightings = await _context.Sightings
+                .Include(s => s.User)
+                .Where(s => s.User.Id == currentUser.Id)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
+                .Select(s => new SightingResponseModel(s))
+                .ToListAsync();
+
+            return sightings;
         }
     }
 }
