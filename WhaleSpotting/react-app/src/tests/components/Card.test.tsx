@@ -62,7 +62,7 @@ test("On click the class changes to open", () => {
 });
 
 test("On approve the card class changes to hidden", () => {
-    render(<Card sighting={exampleUnconfirmed} />);
+    render(<Card sighting={exampleUnconfirmed} admin={true} />);
     const card = screen.getByTestId("sighting-card");
     const approveButton = screen.getByTestId("approve-button");
     userEvent.click(approveButton);
@@ -70,7 +70,7 @@ test("On approve the card class changes to hidden", () => {
 });
 
 test("On click of approve confirmSighting API is called", () => {
-    const sighting: SightingApiModel = {
+    const mockSighting: SightingApiModel = {
         id: 1,
         sightedAt: new Date().toDateString(),
         species: "orca",
@@ -81,18 +81,18 @@ test("On click of approve confirmSighting API is called", () => {
         description: "Whales at sea",
         orcaType: "Orca",
         orcaPod: "",
-        confirmed: true,
+        confirmed: false,
         username: "FakeUserConfirmed"
     };
 
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
         confirmSighting: jest.fn(async (id: number): Promise<SightingApiModel> => {
-            return Promise.resolve(sighting);
+            return Promise.resolve(mockSighting);
         })
     }));
 
-    render(<Card sighting={sighting} admin={true} />);
+    render(<Card sighting={mockSighting} admin={true} />);
 
     const approveButton = screen.getByTestId("approve-button");
     userEvent.click(approveButton);
