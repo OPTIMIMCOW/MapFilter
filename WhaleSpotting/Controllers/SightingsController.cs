@@ -90,9 +90,10 @@ namespace WhaleSpotting.Controllers
 
         [Authorize]
         [HttpGet("currentuser")]
-        public async Task<List<SightingResponseModel>> GetCurrentUserSightings(UserDbModel user)
+        public async Task<List<SightingResponseModel>> GetCurrentUserSightings([FromQuery] PageFilter pageFilter)
         {
-
+            var currentUser = await _userManager.GetUserAsync(User);
+            return await _sightings.GetUserSightings(currentUser, pageFilter);
         }
 
     }
