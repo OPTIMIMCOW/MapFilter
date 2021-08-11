@@ -66,7 +66,7 @@ test("On approve the card class changes to hidden", () => {
     const card = screen.getByTestId("sighting-card");
     const approveButton = screen.getByTestId("approve-button");
     userEvent.click(approveButton);
-    expect(card).toHaveClass("hidden");
+    expect(card).toHaveAttribute("hidden");
 });
 
 test("On click of approve confirmSighting API is called", () => {

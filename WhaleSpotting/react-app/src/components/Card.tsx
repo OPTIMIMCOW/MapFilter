@@ -14,7 +14,7 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
     const [closeCard, setCardState] = useState(true);
     
     return (
-        <div className={checked ? "hidden" : "" } data-testid="sighting-card">
+        <div hidden={checked} data-testid="sighting-card">
             <div className="card-component" data-testid="card-component">
                 {!sighting.confirmed && <div className="pending" data-testid="pending"> PENDING </div>}
                 <div className="card-info"
