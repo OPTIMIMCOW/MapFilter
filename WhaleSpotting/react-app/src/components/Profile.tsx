@@ -6,8 +6,9 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings } from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
+import { Link } from "react-router-dom";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -82,9 +83,9 @@ export function Profile(): JSX.Element {
         if (feedToggle == "Approvals") {
             fetchPendingSightings(page)
                 .then(data => setData(data));
-        }
-        else {
-            setData([orca, orcaConfirmed]);
+        } else if (feedToggle == "Sightings") {
+            fetchCurrentUserSightings(page)
+                .then(data => setData(data));
         }
     }, [feedToggle, page]);
 
@@ -134,7 +135,7 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h1 className="heading">Your {feedToggle}</h1>
                 <div className="card-holder">
-                    {cards}
+                    {(cards.length === 0 && page === 1) ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
                 <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>

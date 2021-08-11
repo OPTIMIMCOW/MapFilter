@@ -55,8 +55,9 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
         .then(r => r.json());
 }
 
-export async function GetCurrentUserSightings(pageNumber: number, pageSize: number): Promise<SightingApiModel[]> {
-
+export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {
+    return await fetch(`api/sightings/current?pageNumber=${pageNumber}&pageSize=10`, await getGetSettings())
+        .then(r => r.json());
 }
 
 async function getPostSettings(apiModel: any): Promise<any> {
