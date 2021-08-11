@@ -87,5 +87,13 @@ namespace WhaleSpotting.Controllers
         {
             return await _sightings.GetSpeciesByCoordinates(latitude, longitude);
         }
+
+        [Authorize]
+        [HttpGet("currentuser")]
+        public async Task<List<SightingResponseModel>> GetCurrentUserSightings(UserDbModel user)
+        {
+
+        }
+
     }
 }
