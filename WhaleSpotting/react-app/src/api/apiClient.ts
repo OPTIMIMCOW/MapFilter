@@ -49,7 +49,7 @@ async function getGetSettings(): Promise<any> {
 
 export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber=1, pageSize=10) {
     //search = {Key: value, Key: Value}
-    return await fetch(`sighting/search?
+    return await fetch(`api/sightings/search?
         ${search.species ? "species=" + search.species : ""}
         ${search.longitude ? "&longitude=" + search.longitude : ""}
         ${search.latitude ? "&latitude=" + search.latitude : ""}

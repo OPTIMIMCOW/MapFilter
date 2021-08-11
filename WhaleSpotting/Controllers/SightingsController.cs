@@ -35,8 +35,8 @@ namespace WhaleSpotting.Controllers
         }
 
         //[Authorize]
-        [HttpGet("/search")]
-        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, PageFilter pageFilter)
+        [HttpGet("search")]
+        public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, [FromQuery] PageFilter pageFilter)
         {
             var result = await _sightings.SearchSighting(searchSighting, pageFilter);
             return result.Any() ? result : NotFound();
