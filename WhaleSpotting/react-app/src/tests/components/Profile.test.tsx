@@ -4,7 +4,7 @@ import { Profile } from "../../components/Profile";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { Button, Style } from "../../components/Button";
-import {SightingApiModel} from "../../api/models/SightingApiModel";
+import { SightingApiModel } from "../../api/models/SightingApiModel";
 import { fetchPendingSightings } from "../../api/apiClient";
 
 const mockexample1: SightingApiModel = {
@@ -23,6 +23,21 @@ const mockexample1: SightingApiModel = {
     username: "FakeUserConfirmed"
 };
 
+const mockexample2: SightingApiModel = {
+    id: 2,
+    sightedAt: new Date().toDateString(),
+    species: "minke",
+    quantity: 3,
+    location: "Sea",
+    longitude: 1.232,
+    latitude: 2.312,
+    description: "Whales at sea",
+    orcaType: "Minke",
+    orcaPod: "",
+    confirmed: true,
+    userId: 2,
+    username: "FakeUserConfirmed"
+};
 test("renders the Profile information", () => {
     render(
         <Router>
@@ -46,7 +61,7 @@ test("renders the Sightings feed", () => {
 test("When approval selected get data from API and change heading to Your Approvals", () => {
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
-        fetchPendingSightings: jest.fn(async (pageNumber: number) : Promise<SightingApiModel[]> => {
+        fetchPendingSightings: jest.fn(async (pageNumber: number): Promise<SightingApiModel[]> => {
             return Promise.resolve([]);
         })
     }));
@@ -59,7 +74,7 @@ test("When approval selected get data from API and change heading to Your Approv
     const approvalButton = screen.getByTestId("approval-toggle");
     userEvent.click(approvalButton);
 
-    setTimeout(()=>{
+    setTimeout(() => {
         expect(fetchPendingSightings).toBeCalled();
     }, 100);
 
@@ -71,7 +86,14 @@ test("When click next page approvals load new records", () => {
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
         fetchPendingSightings: jest.fn(async (pageNumber: number): Promise<SightingApiModel[]> => {
-            return Promise.resolve([mockexample1]);
+            switch (pageNumber) {
+                case 1:
+                    return Promise.resolve([mockexample1]);
+                case 2:
+                    return Promise.resolve([mockexample2]);
+                default:
+                    return Promise.resolve([]);
+            }
         })
     }));
 
@@ -85,23 +107,26 @@ test("When click next page approvals load new records", () => {
     userEvent.click(approvalButton);
 
     setTimeout(() => {
-        expect(fetchPendingSightings).toBeCalled();
+        expect(fetchPendingSightings(1)).toBeCalled();
     }, 100);
 
     const title = screen.getByText("Your Approvals");
     expect(title).toBeInTheDocument();
-    
+
     setTimeout(() => {
         const nextPage = screen.getByTestId("next-page");
         userEvent.click(nextPage);
         const card = screen.getByTestId("card-component");
         expect(card).toBeInTheDocument();
+        const firstExample = screen.getAllByText("orca");
+        expect(firstExample).toBeInTheDocument();
     }, 200);
 
     setTimeout(() => {
-        expect(fetchPendingSightings).toBeCalled();
+        expect(fetchPendingSightings(2)).toBeCalled();
+        const secondExample = screen.getAllByText("minke");
+        expect(secondExample).toBeInTheDocument();
     }, 300);
-
 });
 
 test("User is admin, check RemoveAdmin & CheckApprovals do not have hidden attribute and AddAdmin has hidden attribute", () => {
