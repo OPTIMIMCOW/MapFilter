@@ -2,11 +2,32 @@
 
 .page-nav {
     display: inline-flex;
-    // justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
 }
-.previous .next {
-    width: 35%
+
+.previous-button, .next-button {
+    width: 30%;  
 }
-.page{
-    width: 30%
+
+.next-button {
+    text-align: right;
+}
+
+.page {
+    text-align: center;
+    margin: 5px;
+    padding: 15px 0;
+}
+
+@media (max-width: $mobileScreenSize) {
+
+    .previous-button, .next-button {
+        width: 40%;
+    }
+
+    .page {
+        width: 20%;
+        text-align: center;
+    } 
 }
