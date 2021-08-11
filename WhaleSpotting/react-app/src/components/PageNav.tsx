@@ -20,7 +20,7 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                 hidden={page <= 1 ? true : false}
             />
             <div />
-            <Button
+            <Button data-testid="next-page"
                 style={Style.secondary}
                 text="Next Page"
                 onClick={() => nextPage()}

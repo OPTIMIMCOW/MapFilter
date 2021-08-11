@@ -7,6 +7,22 @@ import { Button, Style } from "../../components/Button";
 import {SightingApiModel} from "../../api/models/SightingApiModel";
 import { fetchPendingSightings } from "../../api/apiClient";
 
+const mockexample1: SightingApiModel = {
+    id: 1,
+    sightedAt: new Date().toDateString(),
+    species: "orca",
+    quantity: 3,
+    location: "Sea",
+    longitude: 1.232,
+    latitude: 2.312,
+    description: "Whales at sea",
+    orcaType: "Orca",
+    orcaPod: "",
+    confirmed: true,
+    userId: 2,
+    username: "FakeUserConfirmed"
+};
+
 test("renders the Profile information", () => {
     render(
         <Router>
@@ -49,6 +65,43 @@ test("When approval selected get data from API and change heading to Your Approv
 
     const title = screen.getByText("Your Approvals");
     expect(title).toBeInTheDocument();
+});
+
+test("When click next page approvals load new records", () => {
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        fetchPendingSightings: jest.fn(async (pageNumber: number): Promise<SightingApiModel[]> => {
+            return Promise.resolve([mockexample1]);
+        })
+    }));
+
+    render(
+        <Router>
+            <Profile />
+        </Router>
+    );
+
+    const approvalButton = screen.getByTestId("approval-toggle");
+    userEvent.click(approvalButton);
+
+    setTimeout(() => {
+        expect(fetchPendingSightings).toBeCalled();
+    }, 100);
+
+    const title = screen.getByText("Your Approvals");
+    expect(title).toBeInTheDocument();
+    
+    setTimeout(() => {
+        const nextPage = screen.getByTestId("next-page");
+        userEvent.click(nextPage);
+        const card = screen.getByTestId("card-component");
+        expect(card).toBeInTheDocument();
+    }, 200);
+
+    setTimeout(() => {
+        expect(fetchPendingSightings).toBeCalled();
+    }, 300);
+
 });
 
 test("User is admin, check RemoveAdmin & CheckApprovals do not have hidden attribute and AddAdmin has hidden attribute", () => {

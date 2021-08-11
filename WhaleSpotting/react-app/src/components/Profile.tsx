@@ -70,14 +70,10 @@ export function Profile(): JSX.Element {
 
     function nextPage() {
         setPage(page + 1);
-        //eslint-disable-next-line
-        console.log(page);
     }
 
     function previousPage() {
         setPage(page - 1);
-        //eslint-disable-next-line
-        console.log(page);
     }
 
     useEffect(() => {
