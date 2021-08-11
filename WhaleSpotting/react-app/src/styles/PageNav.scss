@@ -1,6 +1,12 @@
 @import "./Constants.scss";
 
 .page-nav {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    // justify-content: space-between;
+}
+.previous .next {
+    width: 35%
+}
+.page{
+    width: 30%
 }
