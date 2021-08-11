@@ -41,36 +41,6 @@ export function Profile(): JSX.Element {
             .then(() => setFeedToggle("Sightings"));
     }
 
-    const orca: SightingApiModel = {
-        id: 1,
-        sightedAt: new Date().toDateString(),
-        species: "whale",
-        quantity: 1,
-        location: "Deep Ocean",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Whale",
-        orcaPod: "k",
-        confirmed: false,
-        username: "FakeUser1"
-    };
-
-    const orcaConfirmed: SightingApiModel = {
-        id: 2,
-        sightedAt: new Date().toDateString(),
-        species: "orca",
-        quantity: 3,
-        location: "Sea",
-        longitude: 1.232,
-        latitude: 2.312,
-        description: "Whales at sea",
-        orcaType: "Orca",
-        orcaPod: "",
-        confirmed: true,
-        username: "FakeUserConfirmed"
-    };
-
     function nextPage() {
         setPage(page + 1);
     }
@@ -89,7 +59,7 @@ export function Profile(): JSX.Element {
         }
     }, [feedToggle, page]);
 
-    const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     return (
         <div className="body">
@@ -133,7 +103,7 @@ export function Profile(): JSX.Element {
                 </div>
             </div>
             <div className="feed">
-                <h2 className="heading">Your {feedToggle}</h2>
+                <h1 className="heading">Your {feedToggle}</h1>
                 <div className="card-holder">
                     {(cards.length === 0 && page === 1) ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
