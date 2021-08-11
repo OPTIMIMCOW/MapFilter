@@ -9,7 +9,7 @@ export async function fetchAllSightings(): Promise<SightingApiModel[]> {
 }
 
 export async function fetchPendingSightings(pageNumber: number): Promise<SightingApiModel[]> {
-    return await fetch(`api/sightings/pending?page=${pageNumber}&pageSize=10`, await getGetSettings())
+    return await fetch(`api/sightings/pending?pageNumber=${pageNumber}&pageSize=10`, await getGetSettings())
         .then(r => r.json());
 }
 
