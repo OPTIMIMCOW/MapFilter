@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Card from "../../components/Card";
 import { SightingApiModel } from "../../api/models/SightingApiModel";
 import userEvent from "@testing-library/user-event";
+import { confirmSighting } from "../../api/apiClient";
 
 const exampleConfirmed: SightingApiModel = {
     id: 1,
@@ -58,4 +59,46 @@ test("On click the class changes to open", () => {
     const secondCol = screen.getByTestId("second-column");
     userEvent.click(card);
     expect(secondCol).toHaveClass("open");
+});
+
+test("On approve the card class changes to hidden", () => {
+    render(<Card sighting={exampleUnconfirmed} />);
+    const card = screen.getByTestId("sighting-card");
+    const approveButton = screen.getByTestId("approve-button");
+    userEvent.click(approveButton);
+    expect(card).toHaveClass("hidden");
+});
+
+test("On click of approve confirmSighting API is called", () => {
+    const sighting: SightingApiModel = {
+        id: 1,
+        sightedAt: new Date().toDateString(),
+        species: "orca",
+        quantity: 3,
+        location: "Sea",
+        longitude: 1.232,
+        latitude: 2.312,
+        description: "Whales at sea",
+        orcaType: "Orca",
+        orcaPod: "",
+        confirmed: true,
+        username: "FakeUserConfirmed"
+    };
+
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        confirmSighting: jest.fn(async (id: number): Promise<SightingApiModel> => {
+            return Promise.resolve(sighting);
+        })
+    }));
+
+    render(<Card sighting={sighting} admin={true} />);
+
+    const approveButton = screen.getByTestId("approve-button");
+    userEvent.click(approveButton);
+
+    setTimeout(() => {
+        expect(confirmSighting).toBeCalled();
+    }, 100);
+    
 });
