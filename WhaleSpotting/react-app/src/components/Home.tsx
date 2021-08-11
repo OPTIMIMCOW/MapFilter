@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Home.scss";
 import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
@@ -9,42 +9,48 @@ import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<SightingApiModel[]>([]);
 
     function orderFeedBy(): void {
-        
+
         //TODO "this needs to be implemented";
     }
-    async function getSightings(pageNumber: number, pageSize: number) {
-        const sightings = await getConfirmedSightings({ "confirmed": true }, pageNumber, pageSize)
+
+
+   
+
+    //function ReturnSightings(props: any): JSX.Element {
+    //    const info = props.data.map(s => {
+    //    const sighting: SightingApiModel =
+    //    {
+    //        id: s.Id,
+    //        sightedAt: s.SightedAt,
+    //        species: s.Species,
+    //        quantity: s.Quantity,
+    //        location: s.Location,
+    //        longitude: s.Longitude,
+    //        latitude: s.Latitude,
+    //        description: s.Description,
+    //        orcaType: s.OrcaType,
+    //        orcaPod: s.OrcaPod,
+    //        confirmed: s.Confirmed,
+    //        userId: s.UserId,
+    //        username: s.Username
+    //    };
+    //    return sighting;
+    //    });
+    //    return info.map(s => {
+    //        <Card sighting={s} />
+    //    })
+    //}
+
+    useEffect(() => {
+        getConfirmedSightings({ "confirmed": true }, page, 10)
             .then(response => response.json())
             .then(data => setData(data));
-    }
+    }, [page]);
 
-    function ReturnSightings(props: any): JSX.Element {
-        const info = props.data.map(s => {
-        const sighting: SightingApiModel =
-        {
-            id: s.Id,
-            sightedAt: s.SightedAt,
-            species: s.Species,
-            quantity: s.Quantity,
-            location: s.Location,
-            longitude: s.Longitude,
-            latitude: s.Latitude,
-            description: s.Description,
-            orcaType: s.OrcaType,
-            orcaPod: s.OrcaPod,
-            confirmed: s.Confirmed,
-            userId: s.UserId,
-            username: s.Username
-        };
-        return sighting;
-        });
-        return info.map(s => {
-            <Card sighting={s} />
-        })
-    }
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     function nextPage() {
         setPage(page + 1);
@@ -59,7 +65,7 @@ export default function Home(): JSX.Element {
             <BannerImage />
             <div className="home-contents">
                 <div className="report-button-container">
-                    <Button 
+                    <Button
                         style={Style.primary}
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
@@ -77,7 +83,7 @@ export default function Home(): JSX.Element {
                     />
                 </div>
                 <div className="card-holder">
-                    {data ? <ReturnSightings props={data} /> :"Loading" }
+                    {cards.length === 0 ? "Loading..." : cards}
                 </div>
                 <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
