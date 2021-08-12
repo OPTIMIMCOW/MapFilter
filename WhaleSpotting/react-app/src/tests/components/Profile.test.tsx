@@ -7,17 +7,18 @@ import { Button, Style } from "../../components/Button";
 import {SightingApiModel} from "../../api/models/SightingApiModel";
 import { UserApiModel } from "../../api/models/UserApiModel";
 import { fetchPendingSightings, fetchCurrentUser } from "../../api/apiClient";
+import { OrcaType, Species } from "../../api/ApiEnums";
 
 const mockexample1: SightingApiModel = {
     id: 1,
     sightedAt: new Date().toDateString(),
-    species: "orca",
+    species: Species.Orca,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "Orca",
+    orcaType: OrcaType.Offshore,
     orcaPod: "",
     confirmed: true,
     username: "FakeUserConfirmed"
@@ -26,13 +27,13 @@ const mockexample1: SightingApiModel = {
 const mockexample2: SightingApiModel = {
     id: 2,
     sightedAt: new Date().toDateString(),
-    species: "minke",
+    species: Species.Minke,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "Minke",
+    orcaType: null,
     orcaPod: "",
     confirmed: true,
     username: "FakeUserConfirmed"
