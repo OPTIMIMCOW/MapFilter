@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import SightingMapInfo from "../../components/SightingMapInfo";
 import { BrowserRouter as Router } from "react-router-dom";
+import { fetchSpecies } from "../../api/apiClient";
 
 describe("Map Chart component tests", () => {
     test("Renders MapChart", () => {
