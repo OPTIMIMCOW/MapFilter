@@ -26,7 +26,7 @@ namespace WhaleSpotting.Models.RequestModels
         public OrcaType? OrcaType { get; set; }
 
         public string OrcaPod { get; set; } = null;
-        public bool? Confirmed { get; set; }
+        
         [Range(0, int.MaxValue, ErrorMessage = "Radius in km must be greater than 0")]
         public int? RadiusKm { get; set; } = 50;
     }

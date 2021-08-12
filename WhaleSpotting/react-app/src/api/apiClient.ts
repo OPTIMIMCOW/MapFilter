@@ -48,7 +48,7 @@ export async function fetchCurrentUser(): Promise<UserApiModel> {
         .then(r => r.json());
 }
 
-export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
+export async function searchSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
     return await fetch(`api/sightings/search?
         ${search.species ? "species=" + search.species : ""}
         ${search.longitude ? "&longitude=" + search.longitude : ""}
@@ -58,7 +58,7 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
         ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
         ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
         ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
-        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
+        ${search.radiusKm ? "&radiusKm=" + search.radiusKm : ""}
         ${pageNumber ? "&pageNumber=" + pageNumber : ""}
         ${pageSize ? "&pageSize=" + pageSize : ""}`,
     await getGetSettings())

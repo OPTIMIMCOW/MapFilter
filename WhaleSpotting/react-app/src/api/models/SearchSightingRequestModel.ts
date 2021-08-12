@@ -9,6 +9,5 @@ export interface SearchSightingRequestModel {
     sightedTo?: Date | null;
     orcaType?: OrcaType | null;
     orcaPod?: string;
-    confirmed?: boolean | null;
     radiusKm?: number;
 }

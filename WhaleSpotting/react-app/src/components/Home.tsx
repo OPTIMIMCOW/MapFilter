@@ -5,7 +5,7 @@ import { Button, Style } from "./Button";
 import Card from "./Card";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { BannerImage } from "./BannerImage";
-import { getConfirmedSightings } from "../api/apiClient";
+import { searchSightings } from "../api/apiClient";
 import { Species, OrcaType } from "../api/ApiEnums";
 import { SearchSightingRequestModel } from "../api/models/SearchSightingRequestModel";
 
@@ -22,11 +22,12 @@ export default function Home(): JSX.Element {
     const [radiusKm, setRadiusKm] = useState<number>(50);
     const [orcaPod, setOrcaPod] = useState<string>("");
     const [orcaType, setOrcaType] = useState<OrcaType | number>(0);
+    const [search, setSearch] = useState<SearchSightingRequestModel>({}); 
 
     useEffect(() => {
-        getConfirmedSightings({ "confirmed": true }, page, 10)
+        searchSightings(search, page, 10)
             .then(data => setData(data));
-    }, [page]);
+    }, [page, search]);
 
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
@@ -40,7 +41,7 @@ export default function Home(): JSX.Element {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const search: SearchSightingRequestModel = {
+        setSearch({
             species: species === 0 ? null : species,
             location: location,
             longitude: longitude,
@@ -50,16 +51,8 @@ export default function Home(): JSX.Element {
             orcaType: orcaType === 0 ? null : orcaType,
             orcaPod: orcaPod,
             radiusKm: radiusKm
-        };
-
-        const response = await createSighting(sighting)
-            .then(r => {
-                if (r.status === 400) {
-                    isError = true;
-                    return r.json();
-                }
-                return r.json();
-            })
+        });
+        setSearchFormOpen(!searchFormOpen);
     }
 
     return (
@@ -84,7 +77,7 @@ export default function Home(): JSX.Element {
                         minWidth25={true}
                     />
                 </div>
-                <div hidden={!searchFormOpen} className="search-form">
+                <div hidden={!searchFormOpen} className="search-form"> 
                     <form onSubmit={handleSubmit}>
                         <div className="card-component">
                             <div className="sighting-details">
@@ -162,6 +155,9 @@ export default function Home(): JSX.Element {
                         </div>
                         <button type="submit" className="submit-button">
                             Search
+                        </button>
+                        <button type="reset" className="reset-button" >
+                            Reset
                         </button>
                     </form>
                 </div>
