@@ -36,6 +36,21 @@ const exampleUnconfirmed: SightingApiModel = {
     username: "FakeUserNotConfirmed"
 };
 
+const orcaSouthen: SightingApiModel = {
+    id: 2,
+    sightedAt: new Date().toDateString(),
+    species: "Orca",
+    quantity: 3,
+    location: "Sea",
+    longitude: 1.232,
+    latitude: 2.312,
+    description: "Whales at sea",
+    orcaType: "SouthernResident",
+    orcaPod: "j",
+    confirmed: false,
+    username: "FakeUserNotConfirmed"
+};
+
 test("Renders card", () => {
     render(<Card sighting={exampleConfirmed} />);
     const cardComponent = screen.getByTestId("card-component");
@@ -100,6 +115,25 @@ test("On click of approve confirmSighting API is called", () => {
 
     setTimeout(() => {
         expect(confirmSighting).toBeCalled();
-    }, 100);
-    
+    }, 100); 
+});
+
+test("OrcaType is hidden for species not Orca", () => {
+    render(<Card sighting={exampleConfirmed} admin={true} />);
+    const orcaType = screen.getByTestId("orca-type");
+    expect(orcaType).toHaveAttribute("hidden");
+});
+
+test("OrcaPod is hidden if OrcaType is not SouthernResident", () => {
+    render(<Card sighting={exampleUnconfirmed} admin={true} />);
+    const orcaPod = screen.getByTestId("orca-pod");
+    expect(orcaPod).toHaveAttribute("hidden");
+});
+
+test("OrcaPod and OrcaType are not hidden for Orca SouthernResident", () => {
+    render(<Card sighting={orcaSouthen} admin={true} />);
+    const orcaType = screen.getByTestId("orca-type");
+    expect(orcaType).not.toHaveAttribute("hidden");
+    const orcaPod = screen.getByTestId("orca-type");
+    expect(orcaPod).not.toHaveAttribute("hidden");
 });

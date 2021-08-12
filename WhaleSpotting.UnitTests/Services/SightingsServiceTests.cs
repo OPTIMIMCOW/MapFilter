@@ -24,22 +24,25 @@ namespace WhaleSpotting.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetAllSightings_Called_ReturnsSightings()
+        public async Task GetAllSightings_Called_ReturnsConfirmedSightings()
         {
             // Arrange
             var sightings = new List<SightingDbModel>
             {
                 new SightingDbModel
                 {
-                    Id = 1
+                    Id = 1,
+                    Confirmed = true
                 },
                 new SightingDbModel
                 {
-                    Id = 2
+                    Id = 2,
+                    Confirmed = true
                 },
                 new SightingDbModel
                 {
-                    Id = 3
+                    Id = 3,
+                    Confirmed = false
                 }
             };
 
@@ -50,7 +53,7 @@ namespace WhaleSpotting.UnitTests.Services
             var result = await _underTest.GetAllSightings();
 
             // Assert
-            result.Should().HaveCount(3);
+            result.Should().HaveCount(2);
         }
 
         [Fact]
@@ -100,7 +103,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Quantity = 5,
                 Description = "Whales at sea",
                 SightedAt = DateTime.Now,
-                User = user
+                User = user,
+                Confirmed = true
             };
 
             await Context.Sightings.AddAsync(whaleSighting);
