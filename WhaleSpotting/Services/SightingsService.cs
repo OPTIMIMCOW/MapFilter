@@ -46,12 +46,22 @@ namespace WhaleSpotting.Services
 
         public async Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSighting, PageFilter pageFilter)
         {
+            var radiusInCoords = searchSighting.RadiusKm * 0.009;
+            var upperLatitude = searchSighting.Latitude + radiusInCoords;
+            var lowerLatitude = searchSighting.Latitude - radiusInCoords;
+
+            var upperLongitude = searchSighting.Longitude + radiusInCoords;
+            var lowerLongitude = searchSighting.Longitude - radiusInCoords;
+
             var sightings = await _context.Sightings
                 .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
                 .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
-                .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod == searchSighting.OrcaPod)
-                .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location == searchSighting.Location)
+                .Where(s => searchSighting.Latitude == null || s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
+                .Where(s => searchSighting.Longitude == null || s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
+                .Where(s => searchSighting.OrcaType == null || s.OrcaType == searchSighting.OrcaType)
+                .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod.ToLower() == searchSighting.OrcaPod.ToLower())
+                .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location.ToLower() == searchSighting.Location.ToLower())
                 .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
                 .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
