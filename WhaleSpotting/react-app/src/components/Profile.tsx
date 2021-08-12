@@ -76,25 +76,25 @@ export function Profile(): JSX.Element {
                     </div>
                     <div className="button-container">
                         <Button
-                            style={Style.primary}
+                            style={Style.secondary}
                             text="Sightings"
                             onClick={() => setFeedToggle("Sightings")}
                         />
                         <Button
-                            style={Style.primary}
+                            style={Style.secondary}
                             text="Approvals"
                             onClick={() => setFeedToggle("Approvals")}
                             dataTestId="approval-toggle"
                             hidden={!isUserAdmin}
                         />
                         <Button
-                            style={Style.secondary}
+                            style={Style.primary}
                             text="Make Admin"
                             onClick={makeAdminHandler}
                             hidden={isUserAdmin}
                             dataTestId="make-admin" />
                         <Button
-                            style={Style.secondary}
+                            style={Style.primary}
                             text="Remove Admin"
                             onClick={removeAdminHandler}
                             hidden={!isUserAdmin}
@@ -105,7 +105,7 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
-                    {cards.length === 0 && page === 1 ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
+                    {cards.length === 0 && page === 1 && feedToggle === "Sightings" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
                 {cards.length === 0 && page === 1 ?
