@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { Button, Style } from "./Button";
 import { deleteSighting, confirmSighting } from "../api/apiClient";
+import { Species } from "../api/ApiEnums";
+import { WhaleVisualTextDictionary } from "../api/ApiLookups";
+
 
 interface CardProps {
     sighting: SightingApiModel;
@@ -20,8 +23,8 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                 <div className="card-info"
                     onClick={() => setCardState(!closeCard)} data-testid="card">
                     <div className="first-column">
-                        <div>Sighted At: {sighting.sightedAt}</div>
-                        <div>Species: {sighting.species}</div>
+                        <div>Sighted At: {sighting.sightedAt.split("T")[0].replaceAll("-", "/")}</div>
+                        <div>Species: {WhaleVisualTextDictionary[Species[sighting.species as keyof typeof Species]]}</div>
                         <div>Location: {sighting.location}</div>
                         <div>Quantity: {sighting.quantity}</div>
                         <div>Reported By: {sighting.username} </div>
