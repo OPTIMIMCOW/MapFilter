@@ -30,7 +30,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     }, [chosen]);
 
     const images = speciesData.map(s =>
-        <div className="whale-image-comtainer" key={s}>
+        <div className={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"} key={s}>
             <img className="whale-image" src={WhaleImageDictionary[s]} alt="local species" />
         </div>);
 
