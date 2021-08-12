@@ -29,7 +29,9 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
         }
     }, [chosen]);
 
-    const response : IResponse = {
+    const images = speciesData.map(s => <img className="whale-image" key={s} src={WhaleImageDictionary[s]} alt="local species" />);
+
+    const response: IResponse = {
         lon: chosen?.lon,
         lat: chosen?.lat,
         species: speciesData,
@@ -38,6 +40,8 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     if (!chosen || !weatherData) {
         return <div className="weather-component-empty" data-testid="loading"></div>;
     }
+
+
 
     return (
         <div className="weather-component" data-testid="weather">
@@ -56,8 +60,11 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                         <li key={s}>{s}</li>)}</ul>
                 </div>
                 <div className="whale-image-container">
-                    <img className="whale-image" src={getSingleWhaleImage(response)} alt="local species" />
+                    {images.length == 0 ? "whaleicon512.png" : images[0]}
                 </div>
+            </div>
+            <div className="all-pictures" hidden={speciesData.length <= 1}>
+                {images}
             </div>
         </div>
     );
@@ -75,10 +82,11 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     }
 }
 
-function getSingleWhaleImage(response: IResponse): string {
+function getWhaleImageUrls(response: IResponse): string[] {
+
     return response.species.length != 0
-        ? WhaleImageDictionary[response.species[0]]
-        : "whaleicon512.png";
+        ? response.species.map(r => WhaleImageDictionary[r])
+        : [];
 }
 
 function getHumanReadableWhaleNames(response: IResponse): Array<string> {
