@@ -4,17 +4,18 @@ import Card from "../../components/Card";
 import { SightingApiModel } from "../../api/models/SightingApiModel";
 import userEvent from "@testing-library/user-event";
 import { confirmSighting } from "../../api/apiClient";
+import { OrcaType, Species } from "../../api/ApiEnums";
 
 const exampleConfirmed: SightingApiModel = {
     id: 1,
     sightedAt: new Date().toDateString(),
-    species: "Something else",
+    species: Species.CaliforniaSeaLion,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "Not known",
+    orcaType: null,
     orcaPod: "",
     confirmed: true,
     username: "FakeUserConfirmed"
@@ -23,13 +24,13 @@ const exampleConfirmed: SightingApiModel = {
 const exampleUnconfirmed: SightingApiModel = {
     id: 2,
     sightedAt: new Date().toDateString(),
-    species: "Orca",
+    species: Species.Orca,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "Orca",
+    orcaType: OrcaType.Offshore,
     orcaPod: "",
     confirmed: false,
     username: "FakeUserNotConfirmed"
@@ -38,13 +39,13 @@ const exampleUnconfirmed: SightingApiModel = {
 const orcaSouthen: SightingApiModel = {
     id: 2,
     sightedAt: new Date().toDateString(),
-    species: "Orca",
+    species: Species.Orca,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "SouthernResident",
+    orcaType: OrcaType.SouthernResident,
     orcaPod: "j",
     confirmed: false,
     username: "FakeUserNotConfirmed"
@@ -88,13 +89,13 @@ test("On click of approve confirmSighting API is called", () => {
     const mockSighting: SightingApiModel = {
         id: 1,
         sightedAt: new Date().toDateString(),
-        species: "orca",
+        species: Species.Orca,
         quantity: 3,
         location: "Sea",
         longitude: 1.232,
         latitude: 2.312,
         description: "Whales at sea",
-        orcaType: "Orca",
+        orcaType: OrcaType.Offshore,
         orcaPod: "",
         confirmed: false,
         username: "FakeUserConfirmed"
