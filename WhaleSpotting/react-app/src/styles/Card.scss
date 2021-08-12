@@ -4,7 +4,7 @@
     border-radius: 10px;
     background-color: $primaryCard;
     margin: 15px 0;
-
+    
     .card-info {
         display: inline-flex;
         padding: 10px 10px;
@@ -13,6 +13,7 @@
 
     .first-column, .second-column {
         width: 50%;
+        margin-right: 10px;
     }
 
     .pending {
@@ -31,10 +32,21 @@
     align-items: center;
 }
 
+.species-image {
+    width: 200px;
+    height: 150px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: 10px;
+    object-fit: cover;
+    border-radius: 5px;
+    align-self: center;
+}
+
 @media (max-width: $mobileScreenSize) {
 
     .card-component {
-        .card-info{
+        .card-info {
             display: block;
         }
 
@@ -45,5 +57,12 @@
         .closed {
             display: none;
         }
+    }
+}
+
+@media (max-width: 700px) {
+
+    .species-image {
+        display: none;
     }
 }

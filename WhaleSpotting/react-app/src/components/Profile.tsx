@@ -66,7 +66,7 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div className="inner-container">
-                        <h1 data-testid="username" className="heading">{currentUser?.username}</h1>
+                        <h2 data-testid="username" className="username">{currentUser?.username}</h2>
                         <div className="trophy-container">
                             <p className="feature-text"> 15</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>

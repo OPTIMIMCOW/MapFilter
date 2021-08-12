@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { Button, Style } from "./Button";
 import { deleteSighting, confirmSighting } from "../api/apiClient";
+import { WhaleImageDictionary } from "../api/ApiLookups";
 import { OrcaType, Species } from "../api/ApiEnums";
 import { WhaleVisualTextDictionary, OrcaTypeTextDictionary } from "../api/ApiLookups";
 
@@ -14,13 +15,14 @@ interface CardProps {
 export default function Card({ sighting, admin = false }: CardProps): JSX.Element {
     const [checked, setChecked] = useState(false);
     const [closeCard, setCardState] = useState(true);
-    
+
     return (
         <div hidden={checked} data-testid="sighting-card">
             <div className="card-component" data-testid="card-component">
                 {!sighting.confirmed && <div className="pending" data-testid="pending"> PENDING </div>}
                 <div className="card-info"
                     onClick={() => setCardState(!closeCard)} data-testid="card">
+                    <img className="species-image" data-testid="speciesImage" src={WhaleImageDictionary[sighting.species]} />
                     <div className="first-column">
                         <div>Sighted At: {sighting.sightedAt.split("T")[0].split("-").join("/")}</div>
                         <div>Species: {WhaleVisualTextDictionary[sighting.species]}</div>
