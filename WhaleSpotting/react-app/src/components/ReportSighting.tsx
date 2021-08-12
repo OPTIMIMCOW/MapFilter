@@ -79,7 +79,7 @@ export default function ReportSighting(): JSX.Element {
         <div className="report-sighting" data-testid="report-sighting">
             <BannerImage />
             <div className="container">
-                <div className="title">Report Your Sighting</div>
+                <h2 className="title">Report Your Sighting</h2>
                 {showForm
                     ?
                     <form onSubmit={handleSubmit}>
