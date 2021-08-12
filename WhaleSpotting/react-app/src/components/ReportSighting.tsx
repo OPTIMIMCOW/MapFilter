@@ -59,6 +59,7 @@ export default function ReportSighting(): JSX.Element {
     function handleError(response: any) {
         const keys = Object.keys(response.errors);
         setResponseMessage("Unsuccessful submission: " + response.errors[keys[0]][0]);
+        window.scrollTo(0, 0);
     }
 
     function resetForm() {
@@ -83,6 +84,7 @@ export default function ReportSighting(): JSX.Element {
                 {showForm
                     ?
                     <form onSubmit={handleSubmit}>
+                        <ShowResultMessage backgroundRed={true} responseMessage={responseMessage} />
                         <div className="card-component">
                             <div className="sighting-details">
                                 <div className="input-box">
@@ -160,7 +162,6 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                         </div>
                         <button type="submit" className="submit-button">Submit Sighting</button>
-                        <ShowResultMessage backgroundRed={true} responseMessage={responseMessage} />
                     </form>
                     
                     : <div>
