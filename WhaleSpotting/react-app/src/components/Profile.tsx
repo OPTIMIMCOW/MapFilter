@@ -52,27 +52,38 @@ export function Profile(): JSX.Element {
     }
 
     function assignRank() {
-        if (!currentUser){
+        if (!currentUser) {
             setRank(Rank.Newbie);
             return;
         }
-        switch (true) {
-        case (currentUser.sightingsCount === 0):
+        if (currentUser.sightingsCount === 0)
             setRank(Rank.Newbie);
-            break;
-        case (currentUser.sightingsCount < 3):
+        else if (currentUser.sightingsCount > 0 && currentUser.sightingsCount <= 3)
             setRank(Rank.Intermediate);
-            break;
-        case (currentUser.sightingsCount <= 6):
+        else if (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6)
             setRank(Rank.Advanced);
-            break;
-        case (currentUser.sightingsCount > 6):
+        else if (currentUser.sightingsCount > 6)
             setRank(Rank.Master);
-            break;
-        default:
+        else
             setRank(Rank.Newbie);
-            break;
-        }
+
+        //switch (true) {
+        //case (currentUser.sightingsCount === 0):
+        //    setRank(Rank.Newbie);
+        //    break;
+        //case (currentUser.sightingsCount > 0 && currentUser.sightingsCount < 3):
+        //    setRank(Rank.Intermediate);
+        //    break;
+        //case (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6):
+        //    setRank(Rank.Advanced);
+        //    break;
+        //case (currentUser.sightingsCount > 6):
+        //    setRank(Rank.Master);
+        //    break;
+        //default:
+        //    setRank(Rank.Newbie);
+        //    break;
+        //}
     }
 
     useEffect(() => {
@@ -96,7 +107,7 @@ export function Profile(): JSX.Element {
                         <div className="trophy-container">
                             <p className="feature-text">{currentUser?.sightingsCount ?? 0}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
-                            <img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]}/>
+                            <img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]} />
                         </div>
                         <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>

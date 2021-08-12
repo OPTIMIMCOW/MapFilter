@@ -6,8 +6,8 @@ export enum Rank {
 }
 
 export const reportSightingsRank = {
-    [Rank.Newbie]: "../../public/Newbie.png",
-    [Rank.Intermediate]: "../../public/Intermediate.png",
-    [Rank.Advanced]: "../../public/Advanced.png",
-    [Rank.Master]: "../../public/Master.png"
+    [Rank.Newbie]: "Newbie.jpg",
+    [Rank.Intermediate]: "Intermediate.jpg",
+    [Rank.Advanced]: "Advanced.jpg",
+    [Rank.Master]: "Master.jpg"
 };
