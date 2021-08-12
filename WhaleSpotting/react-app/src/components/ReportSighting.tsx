@@ -160,10 +160,14 @@ export default function ReportSighting(): JSX.Element {
                             </div>
                         </div>
                         <button type="submit" className="submit-button">Submit Sighting</button>
+                        <ShowResultMessage backgroundRed={true} responseMessage={responseMessage} />
                     </form>
-                    : <button className="submit-button" onClick={() => resetForm()}> Report Another Sighting</button>
-                }
-                <ShowResultMessage isError={showForm} responseMessage={responseMessage} />
+                    
+                    : <div>
+                        <button className="submit-button" onClick={() => resetForm()}> Report Another Sighting</button>
+                        <ShowResultMessage responseMessage={responseMessage} />
+                    </div>
+                } 
             </div>
         </div>
     );
