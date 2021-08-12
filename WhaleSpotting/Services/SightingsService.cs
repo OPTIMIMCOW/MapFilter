@@ -195,6 +195,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Include(s => s.User)
                 .Where(s => s.User.Id == currentUser.Id)
+                .Where(s => s.Confirmed)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 

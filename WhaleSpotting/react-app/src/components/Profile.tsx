@@ -9,6 +9,7 @@ import Card from "./Card";
 import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings, fetchUserSightingsCount } from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
 import { Link } from "react-router-dom";
+import { Rank, reportSightingsRank } from "../Enums/RankLookup";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -17,12 +18,11 @@ export function Profile(): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
     const [count, setCount] = useState(0);
-
+    const [rank, setRank] = useState<Rank>(0);
 
     useEffect(() => {
         checkifAdmin();
         getUser();
-        getUserSightingsCount();
     }, []);
 
     async function getUser() {
@@ -57,6 +57,26 @@ export function Profile(): JSX.Element {
         setPage(page - 1);
     }
 
+    function assignRank() {
+        switch (true) {
+        case (count === 0):
+            setRank(Rank.Newbie);
+            break;
+        case (count < 3):
+            setRank(Rank.Newbie);
+            break;
+        case (count <= 6):
+            setRank(Rank.Newbie);
+            break;
+        case (count > 6):
+            setRank(Rank.Newbie);
+            break;
+        default:
+            setRank(Rank.Newbie);
+            break;
+        }
+    }
+
     useEffect(() => {
         if (feedToggle == "Approvals") {
             fetchPendingSightings(page)
@@ -65,6 +85,8 @@ export function Profile(): JSX.Element {
             fetchCurrentUserSightings(page)
                 .then(data => setData(data));
         }
+        getUserSightingsCount();
+        assignRank();
     }, [feedToggle, page]);
 
     const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
@@ -76,9 +98,9 @@ export function Profile(): JSX.Element {
                     <div className="inner-container">
                         <h1 data-testid="username" className="heading">{currentUser?.username}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text"> 15</p>
+                            <p className="feature-text">{count}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
-                            <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
+                            <img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]}/>
                         </div>
                         <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>
