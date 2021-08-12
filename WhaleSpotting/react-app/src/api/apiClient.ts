@@ -63,10 +63,10 @@ export async function searchSightings(search: SearchSightingRequestModel, pageNu
         searchParams.push("location=" + search.location);
     }
     if (search.sightedFrom){
-        searchParams.push("sightedFrom=" + search.sightedFrom);
+        searchParams.push("sightedFrom=" + search.sightedFrom.toJSON());
     }
     if (search.sightedTo){
-        searchParams.push("sightedTo=" + search.sightedTo);
+        searchParams.push("sightedTo=" + search.sightedTo.toJSON());
     }
     if (search.orcaType){
         searchParams.push("orcaType=" + search.orcaType);
@@ -84,7 +84,7 @@ export async function searchSightings(search: SearchSightingRequestModel, pageNu
         searchParams.push("pageSize=" + pageSize);
     }
     return await fetch("api/sightings/search?" + searchParams.join("&"), await getGetSettings())
-        .then(r => r.json());
+        .then(r => r.status === 404 ? [] : r.json());
 }
 
 export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {

@@ -55,7 +55,7 @@ namespace WhaleSpotting.Services
 
             var sightings = await _context.Sightings
                 .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
-                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
+                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= Convert.ToDateTime(searchSighting.SightedFrom))
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
                 .Where(s => searchSighting.Latitude == null || s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
                 .Where(s => searchSighting.Longitude == null || s.Longitude > lowerLongitude && s.Longitude < upperLongitude)

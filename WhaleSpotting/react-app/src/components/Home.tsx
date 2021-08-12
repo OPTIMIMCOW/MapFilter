@@ -36,18 +36,10 @@ export default function Home(): JSX.Element {
 
     useEffect(() => {
         searchSightings(search, page, 10)
-            .then(data => setData(data))
-            //eslint-disable-next-line
-            .then(data => console.log(data));
+            .then(data => setData(data));
     }, [page, search]);
-
-    let cards;
-
-    if (!data) {
-        cards = "No sightings found";
-    } else {
-        cards = data.map((s, index) => <Card sighting={s} key={index} />);
-    }
+   
+    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
     function nextPage() {
         setPage(page + 1);
@@ -71,8 +63,6 @@ export default function Home(): JSX.Element {
             radiusKm: radiusKm
         };
         setSearch(formSearch);
-        //eslint-disable-next-line
-        console.log(search);
         setSearchFormOpen(!searchFormOpen);
     }
 
@@ -173,17 +163,14 @@ export default function Home(): JSX.Element {
                                         onChange={(e) => setOrcaPod(e.target.value)} />
                                 </div>
                             </div>
-                        </div>
                             <button type="submit" className="submit-button">
                                 Search
                             </button>
                         </div>
-                            Reset
-                        </button>
                     </form>
                 </div>
                 <div className="card-holder">
-                    {cards.length === 0 ? "Loading..." : cards}
+                    {cards.length === 0 ? "No Sightings Found" : cards}
                 </div>
                 <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
             </div>
