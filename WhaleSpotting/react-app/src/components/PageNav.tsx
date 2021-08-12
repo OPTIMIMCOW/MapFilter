@@ -17,7 +17,7 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                     style={Style.secondary}
                     text="Previous Page"
                     onClick={() => previousPage()}
-                    hidden={page <= 1 ? true : false}
+                    hidden={page <= 1}
                 />
             </div>
             <div className="page" data-testid="page-number"> Page {page} </div>
