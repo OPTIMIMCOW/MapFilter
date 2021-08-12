@@ -102,3 +102,32 @@ test("On click of approve confirmSighting API is called", () => {
     }, 100);
     
 });
+
+test("Test that the species image is rendered", () => {
+    const mockSighting: SightingApiModel = {
+        id: 1,
+        sightedAt: new Date().toDateString(),
+        species: "orca",
+        quantity: 3,
+        location: "Sea",
+        longitude: 1.232,
+        latitude: 2.312,
+        description: "Whales at sea",
+        orcaType: "Orca",
+        orcaPod: "",
+        confirmed: false,
+        username: "FakeUserConfirmed"
+    };
+
+    jest.mock("../../api/apiClient", () => ({
+        __esModule: true,
+        confirmSighting: jest.fn(async (id: number): Promise<SightingApiModel> => {
+            return Promise.resolve(mockSighting);
+        })
+    }));
+
+    render(<Card sighting={mockSighting} admin={true} />);
+    const speciesImage = screen.getByTestId("speciesImage");
+    expect(speciesImage).toBeInTheDocument();
+
+});

@@ -21,7 +21,7 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                 {!sighting.confirmed && <div className="pending" data-testid="pending"> PENDING </div>}
                 <div className="card-info"
                     onClick={() => setCardState(!closeCard)} data-testid="card">
-                    <img className="species-image" src={WhaleImageDictionary[Species[sighting.species as keyof typeof Species]]} />
+                    <img className="species-image" data-testid="speciesImage" src={WhaleImageDictionary[Species[sighting.species as keyof typeof Species]]} />
                     <div className="first-column">
                         <div>Sighted At: {sighting.sightedAt}</div>
                         <div>Species: {sighting.species}</div>
