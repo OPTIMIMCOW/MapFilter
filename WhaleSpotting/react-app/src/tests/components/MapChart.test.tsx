@@ -4,17 +4,18 @@ import { MapChart } from "../../components/MapChart";
 import { BrowserRouter as Router } from "react-router-dom";
 import { SightingApiModel } from "../../api/models/SightingApiModel";
 import { fetchAllSightings } from "../../api/apiClient";
+import { OrcaType, Species } from "../../api/ApiEnums";
 
 const mockexample: SightingApiModel = {
     id: 1,
     sightedAt: new Date().toDateString(),
-    species: "orca",
+    species: Species.Orca,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "Orca",
+    orcaType: OrcaType.NorthernResident,
     orcaPod: "",
     confirmed: true,
     username: "FakeUserConfirmed"

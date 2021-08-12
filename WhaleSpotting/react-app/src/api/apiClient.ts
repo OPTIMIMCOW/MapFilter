@@ -3,7 +3,6 @@ import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
 import { UserApiModel } from "./models/UserApiModel";
-import { Species } from "./ApiEnums";
 
 export async function fetchAllSightings(): Promise<SightingApiModel[]> {
     return await fetch("api/sightings", await getGetSettings())
