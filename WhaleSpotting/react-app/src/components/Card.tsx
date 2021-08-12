@@ -6,7 +6,6 @@ import { deleteSighting, confirmSighting } from "../api/apiClient";
 import { Species } from "../api/ApiEnums";
 import { WhaleVisualTextDictionary } from "../api/ApiLookups";
 
-
 interface CardProps {
     sighting: SightingApiModel;
     admin?: boolean;
