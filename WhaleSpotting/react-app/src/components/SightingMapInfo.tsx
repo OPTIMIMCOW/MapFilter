@@ -4,6 +4,7 @@ import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
 import { Species } from "../api/ApiEnums";
 import { WhaleImageDictionary, WhaleVisualTextDictionary } from "../api/ApiLookups";
+import { fetchSpecies } from "../api/apiClient";
 
 interface SightingMapInfoProps {
     chosen: Chosen | undefined;
@@ -25,12 +26,18 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     useEffect(() => {
         if (chosen) {
             fetchWeather();
-            fetchSpecies();
+            getSpecies();
         }
     }, [chosen]);
 
+    async function getSpecies() {
+        setSpeciesData(await fetchSpecies(chosen!.lon, chosen!.lat));
+    }
+
     const images = speciesData.map(s =>
-        <div className={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"} key={s}>
+        <div className={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"}
+            key={s}
+            data-testid={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"}>
             <img className="whale-image" src={WhaleImageDictionary[s]} alt="local species" />
         </div>);
 
@@ -43,8 +50,6 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     if (!chosen || !weatherData) {
         return <div className="weather-component-empty" data-testid="loading"></div>;
     }
-
-
 
     return (
         <div className="weather-component" data-testid="weather">
@@ -77,19 +82,6 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
             .then(response => response.json())
             .then(response => setWeatherData(response));
     }
-
-    async function fetchSpecies(): Promise<Array<string> | void> {
-        await fetch(`api/sightings/LocalSpecies?longitude=${chosen!.lon}&latitude=${chosen!.lat}`)
-            .then(response => response.json())
-            .then(response => setSpeciesData(response));
-    }
-}
-
-function getWhaleImageUrls(response: IResponse): string[] {
-
-    return response.species.length != 0
-        ? response.species.map(r => WhaleImageDictionary[r])
-        : [];
 }
 
 function getHumanReadableWhaleNames(response: IResponse): Array<string> {
