@@ -33,7 +33,7 @@
         flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 6%;
-        padding: 2% 5% 5% 5%;
+        padding: 2% 5%;
     }
 
     .input-box {
@@ -68,8 +68,8 @@
 
     .submit-button {
         height: 45px;
-        margin: 35px 0;
-        width: 100%;
+        margin: 15px 5%;
+        width: 90%;
         color: $textOnPrimary;
         border: none;
         font-size: $bodyFontSize;

@@ -36,10 +36,18 @@ export default function Home(): JSX.Element {
 
     useEffect(() => {
         searchSightings(search, page, 10)
-            .then(data => setData(data));
+            .then(data => setData(data))
+            //eslint-disable-next-line
+            .then(data => console.log(data));
     }, [page, search]);
 
-    const cards = data.map((s, index) => <Card sighting={s} key={index} />);
+    let cards;
+
+    if (!data) {
+        cards = "No sightings found";
+    } else {
+        cards = data.map((s, index) => <Card sighting={s} key={index} />);
+    }
 
     function nextPage() {
         setPage(page + 1);
@@ -166,10 +174,10 @@ export default function Home(): JSX.Element {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" className="submit-button">
-                            Search
-                        </button>
-                        <button type="reset" className="reset-button" >
+                            <button type="submit" className="submit-button">
+                                Search
+                            </button>
+                        </div>
                             Reset
                         </button>
                     </form>
