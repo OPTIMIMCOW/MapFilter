@@ -38,7 +38,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Where(s => s.Confirmed)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 
@@ -118,7 +118,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Where(s => s.Confirmed == false)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
@@ -182,6 +182,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Include(s => s.User)
                 .Where(s => s.User.Id == currentUser.Id)
+                .OrderByDescending(s => s.CreatedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
