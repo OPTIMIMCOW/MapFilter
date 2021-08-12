@@ -12,20 +12,22 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
 
     return (
         <div className="page-nav" data-testid="page-nav">
-            <Button
-                style={Style.secondary}
-                text="Previous Page"
-                onClick={() => previousPage()}
-                minWidth25={true}
-                hidden={page <= 1 ? true : false}
-            />
-            <div />
-            <Button data-testid="next-page"
-                style={Style.secondary}
-                text="Next Page"
-                onClick={() => nextPage()}
-                minWidth25={true}
-            />
+            <div className="previous-button" data-testid="previous-page">
+                <Button 
+                    style={Style.secondary}
+                    text="Previous Page"
+                    onClick={() => previousPage()}
+                    hidden={page <= 1}
+                />
+            </div>
+            <div className="page" data-testid="page-number"> Page {page} </div>
+            <div className="next-button" data-testid="next-page">
+                <Button 
+                    style={Style.secondary}
+                    text="Next Page"
+                    onClick={() => nextPage()}
+                />
+            </div>
         </div>
     );
 }
