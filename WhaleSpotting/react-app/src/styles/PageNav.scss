@@ -1,9 +1,8 @@
 @import "./Constants.scss";
 
 .page-nav {
-    display: inline-flex;
+    display: flex;
     justify-content: space-between;
-    width: 100%;
 }
 
 .previous-button, .next-button {
