@@ -8,6 +8,8 @@ test("Renders page nav", () => {
     render(<PageNav nextPage={voidFunction} previousPage={voidFunction} page={1}/>);
     const pageNav = screen.getByTestId("page-nav");
     expect(pageNav).toBeInTheDocument();
+    const pageNumber = screen.getByTestId("page-number");
+    expect(pageNumber).toBeInTheDocument();
 });
 
 test("Renders next page", () => {
