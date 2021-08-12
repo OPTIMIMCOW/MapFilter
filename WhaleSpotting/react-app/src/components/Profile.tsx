@@ -6,7 +6,7 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings, fetchUserSightingsCount } from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
 import { Link } from "react-router-dom";
 
@@ -16,14 +16,22 @@ export function Profile(): JSX.Element {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
+    const [count, setCount] = useState(0);
+
 
     useEffect(() => {
         checkifAdmin();
         getUser();
+        getUserSightingsCount();
     }, []);
 
     async function getUser() {
         setCurrentUser(await fetchCurrentUser());
+    }
+
+    async function getUserSightingsCount() {
+        await fetchUserSightingsCount()
+            .then(n => setCount(n));
     }
 
     async function checkifAdmin() {
@@ -105,7 +113,7 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
-                    {cards.length === 0 && page === 1 && feedToggle === "Sightings" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
+                    {cards.length === 0 && page === 1 && feedToggle === "" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
                 {cards.length === 0 && page === 1 ?

@@ -94,5 +94,13 @@ namespace WhaleSpotting.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             return await _sightings.GetUserSightings(currentUser, pageFilter);
         }
+
+        [Authorize]
+        [HttpGet("current/count")]
+        public async Task<int> GetCurrentUserSightingsCount()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            return await _sightings.GetUserSightingsCount(currentUser);
+        }
     }
 }
