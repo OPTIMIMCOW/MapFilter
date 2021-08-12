@@ -29,8 +29,8 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                         <div>Reported By: {sighting.username} </div>
                     </div>
                     <div data-testid="second-column" className={closeCard ? "second-column closed" : "second-column open"}>
-                        <div data-testid="orca-pod" hidden={sighting.orcaType !== OrcaType.SouthernResident}>Orca pod: {sighting.orcaPod}</div>
                         <div data-testid="orca-type" hidden={sighting.species !== Species.Orca || !sighting.orcaType}>Orca type: {sighting.orcaType === null ? "" : OrcaTypeTextDictionary[sighting.orcaType]}</div>
+                        <div data-testid="orca-pod" hidden={sighting.orcaType !== OrcaType.SouthernResident}>Orca pod: {sighting.orcaPod}</div>
                         <div>Longitude: {sighting.longitude} </div>
                         <div>Latitude: {sighting.latitude} </div>
                         <div>Description: {sighting.description} </div>
