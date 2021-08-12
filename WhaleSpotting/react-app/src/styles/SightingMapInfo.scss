@@ -32,6 +32,10 @@
     .whale-image {
         width: 80%;
     }
+
+    .all-pictures {
+        display: flex;
+    }
 }
 
 @media (max-width: $mobileScreenSize) {
@@ -47,6 +51,10 @@
 
         .species {
             width: 100%;
+        }
+
+        .all-pictures {
+            display: block;
         }
 
         .whale-image-container {

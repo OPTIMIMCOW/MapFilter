@@ -29,7 +29,10 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
         }
     }, [chosen]);
 
-    const images = speciesData.map(s => <img className="whale-image" key={s} src={WhaleImageDictionary[s]} alt="local species" />);
+    const images = speciesData.map(s =>
+        <div className="whale-image-comtainer" key={s}>
+            <img className="whale-image" src={WhaleImageDictionary[s]} alt="local species" />
+        </div>);
 
     const response: IResponse = {
         lon: chosen?.lon,
@@ -59,7 +62,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                     <ul className="list">{getHumanReadableWhaleNames(response).map(s =>
                         <li key={s}>{s}</li>)}</ul>
                 </div>
-                <div className="whale-image-container">
+                <div className="whale-image-container" hidden={speciesData.length > 1}>
                     {images.length == 0 ? "whaleicon512.png" : images[0]}
                 </div>
             </div>
