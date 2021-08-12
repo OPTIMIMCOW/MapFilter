@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using WhaleSpotting.Models.DbModels;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.ResponseModels
 {
@@ -13,7 +14,7 @@ namespace WhaleSpotting.Models.ResponseModels
         public DateTime SightedAt { get; set; }
 
         [JsonProperty("species")]
-        public string Species { get; set; }
+        public Species? Species { get; set; }
 
         [JsonProperty("quantity")]
         public int? Quantity { get; set; }
@@ -31,7 +32,7 @@ namespace WhaleSpotting.Models.ResponseModels
         public string Description { get; set; }
 
         [JsonProperty("orca_type")]
-        public string OrcaType { get; set; }
+        public OrcaType? OrcaType { get; set; }
 
         public string OrcaPod { get; set; }
 
@@ -49,13 +50,13 @@ namespace WhaleSpotting.Models.ResponseModels
         {
             Id = sighting.Id;
             SightedAt = sighting.SightedAt;
-            Species = sighting.Species.ToString();
+            Species = sighting.Species;
             Quantity = sighting.Quantity;
             Location = sighting.Location;
             Longitude = sighting.Longitude;
             Latitude = sighting.Latitude;
             Description = sighting.Description;
-            OrcaType = sighting.OrcaType.ToString();
+            OrcaType = sighting.OrcaType;
             OrcaPod = sighting.OrcaPod;
             Confirmed = sighting.Confirmed;
             Username = sighting.User?.UserName ?? "Whale Museum";

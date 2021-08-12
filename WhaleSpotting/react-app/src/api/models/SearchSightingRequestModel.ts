@@ -10,4 +10,5 @@ export interface SearchSightingRequestModel {
     orcaType?: OrcaType | null;
     orcaPod?: string;
     radiusKm?: number;
+    confirmed?: boolean;
 }

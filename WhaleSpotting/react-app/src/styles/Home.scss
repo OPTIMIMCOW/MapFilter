@@ -50,7 +50,6 @@
             border: 1px solid $primaryColour;
             box-sizing: border-box;
 
-
             &:focus {
                 outline: none;
                 border: 1.25px solid $primaryDark;
@@ -68,8 +67,8 @@
 
     .submit-button {
         height: 45px;
-        margin: 15px 5%;
-        width: 90%;
+        margin: 15px 2.5%;
+        width: 45%;
         color: $textOnPrimary;
         border: none;
         font-size: $bodyFontSize;

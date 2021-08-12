@@ -36,8 +36,9 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             var sightings = await _context.Sightings
+                .Where(s => s.Confirmed)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
                 .ToListAsync();
 
@@ -55,16 +56,16 @@ namespace WhaleSpotting.Services
 
             var sightings = await _context.Sightings
                 .Where(s => searchSighting.Species == null || s.Species == searchSighting.Species)
-                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= Convert.ToDateTime(searchSighting.SightedFrom))
+                .Where(s => searchSighting.SightedFrom == null || s.SightedAt >= searchSighting.SightedFrom)
                 .Where(s => searchSighting.SightedTo == null || s.SightedAt <= searchSighting.SightedTo)
                 .Where(s => searchSighting.Latitude == null || s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
                 .Where(s => searchSighting.Longitude == null || s.Longitude > lowerLongitude && s.Longitude < upperLongitude)
                 .Where(s => searchSighting.OrcaType == null || s.OrcaType == searchSighting.OrcaType)
                 .Where(s => string.IsNullOrEmpty(searchSighting.OrcaPod) || s.OrcaPod.ToLower() == searchSighting.OrcaPod.ToLower())
                 .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location.ToLower() == searchSighting.Location.ToLower())
-                .Where(s => s.Confirmed == true)
+                .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
@@ -127,7 +128,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Where(s => s.Confirmed == false)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
@@ -191,6 +192,7 @@ namespace WhaleSpotting.Services
             var sightings = await _context.Sightings
                 .Include(s => s.User)
                 .Where(s => s.User.Id == currentUser.Id)
+                .OrderByDescending(s => s.CreatedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))

@@ -4,6 +4,7 @@ import { Chosen } from "./Map";
 import "../styles/SightingMapInfo.scss";
 import { Species } from "../api/ApiEnums";
 import { WhaleImageDictionary, WhaleVisualTextDictionary } from "../api/ApiLookups";
+import { fetchSpecies } from "../api/apiClient";
 
 interface SightingMapInfoProps {
     chosen: Chosen | undefined;
@@ -25,11 +26,22 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     useEffect(() => {
         if (chosen) {
             fetchWeather();
-            fetchSpecies();
+            getSpecies();
         }
     }, [chosen]);
 
-    const response : IResponse = {
+    async function getSpecies() {
+        setSpeciesData(await fetchSpecies(chosen!.lon, chosen!.lat));
+    }
+
+    const images = speciesData.map(s =>
+        <div className={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"}
+            key={s}
+            data-testid={speciesData.length > 1 ? "whale-image-container" : "whale-image-container-single"}>
+            <img className="whale-image" src={WhaleImageDictionary[s]} alt="local species" />
+        </div>);
+
+    const response: IResponse = {
         lon: chosen?.lon,
         lat: chosen?.lat,
         species: speciesData,
@@ -55,9 +67,12 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                     <ul className="list">{getHumanReadableWhaleNames(response).map(s =>
                         <li key={s}>{s}</li>)}</ul>
                 </div>
-                <div className="whale-image-container">
-                    <img className="whale-image" src={getSingleWhaleImage(response)} alt="local species" />
+                <div className="whale-image-container" hidden={speciesData.length > 1}>
+                    {images.length == 0 ? "whaleicon512.png" : images[0]}
                 </div>
+            </div>
+            <div className={speciesData.length <= 1 ? "hidden" : "all-pictures"}>
+                {images}
             </div>
         </div>
     );
@@ -67,18 +82,6 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
             .then(response => response.json())
             .then(response => setWeatherData(response));
     }
-
-    async function fetchSpecies(): Promise<Array<string> | void> {
-        await fetch(`api/sightings/LocalSpecies?longitude=${chosen!.lon}&latitude=${chosen!.lat}`)
-            .then(response => response.json())
-            .then(response => setSpeciesData(response));
-    }
-}
-
-function getSingleWhaleImage(response: IResponse): string {
-    return response.species.length != 0
-        ? WhaleImageDictionary[response.species[0]]
-        : "whaleicon512.png";
 }
 
 function getHumanReadableWhaleNames(response: IResponse): Array<string> {

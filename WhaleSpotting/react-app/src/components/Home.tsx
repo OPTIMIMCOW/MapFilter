@@ -49,6 +49,19 @@ export default function Home(): JSX.Element {
         setPage(page - 1);
     }
 
+    function resetSearch() {
+        setSearchFormOpen(!searchFormOpen);
+        setFromDate(null);
+        setToDate(null);
+        setLocation("");
+        setSpecies(0);
+        setRadiusKm(50);
+        setLongitude(null);
+        setLatitude(null);
+        setOrcaType(0);
+        setOrcaPod("");
+    }
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formSearch: SearchSightingRequestModel = {
@@ -131,15 +144,15 @@ export default function Home(): JSX.Element {
                                     </select>
                                 </div>
                                 <div className="input-box">
+                                    <label>Longitude </label>
+                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude"
+                                        onChange={(e) => setLongitude(parseInt(e.target.value))} />
+                                </div>
+                                <div className="input-box">
                                     <label>Radius in Km </label>
                                     <input className="input-field" type="number" placeholder="Enter radius from specified coordinates in Km"
                                         value={radiusKm}
                                         onChange={(e) => setRadiusKm(parseInt(e.target.value))} />
-                                </div>
-                                <div className="input-box">
-                                    <label>Longitude </label>
-                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude"
-                                        onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude </label>
@@ -163,6 +176,9 @@ export default function Home(): JSX.Element {
                                         onChange={(e) => setOrcaPod(e.target.value)} />
                                 </div>
                             </div>
+                            <button type="reset" onClick={() => resetSearch} className="submit-button">
+                                Clear
+                            </button>
                             <button type="submit" className="submit-button">
                                 Search
                             </button>
