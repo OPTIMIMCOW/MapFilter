@@ -36,6 +36,7 @@ namespace WhaleSpotting.Services
         public async Task<List<SightingResponseModel>> GetAllSightings()
         {
             var sightings = await _context.Sightings
+                .Where(s => s.Confirmed)
                 .Include(s => s.User)
                 .OrderBy(s => s.SightedAt)
                 .Select(s => new SightingResponseModel(s))
@@ -54,7 +55,7 @@ namespace WhaleSpotting.Services
                 .Where(s => string.IsNullOrEmpty(searchSighting.Location) || s.Location == searchSighting.Location)
                 .Where(s => searchSighting.Confirmed == null || s.Confirmed == searchSighting.Confirmed)
                 .Include(s => s.User)
-                .OrderBy(s => s.SightedAt)
+                .OrderByDescending(s => s.SightedAt)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .Select(s => new SightingResponseModel(s))
