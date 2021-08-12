@@ -9,13 +9,13 @@ import { OrcaType, Species } from "../../api/ApiEnums";
 const exampleConfirmed: SightingApiModel = {
     id: 1,
     sightedAt: new Date().toDateString(),
-    species: Species.Orca,
+    species: Species.CaliforniaSeaLion,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: OrcaType.Offshore,
+    orcaType: null,
     orcaPod: "",
     confirmed: true,
     username: "FakeUserConfirmed"
@@ -39,13 +39,13 @@ const exampleUnconfirmed: SightingApiModel = {
 const orcaSouthen: SightingApiModel = {
     id: 2,
     sightedAt: new Date().toDateString(),
-    species: "Orca",
+    species: Species.Orca,
     quantity: 3,
     location: "Sea",
     longitude: 1.232,
     latitude: 2.312,
     description: "Whales at sea",
-    orcaType: "SouthernResident",
+    orcaType: OrcaType.SouthernResident,
     orcaPod: "j",
     confirmed: false,
     username: "FakeUserNotConfirmed"
