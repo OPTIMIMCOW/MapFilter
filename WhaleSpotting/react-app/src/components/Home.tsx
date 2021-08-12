@@ -76,7 +76,7 @@ export default function Home(): JSX.Element {
             radiusKm: radiusKm
         };
         setSearch(formSearch);
-        setSearchFormOpen(!searchFormOpen);
+        resetSearch();
     }
 
     return (
@@ -176,7 +176,7 @@ export default function Home(): JSX.Element {
                                         onChange={(e) => setOrcaPod(e.target.value)} />
                                 </div>
                             </div>
-                            <button type="reset" onClick={() => resetSearch} className="submit-button">
+                            <button type="reset" onClick={resetSearch} className="submit-button">
                                 Clear
                             </button>
                             <button type="submit" className="submit-button">
