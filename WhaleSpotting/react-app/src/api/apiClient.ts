@@ -3,6 +3,7 @@ import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
 import { UserApiModel } from "./models/UserApiModel";
+import { Species } from "./ApiEnums";
 
 export async function fetchAllSightings(): Promise<SightingApiModel[]> {
     return await fetch("api/sightings", await getGetSettings())
@@ -68,6 +69,11 @@ export async function getConfirmedSightings(search: SearchSightingRequestModel, 
 export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {
     return await fetch(`api/sightings/current?pageNumber=${pageNumber}&pageSize=10`, await getGetSettings())
         .then(r => r.json());
+}
+
+export async function fetchSpecies(lon: number, lat: number): Promise<Species[]> {
+    return await fetch(`api/sightings/LocalSpecies?longitude=${lon}&latitude=${lat}`)
+        .then(response => response.json());
 }
 
 async function getPostSettings(apiModel: any): Promise<any> {

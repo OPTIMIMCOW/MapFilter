@@ -9,7 +9,7 @@ import { getConfirmedSightings } from "../api/apiClient";
 
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
-    const [data, setData] = useState< SightingApiModel[]>([]);
+    const [data, setData] = useState<SightingApiModel[]>([]);
 
     function orderFeedBy(): void {
         //TODO "this needs to be implemented";

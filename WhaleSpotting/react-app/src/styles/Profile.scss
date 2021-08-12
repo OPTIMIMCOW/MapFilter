@@ -13,7 +13,7 @@
     background-color: $secondaryDark;
 }
 
-.feed{
+.feed {
     padding: $guttersTopBottom $guttersSide;
     flex: 1;
 }
@@ -22,67 +22,86 @@
     padding-top: $guttersTopBottom;
     width: 90%;
     flex-direction: column;
-    display:flex;
+    display: flex;
     margin: 0 auto;
 }
 
-.little-text{
+.little-text {
     margin: 0;
-    
-    &.reported{
+
+    &.reported {
         margin-left: 10px;
     }
 }
 
-.feature-text{
+.feature-text {
     font-size: $featureFontSize;
-    margin:0;
+    margin: 0;
 }
 
-.heading{
-    margin:0;
+.heading {
+    margin: 0;
     overflow-wrap: break-word;
+    text-align: center;
+}
+.username {
+    font-size: $mobileTitleFontSize;
+    margin: 0;
 }
 
-.button-container{
-    display:flex;
+.button-container {
+    display: flex;
     flex-direction: column;
     justify-content: flex-end;
     flex: 1;
     align-items: center;
 }
 
-.trophy-container{
-    display:flex;
-    align-items:center;
+.trophy-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.trophy-image{
-    width:70px;
+.trophy-image {
+    width: 70px;
     height: 70px;
-    margin-left:10px;
+    margin-left: 10px;
     border-radius: 50%;
 }
 
-.profile-image{
+.profile-image {
     width: 100%;
-    height:auto;
-    margin-top:5px;
+    height: auto;
+    margin-top: 5px;
     border-radius: 5%;
 }
 
-@media(max-width: $mobileScreenSize) {
+ .inner-container {
+     text-align: center;
+ }
+
+@media (max-width: 900px) {
+    .feed {
+
+        .closed {
+            display: none;
+        }
+    }
+}
+
+@media(max-width: 700px) {
     .body {
         flex-direction: column;
         margin: $mobileHeaderHeight auto $mobileFooterHeight auto;
     }
 
     .profile-pane {
-        width:100vw;
+        width: 100vw;
         min-height: 290px;
     }
 
-    .little-text { 
+    .little-text {
         font-size: $smallMobileBodyFontSize;
 
         &.reported {
@@ -98,30 +117,38 @@
         font-size: $mobileTitleFontSize;
     }
 
-    .outer-container{
+    .outer-container {
         flex-direction: row;
         padding: 3px 0;
     }
-    
-    .inner-container{
+
+    .inner-container {
         width: 50%;
     }
 
-    .button-container{
+    .button-container {
         width: 50%;
     }
 
-    .profile-image{
+    .profile-image {
         width: 170px;
     }
 }
 
+@media(max-width: $mobileScreenSize) {
+
+    .heading {
+        font-size: $mobileTitleFontSize;
+    }
+
+}
+
 @media(max-width: 335px) {
-    .button-container{
+    .button-container {
         width: 40%;
     }
 
-    .inner-container{
+    .inner-container {
         width: 60%;
     }
 }
