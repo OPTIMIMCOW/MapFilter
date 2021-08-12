@@ -36,6 +36,10 @@
     .all-pictures {
         display: flex;
     }
+
+    .hidden {
+        display: none;
+    }
 }
 
 @media (max-width: $mobileScreenSize) {

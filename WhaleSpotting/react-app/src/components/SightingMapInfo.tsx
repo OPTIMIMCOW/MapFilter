@@ -66,7 +66,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                     {images.length == 0 ? "whaleicon512.png" : images[0]}
                 </div>
             </div>
-            <div className="all-pictures" hidden={speciesData.length <= 1}>
+            <div className={speciesData.length <= 1 ? "hidden" : "all-pictures"}>
                 {images}
             </div>
         </div>
