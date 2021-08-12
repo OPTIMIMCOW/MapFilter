@@ -4,7 +4,7 @@ import { SightingApiModel } from "../api/models/SightingApiModel";
 import { Button, Style } from "./Button";
 import { deleteSighting, confirmSighting } from "../api/apiClient";
 import { Species } from "../api/ApiEnums";
-import { WhaleVisualTextDictionary } from "../api/ApiLookups";
+import { WhaleVisualTextDictionary, OrcaTypeTextDictionary } from "../api/ApiLookups";
 
 interface CardProps {
     sighting: SightingApiModel;
@@ -23,13 +23,13 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                     onClick={() => setCardState(!closeCard)} data-testid="card">
                     <div className="first-column">
                         <div>Sighted At: {sighting.sightedAt.split("T")[0].replaceAll("-", "/")}</div>
-                        <div>Species: {WhaleVisualTextDictionary[Species[sighting.species as keyof typeof Species]]}</div>
+                        <div>Species: {WhaleVisualTextDictionary[sighting.species]}</div>
                         <div>Location: {sighting.location}</div>
                         <div>Quantity: {sighting.quantity}</div>
                         <div>Reported By: {sighting.username} </div>
                     </div>
                     <div data-testid="second-column" className={closeCard ? "second-column closed" : "second-column open"}>
-                        <div>Orca type: {sighting.orcaType}</div>
+                        <div>Orca type: {sighting.orcaType === null ? "" : OrcaTypeTextDictionary[sighting.orcaType]}</div>
                         <div>Orca pod: {sighting.orcaPod}</div>
                         <div>Longitude: {sighting.longitude} </div>
                         <div>Latitude: {sighting.latitude} </div>
