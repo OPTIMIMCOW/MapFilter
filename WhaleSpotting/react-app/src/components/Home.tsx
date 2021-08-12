@@ -12,7 +12,7 @@ import { SearchSightingRequestModel } from "../api/models/SearchSightingRequestM
 export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
     const [data, setData] = useState<SightingApiModel[]>([]);
-    const [searchFormOpen, setSearchFormOpen] = useState<Boolean>(false);
+    const [searchFormOpen, setSearchFormOpen] = useState<boolean>(false);
     const [fromDate, setFromDate] = useState<Date>(new Date());
     const [toDate, setToDate] = useState<Date>(new Date());
     const [location, setLocation] = useState<string>("");
@@ -22,7 +22,17 @@ export default function Home(): JSX.Element {
     const [radiusKm, setRadiusKm] = useState<number>(50);
     const [orcaPod, setOrcaPod] = useState<string>("");
     const [orcaType, setOrcaType] = useState<OrcaType | number>(0);
-    const [search, setSearch] = useState<SearchSightingRequestModel>({}); 
+    const [search, setSearch] = useState<SearchSightingRequestModel>({
+        species: null,
+        location: "",
+        longitude: null,
+        latitude: null,
+        sightedFrom: null,
+        sightedTo: null,
+        orcaType: null,
+        orcaPod: "",
+        radiusKm: 50
+    }); 
 
     useEffect(() => {
         searchSightings(search, page, 10)
@@ -41,7 +51,7 @@ export default function Home(): JSX.Element {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        setSearch({
+        const formSearch: SearchSightingRequestModel = {
             species: species === 0 ? null : species,
             location: location,
             longitude: longitude,
@@ -51,7 +61,10 @@ export default function Home(): JSX.Element {
             orcaType: orcaType === 0 ? null : orcaType,
             orcaPod: orcaPod,
             radiusKm: radiusKm
-        });
+        };
+        setSearch(formSearch);
+        //eslint-disable-next-line
+        console.log(search);
         setSearchFormOpen(!searchFormOpen);
     }
 
@@ -83,17 +96,17 @@ export default function Home(): JSX.Element {
                             <div className="sighting-details">
                                 <div className="input-box">
                                     <label >Sighting Date From </label>
-                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting start date" required
+                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting start date" 
                                         onChange={(e) => setFromDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label >Sighting Date To </label>
-                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting end date" required
+                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting end date" 
                                         onChange={(e) => setToDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Location </label>
-                                    <input className="input-field" type="text" name="location" placeholder="Enter your location" required
+                                    <input className="input-field" type="text" name="location" placeholder="Enter your location" 
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)} />
                                 </div>
@@ -127,12 +140,12 @@ export default function Home(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Longitude </label>
-                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" required
+                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" 
                                         onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude </label>
-                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" required
+                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" 
                                         onChange={(e) => setLatitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
