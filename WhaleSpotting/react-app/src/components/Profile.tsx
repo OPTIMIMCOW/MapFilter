@@ -21,7 +21,7 @@ export function Profile(): JSX.Element {
 
     useEffect(() => {
         checkifAdmin();
-        getUser();
+        getUser().then(() => assignRank());
     }, []);
 
     async function getUser() {
@@ -83,7 +83,6 @@ export function Profile(): JSX.Element {
             fetchCurrentUserSightings(page)
                 .then(data => setData(data));
         }
-        assignRank();
     }, [feedToggle, page]);
 
     const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
@@ -95,7 +94,7 @@ export function Profile(): JSX.Element {
                     <div className="inner-container">
                         <h1 data-testid="username" className="heading">{currentUser?.username ?? "Loading"}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text">{currentUser?.sightingsCount ?? "Loading"}</p>
+                            <p className="feature-text">{currentUser?.sightingsCount ?? 0}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]}/>
                         </div>
