@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WhaleSpotting.Constants;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Services;
 
 namespace WhaleSpotting.Controllers
 {
@@ -17,14 +18,20 @@ namespace WhaleSpotting.Controllers
         private readonly SignInManager<UserDbModel> _signInManager;
         private readonly UserManager<UserDbModel> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ISightingsService _sightingsService;
 
-        public UserController(RoleManager<IdentityRole> roleManager, SignInManager<UserDbModel> signInManager, UserManager<UserDbModel> userManager)
+        public UserController(
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<UserDbModel> signInManager,
+            UserManager<UserDbModel> userManager,
+            ISightingsService sightingsService)
         {
             _roleManager = roleManager;
             _signInManager = signInManager;
             _userManager = userManager;
+            _sightingsService = sightingsService;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> MakeAdmin()
         {
@@ -61,7 +68,8 @@ namespace WhaleSpotting.Controllers
         public async Task<UserResponseModel> GetCurrentUser()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            return new UserResponseModel(currentUser);
+            var sightingsCount = _sightingsService.GetUserSightingsCount(currentUser);
+            return new UserResponseModel(currentUser, sightingsCount);
         }
     }
 }

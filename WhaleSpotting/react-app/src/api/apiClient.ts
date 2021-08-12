@@ -70,11 +70,6 @@ export async function fetchCurrentUserSightings(pageNumber: number): Promise<Sig
         .then(r => r.json());
 }
 
-export async function fetchUserSightingsCount(): Promise<number> {
-    return await fetch("api/sightings/current/count", await getGetSettings())
-        .then(r => r.json());
-}
-
 async function getPostSettings(apiModel: any): Promise<any> {
     const token = await authService.getAccessToken();
     return {

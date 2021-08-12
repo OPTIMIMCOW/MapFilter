@@ -6,7 +6,7 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings, fetchUserSightingsCount } from "../api/apiClient";
+import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings } from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
 import { Link } from "react-router-dom";
 import { Rank, reportSightingsRank } from "../Enums/RankLookup";
@@ -17,7 +17,6 @@ export function Profile(): JSX.Element {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
-    const [count, setCount] = useState(0);
     const [rank, setRank] = useState<Rank>(0);
 
     useEffect(() => {
@@ -27,11 +26,6 @@ export function Profile(): JSX.Element {
 
     async function getUser() {
         setCurrentUser(await fetchCurrentUser());
-    }
-
-    async function getUserSightingsCount() {
-        await fetchUserSightingsCount()
-            .then(n => setCount(n));
     }
 
     async function checkifAdmin() {
@@ -58,18 +52,22 @@ export function Profile(): JSX.Element {
     }
 
     function assignRank() {
+        if (!currentUser){
+            setRank(Rank.Newbie);
+            return;
+        }
         switch (true) {
-        case (count === 0):
+        case (currentUser.sightingsCount === 0):
             setRank(Rank.Newbie);
             break;
-        case (count < 3):
-            setRank(Rank.Newbie);
+        case (currentUser.sightingsCount < 3):
+            setRank(Rank.Intermediate);
             break;
-        case (count <= 6):
-            setRank(Rank.Newbie);
+        case (currentUser.sightingsCount <= 6):
+            setRank(Rank.Advanced);
             break;
-        case (count > 6):
-            setRank(Rank.Newbie);
+        case (currentUser.sightingsCount > 6):
+            setRank(Rank.Master);
             break;
         default:
             setRank(Rank.Newbie);
@@ -85,7 +83,6 @@ export function Profile(): JSX.Element {
             fetchCurrentUserSightings(page)
                 .then(data => setData(data));
         }
-        getUserSightingsCount();
         assignRank();
     }, [feedToggle, page]);
 
@@ -96,9 +93,9 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div className="inner-container">
-                        <h1 data-testid="username" className="heading">{currentUser?.username}</h1>
+                        <h1 data-testid="username" className="heading">{currentUser?.username ?? "Loading"}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text">{count}</p>
+                            <p className="feature-text">{currentUser?.sightingsCount ?? "Loading"}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]}/>
                         </div>

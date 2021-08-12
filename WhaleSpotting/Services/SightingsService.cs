@@ -22,7 +22,7 @@ namespace WhaleSpotting.Services
         List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd);
         Task<IEnumerable<Species?>> GetSpeciesByCoordinates(double latitude, double longitude);
         Task<List<SightingResponseModel>> GetUserSightings(UserDbModel currentUser, PageFilter pageFilter);
-        Task<int> GetUserSightingsCount(UserDbModel currentUser);
+        int GetUserSightingsCount(UserDbModel currentUser);
     }
 
     public class SightingsService : ISightingsService
@@ -190,16 +190,15 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public async Task<int> GetUserSightingsCount(UserDbModel currentUser)
+        public int GetUserSightingsCount(UserDbModel currentUser)
         {
-            var sightings = await _context.Sightings
-                .Include(s => s.User)
-                .Where(s => s.User.Id == currentUser.Id)
-                .Where(s => s.Confirmed)
-                .Select(s => new SightingResponseModel(s))
-                .ToListAsync();
+            var sightingsCount = _context.Users
+                .Include(u => u.Sightings.Where(s => s.Confirmed))
+                .Single(u => u.Id == currentUser.Id)
+                .Sightings
+                .Count;
 
-            return sightings.Count;
+            return sightingsCount;
         }
     }
 }

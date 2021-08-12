@@ -662,5 +662,33 @@ namespace WhaleSpotting.UnitTests.Services
             result.Should().HaveCount(2);
             result[0].Username.Should().Be(currentUser.UserName);
         }
+
+        [Fact]
+        public async void GetUserSightingsCount_CalledWithUser_ReturnsCorrectCount()
+        {
+            // Arrange
+            var user = new UserDbModel
+            {
+                UserName = "Hello",
+                Sightings = new List<SightingDbModel>
+                {
+                    new SightingDbModel { Confirmed = true },
+                    new SightingDbModel { Confirmed = true },
+                    new SightingDbModel { Confirmed = true },
+                }
+            };
+
+            var extraSighting = new SightingDbModel { Confirmed = true };
+
+            await Context.Users.AddAsync(user);
+            await Context.Sightings.AddAsync(extraSighting);
+            await Context.SaveChangesAsync();
+
+            // Act
+            var result = _underTest.GetUserSightingsCount(user);
+
+            // Assert
+            result.Should().Be(3);
+        }
     }
 }
