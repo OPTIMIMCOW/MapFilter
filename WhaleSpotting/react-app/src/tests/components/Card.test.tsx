@@ -122,13 +122,13 @@ test("Test that the species image is rendered", () => {
     const mockSighting: SightingApiModel = {
         id: 1,
         sightedAt: new Date().toDateString(),
-        species: "orca",
+        species: Species.Orca,
         quantity: 3,
         location: "Sea",
         longitude: 1.232,
         latitude: 2.312,
         description: "Whales at sea",
-        orcaType: "Orca",
+        orcaType: OrcaType.Offshore,
         orcaPod: "",
         confirmed: false,
         username: "FakeUserConfirmed"
