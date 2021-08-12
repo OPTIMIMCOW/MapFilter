@@ -54,36 +54,17 @@ export function Profile(): JSX.Element {
     function assignRank() {
         if (!currentUser) {
             setRank(Rank.Newbie);
-            return;
-        }
-        if (currentUser.sightingsCount === 0)
+        } else if (currentUser.sightingsCount === 0) {
             setRank(Rank.Newbie);
-        else if (currentUser.sightingsCount > 0 && currentUser.sightingsCount <= 3)
+        } else if (currentUser.sightingsCount > 0 && currentUser.sightingsCount <= 3) {
             setRank(Rank.Intermediate);
-        else if (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6)
+        } else if (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6) {
             setRank(Rank.Advanced);
-        else if (currentUser.sightingsCount > 6)
+        } else if (currentUser.sightingsCount > 6) {
             setRank(Rank.Master);
-        else
+        } else {
             setRank(Rank.Newbie);
-
-        //switch (true) {
-        //case (currentUser.sightingsCount === 0):
-        //    setRank(Rank.Newbie);
-        //    break;
-        //case (currentUser.sightingsCount > 0 && currentUser.sightingsCount < 3):
-        //    setRank(Rank.Intermediate);
-        //    break;
-        //case (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6):
-        //    setRank(Rank.Advanced);
-        //    break;
-        //case (currentUser.sightingsCount > 6):
-        //    setRank(Rank.Master);
-        //    break;
-        //default:
-        //    setRank(Rank.Newbie);
-        //    break;
-        //}
+        }     
     }
 
     useEffect(() => {
