@@ -13,8 +13,8 @@ export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [searchFormOpen, setSearchFormOpen] = useState<boolean>(false);
-    const [fromDate, setFromDate] = useState<Date>(new Date());
-    const [toDate, setToDate] = useState<Date>(new Date());
+    const [fromDate, setFromDate] = useState<Date | null>(null);
+    const [toDate, setToDate] = useState<Date | null>(null);
     const [location, setLocation] = useState<string>("");
     const [species, setSpecies] = useState<Species | number>(0);
     const [longitude, setLongitude] = useState<number | null>(null);
@@ -32,7 +32,7 @@ export default function Home(): JSX.Element {
         orcaType: null,
         orcaPod: "",
         radiusKm: 50
-    }); 
+    });
 
     useEffect(() => {
         searchSightings(search, page, 10)
@@ -90,23 +90,23 @@ export default function Home(): JSX.Element {
                         minWidth25={true}
                     />
                 </div>
-                <div hidden={!searchFormOpen} className="search-form"> 
+                <div hidden={!searchFormOpen} className="search-form">
                     <form onSubmit={handleSubmit}>
                         <div className="card-component">
                             <div className="sighting-details">
                                 <div className="input-box">
                                     <label >Sighting Date From </label>
-                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting start date" 
+                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting start date"
                                         onChange={(e) => setFromDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label >Sighting Date To </label>
-                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting end date" 
+                                    <input className="input-field" name="date" type="date" placeholder="Enter sighting end date"
                                         onChange={(e) => setToDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Location </label>
-                                    <input className="input-field" type="text" name="location" placeholder="Enter your location" 
+                                    <input className="input-field" type="text" name="location" placeholder="Enter your location"
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)} />
                                 </div>
@@ -140,12 +140,12 @@ export default function Home(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Longitude </label>
-                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" 
+                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude"
                                         onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude </label>
-                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" 
+                                    <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude"
                                         onChange={(e) => setLatitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
