@@ -75,6 +75,22 @@ export default function ReportSighting(): JSX.Element {
         setShowForm(true);
     }
 
+    function formatDate(date: Date | null): string {
+        if (!date) {
+            return "";
+        }
+        let month = "" + ((date.getMonth() ?? 0) + 1);
+        let day = "" + date.getDate();
+        const year = date.getFullYear();
+
+        if (month.length < 2)
+            month = "0" + month;
+        if (day.length < 2)
+            day = "0" + day;
+
+        return [year, month, day].join("-");
+    }
+
     return (
         <div className="report-sighting" data-testid="report-sighting">
             <BannerImage />
@@ -89,6 +105,7 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label >Sighting Date Time <span className="required">(required)</span></label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting date" required
+                                        max={formatDate(new Date())}
                                         onChange={(e) => setDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -162,7 +179,6 @@ export default function ReportSighting(): JSX.Element {
                         </div>
                         <button type="submit" className="submit-button">Submit Sighting</button>
                     </form>
-
                     : <div>
                         <button className="submit-button" onClick={() => resetForm()}> Report Another Sighting</button>
                         <ShowResultMessage responseMessage={responseMessage} />
