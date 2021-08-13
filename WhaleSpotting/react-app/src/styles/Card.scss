@@ -44,7 +44,7 @@
     align-self: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: $tabletScreenSize) {
     .profile {
         .card-info {
             display: block;
@@ -53,11 +53,9 @@
             width: 70%;
         }
     }
-
 }
 
 @media (max-width: $mobileScreenSize) {
-
     .card-component {
         .card-info {
             display: block;
