@@ -196,7 +196,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -208,7 +209,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -220,7 +222,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(1),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
 
             Context.SaveChanges();
@@ -251,7 +254,9 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-9),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
+
             });
             Context.Add(new SightingDbModel
             {
@@ -263,7 +268,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-10),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -275,7 +281,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-5),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
 
             Context.SaveChanges();
@@ -308,7 +315,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-7),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -320,7 +328,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-1),
                 OrcaType = null,
-                OrcaPod = "k"
+                OrcaPod = "k",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -332,7 +341,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-5),
                 OrcaType = null,
-                OrcaPod = "k"
+                OrcaPod = "k",
+                Confirmed = true,
             });
 
             Context.SaveChanges();
@@ -366,7 +376,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "pacific ocean",
                 SightedAt = DateTime.Now.AddDays(-7),
                 OrcaType = null,
-                OrcaPod = ""
+                OrcaPod = "",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -378,7 +389,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-1),
                 OrcaType = null,
-                OrcaPod = "k"
+                OrcaPod = "k",
+                Confirmed = true,
             });
             Context.Add(new SightingDbModel
             {
@@ -390,7 +402,8 @@ namespace WhaleSpotting.UnitTests.Services
                 Location = "atlantic ocean",
                 SightedAt = DateTime.Now.AddDays(-5),
                 OrcaType = null,
-                OrcaPod = "k"
+                OrcaPod = "k",
+                Confirmed = true,
             });
 
             Context.SaveChanges();

@@ -22,6 +22,64 @@
         justify-content: space-between;
     }
 
+    .search-form {
+        margin: $guttersTopBottom auto;
+        padding: 0 $guttersSide;
+        max-width: $bodyWidth;
+    }
+
+    .sighting-details {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 6%;
+        padding: 2% 5%;
+    }
+
+    .input-box {
+        margin: 3% 0;
+        width: 46%;
+        font-size: $bodyFontSize;
+
+        .input-field {
+            height: 85%;
+            width: 100%;
+            padding-left: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid $primaryColour;
+            box-sizing: border-box;
+
+            &:focus {
+                outline: none;
+                border: 1.25px solid $primaryDark;
+            }
+        }
+    }
+
+    .coordinates::-webkit-inner-spin-button,
+    .coordinates::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+
+    .submit-button {
+        height: 45px;
+        margin: 15px 2.5%;
+        width: 45%;
+        color: $textOnPrimary;
+        border: none;
+        font-size: $bodyFontSize;
+        border-radius: 5px;
+        background: $primaryDark;
+
+        &:hover {
+            background: $primaryColour;
+        }
+    }
+
     @media (max-width: $mobileScreenSize) {
         padding-bottom: $mobileFooterHeight;
         margin-top: $mobileHeaderHeight;

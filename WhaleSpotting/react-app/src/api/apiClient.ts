@@ -49,21 +49,46 @@ export async function fetchCurrentUser(): Promise<UserApiModel> {
         .then(r => r.json());
 }
 
-export async function getConfirmedSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
-    return await fetch(`api/sightings/search?
-        ${search.species ? "species=" + search.species : ""}
-        ${search.longitude ? "&longitude=" + search.longitude : ""}
-        ${search.latitude ? "&latitude=" + search.latitude : ""}
-        ${search.location ? "&location=" + search.location : ""}
-        ${search.sightedFrom ? "&sightedFrom=" + search.sightedFrom : ""}
-        ${search.sightedTo ? "&sightedTo=" + search.sightedTo : ""}
-        ${search.orcaType ? "&orcaType=" + search.orcaType : ""}
-        ${search.orcaPod ? "&orcaPod=" + search.orcaPod : ""}
-        ${search.confirmed ? "&confirmed=" + search.confirmed : ""}
-        ${pageNumber ? "&pageNumber=" + pageNumber : ""}
-        ${pageSize ? "&pageSize=" + pageSize : ""}`,
-    await getGetSettings())
-        .then(r => r.json());
+export async function searchSightings(search: SearchSightingRequestModel, pageNumber = 1, pageSize = 10): Promise<SightingApiModel[]> {
+    const searchParams: string[] = [];
+    if (search.species){
+        searchParams.push("species=" + search.species);
+    }
+    if (search.longitude){
+        searchParams.push("longitude=" + search.longitude);
+    }
+    if (search.latitude){
+        searchParams.push("latitude=" + search.latitude);
+    }
+    if (search.location){
+        searchParams.push("location=" + search.location);
+    }
+    if (search.sightedFrom){
+        searchParams.push("sightedFrom=" + search.sightedFrom.toJSON());
+    }
+    if (search.sightedTo){
+        searchParams.push("sightedTo=" + search.sightedTo.toJSON());
+    }
+    if (search.orcaType){
+        searchParams.push("orcaType=" + search.orcaType);
+    }
+    if (search.orcaPod){
+        searchParams.push("orcaPod=" + search.orcaPod);
+    }
+    if (search.radiusKm){
+        searchParams.push("radiusKm=" + search.radiusKm);
+    }
+    if (search.confirmed) {
+        searchParams.push("confirmed=" + search.confirmed);
+    }
+    if (pageNumber){
+        searchParams.push("pageNumber=" + pageNumber);
+    }
+    if (pageSize){
+        searchParams.push("pageSize=" + pageSize);
+    }
+    return await fetch("api/sightings/search?" + searchParams.join("&"), await getGetSettings())
+        .then(r => r.status === 404 ? [] : r.json());
 }
 
 export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {

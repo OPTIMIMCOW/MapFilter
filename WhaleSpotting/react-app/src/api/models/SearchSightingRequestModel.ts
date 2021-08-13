@@ -1,11 +1,14 @@
+import { Species, OrcaType } from "../ApiEnums";
+
 export interface SearchSightingRequestModel {
-    species?: string;
+    species?: Species | null;
     location?: string;
     longitude?: number | null;
     latitude?: number | null;
     sightedFrom?: Date | null;
     sightedTo?: Date | null;
-    orcaType?: string;
+    orcaType?: OrcaType | null;
     orcaPod?: string;
-    confirmed?: boolean | null;
+    radiusKm?: number;
+    confirmed?: boolean;
 }
