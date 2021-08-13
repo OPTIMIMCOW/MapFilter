@@ -51,9 +51,10 @@ test("renders the Sightings feed", () => {
 
 test("When profile renders, it calls API and gets current user", () => {
     const user: UserApiModel = {
-        username: "test"
+        username: "test",
+        sightingsCount: 2
     };
-    
+
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
         fetchCurrentUser: jest.fn(async () : Promise<UserApiModel> => {
@@ -66,7 +67,7 @@ test("When profile renders, it calls API and gets current user", () => {
             <Profile />
         </Router>
     );
-    
+
     setTimeout(()=>{
         expect(fetchCurrentUser).toBeCalled();
     }, 100);
@@ -78,7 +79,7 @@ test("When profile renders, it calls API and gets current user", () => {
 test("When approval selected get data from API and change heading to Your Approvals", () => {
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
-        fetchPendingSightings: jest.fn(async (pageNumber: number): Promise<SightingApiModel[]> => {
+        fetchPendingSightings: jest.fn(async (): Promise<SightingApiModel[]> => {
             return Promise.resolve([]);
         })
     }));
@@ -226,9 +227,10 @@ test("RemoveAdmin, CheckApprovals should have an attribute hidden and AddAdmin s
 
 test("When profile renders, it calls API and gets current user", () => {
     const user: UserApiModel = {
-        username: "test"
+        username: "test",
+        sightingsCount: 2
     };
-    
+
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
         fetchCurrentUser: jest.fn(async () : Promise<UserApiModel> => {
@@ -241,7 +243,7 @@ test("When profile renders, it calls API and gets current user", () => {
             <Profile />
         </Router>
     );
-    
+
     setTimeout(()=>{
         expect(fetchCurrentUser).toBeCalled();
     }, 100);

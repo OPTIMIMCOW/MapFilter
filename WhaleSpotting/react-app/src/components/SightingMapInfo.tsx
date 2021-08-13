@@ -31,7 +31,9 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     }, [chosen]);
 
     async function getSpecies() {
-        setSpeciesData(await fetchSpecies(chosen!.lon, chosen!.lat));
+        if (chosen) {
+            setSpeciesData(await fetchSpecies(chosen.lon, chosen.lat));
+        }
     }
 
     const images = speciesData.map(s =>
@@ -78,9 +80,11 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     );
 
     async function fetchWeather(): Promise<WeatherApiModel | void> {
-        return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen!.lat}&lon=${chosen!.lon}&units=metric&Appid=${key}`)
-            .then(response => response.json())
-            .then(response => setWeatherData(response));
+        if (chosen) {
+            return await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${chosen.lat}&lon=${chosen.lon}&units=metric&Appid=${key}`)
+                .then(response => response.json())
+                .then(response => setWeatherData(response));
+        }
     }
 }
 

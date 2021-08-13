@@ -103,7 +103,7 @@ test("On click of approve confirmSighting API is called", () => {
 
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
-        confirmSighting: jest.fn(async (id: number): Promise<SightingApiModel> => {
+        confirmSighting: jest.fn(async (): Promise<SightingApiModel> => {
             return Promise.resolve(mockSighting);
         })
     }));
@@ -115,7 +115,7 @@ test("On click of approve confirmSighting API is called", () => {
 
     setTimeout(() => {
         expect(confirmSighting).toBeCalled();
-    }, 100); 
+    }, 100);
 });
 
 test("Test that the species image is rendered", () => {
@@ -136,7 +136,7 @@ test("Test that the species image is rendered", () => {
 
     jest.mock("../../api/apiClient", () => ({
         __esModule: true,
-        confirmSighting: jest.fn(async (id: number): Promise<SightingApiModel> => {
+        confirmSighting: jest.fn(async (): Promise<SightingApiModel> => {
             return Promise.resolve(mockSighting);
         })
     }));

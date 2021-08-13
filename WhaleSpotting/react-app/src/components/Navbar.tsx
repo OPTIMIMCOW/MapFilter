@@ -85,8 +85,8 @@ function useOnClickOutside(ref: React.RefObject<HTMLDivElement>, handler: () => 
         };
     }, [ref, handler]);
 
-    function listener(this: Document, ev: MouseEvent | TouchEvent): any {
-        if (!ref.current || ref.current!.contains(ev.target as Node)) {
+    function listener(this: Document, ev: MouseEvent | TouchEvent): void {
+        if (!ref.current || ref.current.contains(ev.target as Node)) {
             return;
         }
         handler();

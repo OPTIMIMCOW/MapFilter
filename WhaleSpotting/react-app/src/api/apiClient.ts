@@ -15,22 +15,22 @@ export async function fetchPendingSightings(pageNumber: number): Promise<Sightin
         .then(r => r.json());
 }
 
-export async function makeAdmin() {
+export async function makeAdmin(): Promise<void> {
     await fetch("api/User/MakeAdmin", await getGetSettings());
 }
 
-export async function checkAdmin() {
+export async function checkAdmin(): Promise<boolean> {
     const response = await fetch("api/User/CheckAdmin", await getGetSettings());
 
     const regexMatch = /(AccessDenied)/;
     return !response.url.match(regexMatch);
 }
 
-export async function removeAdmin() {
+export async function removeAdmin(): Promise<void> {
     await fetch("api/User/RemoveAdmin", await getGetSettings());
 }
 
-export async function createSighting(sighting: CreateSightingApiModel): Promise<any> {
+export async function createSighting(sighting: CreateSightingApiModel): Promise<Response> {
     return await fetch("api/sightings/create", await getPostSettings(sighting));
 }
 
@@ -76,7 +76,7 @@ export async function fetchSpecies(lon: number, lat: number): Promise<Species[]>
         .then(response => response.json());
 }
 
-async function getPostSettings(apiModel: any): Promise<any> {
+async function getPostSettings(apiModel: CreateSightingApiModel): Promise<RequestInit> {
     const token = await authService.getAccessToken();
     return {
         method: "POST",
@@ -89,14 +89,14 @@ async function getPostSettings(apiModel: any): Promise<any> {
     };
 }
 
-async function getGetSettings(): Promise<any> {
+async function getGetSettings(): Promise<RequestInit> {
     const token = await authService.getAccessToken();
     return {
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
     };
 }
 
-async function getPutSettings(): Promise<any> {
+async function getPutSettings(): Promise<RequestInit> {
     const token = await authService.getAccessToken();
     return {
         method: "PUT",
@@ -104,7 +104,7 @@ async function getPutSettings(): Promise<any> {
     };
 }
 
-async function getDeleteSettings(): Promise<any> {
+async function getDeleteSettings(): Promise<RequestInit> {
     const token = await authService.getAccessToken();
     return {
         method: "DELETE",

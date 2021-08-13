@@ -9,8 +9,6 @@ import Card from "./Card";
 import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings } from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
 import { Link } from "react-router-dom";
-import { Rank, reportSightingsRank } from "../Enums/RankLookup";
-import ReportSighting from "./ReportSighting";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
@@ -18,12 +16,9 @@ export function Profile(): JSX.Element {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
-    const [rank, setRank] = useState<Rank>(0);
-    const [rankSrc, setRankSrc] = useState("");
 
     useEffect(() => {
         checkifAdmin();
-        //getUser().then(() => assignRank());
         getUser();
     }, []);
 
@@ -67,24 +62,8 @@ export function Profile(): JSX.Element {
             return "Master.jpg";
         } else {
             return "Newbie.jpg";
-        }     
+        }
     }
-
-    //function assignRank() {
-    //    if (!currentUser) {
-    //        setRank(Rank.Newbie);
-    //    } else if (currentUser.sightingsCount === 0) {
-    //        setRank(Rank.Newbie);
-    //    } else if (currentUser.sightingsCount > 0 && currentUser.sightingsCount <= 3) {
-    //        setRank(Rank.Intermediate);
-    //    } else if (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6) {
-    //        setRank(Rank.Advanced);
-    //    } else if (currentUser.sightingsCount > 6) {
-    //        setRank(Rank.Master);
-    //    } else {
-    //        setRank(Rank.Newbie);
-    //    }     
-    //}
 
     useEffect(() => {
         if (feedToggle == "Approvals") {
@@ -108,7 +87,6 @@ export function Profile(): JSX.Element {
                             <p className="feature-text">{currentUser?.sightingsCount ?? 0}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
                             <img className="trophy-image" alt="Trophy Image" src={getRankSrc()} />
-                            {/*<img className="trophy-image" alt="Trophy Image" src={reportSightingsRank[rank]} />*/}
                         </div>
                         <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>
