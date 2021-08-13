@@ -59,7 +59,7 @@ namespace WhaleSpotting.Models.ResponseModels
             OrcaType = sighting.OrcaType;
             OrcaPod = sighting.OrcaPod;
             Confirmed = sighting.Confirmed;
-            Username = sighting.User?.UserName ?? "Whale Museum";
+            Username = sighting.User?.UserName.Split("@")[0] ?? "Whale Museum";
         }
     }
 }

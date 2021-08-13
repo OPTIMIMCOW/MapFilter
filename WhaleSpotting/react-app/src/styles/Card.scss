@@ -17,6 +17,7 @@
     }
 
     .pending {
+        position: relative;
         text-align: end;
         margin-right: 7px;
         height: 0;
@@ -43,8 +44,18 @@
     align-self: center;
 }
 
-@media (max-width: $mobileScreenSize) {
+@media (max-width: $tabletScreenSize) {
+    .profile {
+        .card-info {
+            display: block;
+        }
+        .species-image {
+            width: 70%;
+        }
+    }
+}
 
+@media (max-width: $mobileScreenSize) {
     .card-component {
         .card-info {
             display: block;
@@ -57,12 +68,8 @@
         .closed {
             display: none;
         }
-    }
-}
-
-@media (max-width: 700px) {
-
-    .species-image {
-        display: none;
+        .species-image {
+            width: 100%;
+        }
     }
 }

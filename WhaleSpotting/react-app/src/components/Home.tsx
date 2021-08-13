@@ -39,7 +39,7 @@ export default function Home(): JSX.Element {
     useEffect(() => {
         searchSightings(search, page, 10)
             .then(data => setData(data));
-    }, [page, search, isSubmitted]);
+    }, [page]);
    
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
@@ -62,6 +62,7 @@ export default function Home(): JSX.Element {
         setLatitude(null);
         setOrcaType(0);
         setOrcaPod("");
+        setPage(1);
     }
     
     function resetSearch() {
@@ -82,6 +83,7 @@ export default function Home(): JSX.Element {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
         const formSearch: SearchSightingRequestModel = {
             species: species === 0 ? null : species,
             location: location,
@@ -199,7 +201,7 @@ export default function Home(): JSX.Element {
                                         value={latitude ?? ""}
                                         onChange={(e) => setLatitude(parseInt(e.target.value))} />
                                 </div>
-                                <div className="input-box">
+                                <div className="input-box" hidden={species !== Species.Orca}>
                                     <label>Orca Type</label>
                                     <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }} value={orcaType}>
                                         <option value={0}>N/A</option>,
@@ -209,7 +211,7 @@ export default function Home(): JSX.Element {
                                         <option value={OrcaType.Transient}>Transient</option>,
                                     </select>
                                 </div>
-                                <div className="input-box">
+                                <div className="input-box" hidden={species !== Species.Orca}>
                                     <label>Orca Pod</label>
                                     <input className="input-field" type="text" placeholder="Enter the orca pod"
                                         value={orcaPod}
@@ -228,7 +230,7 @@ export default function Home(): JSX.Element {
                 <div className="card-holder">
                     {cards.length === 0 ? "No Sightings Found" : cards}
                 </div>
-                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} count={cards.length} />
             </div>
         </div>
     );
