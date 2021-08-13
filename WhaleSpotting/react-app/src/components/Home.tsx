@@ -189,7 +189,7 @@ export default function Home(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Radius in Km </label>
-                                    <input className="input-field" type="number" placeholder="Enter radius from specified coordinates in Km"
+                                    <input className="input-field" type="number" placeholder="Enter radius from specified coordinates in Km" min="1" max="10 000"
                                         value={radiusKm}
                                         onChange={(e) => setRadiusKm(parseInt(e.target.value))} />
                                 </div>
