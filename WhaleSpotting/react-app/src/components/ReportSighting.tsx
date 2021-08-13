@@ -127,13 +127,11 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Longitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" required
-
                                         onChange={(e) => setLongitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" required
-
                                         onChange={(e) => setLatitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box">

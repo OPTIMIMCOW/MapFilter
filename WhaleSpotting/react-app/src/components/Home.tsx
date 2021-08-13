@@ -13,6 +13,7 @@ export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [searchFormOpen, setSearchFormOpen] = useState<boolean>(false);
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [fromDate, setFromDate] = useState<Date | null>(null);
     const [toDate, setToDate] = useState<Date | null>(null);
     const [location, setLocation] = useState<string>("");
@@ -38,7 +39,7 @@ export default function Home(): JSX.Element {
     useEffect(() => {
         searchSightings(search, page, 10)
             .then(data => setData(data));
-    }, [page, search]);
+    }, [page, search, isSubmitted]);
    
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
@@ -93,8 +94,25 @@ export default function Home(): JSX.Element {
             radiusKm: radiusKm,
             confirmed: true
         };
-        setSearch(formSearch);
-        resetForm();
+        await setSearch(formSearch);
+        setIsSubmitted(true);
+        if (isSubmitted) resetSearch();
+    }
+
+    function formatDate(date: Date | null): string {
+        if (!date) {
+            return "";
+        }
+        let month = "" + ((date.getMonth() ?? 0) + 1);
+        let day = "" + date.getDate();
+        const year = date.getFullYear();
+
+        if (month.length < 2)
+            month = "0" + month;
+        if (day.length < 2)
+            day = "0" + day;
+
+        return [year, month, day].join("-");
     }
 
     return (
@@ -106,7 +124,7 @@ export default function Home(): JSX.Element {
                         style={Style.primary}
                         text="REPORT SIGHTING"
                         dataTestId="sighting-button"
-                        link="/Reportsighting"
+                        link="/reportsighting"
                     />
                 </div>
                 <div className="sightings-header">
@@ -119,18 +137,20 @@ export default function Home(): JSX.Element {
                         minWidth25={true}
                     />
                 </div>
-                <div hidden={!searchFormOpen} className="search-form" data-testid= "search-form">
+                <div hidden={!searchFormOpen} className="search-form" data-testid="search-form">
                     <form onSubmit={handleSubmit}>
                         <div className="card-component">
                             <div className="sighting-details">
                                 <div className="input-box">
                                     <label >Sighting Date From </label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting start date"
+                                        value={formatDate(fromDate)}
                                         onChange={(e) => setFromDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label >Sighting Date To </label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting end date"
+                                        value={formatDate(toDate)}
                                         onChange={(e) => setToDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -141,8 +161,8 @@ export default function Home(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Species </label>
-                                    <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }}>
-                                        <option selected value={0}>All</option>,
+                                    <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }} value={species}>
+                                        <option value={0}>All</option>,
                                         <option value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
                                         <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
                                         <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
@@ -164,6 +184,7 @@ export default function Home(): JSX.Element {
                                 <div className="input-box">
                                     <label>Longitude </label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude"
+                                        value={longitude ?? ""}
                                         onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -175,12 +196,13 @@ export default function Home(): JSX.Element {
                                 <div className="input-box">
                                     <label>Latitude </label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude"
+                                        value={latitude ?? ""}
                                         onChange={(e) => setLatitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Orca Type</label>
-                                    <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }}>
-                                        <option selected value={0}>N/A</option>,
+                                    <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }} value={orcaType}>
+                                        <option value={0}>N/A</option>,
                                         <option value={OrcaType.NorthernResident}>Northern Resident</option>,
                                         <option value={OrcaType.Offshore}>Offshore</option>,
                                         <option value={OrcaType.SouthernResident}>Southern Resident</option>,
