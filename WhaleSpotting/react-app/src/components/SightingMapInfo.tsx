@@ -22,6 +22,7 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
 
     const [weatherData, setWeatherData] = useState<WeatherApiModel>();
     const [speciesData, setSpeciesData] = useState<Species[]>([]);
+    const [closeCard, setCardState] = useState(true);
 
     useEffect(() => {
         if (chosen) {
@@ -54,7 +55,8 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
     }
 
     return (
-        <div className="weather-component" data-testid="weather">
+        <div className="weather-component" data-testid="weather"
+            onClick={() => setCardState(!closeCard)}>
             <div>Information about this sighting</div>
             <div className="location">Latitude: {weatherData.lat}°  Longitude: {weatherData.lon}°</div>
             <div className="sighting-info">
@@ -69,11 +71,13 @@ export default function SightingMapInfo({ chosen }: SightingMapInfoProps): JSX.E
                     <ul className="list">{getHumanReadableWhaleNames(response).map(s =>
                         <li key={s}>{s}</li>)}</ul>
                 </div>
-                <div className="whale-image-container" hidden={speciesData.length > 1}>
+                <div className={closeCard ? "whale-image-container closed" : "whale-image-container"}
+                    hidden={speciesData.length > 1}>
                     {images.length == 0 ? "whaleicon512.png" : images[0]}
                 </div>
             </div>
-            <div className={speciesData.length <= 1 ? "hidden" : "all-pictures"}>
+            <div className={speciesData.length <= 1 ? "hidden" :
+                closeCard ? "all-pictures closed" : "all-pictures"}>
                 {images}
             </div>
         </div>
