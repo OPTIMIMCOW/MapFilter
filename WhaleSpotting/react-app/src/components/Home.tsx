@@ -144,13 +144,13 @@ export default function Home(): JSX.Element {
                                 <div className="input-box">
                                     <label >Sighting Date From </label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting start date"
-                                        value={formatDate(fromDate)}
+                                        value={formatDate(fromDate)} max={formatDate(new Date())}
                                         onChange={(e) => setFromDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label >Sighting Date To </label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting end date"
-                                        value={formatDate(toDate)}
+                                        value={formatDate(toDate)} max={formatDate(new Date())}
                                         onChange={(e) => setToDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -184,19 +184,19 @@ export default function Home(): JSX.Element {
                                 <div className="input-box">
                                     <label>Longitude </label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude"
-                                        value={longitude ?? ""}
+                                        value={longitude ?? ""} min="-180" max="180"
                                         onChange={(e) => setLongitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Radius in Km </label>
-                                    <input className="input-field" type="number" placeholder="Enter radius from specified coordinates in Km"
-                                        value={radiusKm}
+                                    <input className="input-field" type="number" placeholder="Enter radius from specified coordinates in Km" 
+                                        value={radiusKm} min="1" max="10000"
                                         onChange={(e) => setRadiusKm(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude </label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude"
-                                        value={latitude ?? ""}
+                                        value={latitude ?? ""} min="-90" max="90"
                                         onChange={(e) => setLatitude(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box" hidden={species !== Species.Orca}>

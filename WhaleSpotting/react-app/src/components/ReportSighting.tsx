@@ -75,6 +75,22 @@ export default function ReportSighting(): JSX.Element {
         setShowForm(true);
     }
 
+    function formatDate(date: Date | null): string {
+        if (!date) {
+            return "";
+        }
+        let month = "" + ((date.getMonth() ?? 0) + 1);
+        let day = "" + date.getDate();
+        const year = date.getFullYear();
+
+        if (month.length < 2)
+            month = "0" + month;
+        if (day.length < 2)
+            day = "0" + day;
+
+        return [year, month, day].join("-");
+    }
+
     return (
         <div className="report-sighting" data-testid="report-sighting">
             <BannerImage />
@@ -89,6 +105,7 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label >Sighting Date Time <span className="required">(required)</span></label>
                                     <input className="input-field" name="date" type="date" placeholder="Enter sighting date" required
+                                        max={formatDate(new Date())}
                                         onChange={(e) => setDate(new Date(e.target.value))} />
                                 </div>
                                 <div className="input-box">
@@ -121,17 +138,19 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Quantity <span className="required">(required)</span></label>
                                     <input className="input-field" type="number" placeholder="Enter quantity"
-                                        value={quantity}
+                                        value={quantity} min="1" max="1000"
                                         onChange={(e) => setQuantity(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Longitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" required
+                                        min="-180" max="180"
                                         onChange={(e) => setLongitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" required
+                                        min="-90" max="90"
                                         onChange={(e) => setLatitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box" hidden={species !== Species.Orca}>
@@ -160,7 +179,6 @@ export default function ReportSighting(): JSX.Element {
                         </div>
                         <button type="submit" className="submit-button">Submit Sighting</button>
                     </form>
-
                     : <div>
                         <button className="submit-button" onClick={() => resetForm()}> Report Another Sighting</button>
                         <ShowResultMessage responseMessage={responseMessage} />
