@@ -88,7 +88,7 @@ export async function searchSightings(search: SearchSightingRequestModel, pageNu
         searchParams.push("pageSize=" + pageSize);
     }
     return await fetch("api/sightings/search?" + searchParams.join("&"), await getGetSettings())
-        .then(r => r.status === 404 ? [] : r.json());
+        .then(r => r.status === 404 || r.status === 400 ? [] : r.json());
 }
 
 export async function fetchCurrentUserSightings(pageNumber: number): Promise<SightingApiModel[]> {
