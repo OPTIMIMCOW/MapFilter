@@ -41,11 +41,11 @@
 
 .heading {
     margin: 0;
+    overflow-wrap: break-word;
     text-align: center;
 }
 .username {
     font-size: $mobileTitleFontSize;
-    overflow-wrap: break-word;
     margin: 0;
 }
 
