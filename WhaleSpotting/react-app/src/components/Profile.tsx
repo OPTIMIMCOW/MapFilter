@@ -139,7 +139,7 @@ export function Profile(): JSX.Element {
                     <div />
                     :
                     <PageNav page={feedToggle === "Sightings" ? sightingsPage : approvalPage}
-                        nextPage={nextPage} previousPage={previousPage} count={cards.length} size={10}/>}
+                        nextPage={nextPage} previousPage={previousPage} count={cards.length} />}
             </div>
         </div>
     );

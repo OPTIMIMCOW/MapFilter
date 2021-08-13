@@ -206,7 +206,7 @@ export default function Home(): JSX.Element {
                 <div className="card-holder">
                     {cards.length === 0 ? "No Sightings Found" : cards}
                 </div>
-                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} count={cards.length} size={10} />
+                <PageNav page={page} nextPage={nextPage} previousPage={previousPage} count={cards.length} />
             </div>
         </div>
     );

@@ -7,10 +7,10 @@ interface pageNavProps {
     nextPage: () => void;
     previousPage: () => void;
     count: number;
-    size: number;
+    size?: number;
 }
 
-export default function PageNav({ page, nextPage, previousPage, count, size }: pageNavProps): JSX.Element {
+export default function PageNav({ page, nextPage, previousPage, count, size = 10 }: pageNavProps): JSX.Element {
 
     return (
         <div className="page-nav" data-testid="page-nav">
