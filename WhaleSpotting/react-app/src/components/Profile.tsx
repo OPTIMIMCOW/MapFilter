@@ -93,7 +93,7 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div className="inner-container">
-                        <h1 data-testid="username" className="heading">{currentUser?.username.split("@")[0] ?? "Loading"}</h1>
+                        <h1 data-testid="username" className="heading">{currentUser?.username ?? "Loading"}</h1>
                         <div className="trophy-container">
                             <p className="feature-text">{currentUser?.sightingsCount ?? 0}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>

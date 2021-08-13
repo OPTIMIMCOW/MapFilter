@@ -45,6 +45,7 @@
 }
 .username {
     font-size: $mobileTitleFontSize;
+    overflow-wrap: break-word;
     margin: 0;
 }
 
