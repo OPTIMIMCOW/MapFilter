@@ -121,17 +121,19 @@ export default function ReportSighting(): JSX.Element {
                                 <div className="input-box">
                                     <label>Quantity <span className="required">(required)</span></label>
                                     <input className="input-field" type="number" placeholder="Enter quantity"
-                                        value={quantity}
+                                        value={quantity} min="1" max="1000"
                                         onChange={(e) => setQuantity(parseInt(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Longitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your longitude" required
+                                        min="-180" max="180"
                                         onChange={(e) => setLongitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box">
                                     <label>Latitude <span className="required">(required)</span></label>
                                     <input className="input-field coordinates" type="number" step="any" placeholder="Enter your latitude" required
+                                        min="-90" max="90"
                                         onChange={(e) => setLatitude(parseFloat(e.target.value))} />
                                 </div>
                                 <div className="input-box" hidden={species !== Species.Orca}>
