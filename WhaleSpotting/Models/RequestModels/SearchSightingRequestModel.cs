@@ -30,6 +30,6 @@ namespace WhaleSpotting.Models.RequestModels
         [Range(0, int.MaxValue, ErrorMessage = "Radius in km must be greater than 0")]
         public int? RadiusKm { get; set; } = 50;
 
-        public bool? Confirmed { get; set; } = false;
+        public bool? Confirmed { get; set; }
     }
 }

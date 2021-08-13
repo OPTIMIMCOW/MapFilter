@@ -78,9 +78,9 @@ export async function searchSightings(search: SearchSightingRequestModel, pageNu
     if (search.radiusKm){
         searchParams.push("radiusKm=" + search.radiusKm);
     }
-    //if (search.confirmed) {
-    //       searchParams.push("confirmed=" + search.confirmed);
-    //   }
+    if (search.confirmed) {
+        searchParams.push("confirmed=" + search.confirmed);
+    }
     if (pageNumber){
         searchParams.push("pageNumber=" + pageNumber);
     }

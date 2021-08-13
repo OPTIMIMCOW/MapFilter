@@ -31,7 +31,8 @@ export default function Home(): JSX.Element {
         sightedTo: null,
         orcaType: null,
         orcaPod: "",
-        radiusKm: 50
+        radiusKm: 50,
+        confirmed: true
     });
 
     useEffect(() => {
@@ -72,7 +73,8 @@ export default function Home(): JSX.Element {
             sightedTo: null,
             orcaType: null,
             orcaPod: "",
-            radiusKm: 50
+            radiusKm: 50,
+            confirmed: true
         });
         resetForm();
     }
@@ -88,7 +90,8 @@ export default function Home(): JSX.Element {
             sightedTo: toDate,
             orcaType: orcaType === 0 ? null : orcaType,
             orcaPod: orcaPod,
-            radiusKm: radiusKm
+            radiusKm: radiusKm,
+            confirmed: true
         };
         setSearch(formSearch);
         resetForm();
