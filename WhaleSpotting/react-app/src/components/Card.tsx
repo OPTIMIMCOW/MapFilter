@@ -10,14 +10,16 @@ import { WhaleVisualTextDictionary, OrcaTypeTextDictionary } from "../api/ApiLoo
 interface CardProps {
     sighting: SightingApiModel;
     admin?: boolean;
+    reject?: (id: number) => void;
+    approve?: (id: number) => void;
 }
 
-export default function Card({ sighting, admin = false }: CardProps): JSX.Element {
-    const [checked, setChecked] = useState(false);
+/*eslint-disable-next-line*/
+export default function Card({ sighting, admin = false, reject = (id: number) => {}, approve = (id: number) => {} }: CardProps): JSX.Element {
     const [closeCard, setCardState] = useState(true);
 
     return (
-        <div hidden={checked} data-testid="sighting-card">
+        <div data-testid="sighting-card">
             <div className="card-component" data-testid="card-component">
                 {!sighting.confirmed && <div className="pending" data-testid="pending"> PENDING </div>}
                 <div className="card-info"
@@ -46,8 +48,7 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                     style={Style.reject}
                     text="Reject"
                     onClick={() => {
-                        deleteSighting(sighting.id);
-                        setChecked(true);
+                        reject(sighting.id);
                     }}
                     minWidth25={true}
                 />
@@ -56,8 +57,7 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                     style={Style.primary}
                     text="Approve"
                     onClick={() => {
-                        confirmSighting(sighting.id);
-                        setChecked(true);
+                        approve(sighting.id);
                     }}
                     minWidth25={true}
                 />

@@ -6,7 +6,15 @@ import PageNav from "./PageNav";
 import { Button, Style } from "./Button";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import Card from "./Card";
-import { fetchCurrentUser, fetchPendingSightings, makeAdmin, checkAdmin, removeAdmin, fetchCurrentUserSightings } from "../api/apiClient";
+import {
+    fetchCurrentUser,
+    fetchPendingSightings,
+    makeAdmin,
+    checkAdmin,
+    removeAdmin,
+    fetchCurrentUserSightings,
+    deleteSighting, confirmSighting
+} from "../api/apiClient";
 import { UserApiModel } from "../api/models/UserApiModel";
 import { Link } from "react-router-dom";
 
@@ -76,7 +84,7 @@ export function Profile(): JSX.Element {
         }
     }
 
-    useEffect(() => {
+    function fetchData(): void {
         if (feedToggle == "Approvals") {
             fetchPendingSightings(approvalPage)
                 .then(data => setData(data));
@@ -84,9 +92,29 @@ export function Profile(): JSX.Element {
             fetchCurrentUserSightings(sightingsPage)
                 .then(data => setData(data));
         }
+    }
+
+    useEffect(() => {
+        fetchData();
     }, [feedToggle, approvalPage, sightingsPage]);
 
-    const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
+    const cards = data.map((s, index) =>
+        <Card sighting={s} admin={isUserAdmin} key={index}
+            reject={(id: number) => {
+                deleteSighting(id)
+                    .then(() => {
+                        getUser();
+                        fetchData();
+                    });
+            }}
+            approve={(id: number) => {
+                confirmSighting(id)
+                    .then(() => {
+                        getUser();
+                        fetchData();
+                    });
+            }}/>
+    );
 
     return (
         <div className="body">
