@@ -17,6 +17,7 @@
     }
 
     .pending {
+        position: relative;
         text-align: end;
         margin-right: 7px;
         height: 0;
@@ -57,12 +58,8 @@
         .closed {
             display: none;
         }
-    }
-}
-
-@media (max-width: 700px) {
-
-    .species-image {
-        display: none;
+        .species-image {
+            width: 100%;
+        }
     }
 }
