@@ -49,6 +49,22 @@ export function Profile(): JSX.Element {
         setPage(page - 1);
     }
 
+    function getRankSrc(): string {
+        if (!currentUser) {
+            return "Newbie.jpg";
+        } else if (currentUser.sightingsCount === 0) {
+            return "Newbie.jpg";
+        } else if (currentUser.sightingsCount > 0 && currentUser.sightingsCount <= 3) {
+            return "Intermediate.jpg";
+        } else if (currentUser.sightingsCount > 3 && currentUser.sightingsCount <= 6) {
+            return "Advanced.jpg";
+        } else if (currentUser.sightingsCount > 6) {
+            return "Master.jpg";
+        } else {
+            return "Newbie.jpg";
+        }
+    }
+
     useEffect(() => {
         if (feedToggle == "Approvals") {
             fetchPendingSightings(page)
@@ -66,11 +82,11 @@ export function Profile(): JSX.Element {
             <div className="profile-pane">
                 <div className="outer-container">
                     <div className="inner-container">
-                        <h2 data-testid="username" className="username">{currentUser?.username}</h2>
+                        <h1 data-testid="username" className="heading">{currentUser?.username ?? "Loading"}</h1>
                         <div className="trophy-container">
-                            <p className="feature-text"> 15</p>
+                            <p className="feature-text">{currentUser?.sightingsCount ?? 0}</p>
                             <p className="reported little-text"> Reported <br /> Sightings</p>
-                            <img className="trophy-image" alt="Trophy Image" src="https://picsum.photos/id/215/50" />
+                            <img className="trophy-image" alt="Trophy Image" src={getRankSrc()} />
                         </div>
                         <img className="profile-image" alt="Profile Image" src={`https://robohash.org/${currentUser?.username}?set=any&bgset=any`} />
                     </div>
@@ -105,7 +121,7 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
-                    {cards.length === 0 && page === 1 && feedToggle === "Sightings" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
+                    {cards.length === 0 && page === 1 && feedToggle === "" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
                 {cards.length === 0 && page === 1 ?

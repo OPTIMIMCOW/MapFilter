@@ -5,6 +5,7 @@ using System.Security.Claims;
 using WhaleSpotting.Controllers;
 using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Services;
 using Xunit;
 
 namespace WhaleSpotting.UnitTests.Controllers
@@ -14,11 +15,12 @@ namespace WhaleSpotting.UnitTests.Controllers
         private readonly SignInManager<UserDbModel> _signInManager = A.Fake<SignInManager<UserDbModel>>();
         private readonly UserManager<UserDbModel> _userManager = A.Fake<UserManager<UserDbModel>>();
         private readonly RoleManager<IdentityRole> _roleManager = A.Fake<RoleManager<IdentityRole>>();
+        private readonly ISightingsService _sightings = A.Fake<ISightingsService>();
         private readonly UserController _underTest;
 
         public UserControllerTests()
         {
-            _underTest = new UserController(_roleManager, _signInManager, _userManager);
+            _underTest = new UserController(_roleManager, _signInManager, _userManager, _sightings);
         }
 
         [Fact]
@@ -32,6 +34,8 @@ namespace WhaleSpotting.UnitTests.Controllers
 
             A.CallTo(() => _userManager.GetUserAsync(A<ClaimsPrincipal>.Ignored))
                 .Returns(userDbModel);
+            A.CallTo(() => _sightings.GetUserSightingsCount(userDbModel))
+                .Returns(5);
 
             // Act
             var response = await _underTest.GetCurrentUser();
@@ -39,6 +43,7 @@ namespace WhaleSpotting.UnitTests.Controllers
             // Assert
             response.Should().BeOfType<UserResponseModel>();
             response.Username.Should().Be("TestUser");
+            response.SightingsCount.Should().Be(5);
         }
     }
 }

@@ -4,7 +4,6 @@ import { BannerImage } from "./BannerImage";
 import ShowResultMessage from "./ShowResultMessage";
 import { CreateSightingApiModel } from "../api/models/CreateSightingApiModel";
 import { Species, OrcaType } from "../api/ApiEnums";
-import authService from "./api-authorization/AuthorizeService";
 import { createSighting } from "../api/apiClient";
 
 export default function ReportSighting(): JSX.Element {
@@ -100,8 +99,8 @@ export default function ReportSighting(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Species <span className="required">(required)</span></label>
-                                    <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }}>
-                                        <option selected value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
+                                    <select className="input-field" onChange={(e) => { setSpecies(parseInt(e.target.value)); }} defaultValue={Species.AtlanticWhiteSidedDolphin}>
+                                        <option value={Species.AtlanticWhiteSidedDolphin}>Atlantic White Sided Dolphin</option>,
                                         <option value={Species.CaliforniaSeaLion}>California Sea Lion</option>,
                                         <option value={Species.DallsPorpoise}>Dalls Porpoise</option>,
                                         <option value={Species.GrayWhale}>Gray Whale</option>,
@@ -139,8 +138,8 @@ export default function ReportSighting(): JSX.Element {
                                 </div>
                                 <div className="input-box">
                                     <label>Orca Type</label>
-                                    <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }}>
-                                        <option selected value={0}>N/A</option>,
+                                    <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }} defaultValue={0}>
+                                        <option value={0}>N/A</option>,
                                         <option value={OrcaType.NorthernResident}>Northern Resident</option>,
                                         <option value={OrcaType.Offshore}>Offshore</option>,
                                         <option value={OrcaType.SouthernResident}>Southern Resident</option>,
@@ -163,12 +162,12 @@ export default function ReportSighting(): JSX.Element {
                         </div>
                         <button type="submit" className="submit-button">Submit Sighting</button>
                     </form>
-                    
+
                     : <div>
                         <button className="submit-button" onClick={() => resetForm()}> Report Another Sighting</button>
                         <ShowResultMessage responseMessage={responseMessage} />
                     </div>
-                } 
+                }
             </div>
         </div>
     );
