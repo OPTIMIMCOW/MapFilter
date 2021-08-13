@@ -38,7 +38,7 @@ export default function Home(): JSX.Element {
     useEffect(() => {
         searchSightings(search, page, 10)
             .then(data => setData(data));
-    }, [page]);
+    }, [page, search]);
    
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
