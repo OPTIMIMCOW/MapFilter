@@ -38,7 +38,7 @@ export default function Home(): JSX.Element {
     useEffect(() => {
         searchSightings(search, page, 10)
             .then(data => setData(data));
-    }, [page, search]);
+    }, [page]);
    
     const cards = data.map((s, index) => <Card sighting={s} key={index} />);
 
@@ -82,6 +82,7 @@ export default function Home(): JSX.Element {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
         const formSearch: SearchSightingRequestModel = {
             species: species === 0 ? null : species,
             location: location,
