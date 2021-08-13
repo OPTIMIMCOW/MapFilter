@@ -115,7 +115,7 @@ namespace WhaleSpotting.UnitTests.Services
 
             // Assert
             var sighting = result.Should().BeOfType<List<SightingResponseModel>>().Subject.Single();
-            sighting.Username.Should().Be(user.UserName);
+            sighting.Username.Should().Be(user.UserName.Split("@")[0]);
         }
 
         [Fact]
@@ -124,7 +124,8 @@ namespace WhaleSpotting.UnitTests.Services
             // Arrange
             var currentUser = new UserDbModel
             {
-                Id = "1"
+                Id = "1",
+                UserName = "test@example.com"        
             };
             var newSighting = new SightingRequestModel
             {
