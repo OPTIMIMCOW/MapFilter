@@ -23,7 +23,8 @@ export default function Card({ sighting, admin = false }: CardProps): JSX.Elemen
                 <div className="card-info"
                     onClick={() => setCardState(!closeCard)} data-testid="card">
                     <img className={closeCard ? "species-image closed" : "species-image open"}
-                        data-testid="speciesImage" src={WhaleImageDictionary[sighting.species]} />
+                        data-testid="speciesImage" src={WhaleImageDictionary[sighting.species]}
+                        alt="species image" />
                     <div className="first-column">
                         <div>Sighted At: {sighting.sightedAt.split("T")[0].split("-").join("/")}</div>
                         <div>Species: {WhaleVisualTextDictionary[sighting.species]}</div>
