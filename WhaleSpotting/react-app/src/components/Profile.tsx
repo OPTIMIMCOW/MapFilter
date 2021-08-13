@@ -127,7 +127,7 @@ export function Profile(): JSX.Element {
                 {cards.length === 0 && page === 1 ?
                     <div />
                     :
-                    <PageNav page={page} nextPage={nextPage} previousPage={previousPage} />}
+                    <PageNav page={page} nextPage={nextPage} previousPage={previousPage} count={cards.length} size={10}/>}
             </div>
         </div>
     );

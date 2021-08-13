@@ -6,9 +6,11 @@ interface pageNavProps {
     page: number;
     nextPage: () => void;
     previousPage: () => void;
+    count: number;
+    size: number;
 }
 
-export default function PageNav({ page, nextPage, previousPage }: pageNavProps): JSX.Element {
+export default function PageNav({ page, nextPage, previousPage, count, size }: pageNavProps): JSX.Element {
 
     return (
         <div className="page-nav" data-testid="page-nav">
@@ -26,6 +28,7 @@ export default function PageNav({ page, nextPage, previousPage }: pageNavProps):
                     style={Style.secondary}
                     text="Next Page"
                     onClick={() => nextPage()}
+                    hidden={count < size}
                 />
             </div>
         </div>
