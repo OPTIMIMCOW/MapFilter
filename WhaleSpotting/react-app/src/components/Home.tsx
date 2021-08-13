@@ -13,7 +13,6 @@ export default function Home(): JSX.Element {
     const [page, setPage] = useState(1);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [searchFormOpen, setSearchFormOpen] = useState<boolean>(false);
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [fromDate, setFromDate] = useState<Date | null>(null);
     const [toDate, setToDate] = useState<Date | null>(null);
     const [location, setLocation] = useState<string>("");
@@ -96,9 +95,8 @@ export default function Home(): JSX.Element {
             radiusKm: radiusKm,
             confirmed: true
         };
-        await setSearch(formSearch);
-        setIsSubmitted(true);
-        if (isSubmitted) resetSearch();
+        setSearch(formSearch);
+        resetForm();
     }
 
     function formatDate(date: Date | null): string {
