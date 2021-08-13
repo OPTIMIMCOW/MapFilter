@@ -12,7 +12,8 @@ import { Link } from "react-router-dom";
 
 export function Profile(): JSX.Element {
     const [feedToggle, setFeedToggle] = useState("Sightings");
-    const [page, setPage] = useState(1);
+    const [sightingsPage, setSightingsPage] = useState(1);
+    const [approvalPage, setApprovalPage] = useState(1);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [data, setData] = useState<SightingApiModel[]>([]);
     const [currentUser, setCurrentUser] = useState<UserApiModel>();
@@ -42,11 +43,21 @@ export function Profile(): JSX.Element {
     }
 
     function nextPage() {
-        setPage(page + 1);
+        if (feedToggle == "Sightings") {
+            setSightingsPage(sightingsPage + 1);
+        }
+        else {
+            setApprovalPage(approvalPage + 1);
+        }
     }
 
     function previousPage() {
-        setPage(page - 1);
+        if (feedToggle == "Sightings") {
+            setSightingsPage(sightingsPage - 1);
+        }
+        else {
+            setApprovalPage(approvalPage - 1);
+        }
     }
 
     function getRankSrc(): string {
@@ -67,13 +78,13 @@ export function Profile(): JSX.Element {
 
     useEffect(() => {
         if (feedToggle == "Approvals") {
-            fetchPendingSightings(page)
+            fetchPendingSightings(approvalPage)
                 .then(data => setData(data));
         } else if (feedToggle == "Sightings") {
-            fetchCurrentUserSightings(page)
+            fetchCurrentUserSightings(sightingsPage)
                 .then(data => setData(data));
         }
-    }, [feedToggle, page]);
+    }, [feedToggle, approvalPage, sightingsPage]);
 
     const cards = data.map((s, index) => <Card sighting={s} admin={isUserAdmin} key={index} />);
 
@@ -121,13 +132,14 @@ export function Profile(): JSX.Element {
             <div className="feed">
                 <h2 className="heading">Your {feedToggle}</h2>
                 <div className="card-holder">
-                    {cards.length === 0 && page === 1 && feedToggle === "" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
+                    {cards.length === 0 && sightingsPage === 1 && feedToggle === "Sightings" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
-                {cards.length === 0 && page === 1 ?
+                {cards.length === 0 && approvalPage === 1 ?
                     <div />
                     :
-                    <PageNav page={page} nextPage={nextPage} previousPage={previousPage} count={cards.length} size={10}/>}
+                    <PageNav page={feedToggle === "Sightings" ? sightingsPage : approvalPage}
+                        nextPage={nextPage} previousPage={previousPage} count={cards.length} size={10}/>}
             </div>
         </div>
     );
