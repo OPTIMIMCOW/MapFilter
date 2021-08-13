@@ -4,7 +4,6 @@ import Home from "../../components/Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { searchSightings } from "../../api/apiClient";
-import { SearchSightingRequestModel } from "../../api/models/SearchSightingRequestModel";
 import { SightingApiModel } from "../../api/models/SightingApiModel";
 import { OrcaType, Species } from "../../api/ApiEnums";
 
@@ -40,18 +39,6 @@ describe("Home Page tests", () => {
     });
 
     test("When home renders, it calls API and gets recent sightings", () => {
-        const mockSearch: SearchSightingRequestModel = {
-            species: null,
-            location: "",
-            longitude: null,
-            latitude: null,
-            sightedFrom: null,
-            sightedTo: null,
-            orcaType: null,
-            orcaPod: "",
-            radiusKm: 50
-        };
-
         const mockexample1: SightingApiModel = {
             id: 1,
             sightedAt: new Date().toDateString(),
@@ -86,7 +73,7 @@ describe("Home Page tests", () => {
 
         jest.mock("../../api/apiClient", () => ({
             __esModule: true,
-            searchSightings: jest.fn(async (mockSearch, page:1, pageSize:10): Promise<SightingApiModel[]> => {
+            searchSightings: jest.fn(async (): Promise<SightingApiModel[]> => {
                 return Promise.resolve(mockSightings);
             })
         }));
@@ -103,7 +90,7 @@ describe("Home Page tests", () => {
 
         const submitButton = screen.getByTestId("submit-button");
         userEvent.click(submitButton);
-       
+
         setTimeout(() => {
             expect(searchSightings).toBeCalled();
         }, 100);

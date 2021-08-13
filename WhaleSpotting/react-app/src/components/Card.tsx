@@ -2,7 +2,6 @@ import "../styles/Card.scss";
 import React, { useState } from "react";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import { Button, Style } from "./Button";
-import { deleteSighting, confirmSighting } from "../api/apiClient";
 import { WhaleImageDictionary } from "../api/ApiLookups";
 import { OrcaType, Species } from "../api/ApiEnums";
 import { WhaleVisualTextDictionary, OrcaTypeTextDictionary } from "../api/ApiLookups";

@@ -77,14 +77,6 @@ test("On click the class changes to open", () => {
     expect(secondCol).toHaveClass("open");
 });
 
-test("On approve the card class changes to hidden", () => {
-    render(<Card sighting={exampleUnconfirmed} admin={true} />);
-    const card = screen.getByTestId("sighting-card");
-    const approveButton = screen.getByTestId("approve-button");
-    userEvent.click(approveButton);
-    expect(card).toHaveAttribute("hidden");
-});
-
 test("On click of approve confirmSighting API is called", () => {
     const mockSighting: SightingApiModel = {
         id: 1,
