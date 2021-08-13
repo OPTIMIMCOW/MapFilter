@@ -131,7 +131,7 @@ export function Profile(): JSX.Element {
             </div>
             <div className="feed">
                 <h2 className="heading">Your {feedToggle}</h2>
-                <div className="card-holder">
+                <div className="card-holder profile">
                     {cards.length === 0 && sightingsPage === 1 && feedToggle === "Sightings" ? <div className="card-component">Nothing here, <Link to="reportsighting"> report a sighting </ Link> </div> : cards}
                 </div>
 
