@@ -136,7 +136,7 @@ export default function ReportSighting(): JSX.Element {
 
                                         onChange={(e) => setLatitude(parseFloat(e.target.value))} />
                                 </div>
-                                <div className="input-box">
+                                <div className="input-box" hidden={species !== Species.Orca}>
                                     <label>Orca Type</label>
                                     <select className="input-field" onChange={(e) => { setOrcaType(parseInt(e.target.value)); }} defaultValue={0}>
                                         <option value={0}>N/A</option>,
@@ -146,7 +146,7 @@ export default function ReportSighting(): JSX.Element {
                                         <option value={OrcaType.Transient}>Transient</option>,
                                     </select>
                                 </div>
-                                <div className="input-box">
+                                <div className="input-box" hidden={species !== Species.Orca}>
                                     <label>Orca Pod</label>
                                     <input className="input-field" type="text" placeholder="Enter the orca pod"
                                         value={orcaPod}
