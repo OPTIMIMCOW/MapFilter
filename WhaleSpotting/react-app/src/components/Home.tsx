@@ -61,6 +61,7 @@ export default function Home(): JSX.Element {
         setLatitude(null);
         setOrcaType(0);
         setOrcaPod("");
+        setPage(1);
     }
     
     function resetSearch() {
