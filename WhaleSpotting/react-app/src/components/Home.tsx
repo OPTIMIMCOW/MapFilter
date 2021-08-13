@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
         setPage(page - 1);
     }
 
-    function resetSearch() {
+    function resetForm() {
         setSearchFormOpen(!searchFormOpen);
         setFromDate(null);
         setToDate(null);
@@ -60,6 +60,21 @@ export default function Home(): JSX.Element {
         setLatitude(null);
         setOrcaType(0);
         setOrcaPod("");
+    }
+    
+    function resetSearch() {
+        setSearch({
+            species: null,
+            location: "",
+            longitude: null,
+            latitude: null,
+            sightedFrom: null,
+            sightedTo: null,
+            orcaType: null,
+            orcaPod: "",
+            radiusKm: 50
+        });
+        resetForm();
     }
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -76,7 +91,7 @@ export default function Home(): JSX.Element {
             radiusKm: radiusKm
         };
         setSearch(formSearch);
-        resetSearch();
+        resetForm();
     }
 
     return (
@@ -101,7 +116,7 @@ export default function Home(): JSX.Element {
                         minWidth25={true}
                     />
                 </div>
-                <div hidden={!searchFormOpen} className="search-form">
+                <div hidden={!searchFormOpen} className="search-form" data-testid= "search-form">
                     <form onSubmit={handleSubmit}>
                         <div className="card-component">
                             <div className="sighting-details">
@@ -176,10 +191,10 @@ export default function Home(): JSX.Element {
                                         onChange={(e) => setOrcaPod(e.target.value)} />
                                 </div>
                             </div>
-                            <button type="reset" onClick={resetSearch} className="submit-button">
+                            <button type="reset" onClick={resetSearch} className="submit-button" data-testid="reset-button">
                                 Clear
                             </button>
-                            <button type="submit" className="submit-button">
+                            <button type="submit" className="submit-button" data-testid="submit-button">
                                 Search
                             </button>
                         </div>
