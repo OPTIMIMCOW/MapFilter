@@ -34,6 +34,12 @@ namespace WhaleSpotting.Controllers
             return await _sightings.GetAllSightings();
         }
 
+        [HttpGet("batch")]
+        public async Task<List<SightingResponseModel>> GetBatchSightings([FromQuery] BatchSightingRequestModel batchSighting)
+        {
+            return await _sightings.GetBatchSightings(batchSighting);
+        }
+
         [HttpGet("search")]
         public async Task<ActionResult<List<SightingResponseModel>>> SearchSighting([FromQuery] SearchSightingRequestModel searchSighting, [FromQuery] PageFilter pageFilter)
         {
