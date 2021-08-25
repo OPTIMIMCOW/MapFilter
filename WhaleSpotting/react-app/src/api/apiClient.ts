@@ -4,9 +4,15 @@ import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
 import { UserApiModel } from "./models/UserApiModel";
 import { Species } from "./ApiEnums";
+import {BatchSightingRequestModel} from "./models/BatchSightingRequestModel"
 
 export async function fetchAllSightings(): Promise<SightingApiModel[]> {
     return await fetch("api/sightings", await getGetSettings())
+        .then(r => r.json());
+}
+
+export async function fetchBatchSightings(request: BatchSightingRequestModel): Promise<SightingApiModel[]> {
+    return await fetch("api/sightings/batch", await getGetBatchSettings(request))
         .then(r => r.json());
 }
 
@@ -118,6 +124,14 @@ async function getGetSettings(): Promise<RequestInit> {
     const token = await authService.getAccessToken();
     return {
         headers: !token ? {} : { "Authorization": `Bearer ${token}` }
+    };
+}
+
+async function getGetBatchSettings(request: BatchSightingRequestModel): Promise<RequestInit> {
+    const token = await authService.getAccessToken();
+    return {
+        headers: !token ? {} : { "Authorization": `Bearer ${token}` },
+        body: JSON.stringify(request),
     };
 }
 
