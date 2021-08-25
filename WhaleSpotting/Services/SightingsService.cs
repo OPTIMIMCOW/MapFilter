@@ -83,6 +83,7 @@ namespace WhaleSpotting.Services
             var lowerLatitude = batchSighting.minLatitude;
 
             var sightings = await _context.Sightings
+                .Where(s => s.Confirmed)
                 .Where(s => s.Latitude > lowerLatitude && s.Latitude < upperLatitude)
                 .Include(s => s.User)
                 .Select(s => new SightingResponseModel(s))

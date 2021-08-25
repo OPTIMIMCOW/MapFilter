@@ -9,7 +9,8 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import { Chosen } from "./Map";
-import { fetchAllSightings } from "../api/apiClient";
+import { fetchBatchSightings } from "../api/apiClient";
+import { BatchSightingRequestModel } from "../api/models/BatchSightingRequestModel";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -22,7 +23,13 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
 
     useEffect(() => {
-        fetchAllSightings()
+        const request: BatchSightingRequestModel = {
+            maxLatitude: 90,
+            minLatitude: -90,
+            batchNumber: 1,
+        };
+
+        fetchBatchSightings(request)
             .then(data => setData(data));
     }, []);
 
