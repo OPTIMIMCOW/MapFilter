@@ -22,57 +22,60 @@ interface MapChartProps {
 
 export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
+    const [batch, setBatch] = useState<number>(0);
 
     useEffect(() => {
-        for (let i = 0; i < 4; i++) {
-            batchLoad(i);
-        }
     }, []);
 
-    async function batchLoad(i: number): Promise<void> {
+    function batchLoad(): void {
         const request: BatchSightingRequestModel = {
-            maxLatitude: -45 + (45 * i),
-            minLatitude: -90 + (45 * i),
-            batchNumber: i + 1,
+            maxLatitude: -45 + (45 * batch),
+            minLatitude: -90 + (45 * batch),
+            batchNumber: batch + 1,
         };
 
-        await fetchBatchSightings(request)
+        fetchBatchSightings(request)
             .then(newData => setData(data.concat(newData)));
 
+        setBatch(batch + 1);
     }
 
-    if (data.length === 0) {
-        console.log("the component re ran");
-        console.log(data);
-        return <div data-testid="loading"> Loading... </div>;
-    }
+    //if (data.length === 0) {
+    //    return <div data-testid="loading"> Loading... </div>;
+    //}
+
+    console.log("the component re ran");
+    console.log(data);
 
     return (
-        <ComposableMap
-            projection="geoEqualEarth"
-            data-testid="simple-map">
-            <ZoomableGroup zoom={1}>
-                <Geographies geography={geoUrl}>
-                    {({ geographies }) =>
-                        geographies.map(geo => <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            fill="#DDD"
-                            stroke="#FFF"
-                        />)
+        <div>
+            <button onClick={() => batchLoad()}> Batch Number:{batch}</button>
+            <ComposableMap
+                projection="geoEqualEarth"
+                data-testid="simple-map">
+                <ZoomableGroup zoom={1}>
+                    <Geographies geography={geoUrl}>
+                        {({ geographies }) =>
+                            geographies.map(geo => <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                fill="#DDD"
+                                stroke="#FFF"
+                            />)
+                        }
+                    </Geographies>
+                    {data.map(({ id, longitude, latitude }, index) => {
+                        const isChosen = chosen !== undefined && id === chosen.id;
+                        return <Marker
+                            data-testid={isChosen ? "chosen" : "not-chosen"}
+                            key={index} coordinates={[longitude, latitude]} name=""
+                            onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
+                            <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                        </Marker>;
                     }
-                </Geographies>
-                {data.map(({ id, longitude, latitude }, index) => {
-                    const isChosen = chosen !== undefined && id === chosen.id;
-                    return <Marker
-                        data-testid={isChosen ? "chosen" : "not-chosen"}
-                        key={index} coordinates={[longitude, latitude]} name=""
-                        onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
-                        <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
-                    </Marker>;
-                }
-                )}
-            </ZoomableGroup>
-        </ComposableMap>
+                    )}
+                </ZoomableGroup>
+            </ComposableMap>
+        </div>
     );
 }
