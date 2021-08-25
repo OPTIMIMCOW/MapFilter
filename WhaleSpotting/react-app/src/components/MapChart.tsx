@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SightingApiModel } from "../api/models/SightingApiModel";
 import "../styles/Map.scss";
@@ -23,17 +24,26 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<SightingApiModel[]>([]);
 
     useEffect(() => {
-        const request: BatchSightingRequestModel = {
-            maxLatitude: 90,
-            minLatitude: -90,
-            batchNumber: 1,
-        };
-
-        fetchBatchSightings(request)
-            .then(data => setData(data));
+        for (let i = 0; i < 4; i++) {
+            batchLoad(i);
+        }
     }, []);
 
+    async function batchLoad(i: number): Promise<void> {
+        const request: BatchSightingRequestModel = {
+            maxLatitude: -45 + (45 * i),
+            minLatitude: -90 + (45 * i),
+            batchNumber: i + 1,
+        };
+
+        await fetchBatchSightings(request)
+            .then(newData => setData(data.concat(newData)));
+
+    }
+
     if (data.length === 0) {
+        console.log("the component re ran");
+        console.log(data);
         return <div data-testid="loading"> Loading... </div>;
     }
 
