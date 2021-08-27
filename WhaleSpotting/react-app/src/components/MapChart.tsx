@@ -12,7 +12,7 @@ import {
 import { Chosen } from "./Map";
 import { fetchBatchSightings } from "../api/apiClient";
 import { BatchSightingRequestModel } from "../api/models/BatchSightingRequestModel";
-import update from 'immutability-helper';
+import { BatchSightingApiModel } from "../api/models/BatchSightingApiModel";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -22,27 +22,30 @@ interface MapChartProps {
 }
 
 export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
-    const [data, setData] = useState<SightingApiModel[]>([]);
-    const [batch, setBatch] = useState<number>(0);
+    const [data, setData] = useState<BatchSightingApiModel>({ batch: 0, sightings: [] });
 
     useEffect(() => {
-        if (batch < 10) {
+        if (data.batch < 10) {
+            console.log(`ran batch: ${data.batch}`);
             const request: BatchSightingRequestModel = {
-                maxLatitude: -72 + (18 * batch),
-                minLatitude: -90 + (18 * batch),
-                batchNumber: batch + 1,
+                maxLatitude: -72 + (18 * data.batch),
+                minLatitude: -90 + (18 * data.batch),
+                batchNumber: data.batch + 1,
             };
 
             fetchBatchSightings(request)
                 .then(newData => {
-                    const changeData = data.concat(newData);
-                    setBatch(batch + 1);
-                    setData(changeData);
+                    const newBatchSightingApiModel: BatchSightingApiModel =
+                    {
+                        batch: newData.batch,
+                        sightings: data.sightings.concat(newData.sightings),
+                    }
+                    setData(newBatchSightingApiModel);
                 });
         }
     }, [data]);
 
-    if (data.length === 0) {
+    if (data.sightings.length === 0) {
         return <div data-testid="loading"> Loading... </div>;
     }
 
@@ -61,7 +64,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
                         />)
                     }
                 </Geographies>
-                {data.map(({ id, longitude, latitude }, index) => {
+                {data.sightings.map(({ id, longitude, latitude }, index) => {
                     const isChosen = chosen !== undefined && id === chosen.id;
                     return <Marker
                         data-testid={isChosen ? "chosen" : "not-chosen"}

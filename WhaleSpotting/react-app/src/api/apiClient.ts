@@ -1,4 +1,5 @@
 ﻿import { SightingApiModel } from "./models/SightingApiModel";
+import { BatchSightingApiModel } from "./models/BatchSightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
@@ -11,7 +12,7 @@ export async function fetchAllSightings(): Promise<SightingApiModel[]> {
         .then(r => r.json());
 }
 
-export async function fetchBatchSightings(request: BatchSightingRequestModel): Promise<SightingApiModel[]> {
+export async function fetchBatchSightings(request: BatchSightingRequestModel): Promise<BatchSightingApiModel> {
     return await fetch(`api/sightings/batch?maxLatitude=${request.maxLatitude}&minLatitude=${request.minLatitude}&batchNumber=${request.batchNumber}`, await getGetSettings())
         .then(r => r.json());
 }
