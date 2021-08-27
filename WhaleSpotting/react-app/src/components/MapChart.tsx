@@ -24,6 +24,10 @@ interface MapChartProps {
 export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchSightingApiModel>({ batch: 0, sightings: [] });
 
+    const width = 800;
+    const height = 600;
+    const zoom = 1;
+    let boundingBox;
     const totalBatch = 10;
 
     useEffect(() => {
@@ -47,19 +51,29 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
         }
     }, [data]);
 
-    function showLoading(): JSX.Element | void {
-        if (data.batch + 1 < totalBatch) {
-        return <div data-testid="loading"> {`Loaded Results: ${data.batch +1} of ${totalBatch}`} </div>
-        }
+    function getBoundingBox(centre: [number, number], zoom: number) {
+        console.log(centre);
+        const halfWidth = (width * 0.5) / zoom;
+        const halfHeight = (height * 0.5) / zoom;
+        const upperLongitude = (centre[0] + halfWidth) * (360 / 800);
+        const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
+        const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
+        const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
+        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude,];
+        console.log(boundingBox);
     }
 
     return (
         <div>
-            {showLoading()}
+            <div data-testid="loading"> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
+            <div data-testid="loading"> {`Total Results: ${data.sightings.length}`} </div>
             <ComposableMap
                 projection="geoEqualEarth"
-                data-testid="simple-map">
-                <ZoomableGroup zoom={1}>
+                data-testid="simple-map"
+                width={width}
+                height={height}
+            >
+                <ZoomableGroup zoom={zoom} center={[16, 0]} onMoveEnd={position => { getBoundingBox(position.coordinates, position.zoom) }}>
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map(geo => <Geography
@@ -82,6 +96,7 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
                     )}
                 </ZoomableGroup>
             </ComposableMap>
-        </div>
+        </div >
     );
+
 }
