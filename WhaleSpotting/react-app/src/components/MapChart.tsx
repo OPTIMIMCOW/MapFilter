@@ -24,8 +24,10 @@ interface MapChartProps {
 export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchSightingApiModel>({ batch: 0, sightings: [] });
 
+    const totalBatch = 10;
+
     useEffect(() => {
-        if (data.batch < 10) {
+        if (data.batch < totalBatch) {
             console.log(`ran batch: ${data.batch}`);
             const request: BatchSightingRequestModel = {
                 maxLatitude: -72 + (18 * data.batch),
@@ -45,36 +47,41 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
         }
     }, [data]);
 
-    if (data.sightings.length === 0) {
-        return <div data-testid="loading"> Loading... </div>;
+    function showLoading(): JSX.Element | void {
+        if (data.batch + 1 < totalBatch) {
+        return <div data-testid="loading"> {`Loaded Results: ${data.batch +1} of ${totalBatch}`} </div>
+        }
     }
 
     return (
-        <ComposableMap
-            projection="geoEqualEarth"
-            data-testid="simple-map">
-            <ZoomableGroup zoom={1}>
-                <Geographies geography={geoUrl}>
-                    {({ geographies }) =>
-                        geographies.map(geo => <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            fill="#DDD"
-                            stroke="#FFF"
-                        />)
+        <div>
+            {showLoading()}
+            <ComposableMap
+                projection="geoEqualEarth"
+                data-testid="simple-map">
+                <ZoomableGroup zoom={1}>
+                    <Geographies geography={geoUrl}>
+                        {({ geographies }) =>
+                            geographies.map(geo => <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                fill="#DDD"
+                                stroke="#FFF"
+                            />)
+                        }
+                    </Geographies>
+                    {data.sightings.map(({ id, longitude, latitude }, index) => {
+                        const isChosen = chosen !== undefined && id === chosen.id;
+                        return <Marker
+                            data-testid={isChosen ? "chosen" : "not-chosen"}
+                            key={index} coordinates={[longitude, latitude]} name=""
+                            onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
+                            <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                        </Marker>;
                     }
-                </Geographies>
-                {data.sightings.map(({ id, longitude, latitude }, index) => {
-                    const isChosen = chosen !== undefined && id === chosen.id;
-                    return <Marker
-                        data-testid={isChosen ? "chosen" : "not-chosen"}
-                        key={index} coordinates={[longitude, latitude]} name=""
-                        onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
-                        <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
-                    </Marker>;
-                }
-                )}
-            </ZoomableGroup>
-        </ComposableMap>
+                    )}
+                </ZoomableGroup>
+            </ComposableMap>
+        </div>
     );
 }
