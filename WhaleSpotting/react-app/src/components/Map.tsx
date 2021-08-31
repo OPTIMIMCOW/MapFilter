@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import "../styles/Map.scss";
 import "../styles/Home.scss";
 import React, { useState } from "react";
@@ -14,14 +15,16 @@ export interface Chosen {
 export default function Map(): JSX.Element {
 
     const [chosen, setChosen] = useState<Chosen>();
+    const [clicked, setClicked] = useState<number>(0);
 
     return (
         <div className="map-component-container">
             <BannerImage />
+            <button onClick={() => setClicked(clicked + 1)}>Click to Re-Run</button>
             <div className="map-component" data-testid="map-component">
                 <h2 className="map-header">Map of Sightings</h2>
                 <div className="map-container" data-testid="map-container">
-                    <MapChart chosen={chosen} setChosen={setChosen} />
+                    <MapChart chosen={chosen} setChosen={setChosen} clicked={clicked} />
                 </div>
                 <div className="map-info" data-testid="map-info">
                     <SightingMapInfo chosen={chosen} />

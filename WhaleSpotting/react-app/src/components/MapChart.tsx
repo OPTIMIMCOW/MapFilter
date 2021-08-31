@@ -19,16 +19,35 @@ const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 interface MapChartProps {
     chosen: Chosen | undefined;
     setChosen: Dispatch<SetStateAction<Chosen | undefined>>;
+    clicked: number;
 }
 
-export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
+export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchSightingApiModel>({ batch: 0, sightings: [] });
+    const [redraw, setRedraw] = useState<number>(0);
 
     const width = 800;
     const height = 600;
     const zoom = 1;
     let boundingBox;
     const totalBatch = 10;
+
+    if (redraw != clicked) {
+        setData({ batch: 0, sightings: [] });
+        setRedraw(clicked);
+    }
+
+    function getBoundingBox(centre: [number, number], zoom: number) {
+        console.log(centre);
+        const halfWidth = (width * 0.5) / zoom;
+        const halfHeight = (height * 0.5) / zoom;
+        const upperLongitude = (centre[0] + halfWidth) * (360 / 800);
+        const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
+        const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
+        const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
+        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude,];
+        console.log(boundingBox);
+    }
 
     useEffect(() => {
         if (data.batch < totalBatch) {
@@ -51,17 +70,6 @@ export function MapChart({ chosen, setChosen }: MapChartProps): JSX.Element {
         }
     }, [data]);
 
-    function getBoundingBox(centre: [number, number], zoom: number) {
-        console.log(centre);
-        const halfWidth = (width * 0.5) / zoom;
-        const halfHeight = (height * 0.5) / zoom;
-        const upperLongitude = (centre[0] + halfWidth) * (360 / 800);
-        const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
-        const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
-        const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
-        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude,];
-        console.log(boundingBox);
-    }
 
     return (
         <div>
