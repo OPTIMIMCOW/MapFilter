@@ -11,8 +11,8 @@ import {
 } from "react-simple-maps";
 import { Chosen } from "./Map";
 import { fetchBatchSightings } from "../api/apiClient";
-import { BatchSightingRequestModel } from "../api/models/BatchSightingRequestModel";
-import { BatchSightingApiModel } from "../api/models/BatchSightingApiModel";
+import { BatchSightingRequestModel } from "../api/models/BatchGeographyRequestModel";
+import { BatchSightingApiModel } from "../api/models/BatchGeographyApiModel";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 

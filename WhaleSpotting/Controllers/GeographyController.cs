@@ -4,23 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WhaleSpotting.Services;
+using WhaleSpotting.Models.ResponseModels;
+using WhaleSpotting.Models.RequestModels;
 
 namespace WhaleSpotting.Controllers
 {
     [Route("/geography")]
     public class GeographyController : ControllerBase
     {
-        private readonly IGeographyService _service;
-        public GeographyController(IGeographyService service)
+        private readonly IGeographyService _geography;
+        public GeographyController(IGeographyService geography)
         {
-            _service = service;
+            _geography = geography;
         }
 
         [HttpPost]
         public IActionResult PopulateSampleData()
         {
-            _service.populateSampleData();
+            _geography.populateSampleData();
             return Ok();
+        }
+
+        [HttpGet("batch")]
+        public BatchGeographyResponseModel GetBatchGeography([FromQuery] BatchGeographyRequestModel batchGeography)
+        {
+            return _geography.GetBatchGeography(batchGeography);
         }
     }
 }

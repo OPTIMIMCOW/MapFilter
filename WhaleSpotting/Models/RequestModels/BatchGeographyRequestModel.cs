@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WhaleSpotting.Models.RequestModels
 {
-    public class BatchSightingRequestModel
+    public class BatchGeographyRequestModel
     {
         public double maxLatitude { get; set; }
         public double minLatitude { get; set; }

@@ -1,19 +1,19 @@
 ﻿import { SightingApiModel } from "./models/SightingApiModel";
-import { BatchSightingApiModel } from "./models/BatchSightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";
 import { UserApiModel } from "./models/UserApiModel";
 import { Species } from "./ApiEnums";
-import { BatchSightingRequestModel } from "./models/BatchSightingRequestModel";
+import { BatchGeographyRequestModel } from "./models/BatchGeographyRequestModel";
+import { BatchGeographyApiModel } from "./models/BatchGeographyApiModel";
 
 export async function fetchAllSightings(): Promise<SightingApiModel[]> {
     return await fetch("api/sightings", await getGetSettings())
         .then(r => r.json());
 }
 
-export async function fetchBatchSightings(request: BatchSightingRequestModel): Promise<BatchSightingApiModel> {
-    return await fetch(`api/sightings/batch?maxLatitude=${request.maxLatitude}&minLatitude=${request.minLatitude}&batchNumber=${request.batchNumber}`, await getGetSettings())
+export async function fetchBatchGeography(request: BatchGeographyRequestModel): Promise<BatchGeographyApiModel> {
+    return await fetch(`api/geography/batch?maxLatitude=${request.maxLatitude}&minLatitude=${request.minLatitude}&batchNumber=${request.batchNumber}`, await getGetSettings())
         .then(r => r.json());
 }
 
