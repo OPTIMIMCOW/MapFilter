@@ -35,7 +35,7 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("batch")]
-        public async Task<BatchSightingResponseModel> GetBatchSightings([FromQuery] BatchSightingRequestModel batchSighting)
+        public async Task<BatchGeographyResponseModel> GetBatchSightings([FromQuery] BatchSightingRequestModel batchSighting)
         {
             return await _sightings.GetBatchSightings(batchSighting);
         }

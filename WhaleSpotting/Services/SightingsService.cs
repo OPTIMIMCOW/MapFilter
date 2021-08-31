@@ -14,7 +14,7 @@ namespace WhaleSpotting.Services
     public interface ISightingsService
     {
         Task<List<SightingResponseModel>> SearchSighting(SearchSightingRequestModel searchSightingRequestModel, PageFilter pageFilter);
-        Task<BatchSightingResponseModel> GetBatchSightings(BatchSightingRequestModel batchSighting);
+        Task<BatchGeographyResponseModel> GetBatchSightings(BatchSightingRequestModel batchSighting);
         Task<List<SightingResponseModel>> GetAllSightings();
         SightingResponseModel CreateSighting(SightingRequestModel sightingRequestModel, UserDbModel currentUser);
         Task<List<SightingResponseModel>> GetNotConfirmedSightings(PageFilter pageFilter);
@@ -76,7 +76,7 @@ namespace WhaleSpotting.Services
             return sightings;
         }
 
-        public async Task<BatchSightingResponseModel> GetBatchSightings(BatchSightingRequestModel batchSighting)
+        public async Task<BatchGeographyResponseModel> GetBatchSightings(BatchSightingRequestModel batchSighting)
         {
            
             var upperLatitude = batchSighting.maxLatitude;
@@ -90,7 +90,7 @@ namespace WhaleSpotting.Services
                 .ToListAsync();
 
             
-            return new BatchSightingResponseModel(batchSighting.batchNumber, sightings);
+            return new BatchGeographyResponseModel(batchSighting.batchNumber, sightings);
         }
 
         public List<SightingResponseModel> CreateSightings(List<SightingDbModel> sightingsToAdd)
