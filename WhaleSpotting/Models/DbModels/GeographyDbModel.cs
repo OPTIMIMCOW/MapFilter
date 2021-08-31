@@ -9,6 +9,7 @@ namespace WhaleSpotting.Models.DbModels
     public class GeographyDbModel
     {
         public int Id { get; set; }
+        public int ApiId { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string AttractionType { get; set; }
@@ -18,9 +19,9 @@ namespace WhaleSpotting.Models.DbModels
 
         }
 
-        public GeographyDbModel(int id, double latitude, double longitude, string attractiontype)
+        public GeographyDbModel(int apiId, double latitude, double longitude, string attractiontype)
         {
-            Id = id;
+            ApiId = apiId;
             Latitude = latitude;
             Longitude = longitude;
             AttractionType = attractiontype;

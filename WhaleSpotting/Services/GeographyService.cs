@@ -23,8 +23,8 @@ namespace WhaleSpotting.Services
         public List<GeographyResponseModel> populateSampleData()
         {
             var newPoints = generateSampleData();
-            var existingPointIds = _context.Geography.Select(g => g.Id).ToList();
-            var pointsToAdd = newPoints.Where(g => !existingPointIds.Contains(g.Id)).ToList();
+            var existingPointApiIds = _context.Geography.Select(g => g.ApiId).ToList();
+            var pointsToAdd = newPoints.Where(g => !existingPointApiIds.Contains(g.ApiId)).ToList();
 
             _context.Geography.AddRange(pointsToAdd);
             _context.SaveChanges();
@@ -37,27 +37,27 @@ namespace WhaleSpotting.Services
             var geographyPoints = new List<GeographyDbModel>();
             Int32 id = 0;
 
-            for (int i = 0; i < 360; i++)
+            for (int i = -180; i < 180; i++)
             {
-                for (int j = 0; j < 180; j++)
+                for (int j = -90; j < 90; j++)
                 {
                     geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.Beach.ToString())); ;
                     id++;
                 }
             }
 
-            for (int i = 0; i < 360; i+=2)
+            for (int i = -180; i < 180; i+=2)
             {
-                for (int j = 0; j < 180; j+=2)
+                for (int j = -90; j < 90; j+=2)
                 {
                     geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.Hiking.ToString())); ;
                     id++;
                 }
             }
 
-            for (int i = 0; i < 360; i += 4)
+            for (int i = -180; i < 180; i += 4)
             {
-                for (int j = 0; j < 180; j += 4)
+                for (int j = -90; j < 90; j += 4)
                 {
                     geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.History.ToString()));
                     id++;

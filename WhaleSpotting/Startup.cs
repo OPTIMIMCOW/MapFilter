@@ -64,6 +64,8 @@ namespace WhaleSpotting
 
             services.AddTransient<ISightingsService, SightingsService>();
 
+            services.AddTransient<IGeographyService, GeographyService>();
+
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders =
