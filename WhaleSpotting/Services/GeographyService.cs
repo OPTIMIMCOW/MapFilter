@@ -41,29 +41,29 @@ namespace WhaleSpotting.Services
             var geographyPoints = new List<GeographyDbModel>();
             Int32 id = 0;
 
-            for (int i = -180; i < 180; i++)
+            for (int i = -180; i < 180; i += 10)
             {
-                for (int j = -90; j < 90; j++)
+                for (int j = -90; j < 90; j += 10)
                 {
                     geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.Beach.ToString())); ;
                     id++;
                 }
             }
 
-            for (int i = -180; i < 180; i+=2)
+            for (int i = -180; i < 180; i += 20)
             {
-                for (int j = -90; j < 90; j+=2)
+                for (int j = -90; j < 90; j += 20)
                 {
-                    geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.Hiking.ToString())); ;
+                    geographyPoints.Add(new GeographyDbModel(id, j, i + 2, AttractionType.Hiking.ToString())); ;
                     id++;
                 }
             }
 
-            for (int i = -180; i < 180; i += 4)
+            for (int i = -180; i < 180; i += 40)
             {
-                for (int j = -90; j < 90; j += 4)
+                for (int j = -90; j < 90; j += 40)
                 {
-                    geographyPoints.Add(new GeographyDbModel(id, j, i, AttractionType.History.ToString()));
+                    geographyPoints.Add(new GeographyDbModel(id, j, i + 4, AttractionType.History.ToString()));
                     id++;
                 }
             }
@@ -81,7 +81,7 @@ namespace WhaleSpotting.Services
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 
-            
+
             return new BatchGeographyResponseModel(batchGeography.batchNumber, geography);
         }
     }
