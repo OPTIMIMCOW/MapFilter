@@ -26,19 +26,19 @@ describe("Map Chart component tests", () => {
 
         jest.mock("../../api/apiClient", () => ({
             __esModule: true,
-            fetchAllSightings: jest.fn(async () : Promise<SightingApiModel[]> => {
+            fetchAllSightings: jest.fn(async (): Promise<SightingApiModel[]> => {
                 return Promise.resolve([mockexample]);
             })
         }));
 
         //eslint-disable-next-line
-        render(<Router><MapChart chosen={undefined} setChosen={() => {}}/></Router>);
+        render(<Router><MapChart chosen={undefined} setChosen={() => { }} clicked={0} /></Router>);
 
-        setTimeout(()=>{
+        setTimeout(() => {
             expect(fetchAllSightings).toBeCalled();
         }, 100);
 
-        setTimeout(()=> {
+        setTimeout(() => {
             const simpleMap = screen.getByTestId("simple-map");
             expect(simpleMap).toBeInTheDocument();
         }, 200);

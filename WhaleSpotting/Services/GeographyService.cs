@@ -6,14 +6,14 @@ using WhaleSpotting.Models.DbModels;
 using WhaleSpotting.Models.ResponseModels;
 using WhaleSpotting.Models.RequestModels;
 using WhaleSpotting.Models.Enums;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace WhaleSpotting.Services
 {
     public interface IGeographyService
     {
         List<GeographyResponseModel> populateSampleData();
-        BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography);
+        Task<BatchGeographyResponseModel> GetBatchGeography(BatchGeographyRequestModel batchGeography);
     }
 
     public class GeographyService : IGeographyService
@@ -71,7 +71,7 @@ namespace WhaleSpotting.Services
             return geographyPoints;
         }
 
-        public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
+        public async Task<BatchGeographyResponseModel> GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
             var upperLatitude = batchGeography.maxLatitude;
             var lowerLatitude = batchGeography.minLatitude;
@@ -81,6 +81,7 @@ namespace WhaleSpotting.Services
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 
+            
             return new BatchGeographyResponseModel(batchGeography.batchNumber, geography);
         }
     }
