@@ -13,7 +13,7 @@ namespace WhaleSpotting.Services
     public interface IGeographyService
     {
         List<GeographyResponseModel> populateSampleData();
-        Task<BatchGeographyResponseModel> GetBatchGeography(BatchGeographyRequestModel batchGeography);
+        BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography);
     }
 
     public class GeographyService : IGeographyService
@@ -71,7 +71,7 @@ namespace WhaleSpotting.Services
             return geographyPoints;
         }
 
-        public async Task<BatchGeographyResponseModel> GetBatchGeography(BatchGeographyRequestModel batchGeography)
+        public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
             var upperLatitude = batchGeography.maxLatitude;
             var lowerLatitude = batchGeography.minLatitude;

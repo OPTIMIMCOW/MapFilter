@@ -26,9 +26,9 @@ namespace WhaleSpotting.Controllers
         }
 
         [HttpGet("batch")]
-        public async Task<BatchGeographyResponseModel> GetBatchGeography([FromQuery] BatchGeographyRequestModel batchGeography)
+        public BatchGeographyResponseModel GetBatchGeography([FromQuery] BatchGeographyRequestModel batchGeography)
         {
-            return await _geography.GetBatchGeography(batchGeography);
+            return _geography.GetBatchGeography(batchGeography);
         }
     }
 }
