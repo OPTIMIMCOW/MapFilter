@@ -1,4 +1,4 @@
-export interface BatchSightingRequestModel {
+export interface BatchGeographyRequestModel {
     maxLatitude: number;
     minLatitude: number;
     batchNumber: number;

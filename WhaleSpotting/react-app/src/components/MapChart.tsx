@@ -1,6 +1,5 @@
 /*eslint-disable*/
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { SightingApiModel } from "../api/models/SightingApiModel";
 import "../styles/Map.scss";
 import {
     ComposableMap,
@@ -10,9 +9,10 @@ import {
     ZoomableGroup
 } from "react-simple-maps";
 import { Chosen } from "./Map";
-import { fetchBatchSightings } from "../api/apiClient";
-import { BatchSightingRequestModel } from "../api/models/BatchSightingRequestModel";
-import { BatchSightingApiModel } from "../api/models/BatchSightingApiModel";
+import { fetchBatchGeography } from "../api/apiClient";
+import { BatchGeographyRequestModel } from "../api/models/BatchGeographyRequestModel";
+import { BatchGeographyApiModel } from "../api/models/BatchGeographyApiModel";
+import { markerColour } from "../api/ApiLookups"
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -23,7 +23,7 @@ interface MapChartProps {
 }
 
 export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Element {
-    const [data, setData] = useState<BatchSightingApiModel>({ batch: 0, sightings: [] });
+    const [data, setData] = useState<BatchGeographyApiModel>({ batch: 0, geography: [] });
     const [redraw, setRedraw] = useState<number>(0);
 
     const width = 800;
@@ -33,7 +33,7 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     const totalBatch = 10;
 
     if (redraw != clicked) {
-        setData({ batch: 0, sightings: [] });
+        setData({ batch: 0, geography: [] });
         setRedraw(clicked);
     }
 
@@ -52,20 +52,20 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     useEffect(() => {
         if (data.batch < totalBatch) {
             console.log(`ran batch: ${data.batch}`);
-            const request: BatchSightingRequestModel = {
+            const request: BatchGeographyRequestModel = {
                 maxLatitude: -72 + (18 * data.batch),
                 minLatitude: -90 + (18 * data.batch),
                 batchNumber: data.batch + 1,
             };
 
-            fetchBatchSightings(request)
+            fetchBatchGeography(request)
                 .then(newData => {
-                    const newBatchSightingApiModel: BatchSightingApiModel =
+                    const newBatchGeographyApiModel: BatchGeographyApiModel =
                     {
                         batch: newData.batch,
-                        sightings: data.sightings.concat(newData.sightings),
+                        geography: data.geography.concat(newData.geography),
                     }
-                    setData(newBatchSightingApiModel);
+                    setData(newBatchGeographyApiModel);
                 });
         }
     }, [data]);
@@ -73,8 +73,8 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
 
     return (
         <div>
-            <div data-testid="loading"> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
-            <div data-testid="loading"> {`Total Results: ${data.sightings.length}`} </div>
+            <div> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
+            <div data-testid="loading"> {`Total Results: ${data.geography.length}`} </div>
             <ComposableMap
                 projection="geoEqualEarth"
                 data-testid="simple-map"
@@ -92,13 +92,14 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
                             />)
                         }
                     </Geographies>
-                    {data.sightings.map(({ id, longitude, latitude }, index) => {
+                    {data.geography.map(({ id, longitude, latitude, attractionType }, index) => {
+                        //console.log(type);
                         const isChosen = chosen !== undefined && id === chosen.id;
                         return <Marker
                             data-testid={isChosen ? "chosen" : "not-chosen"}
                             key={index} coordinates={[longitude, latitude]} name=""
                             onClick={() => setChosen({ id: id, lat: latitude, lon: longitude })} >
-                            <circle r={2} fill={isChosen ? "#FFA500" : "#0000FF"} stroke="#fff" strokeWidth={0.2} />
+                            <circle r={2} fill={isChosen ? "#FFA500" : markerColour[attractionType as keyof typeof markerColour]} stroke="#fff" strokeWidth={0.2} />
                         </Marker>;
                     }
                     )}

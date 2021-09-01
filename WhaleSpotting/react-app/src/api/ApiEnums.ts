@@ -23,3 +23,10 @@ export enum OrcaType {
     SouthernResident,
     Transient,
 }
+
+export enum AttractionType {
+    Hiking = 1,
+    Beach,
+    History,
+    Fishing
+}

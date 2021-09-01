@@ -1,4 +1,4 @@
-import { Species, OrcaType } from "./ApiEnums";
+import { Species, OrcaType, AttractionType } from "./ApiEnums";
 
 export const WhaleImageDictionary = {
     [Species.AtlanticWhiteSidedDolphin]: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Atlantic_white-sided_dolphin.jpg",
@@ -43,4 +43,12 @@ export const OrcaTypeTextDictionary = {
     [OrcaType.Offshore]: "Offshore",
     [OrcaType.SouthernResident]: "Southern Resident",
     [OrcaType.Transient]: "Transient",
+};
+
+export const markerColour =
+{
+    [AttractionType.Beach]: "#0000FF",
+    [AttractionType.Hiking]: "#FF2500",
+    [AttractionType.History]: "#A500FF",
+    [AttractionType.Fishing]: "#005AFF",
 };

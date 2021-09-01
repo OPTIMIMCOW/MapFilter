@@ -6,18 +6,18 @@ using Newtonsoft.Json;
 
 namespace WhaleSpotting.Models.ResponseModels
 {
-    public class BatchSightingResponseModel
+    public class BatchGeographyResponseModel
     {
         [JsonProperty("batch")]
         public int Batch { get; set; }
 
-        [JsonProperty("sightings")]
-        public List<SightingResponseModel> Sightings { get; set; }
+        [JsonProperty("geography")]
+        public List<GeographyResponseModel> Geography { get; set; }
 
-        public BatchSightingResponseModel(int batch, List<SightingResponseModel> sightings)
+        public BatchGeographyResponseModel(int batch, List<GeographyResponseModel> geography)
         {
             Batch = batch;
-            Sightings = sightings;
+            Geography = geography;
         }
     }
 }
