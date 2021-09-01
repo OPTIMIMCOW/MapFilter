@@ -4,5 +4,5 @@ export interface GeographyApiModel {
     id: number;
     longitude: number;
     latitude: number;
-    type: AttractionType;
+    attractionType: AttractionType;
 }

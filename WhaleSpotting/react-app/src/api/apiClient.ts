@@ -1,4 +1,5 @@
-﻿import { SightingApiModel } from "./models/SightingApiModel";
+﻿/* eslint-disable*/
+import { SightingApiModel } from "./models/SightingApiModel";
 import authService from "../components/api-authorization/AuthorizeService";
 import { CreateSightingApiModel } from "./models/CreateSightingApiModel";
 import { SearchSightingRequestModel } from "./models/SearchSightingRequestModel";

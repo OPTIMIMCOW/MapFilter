@@ -81,7 +81,6 @@ namespace WhaleSpotting.Services
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 
-
             return new BatchGeographyResponseModel(batchGeography.batchNumber, geography);
         }
     }
