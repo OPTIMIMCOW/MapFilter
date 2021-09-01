@@ -73,15 +73,19 @@ namespace WhaleSpotting.Services
 
         public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
-            var upperLatitude = batchGeography.maxLatitude;
-            var lowerLatitude = batchGeography.minLatitude;
+            var upperLatitude = batchGeography.MaxLatitude;
+            var lowerLatitude = batchGeography.MinLatitude;
+
+            var upperLongitude = batchGeography.MaxLongitude;
+            var lowerLongitude = batchGeography.MinLongitude;
 
             var geography = _context.Geography
                 .Where(g => g.Latitude > lowerLatitude && g.Latitude < upperLatitude)
+                .Where(g => g.Longitude > lowerLongitude && g.Longitude < upperLongitude)
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 
-            return new BatchGeographyResponseModel(batchGeography.batchNumber, geography);
+            return new BatchGeographyResponseModel(batchGeography.BatchNumber, geography);
         }
     }
 }

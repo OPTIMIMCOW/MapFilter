@@ -22,7 +22,7 @@ export default function Map(): JSX.Element {
             <BannerImage />
             <button onClick={() => setClicked(clicked + 1)}>Click to Re-Run</button>
             <div className="map-component" data-testid="map-component">
-                <h2 className="map-header">Map of Sightings</h2>
+                <h2 className="map-header">Map Filter</h2>
                 <div className="map-container" data-testid="map-container">
                     <MapChart chosen={chosen} setChosen={setChosen} clicked={clicked} />
                 </div>
