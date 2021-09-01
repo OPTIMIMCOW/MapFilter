@@ -67,8 +67,6 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
                 batchNumber: data.batch + 1,
             };
 
-            debugger;
-
             fetchBatchGeography(request)
                 .then(newData => {
                     const newBatchGeographyApiModel: BatchGeographyApiModel =
