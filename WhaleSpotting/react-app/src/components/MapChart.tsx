@@ -25,11 +25,11 @@ interface MapChartProps {
 export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchGeographyApiModel>({ batch: 0, geography: [] });
     const [redraw, setRedraw] = useState<number>(0);
+    const [boundingBox, setBoundingBox] = useState<number[]>([90, -180, -90, 180]);
 
-    const width = 800;
+    const width = 1000;
     const height = 600;
     const zoom = 1;
-    let boundingBox = [90, -180, -90, 180];
     const totalBatch = 9;
 
     if (redraw != clicked) {
@@ -38,14 +38,13 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     }
 
     function getBoundingBox(centre: [number, number], zoom: number) {
-        console.log(centre);
         const halfWidth = (width * 0.5) / zoom;
         const halfHeight = (height * 0.5) / zoom;
         const upperLongitude = (centre[0] + halfWidth) * (360 / 800);
         const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
         const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
         const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
-        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude];
+        setBoundingBox([upperLatitude, lowerLongitude, lowerLatitude, upperLongitude]);
         console.log(boundingBox);
     }
 
@@ -90,7 +89,7 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
                 width={width}
                 height={height}
             >
-                <ZoomableGroup zoom={zoom} center={[16, 0]} onMoveEnd={position => { getBoundingBox(position.coordinates, position.zoom) }}>
+                <ZoomableGroup zoom={zoom} center={[0, 0]} onMoveEnd={position => { getBoundingBox(position.coordinates, position.zoom) }}>
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map(geo => <Geography
