@@ -12,7 +12,7 @@ import { Chosen } from "./Map";
 import { fetchBatchGeography } from "../api/apiClient";
 import { BatchGeographyRequestModel } from "../api/models/BatchGeographyRequestModel";
 import { BatchGeographyApiModel } from "../api/models/BatchGeographyApiModel";
-import { markerColour } from "../api/ApiLookups"
+import { markerColour, xCoordBatch, yCoordBatch } from "../api/ApiLookups"
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -29,8 +29,8 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     const width = 800;
     const height = 600;
     const zoom = 1;
-    let boundingBox;
-    const totalBatch = 10;
+    let boundingBox = [90, -180, -90, 180];
+    const totalBatch = 9;
 
     if (redraw != clicked) {
         setData({ batch: 0, geography: [] });
@@ -45,18 +45,29 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
         const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
         const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
         const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
-        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude,];
+        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude];
         console.log(boundingBox);
     }
 
     useEffect(() => {
         if (data.batch < totalBatch) {
             console.log(`ran batch: ${data.batch}`);
+            const upperLatitude = boundingBox[0];
+            const lowerLatitude = boundingBox[2];
+            const stepLatitude = (upperLatitude - lowerLatitude) / 3;
+            const upperLongitude = boundingBox[3];
+            const lowerLongitude = boundingBox[1];
+            const stepLongitude = (upperLongitude - lowerLongitude) / 3
+
             const request: BatchGeographyRequestModel = {
-                maxLatitude: -72 + (18 * data.batch),
-                minLatitude: -90 + (18 * data.batch),
+                maxLatitude: upperLatitude - (stepLatitude * yCoordBatch[data.batch]),
+                minLatitude: upperLatitude - (stepLatitude * (yCoordBatch[data.batch] + 1)),
+                minLongitude: lowerLongitude + (stepLongitude * xCoordBatch[data.batch]),
+                maxLongitude: lowerLongitude + (stepLongitude * (xCoordBatch[data.batch] + 1)),
                 batchNumber: data.batch + 1,
             };
+
+            debugger;
 
             fetchBatchGeography(request)
                 .then(newData => {

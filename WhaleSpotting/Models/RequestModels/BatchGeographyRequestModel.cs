@@ -9,6 +9,8 @@ namespace WhaleSpotting.Models.RequestModels
     {
         public double maxLatitude { get; set; }
         public double minLatitude { get; set; }
+        public double maxLongitude { get; set; }
+        public double minLongitude { get; set; }
         public int batchNumber { get; set; }
     }
 }

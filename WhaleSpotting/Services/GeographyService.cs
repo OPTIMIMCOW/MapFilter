@@ -76,8 +76,12 @@ namespace WhaleSpotting.Services
             var upperLatitude = batchGeography.maxLatitude;
             var lowerLatitude = batchGeography.minLatitude;
 
+            var upperLongitude = batchGeography.maxLongitude;
+            var lowerLongitude = batchGeography.minLongitude;
+
             var geography = _context.Geography
                 .Where(g => g.Latitude > lowerLatitude && g.Latitude < upperLatitude)
+                .Where(g => g.Longitude > lowerLongitude && g.Longitude < upperLongitude)
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 

@@ -52,3 +52,7 @@ export const markerColour =
     [AttractionType.History]: "#A500FF",
     [AttractionType.Fishing]: "#005AFF",
 };
+
+export const xCoordBatch = [0, 1, 2, 0, 1, 2, 0, 1, 2];
+
+export const yCoordBatch = [0, 0, 0, 1, 1, 1, 2, 2, 2];
