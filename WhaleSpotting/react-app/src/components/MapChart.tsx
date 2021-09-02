@@ -8,7 +8,7 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import { Chosen } from "./Map";
+import { Chosen, IUserInput } from "./Map";
 import { fetchBatchGeography } from "../api/apiClient";
 import { BatchGeographyRequestModel } from "../api/models/BatchGeographyRequestModel";
 import { BatchGeographyApiModel } from "../api/models/BatchGeographyApiModel";
@@ -20,9 +20,10 @@ interface MapChartProps {
     chosen: Chosen | undefined;
     setChosen: Dispatch<SetStateAction<Chosen | undefined>>;
     clicked: number;
+    userInput: IUserInput | null;
 }
 
-export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Element {
+export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchGeographyApiModel>({ batch: 0, geography: [] });
     const [redraw, setRedraw] = useState<number>(0);
     const [boundingBox, setBoundingBox] = useState<number[]>([90, -180, -90, 180]);
@@ -32,6 +33,7 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     const zoom = 1;
     const totalBatch = 9;
 
+    console.log(userInput);
     if (redraw != clicked) {
         setData({ batch: 0, geography: [] });
         setRedraw(clicked);
