@@ -2,9 +2,9 @@
 {
     public enum AttractionType
     {
+        Beach = 1,
+        Fishing,
         Hiking,
-        Beach,
         History,
-        Fishing
     }
 }

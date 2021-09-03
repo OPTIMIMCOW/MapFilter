@@ -33,7 +33,6 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
     const zoom = 1;
     const totalBatch = 9;
 
-    console.log(userInput);
     if (redraw != clicked) {
         setData({ batch: 0, geography: [] });
         setRedraw(clicked);
@@ -47,7 +46,6 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
         const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
         const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
         setBoundingBox([upperLatitude, lowerLongitude, lowerLatitude, upperLongitude]);
-        console.log(boundingBox);
     }
 
     useEffect(() => {
@@ -80,7 +78,6 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
         }
     }, [data]);
 
-
     return (
         <div>
             <div> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
@@ -103,7 +100,6 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
                         }
                     </Geographies>
                     {data.geography.map(({ id, longitude, latitude, attractionType }, index) => {
-                        //console.log(type);
                         const isChosen = chosen !== undefined && id === chosen.id;
                         return <Marker
                             data-testid={isChosen ? "chosen" : "not-chosen"}
