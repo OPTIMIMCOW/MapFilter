@@ -81,7 +81,7 @@ namespace WhaleSpotting.Services
             if (batchGeography.Attraction1 != null)
             {
                 attraction1 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction1).ToString());
-               
+
                 if (batchGeography.Attraction2 != null)
                 {
                     attraction2 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction2).ToString());
@@ -92,17 +92,9 @@ namespace WhaleSpotting.Services
                     attraction3 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction3).ToString());
                 }
 
-                //var geography = _context.Geography
-                //    .Where(g => g.Latitude > lowerLatitude && g.Latitude < upperLatitude)
-                //    .Where(g => g.Longitude > lowerLongitude && g.Longitude < upperLongitude)
-                //    .Select(g => new GeographyResponseModel(g))
-                //    .ToList();
-
-                var test = checkSeparation(attraction1[0], attraction2, 500000);
-
                 if (batchGeography.Distance12 != null)
                 {
-                    attraction1
+                    attraction1 = attraction1
                         .Where(g => checkSeparation(g, attraction2, (int)batchGeography.Distance12) == true)
                         .ToList();
 
@@ -113,12 +105,16 @@ namespace WhaleSpotting.Services
 
                 if (batchGeography.Distance13 != null)
                 {
-                    attraction1
-                        .Where(g => checkSeparation(g, attraction3, (int)batchGeography.Distance13))
+                    attraction1 = attraction1
+                        .Where(g => checkSeparation(g, attraction3, (int)batchGeography.Distance13) == true)
                         .ToList();
 
-                    attraction3
-                        .Where(g => checkSeparation(g, attraction1, (int)batchGeography.Distance13))
+                    attraction3 = attraction3
+                        .Where(g => checkSeparation(g, attraction1, (int)batchGeography.Distance13) == true)
+                        .ToList();
+
+                    attraction2 = attraction2
+                        .Where(g => checkSeparation(g, attraction1, (int)batchGeography.Distance12) == true)
                         .ToList();
                 }
             }
