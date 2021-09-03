@@ -126,11 +126,11 @@ namespace WhaleSpotting.Services
 
         public List<GeographyResponseModel> getFilteredGeography(BatchGeographyRequestModel batchGeography, string attractionType)
         {
-            var upperLatitude = batchGeography.MaxLatitude;
-            var lowerLatitude = batchGeography.MinLatitude;
+            var upperLatitude = batchGeography.MaxLatitude + 5;
+            var lowerLatitude = batchGeography.MinLatitude - 5;
 
-            var upperLongitude = batchGeography.MaxLongitude;
-            var lowerLongitude = batchGeography.MinLongitude;
+            var upperLongitude = batchGeography.MaxLongitude + 5;
+            var lowerLongitude = batchGeography.MinLongitude - 5;
 
             var geography = _context.Geography
                 .Where(g => g.AttractionType == attractionType)
