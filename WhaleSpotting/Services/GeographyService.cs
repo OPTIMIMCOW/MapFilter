@@ -69,7 +69,6 @@ namespace WhaleSpotting.Services
                     id++;
                 }
             }
-
             return geographyPoints;
         }
         public List<GeographyResponseModel> populateRandomSampleData(int total)
@@ -79,9 +78,9 @@ namespace WhaleSpotting.Services
 
             for (int i = 0; i < total; i++)
             {
-                var latitude = new Random().Next(-90, 91);
-                var longitude = new Random().Next(-180, 181);
-                var attraction = (AttractionType) new Random().Next(1, 5);
+                var latitude = -90 + new Random().NextDouble() * 180;
+                var longitude = -180 + new Random().NextDouble() * 360;
+                var attraction = (AttractionType)new Random().Next(1, 5);
                 newPoints.Add(new GeographyDbModel(id, latitude, longitude, attraction.ToString())); ;
                 id++;
             }
@@ -94,7 +93,6 @@ namespace WhaleSpotting.Services
 
             return pointsToAdd.Select(g => new GeographyResponseModel(g)).ToList();
         }
-
 
         public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
@@ -122,7 +120,7 @@ namespace WhaleSpotting.Services
                         .Where(g => checkSeparation(g, attraction2, (int)batchGeography.Distance12) == true)
                         .ToList();
 
-                    attraction2
+                    attraction2 = attraction2
                         .Where(g => checkSeparation(g, attraction1, (int)batchGeography.Distance12) == true)
                         .ToList();
                 }

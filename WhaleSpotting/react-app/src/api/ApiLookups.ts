@@ -50,7 +50,7 @@ export const markerColour =
     [AttractionType.Beach]: "#0000FF",
     [AttractionType.Hiking]: "#FF2500",
     [AttractionType.History]: "#A500FF",
-    [AttractionType.Fishing]: "#005AFF",
+    [AttractionType.Fishing]: "#81B622",
 };
 
 export const xCoordBatch = [0, 1, 2, 0, 1, 2, 0, 1, 2];

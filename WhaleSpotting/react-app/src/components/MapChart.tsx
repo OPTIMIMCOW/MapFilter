@@ -50,6 +50,7 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
     useEffect(() => {
         if (data.batch < 9) {
             console.log(`ran batch: ${data.batch}`);
+            console.log(`data total: ${data.geography.length}`)
             const upperLatitude = boundingBox[0];
             const lowerLatitude = boundingBox[2];
             const stepLatitude = (upperLatitude - lowerLatitude) / 3;
