@@ -25,6 +25,13 @@ namespace WhaleSpotting.Controllers
             return Ok();
         }
 
+        [HttpPost("poprandom/{total}")]
+        public IActionResult PopulateRandomSampleData([FromRoute] int total)
+        {
+            _geography.populateRandomSampleData(total);
+            return Ok();
+        }
+
         [HttpGet("batch")]
         public BatchGeographyResponseModel GetBatchGeography([FromQuery] BatchGeographyRequestModel batchGeography)
         {

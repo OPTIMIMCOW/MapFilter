@@ -14,6 +14,7 @@ namespace WhaleSpotting.Services
     public interface IGeographyService
     {
         List<GeographyResponseModel> populateSampleData();
+        List<GeographyResponseModel> populateRandomSampleData(int total);
         BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography);
     }
 
@@ -71,6 +72,29 @@ namespace WhaleSpotting.Services
 
             return geographyPoints;
         }
+        public List<GeographyResponseModel> populateRandomSampleData(int total)
+        {
+            var newPoints = new List<GeographyDbModel>();
+            Int32 id = 1;
+
+            for (int i = 0; i < total; i++)
+            {
+                var latitude = new Random().Next(-90, 91);
+                var longitude = new Random().Next(-180, 181);
+                var attraction = (AttractionType) new Random().Next(1, 5);
+                newPoints.Add(new GeographyDbModel(id, latitude, longitude, attraction.ToString())); ;
+                id++;
+            }
+
+            var existingPointApiIds = _context.Geography.Select(g => g.ApiId).ToList();
+            var pointsToAdd = newPoints.Where(g => !existingPointApiIds.Contains(g.ApiId)).ToList();
+
+            _context.Geography.AddRange(pointsToAdd);
+            _context.SaveChanges();
+
+            return pointsToAdd.Select(g => new GeographyResponseModel(g)).ToList();
+        }
+
 
         public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
