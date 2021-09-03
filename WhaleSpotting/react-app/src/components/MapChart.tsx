@@ -8,7 +8,7 @@ import {
     Marker,
     ZoomableGroup
 } from "react-simple-maps";
-import { Chosen } from "./Map";
+import { Chosen, IUserInput } from "./Map";
 import { fetchBatchGeography } from "../api/apiClient";
 import { BatchGeographyRequestModel } from "../api/models/BatchGeographyRequestModel";
 import { BatchGeographyApiModel } from "../api/models/BatchGeographyApiModel";
@@ -20,16 +20,17 @@ interface MapChartProps {
     chosen: Chosen | undefined;
     setChosen: Dispatch<SetStateAction<Chosen | undefined>>;
     clicked: number;
+    userInput: IUserInput | null;
 }
 
-export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Element {
+export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProps): JSX.Element {
     const [data, setData] = useState<BatchGeographyApiModel>({ batch: 0, geography: [] });
     const [redraw, setRedraw] = useState<number>(0);
+    const [boundingBox, setBoundingBox] = useState<number[]>([90, -180, -90, 180]);
 
-    const width = 800;
+    const width = 1000;
     const height = 600;
     const zoom = 1;
-    let boundingBox = [90, -180, -90, 180];
     const totalBatch = 9;
 
     if (redraw != clicked) {
@@ -38,15 +39,13 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
     }
 
     function getBoundingBox(centre: [number, number], zoom: number) {
-        console.log(centre);
         const halfWidth = (width * 0.5) / zoom;
         const halfHeight = (height * 0.5) / zoom;
         const upperLongitude = (centre[0] + halfWidth) * (360 / 800);
         const lowerLongitude = (centre[0] - halfWidth) * (360 / 800);
         const upperLatitude = (centre[1] + halfHeight) * (180 / 600);
         const lowerLatitude = (centre[1] - halfHeight) * (180 / 600);
-        boundingBox = [upperLatitude, lowerLongitude, lowerLatitude, upperLongitude];
-        console.log(boundingBox);
+        setBoundingBox([upperLatitude, lowerLongitude, lowerLatitude, upperLongitude]);
     }
 
     useEffect(() => {
@@ -79,7 +78,6 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
         }
     }, [data]);
 
-
     return (
         <div>
             <div> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
@@ -90,7 +88,7 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
                 width={width}
                 height={height}
             >
-                <ZoomableGroup zoom={zoom} center={[16, 0]} onMoveEnd={position => { getBoundingBox(position.coordinates, position.zoom) }}>
+                <ZoomableGroup zoom={zoom} center={[0, 0]} onMoveEnd={position => { getBoundingBox(position.coordinates, position.zoom) }}>
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map(geo => <Geography
@@ -102,7 +100,6 @@ export function MapChart({ chosen, setChosen, clicked }: MapChartProps): JSX.Ele
                         }
                     </Geographies>
                     {data.geography.map(({ id, longitude, latitude, attractionType }, index) => {
-                        //console.log(type);
                         const isChosen = chosen !== undefined && id === chosen.id;
                         return <Marker
                             data-testid={isChosen ? "chosen" : "not-chosen"}
