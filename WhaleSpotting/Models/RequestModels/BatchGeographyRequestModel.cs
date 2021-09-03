@@ -36,7 +36,7 @@ namespace WhaleSpotting.Models.RequestModels
         [JsonProperty("distance12")]
         public int? Distance12 { get; set; }
 
-        [JsonProperty("distance23")]
-        public int? Distance23 { get; set; }
+        [JsonProperty("distance13")]
+        public int? Distance13 { get; set; }
     }
 }

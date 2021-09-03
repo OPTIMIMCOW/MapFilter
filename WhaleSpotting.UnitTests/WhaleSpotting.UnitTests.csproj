@@ -8,6 +8,7 @@
     <ItemGroup>
         <PackageReference Include="FakeItEasy" Version="7.1.0" />
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
+        <PackageReference Include="GeoCoordinate.NetStandard1" Version="1.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.8" />
         <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
