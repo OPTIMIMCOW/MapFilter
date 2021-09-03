@@ -21,8 +21,8 @@
 }
 
 .map-header{
-    width:100%;
-    
+    display:flex;
+    justify-content:center;
 }
 
 .map-info {
@@ -36,6 +36,7 @@
 }
 
 .attribute-group {
+    width:300px;
     display: flex;
     flex-direction: column;
 }
@@ -43,6 +44,7 @@
 .re-run-button {
     height: 45px;
     margin-top: 35px;
+    margin-bottom:35px;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
