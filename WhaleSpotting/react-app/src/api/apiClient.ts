@@ -14,7 +14,7 @@ export async function fetchAllSightings(): Promise<SightingApiModel[]> {
 }
 
 export async function fetchBatchGeography(request: BatchGeographyRequestModel): Promise<BatchGeographyApiModel> {
-    return await fetch(`geography/batch?maxLatitude=${request.maxLatitude}&minLatitude=${request.minLatitude}&maxLongitude=${request.maxLongitude}&minLongitude=${request.minLongitude}&batchNumber=${request.batchNumber}`, await getGetSettings())
+    return await fetch(`geography/batch?maxLatitude=${request.maxLatitude}&minLatitude=${request.minLatitude}&maxLongitude=${request.maxLongitude}&minLongitude=${request.minLongitude}&batchNumber=${request.batchNumber}&attraction1=${request.userInput.attr1}&attraction2=${request.userInput.attr2}&attraction3=${request.userInput.attr3}&distance12=${request.userInput.dist12}&distance23=${request.userInput.dist23}`, await getGetSettings())
         .then(r => r.json());
 }
 

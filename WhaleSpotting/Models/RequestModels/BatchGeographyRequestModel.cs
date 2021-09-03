@@ -22,5 +22,20 @@ namespace WhaleSpotting.Models.RequestModels
 
         [JsonProperty("batchNumber")]
         public int BatchNumber { get; set; }
+
+        [JsonProperty("attraction1")]
+        public string Attraction1 { get; set; }
+
+        [JsonProperty("attraction2")]
+        public string Attraction2 { get; set; }
+
+        [JsonProperty("attraction3")]
+        public string Attraction3 { get; set; }
+
+        [JsonProperty("distance12")]
+        public string Distance12 { get; set; }
+
+        [JsonProperty("distance23")]
+        public string Distance23 { get; set; }
     }
 }

@@ -20,7 +20,7 @@ interface MapChartProps {
     chosen: Chosen | undefined;
     setChosen: Dispatch<SetStateAction<Chosen | undefined>>;
     clicked: number;
-    userInput: IUserInput | null;
+    userInput: IUserInput;
 }
 
 export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProps): JSX.Element {
@@ -64,6 +64,7 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
                 minLongitude: lowerLongitude + (stepLongitude * xCoordBatch[data.batch]),
                 maxLongitude: lowerLongitude + (stepLongitude * (xCoordBatch[data.batch] + 1)),
                 batchNumber: data.batch + 1,
+                userInput: userInput,
             };
 
             fetchBatchGeography(request)
