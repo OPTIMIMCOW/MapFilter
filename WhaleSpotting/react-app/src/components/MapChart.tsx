@@ -24,14 +24,13 @@ interface MapChartProps {
 }
 
 export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProps): JSX.Element {
-    const [data, setData] = useState<BatchGeographyApiModel>({ batch: 0, geography: [] });
+    const [data, setData] = useState<BatchGeographyApiModel>({ batch: 9, geography: [] });
     const [redraw, setRedraw] = useState<number>(0);
     const [boundingBox, setBoundingBox] = useState<number[]>([90, -180, -90, 180]);
 
     const width = 1000;
     const height = 600;
     const zoom = 1;
-    const totalBatch = 9;
 
     if (redraw != clicked) {
         setData({ batch: 0, geography: [] });
@@ -49,7 +48,7 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
     }
 
     useEffect(() => {
-        if (data.batch < totalBatch) {
+        if (data.batch < 9) {
             console.log(`ran batch: ${data.batch}`);
             const upperLatitude = boundingBox[0];
             const lowerLatitude = boundingBox[2];
@@ -81,7 +80,7 @@ export function MapChart({ chosen, setChosen, clicked, userInput }: MapChartProp
 
     return (
         <div>
-            <div> {`Loaded Results: ${data.batch} of ${totalBatch}`} </div>
+            <div> {`Loaded Results: ${data.batch} of ${9}`} </div>
             <div data-testid="loading"> {`Total Results: ${data.geography.length}`} </div>
             <ComposableMap
                 projection="geoEqualEarth"

@@ -73,6 +73,37 @@ namespace WhaleSpotting.Services
 
         public BatchGeographyResponseModel GetBatchGeography(BatchGeographyRequestModel batchGeography)
         {
+            var attraction1 = new List<GeographyResponseModel>();
+            var attraction2 = new List<GeographyResponseModel>();
+            var attraction3 = new List<GeographyResponseModel>();
+
+            if (batchGeography.Attraction1 != null)
+            {
+                attraction1 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction1).ToString());
+            }
+
+            if (batchGeography.Attraction2 != null)
+            {
+                attraction2 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction2).ToString());
+            }
+
+            if (batchGeography.Attraction3 != null)
+            {
+                attraction3 = getFilteredGeography(batchGeography, ((AttractionType)batchGeography.Attraction3).ToString());
+            }
+
+            //var geography = _context.Geography
+            //    .Where(g => g.Latitude > lowerLatitude && g.Latitude < upperLatitude)
+            //    .Where(g => g.Longitude > lowerLongitude && g.Longitude < upperLongitude)
+            //    .Select(g => new GeographyResponseModel(g))
+            //    .ToList();
+
+            var geography = attraction1.Concat(attraction2).Concat(attraction3).ToList();
+
+            return new BatchGeographyResponseModel(batchGeography.BatchNumber, geography);
+        }
+        public List<GeographyResponseModel> getFilteredGeography(BatchGeographyRequestModel batchGeography, string attractionType)
+        {
             var upperLatitude = batchGeography.MaxLatitude;
             var lowerLatitude = batchGeography.MinLatitude;
 
@@ -80,12 +111,13 @@ namespace WhaleSpotting.Services
             var lowerLongitude = batchGeography.MinLongitude;
 
             var geography = _context.Geography
+                .Where(g => g.AttractionType == attractionType)
                 .Where(g => g.Latitude > lowerLatitude && g.Latitude < upperLatitude)
                 .Where(g => g.Longitude > lowerLongitude && g.Longitude < upperLongitude)
                 .Select(g => new GeographyResponseModel(g))
                 .ToList();
 
-            return new BatchGeographyResponseModel(batchGeography.BatchNumber, geography);
+            return geography;
         }
     }
 }
