@@ -16,7 +16,9 @@ export interface Chosen {
 export interface IUserInput {
     attr1: AttractionType | null,
     attr2: AttractionType | null,
+    attr3: AttractionType | null,
     dist12: number | null,
+    dist23: number | null,
 }
 
 export default function Map(): JSX.Element {
@@ -25,18 +27,20 @@ export default function Map(): JSX.Element {
     const [clicked, setClicked] = useState<number>(0);
     const [variable1, setVariable1] = useState<AttractionType | null>(null);
     const [variable2, setVariable2] = useState<AttractionType | null>(null);
-    const [distVar2, setDistVar2] = useState<number | null>(null);
+    const [distVar12, setDistVar12] = useState<number | null>(null);
     const [variable3, setVariable3] = useState<AttractionType | null>(null);
-    const [distVar3, setDistVar3] = useState<number | null>(null);
+    const [distVar23, setDistVar23] = useState<number | null>(null);
     const [userInput, setUserInput] = useState<IUserInput | null>(null);
 
     useEffect(() => {
         setUserInput({
             attr1: variable1,
             attr2: variable2,
-            dist12: distVar2,
+            attr3: variable3,
+            dist12: distVar12,
+            dist23: distVar23,
         })
-    }, [variable1, variable2, distVar2])
+    }, [variable1, variable2, variable3, distVar12, distVar23])
 
     return (
         <div className="map-component-container">
@@ -45,7 +49,8 @@ export default function Map(): JSX.Element {
             <div className="sector-holder">
                 <div className="attribute-group">
                     <label>Attraction Type 1</label>
-                    <select className="input-field" onChange={(e) => { setVariable1(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <select className="input-field" onChange={(e) => { setVariable1(parseInt(e.target.value)); }} defaultValue={undefined}>,
+                    <option disabled selected> -- select an option -- </option>
                     <option value={AttractionType.Beach}> {AttractionType[AttractionType["Beach"]]}</option>,
                     <option value={AttractionType.Hiking}> {AttractionType[AttractionType["Hiking"]]}</option>,
                     <option value={AttractionType.History}> {AttractionType[AttractionType["History"]]}</option>,
@@ -55,13 +60,15 @@ export default function Map(): JSX.Element {
                 <div className="attribute-group">
                     <label>Attraction Type 2</label>
                     <select className="input-field" onChange={(e) => { setVariable2(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <option disabled selected> -- select an option -- </option>
                     <option value={AttractionType.Beach}> {AttractionType[AttractionType["Beach"]]}</option>,
                     <option value={AttractionType.Hiking}> {AttractionType[AttractionType["Hiking"]]}</option>,
                     <option value={AttractionType.History}> {AttractionType[AttractionType["History"]]}</option>,
                     <option value={AttractionType.Fishing}> {AttractionType[AttractionType["Fishing"]]}</option>,
                     </select>
-                    <label>Distance From Variable 1</label>
-                    <select className="input-field" onChange={(e) => { setDistVar2(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <label>Distance From Attraction 1</label>
+                    <select className="input-field" onChange={(e) => { setDistVar12(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <option disabled selected> -- select an option -- </option>
                     <option value={10}> 10km</option>,
                     <option value={50}> 50km</option>,
                     <option value={100}> 100km</option>,
@@ -71,13 +78,15 @@ export default function Map(): JSX.Element {
                 <div className="attribute-group">
                     <label>Attraction Type 3</label>
                     <select className="input-field" onChange={(e) => { setVariable3(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <option disabled selected> -- select an option -- </option>
                     <option value={AttractionType.Beach}> {AttractionType[AttractionType["Beach"]]}</option>,
                     <option value={AttractionType.Hiking}> {AttractionType[AttractionType["Hiking"]]}</option>,
                     <option value={AttractionType.History}> {AttractionType[AttractionType["History"]]}</option>,
                     <option value={AttractionType.Fishing}> {AttractionType[AttractionType["Fishing"]]}</option>,
                     </select>
-                    <label>Distance From Variable 1</label>
-                    <select className="input-field" onChange={(e) => { setDistVar3(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <label>Distance From Attraction 1</label>
+                    <select className="input-field" onChange={(e) => { setDistVar23(parseInt(e.target.value)); }} defaultValue={undefined}>
+                    <option disabled selected> -- select an option -- </option>
                     <option value={10}> 10km</option>,
                     <option value={50}> 50km</option>,
                     <option value={100}> 100km</option>,

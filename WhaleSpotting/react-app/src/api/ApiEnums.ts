@@ -25,8 +25,8 @@ export enum OrcaType {
 }
 
 export enum AttractionType {
-    Hiking = 1,
-    Beach,
+    Beach = 1,
+    Fishing,
+    Hiking,
     History,
-    Fishing
 }
