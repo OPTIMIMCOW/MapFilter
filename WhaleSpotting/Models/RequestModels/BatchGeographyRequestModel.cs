@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WhaleSpotting.Models.Enums;
 
 namespace WhaleSpotting.Models.RequestModels
 {
@@ -24,18 +25,18 @@ namespace WhaleSpotting.Models.RequestModels
         public int BatchNumber { get; set; }
 
         [JsonProperty("attraction1")]
-        public string Attraction1 { get; set; }
+        public AttractionType? Attraction1 { get; set; }
 
         [JsonProperty("attraction2")]
-        public string Attraction2 { get; set; }
+        public AttractionType? Attraction2 { get; set; }
 
         [JsonProperty("attraction3")]
-        public string Attraction3 { get; set; }
+        public AttractionType? Attraction3 { get; set; }
 
         [JsonProperty("distance12")]
-        public string Distance12 { get; set; }
+        public int? Distance12 { get; set; }
 
         [JsonProperty("distance23")]
-        public string Distance23 { get; set; }
+        public int? Distance23 { get; set; }
     }
 }
